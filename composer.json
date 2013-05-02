@@ -1,0 +1,22 @@
+{
+    "name": "zizaco/mongolid-laravel",
+    "description": "Easy, powerful and ultrafast MongoDB ODM for Laravel.",
+    "keywords": ["odm","mongodb","nosql","laravel","illuminate"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zizaco Zizuini",
+            "email": "zizaco@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "zizaco/mongolid": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Zizaco\\MongolidLaravel": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
