@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Zizaco\Mongolid\MongoDbConnector;
+use Zizaco\Mongolid\Model;
 
 class ServiceProvider extends ServiceProvider {
 
@@ -20,6 +21,9 @@ class ServiceProvider extends ServiceProvider {
     public function register()
     {
         $config = $this->app->make('config');
+        $cache = $this->app->make('cache');
+
+        Model::$cacheComponent = $cache;
 
         $this->app['MongoLidConnection'] = $this->app->share(function($app)
         {
