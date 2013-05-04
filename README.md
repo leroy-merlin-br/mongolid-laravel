@@ -10,20 +10,12 @@
 - [Timestamps](#timestamps)
 - [Query Scopes](#query-scopes)
 - [Relationships](#relationships)
-- [Querying Relations](#querying-relations)
-- [Eager Loading](#eager-loading)
-- [Inserting Related Models](#inserting-related-models)
-- [Touching Parent Timestamps](#touching-parent-timestamps)
-- [Working With Pivot collections](#working-with-pivot-collections)
-- [Collections](#collections)
-- [Accessors & Mutators](#accessors-and-mutators)
-- [Model Events](#model-events)
 - [Converting To Arrays / JSON](#converting-to-arrays-or-json)
 
 <a name="introduction"></a>
 ## Introduction
 
-MongoLid ODM (**O**bject **D**ocument **M**apper) provides a beautiful, simple implementation for working with MongoDB. Each database collection can have a corresponding "Model" which is used to interact with that collection.
+MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementation for working with MongoDB. Each database collection can have a corresponding "Model" which is used to interact with that collection.
 
 Before getting started, be sure to configure a database connection in `app/config/database.php`:
 
@@ -118,7 +110,7 @@ Once a model is defined, you are ready to start retrieving and creating document
 **MongoLid Count**
 
     $count = User::where(['votes'=>'$gt'=>[100]])->count();
-s
+
 <a name="mass-assignment"></a>
 ## Mass Assignment
 
@@ -188,39 +180,276 @@ To delete a model, simply call the `delete` method on the instance:
 
 Of course, your database collections are probably related to one another. For example, a blog post may have many comments, or an order could be related to the user who placed it. MongoLid makes managing and working with these relationships easy. MongoDB and MongoLid in short supports four types of relationships:
 
-- [References One](#references-one)
-- [References Many](#references-many)
 - [Embeds One](#embeds-one)
 - [Embeds Many](#embeds-many)
+- [References One](#references-one)
+- [References Many](#references-many)
 
-<a name="dynamic-properties"></a>
-### Dynamic Properties
+> **Note:** MongoDB **relationships doesn't works like in a Relational database**. In MongoDB, data modeling decisions involve determining how to structure the documents to model the data effectively. The primary decision is whether to embed or to use references. See [MongoDB - Data Modeling Decisions](http://docs.mongodb.org/manual/core/data-modeling/#data-modeling-decisions) for more information on this subject.
 
-MongoLid allows you to access your relations via dynamic properties. MongoLid will automatically load the relationship for you, and is even smart enough to know whether to call the `get` (for one-to-many relationships) or `first` (for one-to-one relationships) method.  It will then be accessible via a dynamic property by the same name as the relation. For example, with the following model `$phone`:
+<a name="embeds-one"></a>
+### Embeds One
 
-    class Phone extends MongoLid {
+Read [MongoDB - Data Modeling Embedding](http://docs.mongodb.org/manual/core/data-modeling/#embedding) to learn more how to take advantage of document embedding.
 
-        public function user()
+A Embeds One relationship is a very basic relation. For example, a `User` model might have one `Phone`. We can define this relation in Mongolid:
+
+**Defining A Embeds One Relation**
+
+    // models/User.php
+    class User extends Mongolid {
+
+        // This model is saved in the collection users
+        protected $collection = 'users';
+
+        // Method that will be used to access the phone
+        public function phone()
         {
-            return $this->referencesOne('User');
+            return $this->embedsOne('Phone', 'phone');
         }
 
     }
 
-    $phone = Phone::find(1);
-    
-Instead of echoing the user's email like this:
+    // models/Phone.php
+    class Phone extends Mongolid {
 
-    echo $phone->user()->first()->email;
+        // This model will be embedded only
+        protected $collection = null;
 
-It may be shortened to simply:
+        public function getFullPhone()
+        {
+            return '+' . $this->regionCode . $this->number;
+        }
 
-    echo $phone->user->email;
+    }
+
+The first argument passed to the `embedsOne` method is the name of the related model. The second argument is in what attribute that object (array with it's attributes) is saved. Once the relationship is defined, we may retrieve it using:
+
+    $phone = User::find('4af9f23d8ead0e1d32000000')->phone();
+
+This statement will perform the following:
+
+- Query for the user with the `_id` _'4af9f23d8ead0e1d32000000'_
+- Instantiate a **Phone** object with the attributes found in _'phone'_ attribute of the user
+- Return that object
+
+In order to embed a document to be used in a Embeds One relationship, simply set the attribute to an array with the attributes of the embeded model. For example:
+
+    // The object that will be embeded
+    $phoneObj = new Phone;
+    $phoneObj->regionCode = '55';
+    $phoneObj->number = '1532323232';
+
+    // The object that will contain the phone
+    $user = User::first('4af9f23d8ead0e1d32000000');
+
+    // This method will embed the $phoneObj into the phone attribute of the user
+    $user->embed( 'phone', $phoneObj );
+
+    // This is an alias to the method called above.
+    $user->embedToPhone( $phoneObj );
+
+    // This will will also work
+    $user->phone = $phoneObj->attributes;
+
+    // Or
+    $user->phone = $phoneObj->toArray();
+
+    // Or even
+    $user->phone = array(
+        'regionCode' => $phoneObj->regionCode,
+        'number' => $phoneObj->number
+    );
+
+    $user->save();
+
+    // Now we can retrieve the object by calling
+    $user->phone(); // Will return a Phone object similar to $phoneObj
+
+> **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
+
+<a name="embeds-many"></a>
+### Embeds many
+
+An example of a Embeds Many relation is a blog post that "has many" comments. We can model this relation like so:
+
+    // models/Post.php
+    class Post extends Mongolid {
+
+        protected $collection = 'posts';
+
+        public function comments()
+        {
+            return $this->embedsMany('Comment', 'comments');
+        }
+
+    }
+
+    // models/Comment.php
+    class Comment extends Mongolid{
+
+        // This model will be embedded only
+        protected $collection = null;
+
+    }
+
+Now we can access the post's comments **array** through the comments method:
+
+    $comments = Post::find('4af9f23d8ead0e1d32000000')->comments();
+
+Now you can iterate the array of Comment objects
+
+    foreach( $comments as $comment )
+    {
+        if(! $comment->hidden )
+            echo $comment;
+    }
+
+In order to embed a document to be used in a Embeds One relationship, you may use the `embed` method or the alias `embedToAttribute`:
+
+    $commentA = new Comment;
+    $commentA->content = 'Cool feature bro!';
+
+    $commentB = new Comment;
+    $commentB->content = 'Awesome!';
+
+    $post = Post::first('4af9f23d8ead0e1d32000000');
+
+    // Both ways work
+    $post->embedToComments( $commentA );
+    $post->embed( 'Comments', $commentB );
+
+    $post->save();
+
+> **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
+
+<a name="references-one"></a>
+### References One
+
+In MongoLid a reference is made by storing the `_id` of the referenced object. 
+
+Referencing provides more flexibility than embedding; however, to resolve the references, client-side applications must issue follow-up queries. In other words, using references requires more roundtrips to the server.
+
+In general, use references when embedding would result in duplication of data and would not provide sufficient read performance advantages to outweigh the implications of the duplication. Read [MongoDB - Data Modeling Referencing](http://docs.mongodb.org/manual/core/data-modeling/#referencing) to learn more how to take advantage of referencing in MongoDB.
+
+**Defining A References One Relation**
+
+    // models/Post.php
+    class Post extends Mongolid {
+
+        protected $collection = 'posts';
+
+        public function author()
+        {
+            return $this->referencesOne('User', 'author');
+        }
+
+    }
+
+    // models/User.php
+    class User extends Mongolid{
+
+        protected $collection = 'users';
+
+    }
+
+The first argument passed to the `referencesOne` method is the name of the related model, the second argument is the attribute where the referenced model `_id` will be stored. Once the relationship is defined, we may retrieve it using the following method:
+
+    $user = Post::find('4af9f23d8ead0e1d32000000')->author();
+
+This statement will perform the following:
+
+- Query for the post with the `_id` _'4af9f23d8ead0e1d32000000'_
+- Query for the user with the `_id` equals to the _author_ attribute of the post
+- Return that object
+
+In order to set a reference to a document, simply set the attribute used in the relationship to the reference's `_id` or use the attach method or it's alias. For example:
+
+    // The object that will be embeded
+    $userObj = new User;
+    $userObj->name = 'John';
+    $userObj->save() // This will populates the $userObj->_id
+
+    // The object that will contain the user
+    $post = Post::first('4af9f23d8ead0e1d32000000');
+
+    // This method will attach the $phoneObj into the phone attribute of the user
+    $post->attach( 'author', $userObj );
+
+    // This is an alias to the method called above.
+    $post->attachToAuthor( $userObj );
+
+    // This will will also work
+    $post->author = $userObj->_id;
+
+    $post->save();
+
+    $post->author(); // Will return a User object
+
+> **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
+
+<a name="references-many"></a>
+### References Many
+
+In MongoLid a references many is made by storing an array containing the `_id` of the referenced objects. 
+
+Referencing provides more flexibility than embedding; however, to resolve the references, client-side applications must issue follow-up queries. In other words, using references requires more roundtrips to the server.
+
+In general, use references when embedding would result in duplication of data and would not provide sufficient read performance advantages to outweigh the implications of the duplication. Read [MongoDB - Data Modeling Referencing](http://docs.mongodb.org/manual/core/data-modeling/#referencing) to learn more how to take advantage of referencing in MongoDB.
+
+**Defining A References Many Relation**
+
+    // models/User.php
+    class User extends Mongolid{
+
+        protected $collection = 'users';
+
+        public function posts()
+        {
+            return $this->referencesMany('Post', 'posts');
+        }
+
+    }
+
+    // models/Post.php
+    class Post extends Mongolid {
+
+        protected $collection = 'posts';
+
+    }
+
+The first argument passed to the `referencesMany` method is the name of the related model, the second argument is the attribute where the `_id`s will be stored. Once the relationship is defined, we may retrieve it using the following method:
+
+    $posts = User::find('4af9f23d8ead0e1d32000000')->posts();
+
+This statement will perform the following:
+
+- Query for the user with the `_id` _'4af9f23d8ead0e1d32000000'_
+- Query for all the posts with the `_id` in the user's _posts_ attribute
+- Return the result of the query (Which is a **OdmCursor**)
+
+In order to set a reference to a document use the attach method or it's alias. For example:
+
+    $postA = new Post;
+    $postA->title = 'Nice post';
+
+    $postB = new Post;
+    $postB->title = 'Nicer post';
+
+    $user = User::first('4af9f23d8ead0e1d32000000');
+
+    // Both ways work
+    $user->attachToPosts( $postA );
+    $user->attach( 'posts', $postB );
+
+    $user->save();
+
+> **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
 
 <a name="converting-to-arrays-or-json"></a>
 ## Converting To Arrays / JSON
 
-When building JSON APIs, you may often need to convert your models and relationships to arrays or JSON. So, MongoLid includes methods for doing so. To convert a model and its loaded relationship to an array, you may use the `toArray` method:
+When building JSON APIs, you may often need to convert your models to arrays or JSON. So, MongoLid includes methods for doing so. To convert a model and its loaded relationship to an array, you may use the `toArray` method:
 
 **Converting A Model To An Array**
 
