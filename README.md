@@ -4,6 +4,7 @@
 
 - [Introduction](#introduction)
 - [Basic Usage](#basic-usage)
+- [Odm Cursor](#odm-cursor)
 - [Mass Assignment](#mass-assignment)
 - [Insert, Update, Delete](#insert-update-delete)
 - [Soft Deleting](#soft-deleting)
@@ -112,6 +113,48 @@ Once a model is defined, you are ready to start retrieving and creating document
 **MongoLid Count**
 
     $count = User::where(['votes'=>'$gt'=>[100]])->count();
+
+<a name="odm-cursor"></a>
+## Odm Cursor
+
+In MongoDB, a cursor is used to iterate through the results of a database query. For example, to query the database and see all results:
+
+    $cursor = User::where(['kind'=>'visitor']);
+
+In the above example, the $cursor variable will be a `Zizaco\Mongolid\OdmCursor`.
+
+The MongoLid's OdmCursor extends the original MongoCursor object of the official MongoDB Driver. [Learn more about MongoCursor](http://php.net/manual/en/class.mongocursor.php). The main difference between the original `MongoCursor` and the MongoLid's `OdmCursor` is that the `OdmCursor` returns objects (instances of your models) instead of arrays.
+
+The cursor object has alot of methods that helps you to iterate, refine and get information. For example:
+
+    $cursor = User::where(['kind'=>'visitor']);
+
+    // Return an explanation of the query, often useful for optimization and debugging
+    $cursor->explain();
+
+    // Sorts the results by given fields. In the example bellow, it sorts by username DESC
+    $cursor->sort( ['username'=>-1] );
+
+    // Limits the number of results returned. Good pagination
+    $cursor->limit( 10 );
+
+    // Skips a number of results. Good for pagination
+    $cursor->skip( 20 );
+
+    // Checks if the cursor is reading a valid result.
+    $cursor->valid();
+
+    // Returns the first result
+    $cursor->first();
+
+You can also chain some methods:
+
+    $page = 2;
+
+    // In order to display 10 results per page
+    $cursor = User::all()->sort( ['_id'=>1] )->skip( 10 * $page )->limit( 10 );
+
+[Learn more about MongoCursor](http://php.net/manual/en/class.mongocursor.php)
 
 <a name="mass-assignment"></a>
 ## Mass Assignment
@@ -428,7 +471,7 @@ This statement will perform the following:
 
 - Query for the user with the `_id` _'4af9f23d8ead0e1d32000000'_
 - Query for all the posts with the `_id` in the user's _posts_ attribute
-- Return the result of the query (Which is a **OdmCursor**)
+- Return the [OdmCursor](#odm-cursor) with the related posts
 
 In order to set a reference to a document use the attach method or it's alias. For example:
 
