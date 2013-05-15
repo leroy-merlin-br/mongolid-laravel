@@ -3,6 +3,7 @@
 # MongoLid (Laravel4 Package)
 
 - [Introduction](#introduction)
+- [Installation](#installation)
 - [Basic Usage](#basic-usage)
 - [Odm Cursor](#odm-cursor)
 - [Mass Assignment](#mass-assignment)
@@ -18,10 +19,48 @@
 
 MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementation for working with MongoDB. Each database collection can have a corresponding "Model" which is used to interact with that collection.
 
-Before getting started, be sure to configure a database connection in `app/config/database.php`:
+<a name="installation"></a>
+## Installation
+
+In the `require` key of `composer.json` file add the following
+
+    "zizaco/mongolid-laravel": "dev-master"
+
+Run the Composer update comand
+
+    $ composer update
+
+In your `config/app.php` add `'Zizaco\MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
+
+```
+    'providers' => array(
+
+        'Illuminate\Foundation\Providers\ArtisanServiceProvider',
+        'Illuminate\Auth\AuthServiceProvider',
+        ...
+        'Zizaco\MongolidLaravel\MongolidServiceProvider',
+
+    ),
+```
+
+At the end of `config/app.php` add `'MongoLid'    => 'Zizaco\MongolidLaravel\MongoLid'` to the `$aliases` array
+
+```php
+    'aliases' => array(
+
+        'App'        => 'Illuminate\Support\Facades\App',
+        'Artisan'    => 'Illuminate\Support\Facades\Artisan',
+        ...
+        'MongoLid'    => 'Zizaco\MongolidLaravel\MongoLid',
+
+    ),
+```
+
+And least, be sure to configure a database connection in `app/config/database.php`:
 
 Paste the settings bellow at the end of your `database.php`, before the last `);`:
 
+```php
     /*
     |--------------------------------------------------------------------------
     | MongoDB Databases
@@ -37,6 +76,7 @@ Paste the settings bellow at the end of your `database.php`, before the last `);
             'database' => 'my_database',
         ),
     ),
+```
 
 > **Note:** If you don't specify the key above in your `config/database.php`. The MongoLid will automatically try to connect to 127.0.0.1:27017 and use a database named 'mongolid'.
 
@@ -47,17 +87,21 @@ To get started, create an MongoLid model. Models typically live in the `app/mode
 
 **Defining An MongoLid Model**
 
+```php
     class User extends MongoLid {}
+```
 
 Note that we did not tell MongoLid which collection to use for our `User` model. So, in this case, MongoLid **will not save the model into the database**. This can be used for models that represents objects that will be embedded within another object and will not have their own collection.
 
 You may specify a collection by defining a `collection` property on your model:
 
+```php
     class User extends MongoLid {
 
         protected $collection = 'users';
 
     }
+```
 
 MongoLid will also assume each collection has a primary key attribute named `_id`. Since MongoDB requires an `_id` for every single document. The `_id` attribute can be of any kind. The default kind for this attribute is `MongoId`. [Learn more about the MongoId](http://php.net/manual/en/class.mongoid.php).
 
@@ -67,22 +111,29 @@ Once a model is defined, you are ready to start retrieving and creating document
 
 **Retrieving All Models**
 
+```php
     $users = User::all();
+```
 
 **Retrieving A Document By Primary Key**
 
+```php
     $user = User::first('4af9f23d8ead0e1d32000000');
 
     // or
 
     $user = User::find('4af9f23d8ead0e1d32000000');
+```
 
 **Retrieving One Document By attribute**
 
+```php
     $user = User::first(['name'=>'bob']);
+```
 
 **Retrieving One or Many Document By attribute**
 
+```php
     $users = User::find(['status'=>'new']);
 
     if( $users instanceOf User ) // Check if One user has been retrieved
@@ -96,30 +147,39 @@ Once a model is defined, you are ready to start retrieving and creating document
             echo $user->name;
         }
     }
+```
 
 **Retrieving Many Documents By attribute**
 
+```php
     $users = User::where(['role'=>'visitor']);
+```
 
 **Querying Using MongoLid Models**
 
+```php
     $users = User::where(['votes'=>'$gt'=>[100]])->limit(10);
 
     foreach ($users as $user)
     {
         var_dump($user->name);
     }
+```
 
 **MongoLid Count**
 
+```php
     $count = User::where(['votes'=>'$gt'=>[100]])->count();
+```
 
 <a name="odm-cursor"></a>
 ## Odm Cursor
 
 In MongoDB, a cursor is used to iterate through the results of a database query. For example, to query the database and see all results:
 
+```php
     $cursor = User::where(['kind'=>'visitor']);
+```
 
 In the above example, the $cursor variable will be a `Zizaco\Mongolid\OdmCursor`.
 
@@ -127,6 +187,7 @@ The MongoLid's OdmCursor extends the original MongoCursor object of the official
 
 The cursor object has alot of methods that helps you to iterate, refine and get information. For example:
 
+```php
     $cursor = User::where(['kind'=>'visitor']);
 
     // Return an explanation of the query, often useful for optimization and debugging
@@ -146,13 +207,16 @@ The cursor object has alot of methods that helps you to iterate, refine and get 
 
     // Returns the first result
     $cursor->first();
+```
 
 You can also chain some methods:
 
+```php
     $page = 2;
 
     // In order to display 10 results per page
     $cursor = User::all()->sort( ['_id'=>1] )->skip( 10 * $page )->limit( 10 );
+```
 
 [Learn more about MongoCursor](http://php.net/manual/en/class.mongocursor.php)
 
@@ -167,11 +231,13 @@ The `fillable` property specifies which attributes should be mass-assignable. Th
 
 **Defining Fillable Attributes On A Model**
 
+```php
     class User extends MongoLid {
 
         protected $fillable = array('first_name', 'last_name', 'email');
 
     }
+```
 
 In this example, only the three listed attributes will be mass-assignable.
 
@@ -179,11 +245,13 @@ The inverse of `fillable` is `guarded`, and serves as a "black-list" instead of 
 
 **Defining Guarded Attributes On A Model**
 
+```php
     class User extends MongoLid {
 
         protected $guarded = array('id', 'password');
 
     }
+```
 
 In the example above, the `id` and `password` attributes may **not** be mass assigned. All other attributes will be mass assignable.
 
@@ -194,11 +262,13 @@ To create a new document in the database from a model, simply create a new model
 
 **Saving A New Model**
 
+```php
     $user = new User;
 
     $user->name = 'John';
 
     $user->save();
+```
 
 > **Note:** Typically, your MongoLid models will have auto-generated `_id` keys. However, if you wish to specify your own keys, set the `_id` attribute.
 
@@ -206,19 +276,23 @@ To update a model, you may retrieve it, change an attribute, and use the `save` 
 
 **Updating A Retrieved Model**
 
+```php
     $user = User::first('4af9f23d8ead0e1d32000000');
 
     $user->email = 'john@foo.com';
 
     $user->save();
+```
 
 To delete a model, simply call the `delete` method on the instance:
 
 **Deleting An Existing Model**
 
+```php
     $user = User::first('4af9f23d8ead0e1d32000000');
 
     $user->delete();
+```
 
 <a name="relationships"></a>
 ## Relationships
@@ -241,6 +315,7 @@ A Embeds One relationship is a very basic relation. For example, a `User` model 
 
 **Defining A Embeds One Relation**
 
+```php
     // models/User.php
     class User extends Mongolid {
 
@@ -267,10 +342,13 @@ A Embeds One relationship is a very basic relation. For example, a `User` model 
         }
 
     }
+```
 
 The first argument passed to the `embedsOne` method is the name of the related model. The second argument is in what attribute that object (array with it's attributes) is saved. Once the relationship is defined, we may retrieve it using:
 
+```php
     $phone = User::find('4af9f23d8ead0e1d32000000')->phone();
+```
 
 This statement will perform the following:
 
@@ -280,6 +358,7 @@ This statement will perform the following:
 
 In order to embed a document to be used in a Embeds One relationship, simply set the attribute to an array with the attributes of the embeded model. For example:
 
+```php
     // The object that will be embeded
     $phoneObj = new Phone;
     $phoneObj->regionCode = '55';
@@ -310,6 +389,7 @@ In order to embed a document to be used in a Embeds One relationship, simply set
 
     // Now we can retrieve the object by calling
     $user->phone(); // Will return a Phone object similar to $phoneObj
+```
 
 > **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
 
@@ -318,6 +398,7 @@ In order to embed a document to be used in a Embeds One relationship, simply set
 
 An example of a Embeds Many relation is a blog post that "has many" comments. We can model this relation like so:
 
+```php
     // models/Post.php
     class Post extends Mongolid {
 
@@ -337,21 +418,27 @@ An example of a Embeds Many relation is a blog post that "has many" comments. We
         protected $collection = null;
 
     }
+```
 
 Now we can access the post's comments **array** through the comments method:
 
+```php
     $comments = Post::find('4af9f23d8ead0e1d32000000')->comments();
+```
 
 Now you can iterate the array of Comment objects
 
+```php
     foreach( $comments as $comment )
     {
         if(! $comment->hidden )
             echo $comment;
     }
+```
 
 In order to embed a document to be used in a Embeds One relationship, you may use the `embed` method or the alias `embedToAttribute`:
 
+```php
     $commentA = new Comment;
     $commentA->content = 'Cool feature bro!';
 
@@ -365,6 +452,7 @@ In order to embed a document to be used in a Embeds One relationship, you may us
     $post->embed( 'Comments', $commentB );
 
     $post->save();
+```
 
 > **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
 
@@ -379,6 +467,7 @@ In general, use references when embedding would result in duplication of data an
 
 **Defining A References One Relation**
 
+```php
     // models/Post.php
     class Post extends Mongolid {
 
@@ -397,10 +486,13 @@ In general, use references when embedding would result in duplication of data an
         protected $collection = 'users';
 
     }
+```
 
 The first argument passed to the `referencesOne` method is the name of the related model, the second argument is the attribute where the referenced model `_id` will be stored. Once the relationship is defined, we may retrieve it using the following method:
 
+```php
     $user = Post::find('4af9f23d8ead0e1d32000000')->author();
+```
 
 This statement will perform the following:
 
@@ -410,6 +502,7 @@ This statement will perform the following:
 
 In order to set a reference to a document, simply set the attribute used in the relationship to the reference's `_id` or use the attach method or it's alias. For example:
 
+```php
     // The object that will be embeded
     $userObj = new User;
     $userObj->name = 'John';
@@ -430,6 +523,7 @@ In order to set a reference to a document, simply set the attribute used in the 
     $post->save();
 
     $post->author(); // Will return a User object
+```
 
 > **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
 
@@ -444,6 +538,7 @@ In general, use references when embedding would result in duplication of data an
 
 **Defining A References Many Relation**
 
+```php
     // models/User.php
     class User extends Mongolid{
 
@@ -462,10 +557,13 @@ In general, use references when embedding would result in duplication of data an
         protected $collection = 'posts';
 
     }
+```
 
 The first argument passed to the `referencesMany` method is the name of the related model, the second argument is the attribute where the `_id`s will be stored. Once the relationship is defined, we may retrieve it using the following method:
 
+```php
     $posts = User::find('4af9f23d8ead0e1d32000000')->posts();
+```
 
 This statement will perform the following:
 
@@ -475,6 +573,7 @@ This statement will perform the following:
 
 In order to set a reference to a document use the attach method or it's alias. For example:
 
+```php
     $postA = new Post;
     $postA->title = 'Nice post';
 
@@ -488,6 +587,7 @@ In order to set a reference to a document use the attach method or it's alias. F
     $user->attach( 'posts', $postB );
 
     $user->save();
+```
 
 > **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
 
@@ -498,25 +598,43 @@ When building JSON APIs, you may often need to convert your models to arrays or 
 
 **Converting A Model To An Array**
 
+```php
     $user = User::with('roles')->first();
 
     return $user->toArray();
+```
 
 Note that entire collections of models may also be converted to arrays:
 
+```php
     return User::all()->toArray();
+```
 
 To convert a model to JSON, you may use the `toJson` method:
 
 **Converting A Model To JSON**
 
+```php
     return User::find(1)->toJson();
+```
 
 Note that when a model or collection is cast to a string, it will be converted to JSON, meaning you can return MongoLid objects directly from your application's routes!
 
 **Returning A Model From A Route**
 
+```php
     Route::get('users', function()
     {
         return User::all();
     });
+```
+
+## License
+
+MongoLid & MongoLid Laravel are free software distributed under the terms of the MIT license
+
+## Aditional information
+
+Any questions, feel free to contact me.
+
+Any issues, please [report here](https://github.com/Zizaco/mongolid-laravel/issues)
