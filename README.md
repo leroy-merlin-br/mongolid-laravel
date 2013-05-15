@@ -24,7 +24,9 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 
 In the `require` key of `composer.json` file add the following
 
+```yml
     "zizaco/mongolid-laravel": "dev-master"
+```
 
 Run the Composer update comand
 
@@ -32,7 +34,7 @@ Run the Composer update comand
 
 In your `config/app.php` add `'Zizaco\MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
 
-```
+```php
     'providers' => array(
 
         'Illuminate\Foundation\Providers\ArtisanServiceProvider',
