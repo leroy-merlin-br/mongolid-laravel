@@ -16,7 +16,7 @@
  * @license MIT
  * @author  Zizaco Zizuini <zizaco@gmail.com>
  */
-abstract class MongoLid extends Zizaco\Mongolid\Model
+abstract class MongoLid extends \Zizaco\Mongolid\Model
 {
     /**
      * Validation rules
@@ -61,7 +61,7 @@ abstract class MongoLid extends Zizaco\Mongolid\Model
         if(! is_array(static::$rules) )
             return true;
 
-        $validator = Validator::make(
+        $validator = \Validator::make(
             $this->attributes,
             static::$rules
         );
@@ -86,11 +86,11 @@ abstract class MongoLid extends Zizaco\Mongolid\Model
     {
         if (! $this->database)
         {
-            $this->database = Config::get(
+            $this->database = \Config::get(
                 'database.mongodb.default.database', 'mongolid'
             );    
         }
         
-        static::$cacheComponent = App::make('cache');
+        static::$cacheComponent = \App::make('cache');
     }
 }
