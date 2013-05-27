@@ -1,6 +1,9 @@
 <?php namespace Zizaco\MongolidLaravel;
 
-class MongoLidAuthManager extends Auth\AuthManager {
+use Illuminate\Auth\AuthManager;
+use Illuminate\Auth\Guard;
+
+class MongoLidAuthManager extends AuthManager {
 
     /**
      * Create an instance of the MongoLid driver.

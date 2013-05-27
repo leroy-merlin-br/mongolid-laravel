@@ -1,6 +1,8 @@
 <?php namespace Zizaco\MongolidLaravel;
 
+use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Hashing\HasherInterface;
+use Illuminate\Auth\UserInterface;
 
 class MongoLidUserProvider implements UserProviderInterface {
 
