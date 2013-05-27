@@ -20,6 +20,18 @@ class MongolidServiceProvider extends ServiceProvider {
      */
     public function register()
     {
+        $this->registerConnector();
+
+        $this->registerAuthManager();
+    }
+
+    /**
+     * Register MongoDbConnector within the application
+     * 
+     * @return void
+     */
+    public function registerConnector()
+    {
         $config = $this->app->make('config');
 
         $connectionString = 'mongodb://'.
@@ -35,6 +47,25 @@ class MongolidServiceProvider extends ServiceProvider {
         $this->app['MongoLidConnector'] = $this->app->share(function($app) use ($connection)
         {
             return $connection;
+        });
+    }
+
+    /**
+     * Registers Mongo Auth Manager
+     * 
+     * @return void
+     */
+    public function registerAuthManager()
+    {
+        // MongoLid Auth Manager
+        $this->app['auth'] = $this->app->share(function($app)
+        {
+            // Once the authentication service has actually been requested by the developer
+            // we will set a variable in the application indicating such. This helps us
+            // know that we need to set any queued cookies in the after event later.
+            $app['auth.loaded'] = true;
+
+            return new MongoLidAuthManager($app);
         });
     }
 }
