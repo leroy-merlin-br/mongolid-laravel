@@ -13,6 +13,7 @@
 - [Query Scopes](#query-scopes)
 - [Relationships](#relationships)
 - [Converting To Arrays / JSON](#converting-to-arrays-or-json)
+- [Authentication](#authentication)
 
 <a name="introduction"></a>
 ## Introduction
@@ -640,3 +641,66 @@ MongoLid & MongoLid Laravel are free software distributed under the terms of the
 Any questions, feel free to contact me.
 
 Any issues, please [report here](https://github.com/Zizaco/mongolid-laravel/issues)
+
+<a name="authentication"></a>
+## Authentication
+
+MongoLid Laravel comes with a Laravel auth driver. In order to use it, simply change the `'driver'` value in your `app/config/auth.php` to 'mongoLid' and make sure that the class specified in `'model'` is a MongoLid model that implements the UserInterface:
+
+```php
+    ...
+
+    'driver' => 'mongoLid',
+
+    ...
+
+    'model' => 'User',
+
+    ...
+```
+
+The `User` model should implement the `UserInterface`:
+
+    <?php
+
+    use Illuminate\Auth\UserInterface;
+
+    class User extends MongoLid implements UserInterface {
+
+        /**
+         * The database collection used by the model.
+         *
+         * @var string
+         */
+        protected $collection = 'users';
+
+        /**
+         * The attributes excluded from the model's JSON form.
+         *
+         * @var array
+         */
+        protected $hidden = array('password');
+
+        /**
+         * Get the unique identifier for the user.
+         *
+         * @return mixed
+         */
+        public function getAuthIdentifier()
+        {
+            return $this->_id;
+        }
+
+        /**
+         * Get the password for the user.
+         *
+         * @return string
+         */
+        public function getAuthPassword()
+        {
+            return $this->password;
+        }
+
+    }
+
+Now, to log a user into your application, you may use the `Auth::attempt` method. You can use [any method regarding authentication](http://four.laravel.com/docs/security#authenticating-users).
