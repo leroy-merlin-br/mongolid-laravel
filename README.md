@@ -14,6 +14,9 @@
 - [Relationships](#relationships)
 - [Converting To Arrays / JSON](#converting-to-arrays-or-json)
 - [Authentication](#authentication)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
+- [Additional Information](#additional_information)
 
 <a name="introduction"></a>
 ## Introduction
@@ -632,16 +635,6 @@ Note that when a model or collection is cast to a string, it will be converted t
     });
 ```
 
-## License
-
-MongoLid & MongoLid Laravel are free software distributed under the terms of the MIT license
-
-## Aditional information
-
-Any questions, feel free to contact me.
-
-Any issues, please [report here](https://github.com/Zizaco/mongolid-laravel/issues)
-
 <a name="authentication"></a>
 ## Authentication
 
@@ -704,3 +697,35 @@ The `User` model should implement the `UserInterface`:
     }
 
 Now, to log a user into your application, you may use the `Auth::attempt` method. You can use [any method regarding authentication](http://four.laravel.com/docs/security#authenticating-users).
+
+<a name="troubleshooting"></a>
+## Troubleshooting
+
+**"PHP Fatal error: Class 'MongoClient' not found in ..."**
+
+The `MongoClient` class is contained in the Mongo driver for PHP. [Here is an instalation guide](http://www.php.net/manual/en/mongo.installation.php). The driver is a PHP extension. MongoLid (and most of the PHP libraries for MongoDB) uses it in order to be fast and reliable (since that driver is written in C++ and maintained by [10gen](https://www.10gen.com/)).
+
+**"Class 'MongoClient' not found in ..." in cli persists even with MongoDB driver installed.**
+
+Make sure that the **php.ini** that are being used in cli contain the MongoDB extension enabled. In some systems, the default PHP instalation uses a different **.ini** for cli.
+
+Run `php -i | grep 'Configuration File'` in terminal to check the **.ini** that is being used.
+
+To check if PHP in cli is importing the driver properly run `php -i | grep 'Mongo'` in your terminal. You should get an output similar to:
+
+```
+$ php -i | grep 'Mongo'
+MongoDB Support => enabled
+```
+
+<a name="license"></a>
+## License
+
+MongoLid & MongoLid Laravel are free software distributed under the terms of the MIT license
+
+<a name="additional_information"></a>
+## Aditional information
+
+Any questions, feel free to contact me.
+
+Any issues, please [report here](https://github.com/Zizaco/mongolid-laravel/issues)
