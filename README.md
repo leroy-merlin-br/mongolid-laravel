@@ -721,7 +721,7 @@ MongoDB Support => enabled
 <a name="license"></a>
 ## License
 
-MongoLid & MongoLid Laravel are free software distributed under the terms of the MIT license
+MongoLid & MongoLid Laravel are free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT)
 
 <a name="additional_information"></a>
 ## Aditional information
