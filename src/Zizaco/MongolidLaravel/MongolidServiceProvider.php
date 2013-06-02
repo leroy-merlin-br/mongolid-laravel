@@ -32,14 +32,7 @@ class MongolidServiceProvider extends ServiceProvider {
      */
     public function registerConnector()
     {
-        $config = $this->app->make('config');
-
-        $connectionString = 'mongodb://'.
-            $config->get('database.mongodb.default.host', '127.0.0.1').
-            ':'.
-            $config->get('database.mongodb.default.port', 27017).
-            '/'.
-            $config->get('database.mongodb.default.database', 'mongolid');
+        $connectionString = $this->buildConnectionString();
 
         $connection = new MongoDbConnector;
         $connection->getConnection( $connectionString );
@@ -67,5 +60,35 @@ class MongolidServiceProvider extends ServiceProvider {
 
             return new MongoLidAuthManager($app);
         });
+    }
+
+    /**
+     * Builds the connection string based in the laravel's config/database.php
+     * config file.
+     * 
+     * @return string The connection string
+     */
+    protected function buildConnectionString()
+    {
+        $config = $this->app->make('config');
+
+        // Connection string should begin with "mongodb://"
+        $result = 'mongodb://';
+        
+        // If username is present, append "<username>:<password>@"
+        if ($config->get('database.mongodb.default.username', '' ))
+        {
+            $result .=
+                $config->get('database.mongodb.default.username', '').':'.
+                $config->get('database.mongodb.default.password', '').'@';
+        }
+        
+        // Append "<host>:<port>/<database>"
+        $result .=
+            $config->get('database.mongodb.default.host', '127.0.0.1').':'.
+            $config->get('database.mongodb.default.port', 27017).'/'.
+            $config->get('database.mongodb.default.database', 'mongolid');
+
+        return $result;
     }
 }
