@@ -48,11 +48,10 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      */
     public function save($force = false)
     {
-
         if ($this->isValid() || $force)
         {
             $this->hashAttributes();
-            
+
             return parent::save();
         }
         else
@@ -148,9 +147,21 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     {
         foreach ($this->hashedAttributes as $attr)
         {
+            /**
+             * Hash attribute if changed
+             */
             if(! isset($this->original[$attr]) || $this->$attr != $this->original[$attr] )
             {
                 $this->$attr = static::$app['hash']->make($this->$attr);
+            }
+
+            /**
+             * Removes any confirmation field before saving it into the database
+             */
+            $confirmationField = $attr.'_password_confirmation';
+            if($this->$confirmationField)
+            {
+                unset($this->$confirmationField);
             }
         }
     }
