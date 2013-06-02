@@ -80,6 +80,8 @@ Paste the settings bellow at the end of your `database.php`, before the last `);
             'host'     => '127.0.0.1',
             'port'     => 27017,
             'database' => 'my_database',
+            'username'     => '',
+            'password'     => '',
         ),
     ),
 ```
