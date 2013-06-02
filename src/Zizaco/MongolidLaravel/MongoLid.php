@@ -33,6 +33,14 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     public $errors;
 
     /**
+     * List of attribute names which should be hashed on save. For
+     * example: array('password');
+     *
+     * @var array
+     */
+    protected $hashedAttributes = array();
+
+    /**
      * Save the model to the database if it's valid
      *
      * @param $force Force save even if the object is invalid
@@ -43,6 +51,8 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
 
         if ($this->isValid() || $force)
         {
+            $this->hashAttributes();
+            
             return parent::save();
         }
         else
@@ -58,14 +68,41 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      */
     public function isValid()
     {
+        /**
+         * Return true if there arent validation rules
+         */
         if(! is_array(static::$rules) )
             return true;
 
+        /**
+         * Get the attributes and the rules to validate then
+         */
+        $attributes = $this->attributes;
+        $rules = static::$rules;
+
+        /**
+         * Verify attributes that are hashed and that have not changed
+         * those doesn't need to be validated.
+         */
+        foreach ($this->hashedAttributes as $hashedAttr)
+        {
+            if(isset($this->original[$hashedAttr]) && $this->$hashedAttr == $this->original[$hashedAttr])
+            {
+                unset($this->$hashedAttr);
+                unset($rules->$hashedAttr);
+            }
+        }
+
+        /**
+         * Creates validator with attributes and the rules of the object
+         */
         $validator = \Validator::make(
-            $this->attributes,
-            static::$rules
+            $attributes, $rules
         );
 
+        /**
+         * Validate and attach errors
+         */
         if ($validator->fails())
         {
             $this->errors = $validator->errors();
@@ -105,5 +142,16 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
         }
         
         static::$cacheComponent = \App::make('cache');
+    }
+
+    protected function hashAttributes()
+    {
+        foreach ($this->hashedAttributes as $attr)
+        {
+            if(! isset($this->original[$attr]) || $this->$attr != $this->original[$attr] )
+            {
+                $this->$attr = static::$app['hash']->make($this->$attr);
+            }
+        }
     }
 }
