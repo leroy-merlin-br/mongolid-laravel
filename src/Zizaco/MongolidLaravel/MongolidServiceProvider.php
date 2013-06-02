@@ -34,12 +34,26 @@ class MongolidServiceProvider extends ServiceProvider {
     {
         $config = $this->app->make('config');
 
-        $connectionString = 'mongodb://'.
-            $config->get('database.mongodb.default.host', '127.0.0.1').
+        $connectionString = 'mongodb://';
+        
+        /*
+		 * DIRTY HACK
+		 * The following code could be re-imagined, probably way better than I have
+		 * and allows connections to MongoDB instances with authentication using
+		 * a username and password
+		 */
+        if( $config->get('database.mongodb.default.username', '' ) != "" ) {
+            $connectionString .= $config->get('database.mongodb.default.username', '').
             ':'.
-            $config->get('database.mongodb.default.port', 27017).
-            '/'.
-            $config->get('database.mongodb.default.database', 'mongolid');
+            $config->get('database.mongodb.default.password', '').
+            '@';
+        }
+        
+        $connectionString .= $config->get('database.mongodb.default.host', '127.0.0.1').
+        ':'.
+        $config->get('database.mongodb.default.port', 27017).
+        '/'.
+        $config->get('database.mongodb.default.database', 'mongolid');
 
         $connection = new MongoDbConnector;
         $connection->getConnection( $connectionString );
