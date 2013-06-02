@@ -78,6 +78,19 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     }
 
     /**
+     * Get the contents of errors attribute
+     * 
+     * @return Illuminate\Support\MessageBag Validation errors
+     */
+    public function errors()
+    {
+        if(! $this->errors)
+            $this->errors = new \Illuminate\Support\MessageBag;
+
+        return $this->errors;
+    }
+
+    /**
      * Sets the database and the cache component of the model
      * If you extend the __construct() method, please don't forget
      * to call parent::__construct()
