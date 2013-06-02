@@ -84,7 +84,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      */
     public function __construct()
     {
-        if (! $this->database)
+        if ($this->database == 'mongolid')
         {
             $this->database = \Config::get(
                 'database.mongodb.default.database', 'mongolid'
