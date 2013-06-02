@@ -21,8 +21,16 @@ class MongolidServiceProvider extends ServiceProvider {
     public function register()
     {
         $this->registerConnector();
+    }
 
-        $this->registerAuthManager();
+    /**
+     * Register the mongoLid driver in auth AuthManager
+     * 
+     * @return void
+     */
+    public function boot()
+    {
+        $this->extendsAuthManager();
     }
 
     /**
@@ -44,21 +52,17 @@ class MongolidServiceProvider extends ServiceProvider {
     }
 
     /**
-     * Registers Mongo Auth Manager
+     * Registers mongoLid Driver in AuthManager
      * 
      * @return void
      */
-    public function registerAuthManager()
+    public function extendsAuthManager()
     {
-        // MongoLid Auth Manager
-        $this->app['auth'] = $this->app->share(function($app)
-        {
-            // Once the authentication service has actually been requested by the developer
-            // we will set a variable in the application indicating such. This helps us
-            // know that we need to set any queued cookies in the after event later.
-            $app['auth.loaded'] = true;
+        // MongoLid Auth Driver
+        $this->app['auth']->extend('mongoLid', function($app) {
+            $provider =  new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
 
-            return new MongoLidAuthManager($app);
+            return new \Illuminate\Auth\Guard($provider, $app['session']);
         });
     }
 
