@@ -87,7 +87,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
         {
             if(isset($this->original[$hashedAttr]) && $this->$hashedAttr == $this->original[$hashedAttr])
             {
-                unset($rules->$hashedAttr);
+                unset($rules[$hashedAttr]);
             }
         }
 
