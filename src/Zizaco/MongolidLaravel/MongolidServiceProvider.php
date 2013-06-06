@@ -1,11 +1,12 @@
-<?php namespace Zizaco\MongolidLaravel;
+<?php
+namespace Zizaco\MongolidLaravel;
 
 use Illuminate\Support\ServiceProvider;
 use Zizaco\Mongolid\MongoDbConnector;
 use Zizaco\Mongolid\Model;
 
-class MongolidServiceProvider extends ServiceProvider {
-
+class MongolidServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -80,8 +81,7 @@ class MongolidServiceProvider extends ServiceProvider {
         $result = 'mongodb://';
         
         // If username is present, append "<username>:<password>@"
-        if ($config->get('database.mongodb.default.username', '' ))
-        {
+        if ($config->get('database.mongodb.default.username', '' )) {
             $result .=
                 $config->get('database.mongodb.default.username', '').':'.
                 $config->get('database.mongodb.default.password', '').'@';
