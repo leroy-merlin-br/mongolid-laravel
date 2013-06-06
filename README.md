@@ -23,6 +23,8 @@
 
 MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementation for working with MongoDB. Each database collection can have a corresponding "Model" which is used to interact with that collection.
 
+> Note: The ODM implementation is within the [(non laravel) mongolid repository](https://github.com/Zizaco/mongolid).
+
 <a name="installation"></a>
 ## Installation
 
