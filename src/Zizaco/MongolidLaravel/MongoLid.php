@@ -1,4 +1,5 @@
-<?php namespace Zizaco\MongolidLaravel;
+<?php 
+namespace Zizaco\MongolidLaravel;
 
 /**
  * This class extends the Zizaco\Mongolid\Model, so, in order
@@ -48,14 +49,11 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      */
     public function save($force = false)
     {
-        if ($this->isValid() || $force)
-        {
+        if ($this->isValid() || $force) {
             $this->hashAttributes();
 
             return parent::save();
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -83,10 +81,8 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
          * Verify attributes that are hashed and that have not changed
          * those doesn't need to be validated.
          */
-        foreach ($this->hashedAttributes as $hashedAttr)
-        {
-            if(isset($this->original[$hashedAttr]) && $this->$hashedAttr == $this->original[$hashedAttr])
-            {
+        foreach ($this->hashedAttributes as $hashedAttr) {
+            if(isset($this->original[$hashedAttr]) && $this->$hashedAttr == $this->original[$hashedAttr]) {
                 unset($rules[$hashedAttr]);
             }
         }
@@ -94,20 +90,15 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
         /**
          * Creates validator with attributes and the rules of the object
          */
-        $validator = \Validator::make(
-            $attributes, $rules
-        );
+        $validator = \Validator::make( $attributes, $rules );
 
         /**
          * Validate and attach errors
          */
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $this->errors = $validator->errors();
             return false;
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
@@ -119,8 +110,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      */
     public function errors()
     {
-        if(! $this->errors)
-            $this->errors = new \Illuminate\Support\MessageBag;
+        if(! $this->errors) $this->errors = new \Illuminate\Support\MessageBag;
 
         return $this->errors;
     }
@@ -132,25 +122,20 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      */
     public function __construct()
     {
-        if ($this->database == 'mongolid')
-        {
-            $this->database = \Config::get(
-                'database.mongodb.default.database', 'mongolid'
-            );    
+        if (is_null($this->database)) {
+            $this->database = \Config::get('database.mongodb.default.database', null);    
         }
-        
+
         static::$cacheComponent = \App::make('cache');
     }
 
     protected function hashAttributes()
     {
-        foreach ($this->hashedAttributes as $attr)
-        {
+        foreach ($this->hashedAttributes as $attr) {
             /**
              * Hash attribute if changed
              */
-            if(! isset($this->original[$attr]) || $this->$attr != $this->original[$attr] )
-            {
+            if(! isset($this->original[$attr]) || $this->$attr != $this->original[$attr] ) {
                 $this->$attr = static::$app['hash']->make($this->$attr);
             }
 
@@ -158,8 +143,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
              * Removes any confirmation field before saving it into the database
              */
             $confirmationField = $attr.'_password_confirmation';
-            if($this->$confirmationField)
-            {
+            if($this->$confirmationField) {
                 unset($this->$confirmationField);
             }
         }
