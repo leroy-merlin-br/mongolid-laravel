@@ -1,11 +1,12 @@
-<?php namespace Zizaco\MongolidLaravel;
+<?php
+namespace Zizaco\MongolidLaravel;
 
 use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Hashing\HasherInterface;
 use Illuminate\Auth\UserInterface;
 
-class MongoLidUserProvider implements UserProviderInterface {
-
+class MongoLidUserProvider implements UserProviderInterface
+{
     /**
      * The hasher implementation.
      *
@@ -82,5 +83,4 @@ class MongoLidUserProvider implements UserProviderInterface {
 
         return new $class;
     }
-
 }
