@@ -149,6 +149,12 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
         return app()->make(get_called_class());
     }
 
+    /**
+     * Hashes the attributes specified in the hashedAttributes
+     * array.
+     *
+     * @return void
+     */
     protected function hashAttributes()
     {
         foreach ($this->hashedAttributes as $attr) {
@@ -175,13 +181,16 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      * @param  dynamic
      * @return \Mockery\Expectation
      */
-    public static function shouldReceive()
+    public static function __callStatic($name, $arguments)
     {
-        if (! static::$mock) {
-            static::$mock = \Mockery::mock(get_called_class().'Mock');
-        }
+        if ($name == 'shouldReceive')
+        {
+            if (! static::$mock) {
+                static::$mock = \Mockery::mock(get_called_class().'Mock');
+            }
 
-        return call_user_func_array(array(static::$mock, 'shouldReceive'), func_get_args());
+            return call_user_func_array(array(static::$mock, 'shouldReceive'), $arguments);
+        }
     }
 
     /**
@@ -191,9 +200,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     public static function first($id = array(), $fields = array())
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('first'))
-            return static::$mock->first(func_get_args());
+            return call_user_func_array(array(static::$mock, 'first'), func_get_args());
         else
-            return parent::first(func_get_args());
+            return parent::first($id, $fields);
     }
 
     /**
@@ -203,9 +212,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     public static function find($id = array(), $fields = array(), $cachable = false)
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('find'))
-            return static::$mock->find(func_get_args());
+            return call_user_func_array(array(static::$mock, 'find'), func_get_args());
         else
-            return parent::find(func_get_args());
+            return parent::find($id, $fields, $cachable);
     }
 
     /**
@@ -215,9 +224,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     public static function where($query = array(), $fields = array(), $cachable = false)
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('where'))
-            return static::$mock->where(func_get_args());
+            return call_user_func_array(array(static::$mock, 'where'), func_get_args());
         else
-            return parent::where(func_get_args());
+            return parent::where($query, $fields, $cachable);
     }
 
     /**
@@ -227,8 +236,8 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     public static function all( $fields = array() )
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('all'))
-            return static::$mock->all(func_get_args());
+            return call_user_func_array(array(static::$mock, 'all'), func_get_args());
         else
-            return parent::all(func_get_args());
+            return parent::all($fields);
     }
 }
