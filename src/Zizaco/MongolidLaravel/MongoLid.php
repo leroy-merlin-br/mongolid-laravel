@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace Zizaco\MongolidLaravel;
 
 /**
@@ -32,6 +33,13 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      * @var Illuminate\Support\MessageBag
      */
     public $errors;
+
+    /**
+     * Public static mock
+     *
+     * @var Mockery\Mock
+     */
+    public static $mock;
 
     /**
      * List of attribute names which should be hashed on save. For
@@ -105,7 +113,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
 
     /**
      * Get the contents of errors attribute
-     * 
+     *
      * @return Illuminate\Support\MessageBag Validation errors
      */
     public function errors()
@@ -123,10 +131,22 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     public function __construct()
     {
         if (is_null($this->database)) {
-            $this->database = \Config::get('database.mongodb.default.database', null);    
+            $this->database = \Config::get('database.mongodb.default.database', null);
         }
 
         static::$cacheComponent = \App::make('cache');
+    }
+
+    /**
+     * Returns a new instance of the current model
+     * Overwrites the original newInstance method in order
+     * to use the IoC container.
+     *
+     * @return  mixed An instance of the current model
+     */
+    public static function newInstance()
+    {
+        return app()->make(get_called_class());
     }
 
     protected function hashAttributes()
@@ -147,5 +167,69 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
                 unset($this->$confirmationField);
             }
         }
+    }
+
+    /**
+     * Initiate a mock expectation on the facade.
+     *
+     * @param  dynamic
+     * @return \Mockery\Expectation
+     */
+    public static function shouldReceive()
+    {
+        if (! static::$mock)
+        {
+            static::$mock = \Mockery::mock(get_called_class().'Mock');
+        }
+
+        return call_user_func_array(array(static::$mock, 'shouldReceive'), func_get_args());
+    }
+
+    /**
+     * Overwrites the "static" method in order to make it mockable
+     *
+     */
+    public static function first($id = array(), $fields = array())
+    {
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('first'))
+            return static::$mock->first(func_get_args());
+        else
+            return parent::first(func_get_args());
+    }
+
+    /**
+     * Overwrites the "static" method in order to make it mockable
+     *
+     */
+    public static function find($id = array(), $fields = array(), $cachable = false)
+    {
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('find'))
+            return static::$mock->find(func_get_args());
+        else
+            return parent::find(func_get_args());
+    }
+
+    /**
+     * Overwrites the "static" method in order to make it mockable
+     *
+     */
+    public static function where($query = array(), $fields = array(), $cachable = false)
+    {
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('where'))
+            return static::$mock->where(func_get_args());
+        else
+            return parent::where(func_get_args());
+    }
+
+    /**
+     * Overwrites the "static" method in order to make it mockable
+     *
+     */
+    public static function all( $fields = array() )
+    {
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('all'))
+            return static::$mock->all(func_get_args());
+        else
+            return parent::all(func_get_args());
     }
 }
