@@ -177,8 +177,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
      */
     public static function shouldReceive()
     {
-        if (! static::$mock)
-        {
+        if (! static::$mock) {
             static::$mock = \Mockery::mock(get_called_class().'Mock');
         }
 
