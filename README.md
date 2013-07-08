@@ -168,7 +168,7 @@ Once a model is defined, you are ready to start retrieving and creating document
 **Querying Using MongoLid Models**
 
 ```php
-    $users = User::where(['votes'=>'$gt'=>[100]])->limit(10);
+    $users = User::where(['votes'=>['$gt'=>100]])->limit(10);
 
     foreach ($users as $user)
     {
@@ -179,7 +179,7 @@ Once a model is defined, you are ready to start retrieving and creating document
 **MongoLid Count**
 
 ```php
-    $count = User::where(['votes'=>'$gt'=>[100]])->count();
+    $count = User::where(['votes'=>['$gt'=>100]])->count();
 ```
 
 <a name="odm-cursor"></a>
