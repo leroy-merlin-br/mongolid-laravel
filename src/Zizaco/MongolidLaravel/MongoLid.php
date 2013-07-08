@@ -168,7 +168,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
             /**
              * Removes any confirmation field before saving it into the database
              */
-            $confirmationField = $attr.'_password_confirmation';
+            $confirmationField = $attr.'_confirmation';
             if($this->$confirmationField) {
                 unset($this->$confirmationField);
             }
