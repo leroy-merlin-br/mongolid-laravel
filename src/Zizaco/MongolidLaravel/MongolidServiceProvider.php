@@ -81,9 +81,9 @@ class MongolidServiceProvider extends ServiceProvider
         $result = 'mongodb://';
         
         // If username is present, append "<username>:<password>@"
-        if ($config->get('database.mongodb.default.username', '' )) {
+        if ($config->get('database.mongodb.default.username')) {
             $result .=
-                $config->get('database.mongodb.default.username', '').':'.
+                $config->get('database.mongodb.default.username').':'.
                 $config->get('database.mongodb.default.password', '').'@';
         }
         
