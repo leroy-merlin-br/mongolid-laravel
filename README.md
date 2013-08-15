@@ -88,6 +88,8 @@ Paste the settings bellow at the end of your `database.php`, before the last `);
     ),
 ```
 
+You may optionally provide a 'connectionString' key to set a fully-assembled connection string, this will override all other connection options.
+
 > **Note:** If you don't specify the key above in your `config/database.php`. The MongoLid will automatically try to connect to 127.0.0.1:27017 and use a database named 'mongolid'.
 
 <a name="basic-usage"></a>
