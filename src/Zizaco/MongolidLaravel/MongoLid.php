@@ -18,7 +18,7 @@ namespace Zizaco\MongolidLaravel;
  * @license MIT
  * @author  Zizaco Zizuini <zizaco@gmail.com>
  */
-abstract class MongoLid extends \Zizaco\Mongolid\Model
+abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
 {
     /**
      * Validation rules
