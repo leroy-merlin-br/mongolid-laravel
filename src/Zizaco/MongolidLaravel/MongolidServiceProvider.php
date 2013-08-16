@@ -77,21 +77,25 @@ class MongolidServiceProvider extends ServiceProvider
     {
         $config = $this->app->make('config');
 
-        // Connection string should begin with "mongodb://"
-        $result = 'mongodb://';
-        
-        // If username is present, append "<username>:<password>@"
-        if ($config->get('database.mongodb.default.username', '' )) {
+        if (! $result = $config->get('database.mongodb.default.connectionString')) {
+
+            // Connection string should begin with "mongodb://"
+            $result = 'mongodb://';
+            
+            // If username is present, append "<username>:<password>@"
+            if ($config->get('database.mongodb.default.username')) {
+                $result .=
+                    $config->get('database.mongodb.default.username').':'.
+                    $config->get('database.mongodb.default.password', '').'@';
+            }
+            
+            // Append "<host>:<port>/<database>"
             $result .=
-                $config->get('database.mongodb.default.username', '').':'.
-                $config->get('database.mongodb.default.password', '').'@';
+                $config->get('database.mongodb.default.host', '127.0.0.1').':'.
+                $config->get('database.mongodb.default.port', 27017).'/'.
+                $config->get('database.mongodb.default.database', 'mongolid');
+
         }
-        
-        // Append "<host>:<port>/<database>"
-        $result .=
-            $config->get('database.mongodb.default.host', '127.0.0.1').':'.
-            $config->get('database.mongodb.default.port', 27017).'/'.
-            $config->get('database.mongodb.default.database', 'mongolid');
 
         return $result;
     }
