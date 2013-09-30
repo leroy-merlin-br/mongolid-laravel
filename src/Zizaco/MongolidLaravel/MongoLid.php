@@ -35,6 +35,13 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
     public $errors;
 
     /**
+     * The event dispatcher instance.
+     *
+     * @var \Illuminate\Events\Dispatcher
+     */
+    protected static $dispatcher;
+
+    /**
      * Public static mock
      *
      * @var Mockery\Mock
@@ -173,6 +180,38 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model
                 unset($this->$confirmationField);
             }
         }
+    }
+
+    /**
+     * Set the event dispatcher instance.
+     *
+     * @param  \Illuminate\Events\Dispatcher  $dispatcher
+     * @return void
+     */
+    public static function setEventDispatcher(\Illuminate\Events\Dispatcher $dispatcher)
+    {
+        static::$dispatcher = $dispatcher;
+    }
+
+    /**
+     * Fire the given event for the model.
+     *
+     * @param  string $event
+     * @param  bool   $halt
+     * @return mixed
+     */
+    protected function fireModelEvent($event, $halt = true)
+    {
+        if ( ! isset(static::$dispatcher)) return true;
+
+        // We will append the names of the class to the event to distinguish it from
+        // other model events that are fired, allowing us to listen on each model
+        // event set individually instead of catching event for all the models.
+        $event = "mongolid.{$event}: ".get_class($this);
+
+        $method = $halt ? 'until' : 'fire';
+
+        return static::$dispatcher->$method($event, $this);
     }
 
     /**

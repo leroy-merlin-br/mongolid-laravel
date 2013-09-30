@@ -26,17 +26,19 @@ class MongolidServiceProvider extends ServiceProvider
 
     /**
      * Register the mongoLid driver in auth AuthManager
-     * 
+     *
      * @return void
      */
     public function boot()
     {
         $this->extendsAuthManager();
+
+        MongoLid::setEventDispatcher($this->app['events']);
     }
 
     /**
      * Register MongoDbConnector within the application
-     * 
+     *
      * @return void
      */
     public function registerConnector()
@@ -54,7 +56,7 @@ class MongolidServiceProvider extends ServiceProvider
 
     /**
      * Registers mongoLid Driver in AuthManager
-     * 
+     *
      * @return void
      */
     public function extendsAuthManager()
@@ -70,7 +72,7 @@ class MongolidServiceProvider extends ServiceProvider
     /**
      * Builds the connection string based in the laravel's config/database.php
      * config file.
-     * 
+     *
      * @return string The connection string
      */
     protected function buildConnectionString()
@@ -81,14 +83,14 @@ class MongolidServiceProvider extends ServiceProvider
 
             // Connection string should begin with "mongodb://"
             $result = 'mongodb://';
-            
+
             // If username is present, append "<username>:<password>@"
             if ($config->get('database.mongodb.default.username')) {
                 $result .=
                     $config->get('database.mongodb.default.username').':'.
                     $config->get('database.mongodb.default.password', '').'@';
             }
-            
+
             // Append "<host>:<port>/<database>"
             $result .=
                 $config->get('database.mongodb.default.host', '127.0.0.1').':'.
