@@ -240,4 +240,37 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
         else
             return parent::all($fields);
     }
+
+    /*
+     * Check whether an offset exists
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->attributes[$offset]);
+    }
+
+    /*
+     * Get the value of an offset
+     */
+    public function offsetGet($offset)
+    {
+        return isset($this->attributes[$offset]) ? $this->attributes[$offset] : null;
+    }
+
+    /*
+     * Set the value of an offset
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->attributes[$offset] = $value;
+    }
+
+    /*
+     * Delete the value of an offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->attributes[$offset]);
+    }
+
 }
