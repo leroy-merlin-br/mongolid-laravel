@@ -272,6 +272,18 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      * Overwrites the "static" method in order to make it mockable
      *
      */
+    public static function group($fields = array(), $initial = array(), $reduce = '', $condition = array())
+    {
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('group'))
+            return call_user_func_array(array(static::$mock, 'group'), func_get_args());
+        else
+            return parent::group($fields, $initial, $reduce, $condition);
+    }
+
+    /**
+     * Overwrites the "static" method in order to make it mockable
+     *
+     */
     public static function all( $fields = array() )
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('all'))
