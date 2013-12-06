@@ -138,7 +138,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     public function __construct()
     {
         if (is_null($this->database)) {
-            $this->database = \Config::get('database.mongodb.default.database', null);
+            $this->database = \Config::get('database.connections.mongodb.default.database', null);
         }
 
         static::$cacheComponent = \App::make('cache');
