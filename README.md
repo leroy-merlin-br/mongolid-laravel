@@ -709,15 +709,15 @@ Now, to log a user into your application, you may use the `Auth::attempt` method
 
 **"PHP Fatal error: Class 'MongoClient' not found in ..."**
 
-The `MongoClient` class is contained in the Mongo driver for PHP. [Here is an instalation guide](http://www.php.net/manual/en/mongo.installation.php). The driver is a PHP extension. MongoLid (and most of the PHP libraries for MongoDB) uses it in order to be fast and reliable (since that driver is written in C++ and maintained by [10gen](https://www.10gen.com/)).
+The `MongoClient` class is contained in the [MongoDB driver](http://pecl.php.net/package/mongo) for PHP. [Here is an installation guide](http://www.php.net/manual/en/mongo.installation.php). The driver is a PHP extension written in C and maintained by [MongoDB](https://mongodb.com). MongoLid and most other MongoDB PHP libraries utilize it in order to be fast and reliable.
 
-**"Class 'MongoClient' not found in ..." in cli persists even with MongoDB driver installed.**
+**"Class 'MongoClient' not found in ..." in CLI persists even with MongoDB driver installed.**
 
-Make sure that the **php.ini** that are being used in cli contain the MongoDB extension enabled. In some systems, the default PHP instalation uses a different **.ini** for cli.
+Make sure that the **php.ini** file used in the CLI environment includes the MongoDB extension. In some systems, the default PHP installation uses different **.ini** files for the web and CLI environments.
 
-Run `php -i | grep 'Configuration File'` in terminal to check the **.ini** that is being used.
+Run `php -i | grep 'Configuration File'` in a terminal to check the **.ini** that is being used.
 
-To check if PHP in cli is importing the driver properly run `php -i | grep 'Mongo'` in your terminal. You should get an output similar to:
+To check if PHP in the CLI environment is importing the driver properly run `php -i | grep 'Mongo'` in your terminal. You should get output similar to:
 
 ```
 $ php -i | grep 'Mongo'
