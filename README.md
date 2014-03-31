@@ -31,6 +31,7 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 In the `require` key of `composer.json` file add the following
 
 ```yml
+    "zizaco/mongolid": "dev-master",
     "zizaco/mongolid-laravel": "dev-master"
 ```
 
