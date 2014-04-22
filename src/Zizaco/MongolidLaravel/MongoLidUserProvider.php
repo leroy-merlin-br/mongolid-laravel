@@ -1,5 +1,4 @@
-<?php
-namespace Zizaco\MongolidLaravel;
+<?php namespace Zizaco\MongolidLaravel;
 
 use Illuminate\Auth\UserProviderInterface;
 use Illuminate\Hashing\HasherInterface;
@@ -82,5 +81,37 @@ class MongoLidUserProvider implements UserProviderInterface
         $class = '\\'.ltrim($this->model, '\\');
 
         return new $class;
+    }
+
+    /**
+     * Retrieve a user by by their unique identifier and "remember me" token.
+     *
+     * @param  mixed  $identifier
+     * @param  string  $token
+     * @return \Illuminate\Auth\UserInterface|null
+     */
+    public function retrieveByToken($identifier, $token)
+    {
+        $user = $this->createModel()->first([
+            '_id' => $identifier,
+            'remember_token' => $token
+        ]);
+
+        if ($user) {
+            return $user;
+        }
+    }
+
+    /**
+     * Update the "remember me" token for the given user in storage.
+     *
+     * @param  \Illuminate\Auth\UserInterface  $user
+     * @param  string  $token
+     * @return void
+     */
+    public function updateRememberToken(UserInterface $user, $token)
+    {
+        $user->remember_token = $token;
+        $user->save();
     }
 }
