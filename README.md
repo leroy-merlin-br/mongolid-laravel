@@ -1,3 +1,8 @@
+[![Latest Stable Version](https://poser.pugx.org/zizaco/mongolid-laravel/v/stable.png)](https://packagist.org/packages/zizaco/mongolid-laravel)
+[![Total Downloads](https://poser.pugx.org/zizaco/mongolid-laravel/downloads.png)](https://packagist.org/packages/zizaco/mongolid-laravel)
+[![Latest Unstable Version](https://poser.pugx.org/zizaco/mongolid-laravel/v/unstable.png)](https://packagist.org/packages/zizaco/mongolid-laravel)
+[![License](https://poser.pugx.org/zizaco/mongolid-laravel/license.png)](https://packagist.org/packages/zizaco/mongolid-laravel)
+
 ![MongoLid](https://dl.dropboxusercontent.com/u/12506137/libs_bundles/mongolid_banner.png)
 
 # MongoLid (Laravel4 Package)
