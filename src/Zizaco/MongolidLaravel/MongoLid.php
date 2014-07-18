@@ -166,7 +166,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     public function __construct()
     {
         if (is_null($this->database)) {
-            $this->database = \Config::get('database.mongodb.default.database', null);
+            $this->database = \Config::get('database.connections.mongodb.default.database', null);
         }
 
         static::$cacheComponent = \App::make('cache');
@@ -328,6 +328,18 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
             return call_user_func_array(array(static::$mock, 'where'), func_get_args());
         else
             return parent::where($query, $fields, $cachable);
+    }
+
+    /**
+     * Overwrites the "static" method in order to make it mockable
+     *
+     */
+    public static function group($fields = array(), $initial = array(), $reduce = '', $condition = array())
+    {
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('group'))
+            return call_user_func_array(array(static::$mock, 'group'), func_get_args());
+        else
+            return parent::group($fields, $initial, $reduce, $condition);
     }
 
     /**

@@ -79,16 +79,18 @@ class MongolidServiceProvider extends ServiceProvider
     {
         $config = $this->app->make('config');
 
-        if (! $result = $config->get('database.mongodb.default.connectionString')) {
+        $configPath = 'database.connections.mongodb.default';
+
+        if (! $result = $config->get($configPath . '.connectionString')) {
 
             // Connection string should begin with "mongodb://"
             $result = 'mongodb://';
 
             // If username is present, append "<username>:<password>@"
-            if ($config->get('database.mongodb.default.username')) {
+            if ($config->get($configPath . '.username')) {
                 $result .=
-                    $config->get('database.mongodb.default.username').':'.
-                    $config->get('database.mongodb.default.password', '').'@';
+                    $config->get($configPath . '.username').':'.
+                    $config->get($configPath . '.password', '').'@';
             }
 
             // Append "<host>:<port>/<database>"
