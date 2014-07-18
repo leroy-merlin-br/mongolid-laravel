@@ -18,5 +18,10 @@
             "Zizaco\\MongolidLaravel": "src/"
         }
     },
+    "extra": {
+		"branch-alias": {
+			"dev-master": "v0.5-dev"
+		}
+	},
     "minimum-stability": "dev"
 }
