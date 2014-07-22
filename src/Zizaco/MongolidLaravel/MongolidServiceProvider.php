@@ -46,12 +46,13 @@ class MongolidServiceProvider extends ServiceProvider
         $connectionString = $this->buildConnectionString();
 
         $connection = new MongoDbConnector;
-        $connection->getConnection( $connectionString );
+        $connection->getConnection($connectionString);
 
-        $this->app['MongoLidConnector'] = $this->app->share(function($app) use ($connection)
-        {
-            return $connection;
-        });
+        $this->app['MongoLidConnector'] = $this->app->share(
+            function ($app) use ($connection) {
+                return $connection;
+            }
+        );
     }
 
     /**
@@ -62,11 +63,14 @@ class MongolidServiceProvider extends ServiceProvider
     public function extendsAuthManager()
     {
         // MongoLid Auth Driver
-        $this->app['auth']->extend('mongoLid', function($app) {
-            $provider =  new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
+        $this->app['auth']->extend(
+            'mongoLid',
+            function ($app) {
+                $provider =  new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
 
-            return new \Illuminate\Auth\Guard($provider, $app['session.store']);
-        });
+                return new \Illuminate\Auth\Guard($provider, $app['session.store']);
+            }
+        );
     }
 
     /**

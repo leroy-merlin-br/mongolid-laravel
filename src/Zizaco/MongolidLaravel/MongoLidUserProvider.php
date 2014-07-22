@@ -92,10 +92,9 @@ class MongoLidUserProvider implements UserProviderInterface
      */
     public function retrieveByToken($identifier, $token)
     {
-        $user = $this->createModel()->first([
-            '_id' => $identifier,
-            'remember_token' => $token
-        ]);
+        $user = $this->createModel()->first(
+            ['_id' => $identifier, 'remember_token' => $token]
+        );
 
         if ($user) {
             return $user;
