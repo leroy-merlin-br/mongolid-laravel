@@ -125,8 +125,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
         /**
          * Return true if there arent validation rules
          */
-        if(! is_array(static::$rules) )
+        if (! is_array(static::$rules)) {
             return true;
+        }
 
         /**
          * Get the attributes and the rules to validate then
@@ -139,7 +140,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
          * those doesn't need to be validated.
          */
         foreach ($this->hashedAttributes as $hashedAttr) {
-            if(isset($this->original[$hashedAttr]) && $this->$hashedAttr == $this->original[$hashedAttr]) {
+            if (isset($this->original[$hashedAttr]) && $this->$hashedAttr == $this->original[$hashedAttr]) {
                 unset($rules[$hashedAttr]);
             }
         }
@@ -147,7 +148,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
         /**
          * Creates validator with attributes and the rules of the object
          */
-        $validator = \Validator::make( $attributes, $rules );
+        $validator = \Validator::make($attributes, $rules);
 
         /**
          * Validate and attach errors
@@ -167,7 +168,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public function errors()
     {
-        if(! $this->errors) $this->errors = new \Illuminate\Support\MessageBag;
+        if (! $this->errors) {
+            $this->errors = new \Illuminate\Support\MessageBag;
+        }
 
         return $this->errors;
     }
@@ -196,7 +199,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
             /**
              * Hash attribute if changed
              */
-            if(! isset($this->original[$attr]) || $this->$attr != $this->original[$attr] ) {
+            if (! isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
                 $this->$attr = static::$app['hash']->make($this->$attr);
             }
 
@@ -204,7 +207,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
              * Removes any confirmation field before saving it into the database
              */
             $confirmationField = $attr.'_confirmation';
-            if($this->$confirmationField) {
+            if ($this->$confirmationField) {
                 unset($this->$confirmationField);
             }
         }
@@ -230,7 +233,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     protected function fireModelEvent($event, $halt = true)
     {
-        if ( ! isset(static::$dispatcher)) return true;
+        if (! isset(static::$dispatcher)) {
+            return true;
+        }
 
         // We will append the names of the class to the event to distinguish it from
         // other model events that are fired, allowing us to listen on each model
@@ -250,8 +255,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public static function __callStatic($name, $arguments)
     {
-        if ($name == 'shouldReceive')
-        {
+        if ($name == 'shouldReceive') {
             if (! static::$mock) {
                 static::$mock = \Mockery::mock(get_called_class().'Mock');
             }
@@ -300,8 +304,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public static function first($id = array(), $fields = array())
     {
-        if (static::$mock && static::$mock->mockery_getExpectationsFor('first'))
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('first')) {
             return call_user_func_array(array(static::$mock, 'first'), func_get_args());
+        }
 
         return parent::first($id, $fields);
     }
@@ -312,8 +317,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public static function find($id = array(), $fields = array(), $cachable = false)
     {
-        if (static::$mock && static::$mock->mockery_getExpectationsFor('find'))
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('find')) {
             return call_user_func_array(array(static::$mock, 'find'), func_get_args());
+        }
 
         return parent::find($id, $fields, $cachable);
     }
@@ -324,8 +330,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public static function where($query = array(), $fields = array(), $cachable = false)
     {
-        if (static::$mock && static::$mock->mockery_getExpectationsFor('where'))
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('where')) {
             return call_user_func_array(array(static::$mock, 'where'), func_get_args());
+        }
 
         return parent::where($query, $fields, $cachable);
     }
@@ -334,10 +341,11 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      * Overwrites the "static" method in order to make it mockable
      *
      */
-    public static function all( $fields = array() )
+    public static function all($fields = array())
     {
-        if (static::$mock && static::$mock->mockery_getExpectationsFor('all'))
+        if (static::$mock && static::$mock->mockery_getExpectationsFor('all')) {
             return call_user_func_array(array(static::$mock, 'all'), func_get_args());
+        }
 
         return parent::all($fields);
     }
@@ -373,5 +381,4 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     {
         unset($this->attributes[$offset]);
     }
-
 }
