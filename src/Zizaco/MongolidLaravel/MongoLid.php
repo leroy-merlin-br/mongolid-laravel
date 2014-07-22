@@ -89,15 +89,15 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     {
         if ($this->localMock && $this->localMock->mockery_getExpectationsFor('save')) {
             return $this->localMock->save();
-        } else {
-            if ($this->isValid() || $force) {
-                $this->hashAttributes();
-
-                return parent::save();
-            } else {
-                return false;
-            }
         }
+
+        if ($this->isValid() || $force) {
+            $this->hashAttributes();
+
+            return parent::save();
+        }
+
+        return false;
     }
 
     /**
@@ -110,9 +110,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     {
         if ($this->localMock && $this->localMock->mockery_getExpectationsFor('delete')) {
             return $this->localMock->delete();
-        } else {
-            return parent::delete();
         }
+
+        return parent::delete();
     }
 
     /**
@@ -155,9 +155,9 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
         if ($validator->fails()) {
             $this->errors = $validator->errors();
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
@@ -302,8 +302,8 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('first'))
             return call_user_func_array(array(static::$mock, 'first'), func_get_args());
-        else
-            return parent::first($id, $fields);
+
+        return parent::first($id, $fields);
     }
 
     /**
@@ -314,8 +314,8 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('find'))
             return call_user_func_array(array(static::$mock, 'find'), func_get_args());
-        else
-            return parent::find($id, $fields, $cachable);
+
+        return parent::find($id, $fields, $cachable);
     }
 
     /**
@@ -326,8 +326,8 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('where'))
             return call_user_func_array(array(static::$mock, 'where'), func_get_args());
-        else
-            return parent::where($query, $fields, $cachable);
+
+        return parent::where($query, $fields, $cachable);
     }
 
     /**
@@ -338,8 +338,8 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     {
         if (static::$mock && static::$mock->mockery_getExpectationsFor('all'))
             return call_user_func_array(array(static::$mock, 'all'), func_get_args());
-        else
-            return parent::all($fields);
+
+        return parent::all($fields);
     }
 
     /*
