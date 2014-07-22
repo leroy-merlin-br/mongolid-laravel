@@ -64,6 +64,20 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     protected $hashedAttributes = array();
 
     /**
+     * Sets the database and the cache component of the model
+     * If you extend the __construct() method, please don't forget
+     * to call parent::__construct()
+     */
+    public function __construct()
+    {
+        if (is_null($this->database)) {
+            $this->database = \Config::get('database.mongodb.default.database', null);
+        }
+
+        static::$cacheComponent = \App::make('cache');
+    }
+
+    /**
      * Save the model to the database if it's valid. This method also
      * checks for the presence of the localMock in order to call the save
      * method into the existing Mock in order not to touch the database.
@@ -156,20 +170,6 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
         if(! $this->errors) $this->errors = new \Illuminate\Support\MessageBag;
 
         return $this->errors;
-    }
-
-    /**
-     * Sets the database and the cache component of the model
-     * If you extend the __construct() method, please don't forget
-     * to call parent::__construct()
-     */
-    public function __construct()
-    {
-        if (is_null($this->database)) {
-            $this->database = \Config::get('database.mongodb.default.database', null);
-        }
-
-        static::$cacheComponent = \App::make('cache');
     }
 
     /**
