@@ -91,7 +91,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
             return $this->localMock->save();
         }
 
-        if ($this->isValid() || $force) {
+        if ($force || $this->isValid()) {
             $this->hashAttributes();
 
             return parent::save();
