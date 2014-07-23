@@ -304,11 +304,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public static function first($id = array(), $fields = array())
     {
-        if (static::$mock && static::$mock->mockery_getExpectationsFor('first')) {
-            return call_user_func_array(array(static::$mock, 'first'), func_get_args());
-        }
-
-        return parent::first($id, $fields);
+        return static::callMockOrParent('first', func_get_args());
     }
 
     /**
@@ -317,11 +313,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public static function find($id = array(), $fields = array(), $cachable = false)
     {
-        if (static::$mock && static::$mock->mockery_getExpectationsFor('find')) {
-            return call_user_func_array(array(static::$mock, 'find'), func_get_args());
-        }
-
-        return parent::find($id, $fields, $cachable);
+        return static::callMockOrParent('find', func_get_args());
     }
 
     /**
@@ -330,11 +322,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public static function where($query = array(), $fields = array(), $cachable = false)
     {
-        if (static::$mock && static::$mock->mockery_getExpectationsFor('where')) {
-            return call_user_func_array(array(static::$mock, 'where'), func_get_args());
-        }
-
-        return parent::where($query, $fields, $cachable);
+        return static::callMockOrParent('where', func_get_args());
     }
 
     /**
@@ -343,11 +331,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
      */
     public static function all($fields = array())
     {
-        if (static::$mock && static::$mock->mockery_getExpectationsFor('all')) {
-            return call_user_func_array(array(static::$mock, 'all'), func_get_args());
-        }
-
-        return parent::all($fields);
+        return static::callMockOrParent('all', func_get_args());
     }
 
     /*
@@ -380,5 +364,24 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->attributes[$offset]);
+    }
+
+    /**
+     * Calls mock method if its have expectations. Calls parent method otherwise
+     *
+     * @param string $method
+     * @param array  $arguments Arguments to pass in method call
+     *
+     * @return  mixed See parent implementation
+     */
+    protected static function callMockOrParent($method, array $arguments)
+    {
+        $classToCall = 'parent';
+
+        if (static::$mock && static::$mock->mockery_getExpectationsFor($method)) {
+            $classToCall = static::$mock;
+        }
+
+        return call_user_func_array(array($classToCall, $method), $arguments);
     }
 }
