@@ -1,10 +1,10 @@
 <?php namespace Zizaco\MongolidLaravel;
 
-use Illuminate\Auth\UserProviderInterface;
-use Illuminate\Hashing\HasherInterface;
-use Illuminate\Auth\UserInterface;
+use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Contracts\Hashing\Hasher as HasherContract;
+use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
-class MongoLidUserProvider implements UserProviderInterface
+class MongoLidUserProvider implements UserProvider
 {
     /**
      * The hasher implementation.
@@ -23,11 +23,12 @@ class MongoLidUserProvider implements UserProviderInterface
     /**
      * Create a new database user provider.
      *
-     * @param  \Illuminate\Hashing\HasherInterface  $hasher
-     * @param  string  $model
-     * @return void
+     * @param \Illuminate\Contracts\Hashing\Hasher|\Illuminate\Hashing\HasherInterface $hasher
+     * @param  string                                                                  $model
+     *
+     * @return \Zizaco\MongolidLaravel\MongoLidUserProvider
      */
-    public function __construct(HasherInterface $hasher, $model)
+    public function __construct(HasherContract $hasher, $model)
     {
         $this->model = $model;
         $this->hasher = $hasher;
@@ -60,11 +61,12 @@ class MongoLidUserProvider implements UserProviderInterface
     /**
      * Validate a user against the given credentials.
      *
-     * @param  \Illuminate\Auth\UserInterface  $user
-     * @param  array  $credentials
+     * @param \Illuminate\Auth\UserInterface|\Illuminate\Contracts\Auth\Authenticatable $user
+     * @param  array                                                                    $credentials
+     *
      * @return bool
      */
-    public function validateCredentials(UserInterface $user, array $credentials)
+    public function validateCredentials(UserContract $user, array $credentials)
     {
         $plain = $credentials['password'];
 
@@ -104,11 +106,12 @@ class MongoLidUserProvider implements UserProviderInterface
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @param  \Illuminate\Auth\UserInterface  $user
-     * @param  string  $token
+     * @param \Illuminate\Auth\UserInterface|\Illuminate\Contracts\Auth\Authenticatable $user
+     * @param  string                                                                   $token
+     *
      * @return void
      */
-    public function updateRememberToken(UserInterface $user, $token)
+    public function updateRememberToken(UserContract $user, $token)
     {
         $user->remember_token = $token;
         $user->save();
