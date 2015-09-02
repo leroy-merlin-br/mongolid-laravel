@@ -200,7 +200,7 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
              * Hash attribute if changed
              */
             if (! isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
-                $this->$attr = static::$app['hash']->make($this->$attr);
+                $this->$attr = app('hash')->make($this->$attr);
             }
 
             /**
