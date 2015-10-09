@@ -46,13 +46,10 @@ class MongolidServiceProvider extends ServiceProvider
         $connectionString = $this->buildConnectionString();
 
         $connection = new MongoDbConnector;
-        $connection->getConnection($connectionString);
+        $connection->defaultConnectionString = $connectionString;
 
-        $this->app['MongoLidConnector'] = $this->app->share(
-            function ($app) use ($connection) {
-                return $connection;
-            }
-        );
+        $this->app->instance('MongoLidConnector', $connection);
+        $this->app->instance('Zizaco\Mongolid\MongoDbConnector', $connection);
     }
 
     /**

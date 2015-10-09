@@ -176,6 +176,21 @@ abstract class MongoLid extends \Zizaco\Mongolid\Model implements \ArrayAccess
     }
 
     /**
+     * Returns the database object (the connection)
+     *
+     * @return MongoDB
+     */
+    protected function db()
+    {
+        if (! static::$connection) {
+            $connector = app()->make('Zizaco\Mongolid\MongoDbConnector');
+            static::$connection = $connector->getConnection();
+        }
+
+        return static::$connection->{$this->database};
+    }
+
+    /**
      * Returns a new instance of the current model
      * Overwrites the original newInstance method in order
      * to use the IoC container.
