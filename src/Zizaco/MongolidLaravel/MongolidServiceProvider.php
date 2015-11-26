@@ -1,9 +1,9 @@
 <?php
 namespace Zizaco\MongolidLaravel;
 
+use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
 use Zizaco\Mongolid\MongoDbConnector;
-use Zizaco\Mongolid\Model;
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -65,7 +65,7 @@ class MongolidServiceProvider extends ServiceProvider
             function ($app) {
                 $provider =  new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
 
-                return new \Illuminate\Auth\Guard($provider, $app['session.store']);
+                return new Guard($provider, $app['session.store']);
             }
         );
     }
