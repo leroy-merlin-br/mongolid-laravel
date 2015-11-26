@@ -53,6 +53,14 @@ class MongolidServiceProvider extends ServiceProvider
                 return $connection;
             }
         );
+                
+        $this->app['Sequence'] = $this->app->share(
+            function ($app) use ($connection) {
+                $database = $app['config']->get('database.mongodb.default.database', null);                
+                return new Sequence($connection, $database);
+            }
+        );
+        
     }
 
     /**
