@@ -2,7 +2,7 @@
 namespace Zizaco\MongolidLaravel;
 
 use Illuminate\Support\ServiceProvider;
-use Zizaco\Mongolid\MongoDbConnector;
+use Zizaco\Mongolid\Sequence;
 use Zizaco\Mongolid\Model;
 
 class MongolidServiceProvider extends ServiceProvider
@@ -54,7 +54,7 @@ class MongolidServiceProvider extends ServiceProvider
             }
         );
                 
-        $this->app['Sequence'] = $this->app->share(
+        $this->app['Zizaco\Mongolid\Sequence'] = $this->app->share(
             function ($app) use ($connection) {
                 $database = $app['config']->get('database.mongodb.default.database', null);                
                 return new Sequence($connection, $database);
