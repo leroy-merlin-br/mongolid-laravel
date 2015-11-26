@@ -3,7 +3,12 @@ namespace Zizaco\MongolidLaravel;
 
 use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
+<<<<<<< 2679a12f74562db2b7c5e65acc118b3c161960b6
 use Zizaco\Mongolid\MongoDbConnector;
+=======
+use Zizaco\Mongolid\Sequence;
+use Zizaco\Mongolid\Model;
+>>>>>>> Update Sequence Service container bind to FQN
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -48,8 +53,18 @@ class MongolidServiceProvider extends ServiceProvider
         $connection = new MongoDbConnector;
         $connection->defaultConnectionString = $connectionString;
 
-        $this->app->instance('MongoLidConnector', $connection);
-        $this->app->instance('Zizaco\Mongolid\MongoDbConnector', $connection);
+        $this->app['MongoLidConnector'] = $this->app->share(
+            function ($app) use ($connection) {
+                return $connection;
+            }
+        );
+                
+        $this->app['Zizaco\Mongolid\Sequence'] = $this->app->share(
+            function ($app) use ($connection) {
+                $database = $app['config']->get('database.mongodb.default.database', null);                
+                return new Sequence($connection, $database);
+            }
+        );
     }
 
     /**
