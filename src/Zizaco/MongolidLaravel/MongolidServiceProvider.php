@@ -2,6 +2,7 @@
 namespace Zizaco\MongolidLaravel;
 
 use Illuminate\Support\ServiceProvider;
+use Zizaco\Mongolid\MongoDbConnector;
 use Zizaco\Mongolid\Sequence;
 use Zizaco\Mongolid\Model;
 
