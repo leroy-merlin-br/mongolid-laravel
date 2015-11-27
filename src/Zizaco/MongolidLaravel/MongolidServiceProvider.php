@@ -3,12 +3,7 @@ namespace Zizaco\MongolidLaravel;
 
 use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
-<<<<<<< 2679a12f74562db2b7c5e65acc118b3c161960b6
 use Zizaco\Mongolid\MongoDbConnector;
-=======
-use Zizaco\Mongolid\Sequence;
-use Zizaco\Mongolid\Model;
->>>>>>> Update Sequence Service container bind to FQN
 
 class MongolidServiceProvider extends ServiceProvider
 {
