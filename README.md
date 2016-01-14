@@ -5,7 +5,7 @@
 
 ![MongoLid](https://dl.dropboxusercontent.com/u/12506137/libs_bundles/mongolid_banner.png)
 
-# MongoLid (Laravel4 Package)
+# MongoLid (Laravel Package)
 
 - [Introduction](#introduction)
 - [Installation](#installation)
@@ -36,38 +36,37 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 In the `require` key of `composer.json` file add the following
 
 ```yml
-    "zizaco/mongolid": "dev-master",
-    "zizaco/mongolid-laravel": "dev-master"
+    "zizaco/mongolid-laravel": "^0.8"
 ```
 
-Run the Composer update comand
+Run the Composer update command
 
     $ composer update
 
 In your `config/app.php` add `'Zizaco\MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
 
 ```php
-    'providers' => array(
+    'providers' => [
 
         'Illuminate\Foundation\Providers\ArtisanServiceProvider',
         'Illuminate\Auth\AuthServiceProvider',
         ...
         'Zizaco\MongolidLaravel\MongolidServiceProvider',
 
-    ),
+    ],
 ```
 
 At the end of `config/app.php` add `'MongoLid'    => 'Zizaco\MongolidLaravel\MongoLid'` to the `$aliases` array
 
 ```php
-    'aliases' => array(
+    'aliases' => [
 
         'App'        => 'Illuminate\Support\Facades\App',
         'Artisan'    => 'Illuminate\Support\Facades\Artisan',
         ...
         'MongoLid'    => 'Zizaco\MongolidLaravel\MongoLid',
 
-    ),
+    ],
 ```
 
 And least, be sure to configure a database connection in `app/config/database.php`:
@@ -82,16 +81,16 @@ Paste the settings bellow at the end of your `database.php`, before the last `);
     |
     */
 
-    'mongodb' => array(
+    'mongodb' => [
 
-        'default' => array(
+        'default' => [
             'host'     => '127.0.0.1',
             'port'     => 27017,
             'database' => 'my_database',
             'username'     => '',
             'password'     => '',
-        ),
-    ),
+        ],
+    ],
 ```
 
 > **Note:** If you don't specify the key above in your `config/database.php`. The MongoLid will automatically try to connect to 127.0.0.1:27017 and use a database named 'mongolid'.
@@ -374,7 +373,7 @@ This statement will perform the following:
 - Instantiate a **Phone** object with the attributes found in _'phone'_ attribute of the user
 - Return that object
 
-In order to embed a document to be used in a Embeds One relationship, simply set the attribute to an array with the attributes of the embeded model. For example:
+In order to embed a document to be used in a Embeds One relationship, simply set the attribute to an array with the attributes of the embedded model. For example:
 
 ```php
     // The object that will be embeded
@@ -398,10 +397,10 @@ In order to embed a document to be used in a Embeds One relationship, simply set
     $user->phone = $phoneObj->toArray();
 
     // Or even
-    $user->phone = array(
+    $user->phone = [
         'regionCode' => $phoneObj->regionCode,
         'number' => $phoneObj->number
-    );
+    ];
 
     $user->save();
 
@@ -466,8 +465,8 @@ In order to embed a document to be used in a Embeds One relationship, you may us
     $post = Post::first('4af9f23d8ead0e1d32000000');
 
     // Both ways work
-    $post->embedToComments( $commentA );
-    $post->embed( 'Comments', $commentB );
+    $post->embedToComments($commentA);
+    $post->embed('Comments', $commentB);
 
     $post->save();
 ```
@@ -530,10 +529,10 @@ In order to set a reference to a document, simply set the attribute used in the 
     $post = Post::first('4af9f23d8ead0e1d32000000');
 
     // This method will attach the $phoneObj into the phone attribute of the user
-    $post->attach( 'author', $userObj );
+    $post->attach('author', $userObj);
 
     // This is an alias to the method called above.
-    $post->attachToAuthor( $userObj );
+    $post->attachToAuthor($userObj);
 
     // This will will also work
     $post->author = $userObj->_id;
@@ -543,7 +542,7 @@ In order to set a reference to a document, simply set the attribute used in the 
     $post->author(); // Will return a User object
 ```
 
-> **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
+> **Note:** When using MongoLid models you will need to call the `save()` method after embedding or attaching objects. The changes will only persists after you call the 'save()' method.
 
 <a name="references-many"></a>
 ### References Many
@@ -607,7 +606,7 @@ In order to set a reference to a document use the attach method or it's alias. F
     $user->save();
 ```
 
-> **Note:** When using MongoLid models you will need to call the `save()` method after embeding or attaching objects. The changes will only persists after you call the 'save()' method.
+> **Note:** When using MongoLid models you will need to call the `save()` method after embedding or attaching objects. The changes will only persists after you call the 'save()' method.
 
 <a name="converting-to-arrays-or-json"></a>
 ## Converting To Arrays / JSON
@@ -736,7 +735,7 @@ MongoDB Support => enabled
 MongoLid & MongoLid Laravel are free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT)
 
 <a name="additional_information"></a>
-## Aditional information
+## Additional information
 
 Any questions, feel free to contact me.
 
