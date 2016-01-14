@@ -1,28 +1,31 @@
 <?php
 namespace Zizaco\MongolidLaravel;
 
+use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
-use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
 class MongoLidUserProvider implements UserProvider
 {
     /**
      * The hasher implementation.
      *
-     * @var \Illuminate\Hashing\HasherInterface
+     * @var \Illuminate\Contracts\Hashing\Hasher
      */
     protected $hasher;
 
     /**
      * The MongoLid user model.
      *
-     * @var string
+     * @var \Zizaco\MongolidLaravel\MongoLid
      */
     protected $model;
 
     /**
      * Create a new database user provider.
+     *
+     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
+     * @param \Zizaco\MongolidLaravel\MongoLid     $model
      */
     public function __construct(HasherContract $hasher, $model)
     {
@@ -35,7 +38,7 @@ class MongoLidUserProvider implements UserProvider
      *
      * @param  mixed $identifier
      *
-     * @return \Illuminate\Auth\UserInterface|null
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByID($identifier)
     {
@@ -47,7 +50,7 @@ class MongoLidUserProvider implements UserProvider
      *
      * @param  array $credentials
      *
-     * @return \Illuminate\Auth\UserInterface|null
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByCredentials(array $credentials)
     {
@@ -58,7 +61,10 @@ class MongoLidUserProvider implements UserProvider
 
     /**
      * Validate a user against the given credentials.
-
+     *
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param array                                      $credentials
+     *
      * @return bool
      */
     public function validateCredentials(UserContract $user, array $credentials)
@@ -71,7 +77,7 @@ class MongoLidUserProvider implements UserProvider
     /**
      * Create a new instance of the model.
      *
-     * @return Zizaco\MongolidLaravel\MongoLid
+     * @return \Zizaco\MongolidLaravel\MongoLid
      */
     public function createModel()
     {
@@ -86,7 +92,7 @@ class MongoLidUserProvider implements UserProvider
      * @param  mixed  $identifier
      * @param  string $token
      *
-     * @return \Illuminate\Auth\UserInterface|null
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByToken($identifier, $token)
     {
@@ -102,7 +108,8 @@ class MongoLidUserProvider implements UserProvider
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @return void
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param string                                     $token
      */
     public function updateRememberToken(UserContract $user, $token)
     {
