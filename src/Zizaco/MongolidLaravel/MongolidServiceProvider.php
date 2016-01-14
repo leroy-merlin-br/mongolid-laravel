@@ -4,6 +4,8 @@ namespace Zizaco\MongolidLaravel;
 use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
 use Zizaco\Mongolid\MongoDbConnector;
+use Zizaco\Mongolid\Sequence;
+use Zizaco\Mongolid\Model;
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -46,7 +48,7 @@ class MongolidServiceProvider extends ServiceProvider
         $connectionString = $this->buildConnectionString();
 
         $connection = new MongoDbConnector;
-        $connection->defaultConnectionString = $connectionString;
+        $connection->getConnection($connectionString);
 
         $this->app['MongoLidConnector'] = $this->app->share(
             function ($app) use ($connection) {
@@ -60,6 +62,7 @@ class MongolidServiceProvider extends ServiceProvider
                 return new Sequence($connection, $database);
             }
         );
+        
     }
 
     /**

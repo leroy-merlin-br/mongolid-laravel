@@ -1,4 +1,5 @@
-<?php namespace Zizaco\MongolidLaravel;
+<?php
+namespace Zizaco\MongolidLaravel;
 
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
@@ -22,22 +23,18 @@ class MongoLidUserProvider implements UserProvider
 
     /**
      * Create a new database user provider.
-     *
-     * @param \Illuminate\Contracts\Hashing\Hasher|\Illuminate\Hashing\HasherInterface $hasher
-     * @param  string                                                                  $model
-     *
-     * @return \Zizaco\MongolidLaravel\MongoLidUserProvider
      */
     public function __construct(HasherContract $hasher, $model)
     {
-        $this->model = $model;
+        $this->model  = $model;
         $this->hasher = $hasher;
     }
 
     /**
      * Retrieve a user by their unique identifier.
      *
-     * @param  mixed  $identifier
+     * @param  mixed $identifier
+     *
      * @return \Illuminate\Auth\UserInterface|null
      */
     public function retrieveByID($identifier)
@@ -48,7 +45,8 @@ class MongoLidUserProvider implements UserProvider
     /**
      * Retrieve a user by the given credentials.
      *
-     * @param  array  $credentials
+     * @param  array $credentials
+     *
      * @return \Illuminate\Auth\UserInterface|null
      */
     public function retrieveByCredentials(array $credentials)
@@ -60,10 +58,7 @@ class MongoLidUserProvider implements UserProvider
 
     /**
      * Validate a user against the given credentials.
-     *
-     * @param \Illuminate\Auth\UserInterface|\Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  array                                                                    $credentials
-     *
+
      * @return bool
      */
     public function validateCredentials(UserContract $user, array $credentials)
@@ -80,7 +75,7 @@ class MongoLidUserProvider implements UserProvider
      */
     public function createModel()
     {
-        $class = '\\'.ltrim($this->model, '\\');
+        $class = '\\' . ltrim($this->model, '\\');
 
         return new $class;
     }
@@ -89,7 +84,8 @@ class MongoLidUserProvider implements UserProvider
      * Retrieve a user by by their unique identifier and "remember me" token.
      *
      * @param  mixed  $identifier
-     * @param  string  $token
+     * @param  string $token
+     *
      * @return \Illuminate\Auth\UserInterface|null
      */
     public function retrieveByToken($identifier, $token)
@@ -105,9 +101,6 @@ class MongoLidUserProvider implements UserProvider
 
     /**
      * Update the "remember me" token for the given user in storage.
-     *
-     * @param \Illuminate\Auth\UserInterface|\Illuminate\Contracts\Auth\Authenticatable $user
-     * @param  string                                                                   $token
      *
      * @return void
      */
