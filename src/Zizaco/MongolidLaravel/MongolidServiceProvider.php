@@ -1,6 +1,7 @@
 <?php
 namespace Zizaco\MongolidLaravel;
 
+use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
 use Zizaco\Mongolid\MongoDbConnector;
 use Zizaco\Mongolid\Sequence;
@@ -29,7 +30,7 @@ class MongolidServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(\Illuminate\Contracts\Auth\Guard $guard)
+    public function boot()
     {
         $this->extendsAuthManager();
 
