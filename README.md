@@ -35,8 +35,16 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 
 In the `require` key of `composer.json` file add the following
 
+ - For Laravel 4.2:
+
 ```yml
-    "zizaco/mongolid-laravel": "^0.8"
+"zizaco/mongolid-laravel": "0.7.*"
+```
+
+ - For Laravel 5.0+
+
+```yml
+"zizaco/mongolid-laravel": "^0.8"
 ```
 
 Run the Composer update command
