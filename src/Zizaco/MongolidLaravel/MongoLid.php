@@ -3,7 +3,7 @@ namespace Zizaco\MongolidLaravel;
 
 use App;
 use Config;
-use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\MessageBag;
 use Mockery;
 use Validator;
@@ -37,7 +37,7 @@ abstract class MongoLid extends Model implements \ArrayAccess
     /**
      * Error message bag
      *
-     * @var Illuminate\Support\MessageBag
+     * @var MessageBag
      */
     public $errors;
 
@@ -164,7 +164,7 @@ abstract class MongoLid extends Model implements \ArrayAccess
     /**
      * Get the contents of errors attribute
      *
-     * @return Illuminate\Support\MessageBag Validation errors
+     * @return MessageBag Validation errors
      */
     public function errors()
     {

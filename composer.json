@@ -11,7 +11,11 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "zizaco/mongolid": "^0.8"
+        "zizaco/mongolid": "^0.8",
+        "illuminate/support": "^5.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9"
     },
     "autoload": {
         "psr-0": {
