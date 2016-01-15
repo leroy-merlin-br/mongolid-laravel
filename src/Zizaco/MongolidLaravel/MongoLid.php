@@ -1,12 +1,12 @@
 <?php
 namespace Zizaco\MongolidLaravel;
 
-use App;
-use Config;
-use Illuminate\Events\Dispatcher;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Mockery;
-use Validator;
 use Zizaco\Mongolid\Model;
 
 /**
@@ -37,7 +37,7 @@ abstract class MongoLid extends Model implements \ArrayAccess
     /**
      * Error message bag
      *
-     * @var Illuminate\Support\MessageBag
+     * @var MessageBag
      */
     public $errors;
 
@@ -78,7 +78,7 @@ abstract class MongoLid extends Model implements \ArrayAccess
     public function __construct()
     {
         if (is_null($this->database)) {
-            $this->database = Config::get('database.mongodb.default.database', null);
+            $this->database = Config::get('database.mongodb.default.database', 'mongolid');
         }
 
         static::$cacheComponent = App::make('cache');
@@ -89,7 +89,7 @@ abstract class MongoLid extends Model implements \ArrayAccess
      * checks for the presence of the localMock in order to call the save
      * method into the existing Mock in order not to touch the database.
      *
-     * @param $force Force save even if the object is invalid
+     * @param bool $force Force save even if the object is invalid
      *
      * @return bool
      */
@@ -164,7 +164,7 @@ abstract class MongoLid extends Model implements \ArrayAccess
     /**
      * Get the contents of errors attribute
      *
-     * @return Illuminate\Support\MessageBag Validation errors
+     * @return MessageBag Validation errors
      */
     public function errors()
     {
@@ -173,6 +173,21 @@ abstract class MongoLid extends Model implements \ArrayAccess
         }
 
         return $this->errors;
+    }
+
+    /**
+     * Returns the database object (the connection)
+     *
+     * @return MongoDB
+     */
+    protected function db()
+    {
+        if (! static::$connection) {
+            $connector          = App::make('Zizaco\Mongolid\MongoDbConnector');
+            static::$connection = $connector->getConnection();
+        }
+
+        return static::$connection->{$this->database};
     }
 
     /**
@@ -198,7 +213,7 @@ abstract class MongoLid extends Model implements \ArrayAccess
         foreach ($this->hashedAttributes as $attr) {
             // Hash attribute if changed
             if (! isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
-                $this->$attr = static::$app['hash']->make($this->$attr);
+                $this->$attr = App::make('hash')->make($this->$attr);
             }
 
             // Removes any confirmation field before saving it into the database

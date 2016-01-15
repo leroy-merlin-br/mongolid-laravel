@@ -5,7 +5,6 @@ use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
 use Zizaco\Mongolid\MongoDbConnector;
 use Zizaco\Mongolid\Sequence;
-use Zizaco\Mongolid\Model;
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -48,21 +47,14 @@ class MongolidServiceProvider extends ServiceProvider
         $connectionString = $this->buildConnectionString();
 
         $connection = new MongoDbConnector;
-        $connection->getConnection($connectionString);
+        $connection->defaultConnectionString = $connectionString;
 
-        $this->app['MongoLidConnector'] = $this->app->share(
-            function ($app) use ($connection) {
-                return $connection;
-            }
-        );
-                
-        $this->app['Zizaco\Mongolid\Sequence'] = $this->app->share(
-            function ($app) use ($connection) {
-                $database = $app['config']->get('database.mongodb.default.database', null);                
-                return new Sequence($connection, $database);
-            }
-        );
-        
+        $database = $this->app['config']->get('database.mongodb.default.database', 'mongolid');
+        $sequence = new Sequence($connection, $database);
+
+        $this->app->instance('MongoLidConnector', $connection);
+        $this->app->instance('Zizaco\Mongolid\MongoDbConnector', $connection);
+        $this->app->instance('Zizaco\Mongolid\Sequence', $sequence);
     }
 
     /**
