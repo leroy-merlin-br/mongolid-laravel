@@ -5,6 +5,7 @@ namespace MongolidLaravel;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Connection\Pool;
+use Mongolid\Container\Ioc as MongolidIoc;
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -42,6 +43,8 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function registerConnector()
     {
+        MongolidIoc::setContainer($this->app);
+
         $config           = $this->app->make('config');
         $connectionString = $this->buildConnectionString();
         $connection       = new Connection($connectionString);
