@@ -7,19 +7,23 @@
         {
             "name": "Zizaco Zizuini",
             "email": "zizaco@gmail.com"
+        },
+        {
+            "name": "Guilherme Guitte",
+            "email": "guilherme.guitte@gmail.com"
         }
     ],
     "require": {
-        "php": ">=5.4.0",
-        "zizaco/mongolid": "^0.8",
+        "php": ">=7.0",
+        "zizaco/mongolid": "^2.0.0",
         "illuminate/support": "^5.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9"
     },
     "autoload": {
-        "psr-0": {
-            "Zizaco\\MongolidLaravel": "src/"
-        }
+        "psr-4": {
+            "MongolidLaravel\\": "src/MongolidLaravel"
+        },
     }
 }
