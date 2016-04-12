@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "zizaco/mongolid": "v2.0.0.x-dev",
+        "zizaco/mongolid": "2.0.x-dev",
         "illuminate/support": "^5.0"
     },
     "require-dev": {
@@ -24,6 +24,11 @@
     "autoload": {
         "psr-4": {
             "MongolidLaravel\\": "src/MongolidLaravel"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "v2.0-dev"
         }
     }
 }
