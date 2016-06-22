@@ -255,7 +255,7 @@ abstract class MongolidModel extends ActiveRecord
      *
      * @return ActiveRecord
      */
-    public static function first($query)
+    public static function first($query = [])
     {
         return static::callMockOrParent('first', func_get_args());
     }
