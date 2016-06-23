@@ -44,14 +44,14 @@ In the `require` key of `composer.json` file add the following
  - For Laravel 5.0+
 
 ```yml
-"zizaco/mongolid-laravel": "^0.8"
+"zizaco/mongolid-laravel": "0.8.*"
 ```
 
 Run the Composer update command
 
     $ composer update
 
-In your `config/app.php` add `'Zizaco\MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
+In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
 
 ```php
     'providers' => [
@@ -59,12 +59,12 @@ In your `config/app.php` add `'Zizaco\MongolidLaravel\MongolidServiceProvider'` 
         'Illuminate\Foundation\Providers\ArtisanServiceProvider',
         'Illuminate\Auth\AuthServiceProvider',
         ...
-        'Zizaco\MongolidLaravel\MongolidServiceProvider',
+        'MongolidLaravel\MongolidServiceProvider',
 
     ],
 ```
 
-At the end of `config/app.php` add `'MongoLid'    => 'Zizaco\MongolidLaravel\MongoLid'` to the `$aliases` array
+At the end of `config/app.php` add `'MongoLid'    => 'MongolidLaravel\MongoLidModel'` to the `$aliases` array
 
 ```php
     'aliases' => [
@@ -72,7 +72,7 @@ At the end of `config/app.php` add `'MongoLid'    => 'Zizaco\MongolidLaravel\Mon
         'App'        => 'Illuminate\Support\Facades\App',
         'Artisan'    => 'Illuminate\Support\Facades\Artisan',
         ...
-        'MongoLid'    => 'Zizaco\MongolidLaravel\MongoLid',
+        'MongoLid'    => 'MongolidLaravel\MongoLidModel',
 
     ],
 ```
@@ -95,8 +95,8 @@ Paste the settings bellow at the end of your `database.php`, before the last `);
             'host'     => '127.0.0.1',
             'port'     => 27017,
             'database' => 'my_database',
-            'username'     => '',
-            'password'     => '',
+            'username' => '',
+            'password' => '',
         ],
     ],
 ```
@@ -222,10 +222,10 @@ The cursor object has alot of methods that helps you to iterate, refine and get 
     $cursor->sort( ['username'=>-1] );
 
     // Limits the number of results returned. Good pagination
-    $cursor->limit( 10 );
+    $cursor->limit(10);
 
     // Skips a number of results. Good for pagination
-    $cursor->skip( 20 );
+    $cursor->skip(20);
 
     // Checks if the cursor is reading a valid result.
     $cursor->valid();
