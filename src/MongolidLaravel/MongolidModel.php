@@ -182,7 +182,7 @@ abstract class MongolidModel extends ActiveRecord
         foreach ($this->hashedAttributes as $attr) {
             // Hash attribute if changed
             if (! isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
-                $this->$attr = App::make('hash')->make($this->$attr);
+                $this->$attr = app('hash')->make($this->$attr);
             }
 
             // Removes any confirmation field before saving it into the database
