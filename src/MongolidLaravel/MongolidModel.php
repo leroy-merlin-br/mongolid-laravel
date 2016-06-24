@@ -201,7 +201,7 @@ abstract class MongolidModel extends ActiveRecord
      *
      * @return \Mockery\Expectation
      */
-    public static function __callStatic(string $name, array $arguments)
+    public static function __callStatic($name, $arguments)
     {
         if ($name == 'shouldReceive') {
             if (! static::$mock) {
