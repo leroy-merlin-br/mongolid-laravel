@@ -33,7 +33,7 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $this->extendsAuthManager();
+        $this->extendsAuthManager();
     }
 
     /**
@@ -64,7 +64,15 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function extendsAuthManager()
     {
-        // @TODO
+        // MongoLid Auth Driver
+        $this->app['auth']->extend(
+            'mongoLid',
+            function ($app) {
+                $provider =  new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
+
+                return new Guard($provider, $app['session.store']);
+            }
+        );
     }
 
     /**
