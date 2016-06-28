@@ -1,6 +1,8 @@
 <?php
 namespace MongolidLaravel;
 
+use MongoDB\Collection;
+use MongoDB\Database;
 use Mongolid\ActiveRecord;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Support\MessageBag;
@@ -114,7 +116,7 @@ abstract class MongolidModel extends ActiveRecord
 
         // Get the attributes and the rules to validate then
         $attributes = $this->attributes;
-        $rules      = static::$rules;
+        $rules = static::$rules;
 
         // Verify attributes that are hashed and that have not changed
         // those doesn't need to be validated.
@@ -154,19 +156,22 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Returns the database object (the connection)
      *
-     * @return MongoDB
+     * @return Database
      */
-    protected function db()
+    protected function db(): Database
     {
-        return app(Pool::class)->getConnection();
+        $conn       = app(Pool::class)->getConnection();
+        $database   = $conn->defaultDatabase;
+
+        return $conn->getRawConnection()->$database;
     }
 
     /**
      * Returns the Mongo collection object
      *
-     * @return MongoDB collection
+     * @return Collection
      */
-    protected function collection()
+    protected function collection(): Collection
     {
         return $this->db()->{$this->collection};
     }
