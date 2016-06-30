@@ -1,6 +1,7 @@
 <?php
 namespace MongolidLaravel;
 
+use Mockery\Expectation;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\ActiveRecord;
@@ -73,8 +74,8 @@ abstract class MongolidModel extends ActiveRecord
      */
     public function save(bool $force = false)
     {
-        if ($this->localMock && $this->localMock->mockery_getExpectationsFor('save')) {
-            return $this->localMock->save();
+        if ($this->localMockHasExpectationsFor('save')) {
+            return $this->getLocalMock()->save();
         }
 
         if ($force || $this->isValid()) {
@@ -95,17 +96,18 @@ abstract class MongolidModel extends ActiveRecord
      */
     public function delete()
     {
-        if ($this->localMock && $this->localMock->mockery_getExpectationsFor('delete')) {
-            return $this->localMock->delete();
+        if ($this->localMockHasExpectationsFor('delete')) {
+            return $this->getLocalMock()->delete();
         }
 
         return parent::delete();
     }
 
     /**
-     * Verify if the model is valid
+     * Verify if the model is valid by running its validation rules,
+     * defined on static attribute `$rules`.
      *
-     * @return boolean
+     * @return bool
      */
     public function isValid()
     {
@@ -130,13 +132,11 @@ abstract class MongolidModel extends ActiveRecord
         $validator = app(ValidationFactory::class)->make($attributes, $rules);
 
         // Validate and attach errors
-        if ($validator->fails()) {
+        if ($hasErrors = $validator->fails()) {
             $this->errors = $validator->errors();
-
-            return false;
         }
 
-        return true;
+        return ! $hasErrors;
     }
 
     /**
@@ -160,8 +160,8 @@ abstract class MongolidModel extends ActiveRecord
      */
     protected function db(): Database
     {
-        $conn       = app(Pool::class)->getConnection();
-        $database   = $conn->defaultDatabase;
+        $conn = app(Pool::class)->getConnection();
+        $database = $conn->defaultDatabase;
 
         return $conn->getRawConnection()->$database;
     }
@@ -204,23 +204,22 @@ abstract class MongolidModel extends ActiveRecord
      * @param  string $name      Name of the method being called.
      * @param  array  $arguments Method arguments.
      *
-     * @return \Mockery\Expectation
+     * @return Expectation|void
      */
     public static function __callStatic($name, $arguments)
     {
-        if ($name == 'shouldReceive') {
-            if (! static::$mock) {
-                static::$mock = Mockery::mock(get_called_class() . 'Mock');
-            }
+        if ($name === 'shouldReceive') {
+            $class = get_called_class();
+            static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
 
-            return call_user_func_array([static::$mock, 'shouldReceive'], $arguments);
+            return static::$mock[$class]->shouldReceive(...$arguments);
         }
     }
 
     /**
      * Initiate a mock expectation that is specific for the save method.
      *
-     * @return \Mockery\Expectation
+     * @return Expectation
      */
     public function shouldReceiveSave()
     {
@@ -230,7 +229,7 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Initiate a mock expectation that is specific for the delete method.
      *
-     * @return \Mockery\Expectation
+     * @return Expectation
      */
     public function shouldReceiveDelete()
     {
@@ -238,26 +237,58 @@ abstract class MongolidModel extends ActiveRecord
     }
 
     /**
-     * Initiate a mock expectation that is specific for the given method.
+     * Check if local mock is set.
+     *
+     * @return bool
+     */
+    protected function hasLocalMock(): bool
+    {
+        return $this->localMock !== null;
+    }
+
+    /**
+     * Get a local mock instance.
+     *
+     * @return Mockery\Mock|Mockery\MockInterface
+     */
+    protected function getLocalMock()
+    {
+        if (! $this->hasLocalMock()) {
+            $this->localMock = Mockery::mock();
+        }
+
+        return $this->localMock;
+    }
+
+    /**
+     * Initiate a mockery expectation that is specific for the given method.
      *
      * @param string $method Name of the method being mocked.
      *
-     * @return \Mockery\Expectation
+     * @return Expectation
      */
     protected function localMockShouldReceive(string $method)
     {
-        if (! $this->localMock) {
-            $this->localMock = Mockery::mock(get_called_class() . 'Mock');
-        }
+        return $this->getLocalMock()->shouldReceive($method);
+    }
 
-        return call_user_func_array([$this->localMock, 'shouldReceive'], [$method]);
+    /**
+     * Check for a expectation for given method on local mock.
+     *
+     * @param string $method Name of the method being checked.
+     *
+     * @return bool
+     */
+    protected function localMockHasExpectationsFor(string $method): bool
+    {
+        return $this->hasLocalMock() && $this->getLocalMock()->mockery_getExpectationsFor($method);
     }
 
     /**
      * Gets the first entity of this kind that matches the query
      *
-     * @param  mixed   $query    MongoDB selection criteria.
-     * @param  boolean $useCache Retrieves the entity trought a CacheableCursor.
+     * @param mixed $query    MongoDB selection criteria.
+     * @param bool  $useCache Retrieves the entity through a CacheableCursor.
      *
      * @return ActiveRecord
      */
@@ -270,8 +301,8 @@ abstract class MongolidModel extends ActiveRecord
      * Gets a cursor of this kind of entities that matches the query from the
      * database
      *
-     * @param  array   $query    MongoDB selection criteria.
-     * @param  boolean $useCache Retrieves a CacheableCursor instead.
+     * @param array $query    MongoDB selection criteria.
+     * @param bool  $useCache Retrieves a CacheableCursor instead.
      *
      * @return \Mongolid\Cursor\Cursor
      */
@@ -281,9 +312,7 @@ abstract class MongolidModel extends ActiveRecord
     }
 
     /**
-     * Gets a cursor of this kind of entities from the database
-     *
-     * @return \Mongolid\Cursor\Cursor
+     * {@inheritdoc}
      */
     public static function all()
     {
@@ -301,9 +330,11 @@ abstract class MongolidModel extends ActiveRecord
     protected static function callMockOrParent(string $method, array $arguments)
     {
         $classToCall = 'parent';
+        $class = get_called_class();
+        $mock = static::$mock[$class] ?? null;
 
-        if (static::$mock && static::$mock->mockery_getExpectationsFor($method)) {
-            $classToCall = static::$mock;
+        if ($mock && $mock->mockery_getExpectationsFor($method)) {
+            $classToCall = $mock;
         }
 
         return call_user_func_array([$classToCall, $method], $arguments);
