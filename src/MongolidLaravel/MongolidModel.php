@@ -256,11 +256,12 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Gets the first entity of this kind that matches the query
      *
-     * @param  mixed $query MongoDB selection criteria.
+     * @param  mixed   $query    MongoDB selection criteria.
+     * @param  boolean $useCache Retrieves the entity trought a CacheableCursor.
      *
      * @return ActiveRecord
      */
-    public static function first($query = [])
+    public static function first($query = [], bool $useCache = false)
     {
         return static::callMockOrParent('first', func_get_args());
     }
@@ -269,11 +270,12 @@ abstract class MongolidModel extends ActiveRecord
      * Gets a cursor of this kind of entities that matches the query from the
      * database
      *
-     * @param  array $query MongoDB selection criteria.
+     * @param  array   $query    MongoDB selection criteria.
+     * @param  boolean $useCache Retrieves a CacheableCursor instead.
      *
      * @return \Mongolid\Cursor\Cursor
      */
-    public static function where(array $query = [])
+    public static function where(array $query = [], bool $useCache = false)
     {
         return static::callMockOrParent('where', func_get_args());
     }

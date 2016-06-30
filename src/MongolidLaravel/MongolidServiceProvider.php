@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc as MongolidIoc;
+use Mongolid\Util\CacheComponent;
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -49,9 +50,11 @@ class MongolidServiceProvider extends ServiceProvider
         $connectionString = $this->buildConnectionString();
         $connection       = new Connection($connectionString);
         $pool             = new Pool;
+        $cacheComponent   = new CacheComponent;
 
         $pool->addConnection($connection);
         $this->app->instance(Pool::class, $pool);
+        $this->app->instance(CacheComponent::class, $cacheComponent);
 
         $connection->defaultDatabase = $config
             ->get('database.mongodb.default.database', 'mongolid');
