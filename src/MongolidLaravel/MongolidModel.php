@@ -64,6 +64,13 @@ abstract class MongolidModel extends ActiveRecord
     protected $hashedAttributes = [];
 
     /**
+     * The database that this model is stored in
+     * 
+     * @var string
+     */
+    protected $database = '';
+
+    /**
      * Save the model to the database if it's valid. This method also
      * checks for the presence of the localMock in order to call the save
      * method into the existing Mock in order not to touch the database.
@@ -161,7 +168,7 @@ abstract class MongolidModel extends ActiveRecord
     protected function db(): Database
     {
         $conn = app(Pool::class)->getConnection();
-        $database = $conn->defaultDatabase;
+        $database = $this->database ?: $conn->defaultDatabase;
 
         return $conn->getRawConnection()->$database;
     }
