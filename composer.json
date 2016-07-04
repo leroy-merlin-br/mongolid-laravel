@@ -13,9 +13,15 @@
             "email": "guilherme.guitte@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/Flambe/mongolid"
+        }
+    ],
     "require": {
         "php": ">=7.0",
-        "zizaco/mongolid": "2.0.x-dev",
+        "zizaco/mongolid": "dev-master",
         "illuminate/support": "^5.0"
     },
     "require-dev": {
