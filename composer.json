@@ -1,5 +1,5 @@
 {
-    "name": "zizaco/mongolid-laravel",
+    "name": "leroy-merlin-br/mongolid-laravel",
     "description": "Easy, powerful and ultrafast MongoDB ODM for Laravel.",
     "keywords": ["odm","mongodb","nosql","laravel","illuminate"],
     "license": "MIT",
