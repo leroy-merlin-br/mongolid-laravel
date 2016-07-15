@@ -11,7 +11,7 @@ class LaravelEventTrigger implements EventTriggerInterface
 {
     /**
      * Laravel's Event dispatcher
-     * @var Illuminate\Contracts\Events\Dispatcher
+     * @var \Illuminate\Contracts\Events\Dispatcher
      */
     protected $dispatcher;
 

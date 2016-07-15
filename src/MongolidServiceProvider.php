@@ -2,6 +2,7 @@
 
 namespace MongolidLaravel;
 
+use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Connection\Pool;
@@ -76,7 +77,7 @@ class MongolidServiceProvider extends ServiceProvider
         $this->app['auth']->extend(
             'mongoLid',
             function ($app) {
-                $provider =  new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
+                $provider = new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
 
                 return new Guard($provider, $app['session.store']);
             }
@@ -101,16 +102,15 @@ class MongolidServiceProvider extends ServiceProvider
             // If username is present, append "<username>:<password>@"
             if ($config->get('database.mongodb.default.username')) {
                 $result .=
-                    $config->get('database.mongodb.default.username').':'.
-                    $config->get('database.mongodb.default.password', '').'@';
+                    $config->get('database.mongodb.default.username') . ':' .
+                    $config->get('database.mongodb.default.password', '') . '@';
             }
 
             // Append "<host>:<port>/<database>"
             $result .=
-                $config->get('database.mongodb.default.host', '127.0.0.1').':'.
-                $config->get('database.mongodb.default.port', 27017).'/'.
+                $config->get('database.mongodb.default.host', '127.0.0.1') . ':' .
+                $config->get('database.mongodb.default.port', 27017) . '/' .
                 $config->get('database.mongodb.default.database', 'mongolid');
-
         }
 
         return $result;
