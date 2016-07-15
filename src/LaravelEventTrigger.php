@@ -1,8 +1,8 @@
 <?php
 namespace MongolidLaravel;
 
-use Mongolid\Event\EventTriggerInterface;
 use Illuminate\Contracts\Events\Dispatcher;
+use Mongolid\Event\EventTriggerInterface;
 
 /**
  * Wraps the Laravel's event Dispatcher in order to trigger Mongolid events.
@@ -11,6 +11,7 @@ class LaravelEventTrigger implements EventTriggerInterface
 {
     /**
      * Laravel's Event dispatcher
+     *
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
     protected $dispatcher;
