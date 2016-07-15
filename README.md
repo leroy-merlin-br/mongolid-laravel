@@ -1,7 +1,7 @@
-[![Latest Stable Version](https://poser.pugx.org/zizaco/mongolid-laravel/v/stable.png)](https://packagist.org/packages/zizaco/mongolid-laravel)
-[![Monthly Downloads](https://poser.pugx.org/zizaco/mongolid-laravel/d/monthly.png)](https://packagist.org/packages/zizaco/mongolid-laravel)
-[![Latest Unstable Version](https://poser.pugx.org/zizaco/mongolid-laravel/v/unstable.png)](https://packagist.org/packages/zizaco/mongolid-laravel)
-[![License](https://poser.pugx.org/zizaco/mongolid-laravel/license.png)](https://packagist.org/packages/zizaco/mongolid-laravel)
+[![Latest Stable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/stable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
+[![Monthly Downloads](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/d/monthly.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
+[![Latest Unstable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/unstable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
+[![License](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/license.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
 
 ![MongoLid](https://dl.dropboxusercontent.com/u/12506137/libs_bundles/mongolid_banner.png)
 
@@ -28,7 +28,7 @@
 
 MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementation for working with MongoDB. Each database collection can have a corresponding "Model" which is used to interact with that collection.
 
-> Note: The ODM implementation is within the [(non laravel) mongolid repository](https://github.com/Zizaco/mongolid).
+> Note: The ODM implementation is within the [(non laravel) mongolid repository](https://github.com/leroy-merlin-br/mongolid).
 
 <a name="installation"></a>
 ## Installation
@@ -38,13 +38,13 @@ In the `require` key of `composer.json` file add the following
  - For Laravel 4.2:
 
 ```yml
-"zizaco/mongolid-laravel": "0.7.*"
+"leroy-merlin-br/mongolid-laravel": "0.7.*"
 ```
 
  - For Laravel 5.0+
 
 ```yml
-"zizaco/mongolid-laravel": "0.8.*"
+"leroy-merlin-br/mongolid-laravel": "0.8.*"
 ```
 
 Run the Composer update command
@@ -747,4 +747,4 @@ MongoLid & MongoLid Laravel are free software distributed under the terms of the
 
 Any questions, feel free to contact me.
 
-Any issues, please [report here](https://github.com/Zizaco/mongolid-laravel/issues)
+Any issues, please [report here](https://github.com/leroy-merlin-br/mongolid-laravel/issues)
