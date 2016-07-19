@@ -77,7 +77,7 @@ class MongolidServiceProvider extends ServiceProvider
         $this->app['auth']->extend(
             'mongoLid',
             function ($app) {
-                $provider = new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
+                $provider = new MongolidUserProvider($app['hash'], $app['config']->get('auth.model'));
 
                 return new Guard($provider, $app['session.store']);
             }
