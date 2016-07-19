@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3ddc59f49212d8f9d48ec746f7202ac8",
-    "content-hash": "2ddf0a7578a57052596333ea49a200bd",
+    "hash": "b8a8fda526ae8a45222b3c302ac536ac",
+    "content-hash": "f46bdcf350e8de60bd2f15686ca30776",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -493,16 +493,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.24",
+            "version": "1.0.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "9aca859a303fdca30370f42b8c611d9cf0dedf4b"
+                "reference": "a76afa4035931be0c78ca8efc6abf3902362f437"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9aca859a303fdca30370f42b8c611d9cf0dedf4b",
-                "reference": "9aca859a303fdca30370f42b8c611d9cf0dedf4b",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a76afa4035931be0c78ca8efc6abf3902362f437",
+                "reference": "a76afa4035931be0c78ca8efc6abf3902362f437",
                 "shasum": ""
             },
             "require": {
@@ -515,7 +515,7 @@
                 "ext-fileinfo": "*",
                 "mockery/mockery": "~0.9",
                 "phpspec/phpspec": "^2.2",
-                "phpunit/phpunit": "~4.8 || ~5.0"
+                "phpunit/phpunit": "~4.8"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -572,7 +572,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-06-03 19:11:39"
+            "time": "2016-07-18 12:22:57"
         },
         {
             "name": "leroy-merlin-br/mongolid",
@@ -580,12 +580,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leroy-merlin-br/mongolid.git",
-                "reference": "eac61a20ffb7f87121f7037df0fce897fa2fe556"
+                "reference": "79db18d00c0c281a604b26ff70f1ca2dbe205655"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/eac61a20ffb7f87121f7037df0fce897fa2fe556",
-                "reference": "eac61a20ffb7f87121f7037df0fce897fa2fe556",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/79db18d00c0c281a604b26ff70f1ca2dbe205655",
+                "reference": "79db18d00c0c281a604b26ff70f1ca2dbe205655",
                 "shasum": ""
             },
             "require": {
@@ -633,7 +633,7 @@
                 "nosql",
                 "odm"
             ],
-            "time": "2016-07-14 18:11:26"
+            "time": "2016-07-18 23:54:07"
         },
         {
             "name": "mongodb/mongodb",
