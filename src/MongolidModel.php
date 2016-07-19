@@ -1,14 +1,15 @@
 <?php
 namespace MongolidLaravel;
 
+use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Contracts\Validation\Factory as ValidationFactory;
+use Illuminate\Support\MessageBag;
+use Mockery;
 use Mockery\Expectation;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\ActiveRecord;
-use Illuminate\Contracts\Validation\Factory as ValidationFactory;
-use Illuminate\Support\MessageBag;
 use Mongolid\Connection\Pool;
-use Mockery;
 
 /**
  * This class extends the Mongolid\ActiveRecord, so, in order
@@ -118,7 +119,7 @@ abstract class MongolidModel extends ActiveRecord
 
         // Get the attributes and the rules to validate then
         $attributes = $this->attributes;
-        $rules = static::$rules;
+        $rules      = static::$rules;
 
         // Verify attributes that are hashed and that have not changed
         // those doesn't need to be validated.
@@ -160,7 +161,7 @@ abstract class MongolidModel extends ActiveRecord
      */
     protected function db(): Database
     {
-        $conn = app(Pool::class)->getConnection();
+        $conn     = app(Pool::class)->getConnection();
         $database = $conn->defaultDatabase;
 
         return $conn->getRawConnection()->$database;
@@ -187,7 +188,7 @@ abstract class MongolidModel extends ActiveRecord
         foreach ($this->hashedAttributes as $attr) {
             // Hash attribute if changed
             if (! isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
-                $this->$attr = app('hash')->make($this->$attr);
+                $this->$attr = app(Hasher::class)->make($this->$attr);
             }
 
             // Removes any confirmation field before saving it into the database
@@ -209,7 +210,7 @@ abstract class MongolidModel extends ActiveRecord
     public static function __callStatic($name, $arguments)
     {
         if ($name === 'shouldReceive') {
-            $class = get_called_class();
+            $class                = get_called_class();
             static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
 
             return static::$mock[$class]->shouldReceive(...$arguments);
@@ -338,8 +339,8 @@ abstract class MongolidModel extends ActiveRecord
     protected static function callMockOrParent(string $method, array $arguments)
     {
         $classToCall = 'parent';
-        $class = get_called_class();
-        $mock = static::$mock[$class] ?? null;
+        $class       = get_called_class();
+        $mock        = static::$mock[$class] ?? null;
 
         if ($mock && $mock->mockery_getExpectationsFor($method)) {
             $classToCall = $mock;

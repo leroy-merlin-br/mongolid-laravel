@@ -15,16 +15,24 @@
     ],
     "require": {
         "php": ">=7.0",
-        "zizaco/mongolid": "2.0.x-dev",
-        "illuminate/support": "^5.0"
+        "leroy-merlin-br/mongolid": "2.0.x-dev",
+        "illuminate/support": "~5.1.0",
+        "illuminate/auth": "~5.1.0"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9"
+        "phpunit/phpunit": "^5.0",
+        "mockery/mockery": "^0.9",
+        "orchestra/testbench": "3.1.*"
     },
     "autoload": {
         "psr-4": {
-            "MongolidLaravel\\": "src/MongolidLaravel"
+            "MongolidLaravel\\": "src"
         }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests"
+        ]
     },
     "extra": {
         "branch-alias": {
