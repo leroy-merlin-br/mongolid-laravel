@@ -12,6 +12,10 @@ before_install:
 
 before_script:
     - travis_retry composer install ${COMPOSER_FLAGS} --ignore-platform-reqs --no-interaction --prefer-dist
+    - mkdir -p build/logs
 
 script:
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
