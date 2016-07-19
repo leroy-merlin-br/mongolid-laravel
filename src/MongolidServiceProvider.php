@@ -30,7 +30,7 @@ class MongolidServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the mongoLid driver in auth AuthManager
+     * Register the mongoLid driver in auth AuthManager.
      *
      * @return void
      */
@@ -40,7 +40,7 @@ class MongolidServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register MongoDbConnector within the application
+     * Register MongoDbConnector within the application.
      *
      * @return void
      */
@@ -48,12 +48,12 @@ class MongolidServiceProvider extends ServiceProvider
     {
         MongolidIoc::setContainer($this->app);
 
-        $config           = $this->app->make('config');
+        $config = $this->app->make('config');
         $connectionString = $this->buildConnectionString();
-        $connection       = new Connection($connectionString);
-        $pool             = new Pool;
-        $cacheComponent   = new CacheComponent;
-        $eventService     = new EventTriggerService;
+        $connection = new Connection($connectionString);
+        $pool = new Pool();
+        $cacheComponent = new CacheComponent();
+        $eventService = new EventTriggerService();
 
         $eventService->registerEventDispatcher($this->app->make(LaravelEventTrigger::class));
 
@@ -67,7 +67,7 @@ class MongolidServiceProvider extends ServiceProvider
     }
 
     /**
-     * Registers mongoLid Driver in AuthManager
+     * Registers mongoLid Driver in AuthManager.
      *
      * @return void
      */
@@ -94,7 +94,7 @@ class MongolidServiceProvider extends ServiceProvider
     {
         $config = $this->app->make('config');
 
-        if (! $result = $config->get('database.mongodb.default.connectionString')) {
+        if (!$result = $config->get('database.mongodb.default.connectionString')) {
 
             // Connection string should begin with "mongodb://"
             $result = 'mongodb://';
@@ -102,14 +102,14 @@ class MongolidServiceProvider extends ServiceProvider
             // If username is present, append "<username>:<password>@"
             if ($config->get('database.mongodb.default.username')) {
                 $result .=
-                    $config->get('database.mongodb.default.username') . ':' .
-                    $config->get('database.mongodb.default.password', '') . '@';
+                    $config->get('database.mongodb.default.username').':'.
+                    $config->get('database.mongodb.default.password', '').'@';
             }
 
             // Append "<host>:<port>/<database>"
             $result .=
-                $config->get('database.mongodb.default.host', '127.0.0.1') . ':' .
-                $config->get('database.mongodb.default.port', 27017) . '/' .
+                $config->get('database.mongodb.default.host', '127.0.0.1').':'.
+                $config->get('database.mongodb.default.port', 27017).'/'.
                 $config->get('database.mongodb.default.database', 'mongolid');
         }
 
