@@ -104,7 +104,8 @@ class User extends MongolidModel
 
 In a nutshell, that's it!
 
-### For further reading about models, CRUD operations, relationships and more, check the [Mongolid Documentation](http://leroy-merlin-br.github.io/mongolid/).
+### For further reading about models, CRUD operations, relationships and more, check the [Read the Docs: <small>leroy-merlin-br.github.com/mongolid</small>](http://leroy-merlin-br.github.io/mongolid/).
+[![Mongolid Docs](https://dl.dropboxusercontent.com/u/12506137/libs_bundles/MongolidDocs.png)](http://leroy-merlin-br.github.com/mongolid)
 
 ## Authentication
 
@@ -234,6 +235,8 @@ MongoLid & MongoLid Laravel are free software distributed under the terms of the
 
 ## Additional information
 
+Mongolid was proudly built by the [Leroy Merlin Brazil](https://github.com/leroy-merlin-br) team. [See all the contributors](https://github.com/leroy-merlin-br/mongolid/graphs/contributors).
+
 Any questions, feel free to contact us.
 
-Any issues, please [report here](https://github.com/leroy-merlin-br/mongolid-laravel/issues)
+Any issues, please [report here](https://github.com/Zizaco/mongolid-laravel)
