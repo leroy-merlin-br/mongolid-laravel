@@ -1,11 +1,12 @@
 <?php
-namespace Zizaco\MongolidLaravel;
+namespace MongolidLaravel;
 
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
+use Mongolid\Container\Ioc;
 
-class MongoLidUserProvider implements UserProvider
+class MongolidUserProvider implements UserProvider
 {
     /**
      * The hasher implementation.
@@ -17,7 +18,7 @@ class MongoLidUserProvider implements UserProvider
     /**
      * The MongoLid user model.
      *
-     * @var \Zizaco\MongolidLaravel\MongoLid
+     * @var \MongolidLaravel\MongoLidModel
      */
     protected $model;
 
@@ -25,7 +26,7 @@ class MongoLidUserProvider implements UserProvider
      * Create a new database user provider.
      *
      * @param \Illuminate\Contracts\Hashing\Hasher $hasher
-     * @param \Zizaco\MongolidLaravel\MongoLid     $model
+     * @param \MongolidLaravel\MongoLidModel       $model
      */
     public function __construct(HasherContract $hasher, $model)
     {
@@ -77,13 +78,13 @@ class MongoLidUserProvider implements UserProvider
     /**
      * Create a new instance of the model.
      *
-     * @return \Zizaco\MongolidLaravel\MongoLid
+     * @return \MongolidLaravel\MongoLidModel
      */
-    public function createModel()
+    protected function createModel()
     {
         $class = '\\' . ltrim($this->model, '\\');
 
-        return new $class;
+        return Ioc::make($class);
     }
 
     /**
@@ -100,9 +101,7 @@ class MongoLidUserProvider implements UserProvider
             ['_id' => $identifier, 'remember_token' => $token]
         );
 
-        if ($user) {
-            return $user;
-        }
+        return $user;
     }
 
     /**
