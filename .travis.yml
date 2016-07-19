@@ -3,11 +3,15 @@ language: php
 php:
   - 7.0
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 before_install:
   - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
-  - composer install --no-interaction
+    - travis_retry composer install ${COMPOSER_FLAGS} --ignore-platform-reqs --no-interaction --prefer-dist
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
