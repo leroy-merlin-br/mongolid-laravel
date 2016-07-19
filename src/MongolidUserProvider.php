@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
@@ -30,14 +31,14 @@ class MongolidUserProvider implements UserProvider
      */
     public function __construct(HasherContract $hasher, $model)
     {
-        $this->model  = $model;
+        $this->model = $model;
         $this->hasher = $hasher;
     }
 
     /**
      * Retrieve a user by their unique identifier.
      *
-     * @param  mixed $identifier
+     * @param mixed $identifier
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
@@ -49,7 +50,7 @@ class MongolidUserProvider implements UserProvider
     /**
      * Retrieve a user by the given credentials.
      *
-     * @param  array $credentials
+     * @param array $credentials
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
@@ -82,7 +83,7 @@ class MongolidUserProvider implements UserProvider
      */
     protected function createModel()
     {
-        $class = '\\' . ltrim($this->model, '\\');
+        $class = '\\'.ltrim($this->model, '\\');
 
         return Ioc::make($class);
     }
@@ -90,8 +91,8 @@ class MongolidUserProvider implements UserProvider
     /**
      * Retrieve a user by by their unique identifier and "remember me" token.
      *
-     * @param  mixed  $identifier
-     * @param  string $token
+     * @param mixed  $identifier
+     * @param string $token
      *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */

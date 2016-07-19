@@ -42,8 +42,8 @@ class MongolidUserProviderTest extends TestCase
     {
         // Set
         $provider = $this->getProvider();
-        $user     = m::mock(Authenticatable::class);
-        $params   = ['user' => 'user', 'password' => '1234'];
+        $user = m::mock(Authenticatable::class);
+        $params = ['user' => 'user', 'password' => '1234'];
         $hasher = $this->app->make(Hasher::class);
 
         // Expectations
@@ -74,18 +74,16 @@ class MongolidUserProviderTest extends TestCase
     public function testShouldNotRetrieveByToken()
     {
         // Set
-        $model = new class extends MongolidModel
-        {
+        $model = new class() extends MongolidModel {
             public static function first(
                 $query = [],
                 array $projection = [],
                 bool $useCache = false
             ) {
-                return null;
             }
         };
 
-        $hasher   = $this->app->make(Hasher::class);
+        $hasher = $this->app->make(Hasher::class);
         $provider = new MongolidUserProvider($hasher, get_class($model));
 
         // Actions
@@ -99,7 +97,7 @@ class MongolidUserProviderTest extends TestCase
     {
         // Set
         $provider = $this->getProvider();
-        $user     = m::mock(Authenticatable::class);
+        $user = m::mock(Authenticatable::class);
 
         // Expectations
         $user->shouldReceive('save')
@@ -119,8 +117,7 @@ class MongolidUserProviderTest extends TestCase
      */
     protected function getProvider()
     {
-        $model = new class extends MongolidModel
-        {
+        $model = new class() extends MongolidModel {
             public static function first(
                 $query = [],
                 array $projection = [],
@@ -130,7 +127,7 @@ class MongolidUserProviderTest extends TestCase
             }
         };
 
-        $hasher   = $this->app->make(Hasher::class);
+        $hasher = $this->app->make(Hasher::class);
         $provider = new MongolidUserProvider($hasher, get_class($model));
 
         return $provider;
