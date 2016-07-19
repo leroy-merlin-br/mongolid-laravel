@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Events\Dispatcher;
@@ -10,14 +11,14 @@ use Mongolid\Event\EventTriggerInterface;
 class LaravelEventTrigger implements EventTriggerInterface
 {
     /**
-     * Laravel's Event dispatcher
+     * Laravel's Event dispatcher.
      *
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
     protected $dispatcher;
 
     /**
-     * Injects a Laravel's event dispatcher instance
+     * Injects a Laravel's event dispatcher instance.
      *
      * @param Dispatcher $dispatcher Event dispatcher.
      */
@@ -30,13 +31,13 @@ class LaravelEventTrigger implements EventTriggerInterface
      * Triggers / Dispatches a new event to the event handlers or listeners that
      * are being used.
      *
-     * @param  string  $event   Identification of the event.
-     * @param  mixed   $payload Data that is going to be sent to the event handler.
-     * @param  boolean $halt    The output of the event handler will be used in a conditional inside the context of
-     *                          where the event is being fired. This means that, if the event handler returns false,
-     *                          it will probably stop the action being executed, for example, "saving".
+     * @param string $event   Identification of the event.
+     * @param mixed  $payload Data that is going to be sent to the event handler.
+     * @param bool   $halt    The output of the event handler will be used in a conditional inside the context of
+     *                        where the event is being fired. This means that, if the event handler returns false,
+     *                        it will probably stop the action being executed, for example, "saving".
      *
-     * @return mixed            Event handler return. The importance of this return is determined by $halt
+     * @return mixed Event handler return. The importance of this return is determined by $halt
      */
     public function fire(string $event, $payload, bool $halt)
     {

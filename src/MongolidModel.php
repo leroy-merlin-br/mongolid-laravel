@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
@@ -29,28 +30,28 @@ use Mongolid\Connection\Pool;
 abstract class MongolidModel extends ActiveRecord
 {
     /**
-     * Validation rules
+     * Validation rules.
      *
      * @var array
      */
     public static $rules = null;
 
     /**
-     * Error message bag
+     * Error message bag.
      *
      * @var MessageBag
      */
     public $errors;
 
     /**
-     * Public static mock
+     * Public static mock.
      *
      * @var Mockery\Mock
      */
     public static $mock;
 
     /**
-     * Public local mock
+     * Public local mock.
      *
      * @var Mockery\Mock
      */
@@ -58,7 +59,7 @@ abstract class MongolidModel extends ActiveRecord
 
     /**
      * List of attribute names which should be hashed on save. For
-     * example: array('password');
+     * example: array('password');.
      *
      * @var array
      */
@@ -69,9 +70,9 @@ abstract class MongolidModel extends ActiveRecord
      * checks for the presence of the localMock in order to call the save
      * method into the existing Mock in order not to touch the database.
      *
-     * @param boolean $force Force save even if the object is invalid.
+     * @param bool $force Force save even if the object is invalid.
      *
-     * @return boolean
+     * @return bool
      */
     public function save(bool $force = false)
     {
@@ -93,7 +94,7 @@ abstract class MongolidModel extends ActiveRecord
      * the expectation in the localMock in order to call the delete method
      * into the existing mock and avoid touching the database.
      *
-     * @return boolean
+     * @return bool
      */
     public function delete()
     {
@@ -113,13 +114,13 @@ abstract class MongolidModel extends ActiveRecord
     public function isValid()
     {
         // Return true if there aren't validation rules
-        if (! is_array(static::$rules)) {
+        if (!is_array(static::$rules)) {
             return true;
         }
 
         // Get the attributes and the rules to validate then
         $attributes = $this->attributes;
-        $rules      = static::$rules;
+        $rules = static::$rules;
 
         // Verify attributes that are hashed and that have not changed
         // those doesn't need to be validated.
@@ -137,38 +138,38 @@ abstract class MongolidModel extends ActiveRecord
             $this->errors = $validator->errors();
         }
 
-        return ! $hasErrors;
+        return !$hasErrors;
     }
 
     /**
-     * Get the contents of errors attribute
+     * Get the contents of errors attribute.
      *
      * @return MessageBag Validation errors
      */
     public function errors(): MessageBag
     {
-        if (! $this->errors) {
-            $this->errors = new MessageBag;
+        if (!$this->errors) {
+            $this->errors = new MessageBag();
         }
 
         return $this->errors;
     }
 
     /**
-     * Returns the database object (the connection)
+     * Returns the database object (the connection).
      *
      * @return Database
      */
     protected function db(): Database
     {
-        $conn     = app(Pool::class)->getConnection();
+        $conn = app(Pool::class)->getConnection();
         $database = $conn->defaultDatabase;
 
         return $conn->getRawConnection()->$database;
     }
 
     /**
-     * Returns the Mongo collection object
+     * Returns the Mongo collection object.
      *
      * @return Collection
      */
@@ -187,12 +188,12 @@ abstract class MongolidModel extends ActiveRecord
     {
         foreach ($this->hashedAttributes as $attr) {
             // Hash attribute if changed
-            if (! isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
+            if (!isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
                 $this->$attr = app(Hasher::class)->make($this->$attr);
             }
 
             // Removes any confirmation field before saving it into the database
-            $confirmationField = $attr . '_confirmation';
+            $confirmationField = $attr.'_confirmation';
             if ($this->$confirmationField) {
                 unset($this->$confirmationField);
             }
@@ -202,15 +203,15 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Initiate a mock expectation on the facade.
      *
-     * @param  string $name      Name of the method being called.
-     * @param  array  $arguments Method arguments.
+     * @param string $name      Name of the method being called.
+     * @param array  $arguments Method arguments.
      *
      * @return Expectation|void
      */
     public static function __callStatic($name, $arguments)
     {
         if ($name === 'shouldReceive') {
-            $class                = get_called_class();
+            $class = get_called_class();
             static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
 
             return static::$mock[$class]->shouldReceive(...$arguments);
@@ -254,7 +255,7 @@ abstract class MongolidModel extends ActiveRecord
      */
     protected function getLocalMock()
     {
-        if (! $this->hasLocalMock()) {
+        if (!$this->hasLocalMock()) {
             $this->localMock = Mockery::mock();
         }
 
@@ -286,7 +287,7 @@ abstract class MongolidModel extends ActiveRecord
     }
 
     /**
-     * Gets the first entity of this kind that matches the query
+     * Gets the first entity of this kind that matches the query.
      *
      * @param mixed $query      MongoDB selection criteria.
      * @param array $projection Fields to project in MongoDB query.
@@ -304,7 +305,7 @@ abstract class MongolidModel extends ActiveRecord
 
     /**
      * Gets a cursor of this kind of entities that matches the query from the
-     * database
+     * database.
      *
      * @param array $query      MongoDB selection criteria.
      * @param array $projection Fields to project in MongoDB query.
@@ -329,18 +330,18 @@ abstract class MongolidModel extends ActiveRecord
     }
 
     /**
-     * Calls mock method if its have expectations. Calls parent method otherwise
+     * Calls mock method if its have expectations. Calls parent method otherwise.
      *
      * @param string $method    Name of the method being called.
      * @param array  $arguments Arguments to pass in method call.
      *
-     * @return  mixed See parent implementation
+     * @return mixed See parent implementation
      */
     protected static function callMockOrParent(string $method, array $arguments)
     {
         $classToCall = 'parent';
-        $class       = get_called_class();
-        $mock        = static::$mock[$class] ?? null;
+        $class = get_called_class();
+        $mock = static::$mock[$class] ?? null;
 
         if ($mock && $mock->mockery_getExpectationsFor($method)) {
             $classToCall = $mock;

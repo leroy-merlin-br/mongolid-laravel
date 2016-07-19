@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Events\Dispatcher;
@@ -12,10 +13,10 @@ class LaravelEventTriggerTest extends TestCase
     {
         // Set
         $dispatcher = m::mock(Dispatcher::class);
-        $trigger    = new LaravelEventTrigger($dispatcher);
-        $event      = 'collection:saved';
-        $payload    = ['_id' => new ObjectID()];
-        $halt       = false;
+        $trigger = new LaravelEventTrigger($dispatcher);
+        $event = 'collection:saved';
+        $payload = ['_id' => new ObjectID()];
+        $halt = false;
 
         // Expectations
         $dispatcher->shouldReceive('fire')
