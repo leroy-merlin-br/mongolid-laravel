@@ -1,6 +1,7 @@
 <?php
 namespace MongolidLaravel;
 
+use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Support\MessageBag;
 use Mockery;
@@ -187,7 +188,7 @@ abstract class MongolidModel extends ActiveRecord
         foreach ($this->hashedAttributes as $attr) {
             // Hash attribute if changed
             if (! isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
-                $this->$attr = app('hash')->make($this->$attr);
+                $this->$attr = app(Hasher::class)->make($this->$attr);
             }
 
             // Removes any confirmation field before saving it into the database
