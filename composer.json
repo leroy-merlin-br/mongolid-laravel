@@ -34,5 +34,10 @@
         "classmap": [
             "tests"
         ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "v2.0-dev"
+        }
     }
 }
