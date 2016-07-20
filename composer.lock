@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c8e55580228c6f425ec82b2c0a2f9f84",
-    "content-hash": "6d8640fed57b26658c21695514e96fab",
+    "hash": "8e05919700b781544c4b255f6b079ed5",
+    "content-hash": "88acec1e8919c0612769a91ba4411e0b",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -576,7 +576,7 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "dev-master",
+            "version": "v2.0.0-beta2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leroy-merlin-br/mongolid.git",
@@ -3932,7 +3932,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "leroy-merlin-br/mongolid": 20
+        "leroy-merlin-br/mongolid": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
