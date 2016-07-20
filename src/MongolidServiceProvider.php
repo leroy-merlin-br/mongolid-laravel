@@ -3,12 +3,14 @@
 namespace MongolidLaravel;
 
 use Illuminate\Auth\Guard;
+use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc as MongolidIoc;
 use Mongolid\Event\EventTriggerService;
-use Mongolid\Util\CacheComponent;
+use Mongolid\Serializer\Serializer;
+use Mongolid\Util\CacheComponentInterface;
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -46,21 +48,22 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function registerConnector()
     {
+        $config = $this->app->make('config');
         MongolidIoc::setContainer($this->app);
 
-        $config = $this->app->make('config');
         $connectionString = $this->buildConnectionString();
-        $connection = new Connection($connectionString);
-        $pool = new Pool();
-        $cacheComponent = new CacheComponent();
-        $eventService = new EventTriggerService();
+        $connection       = new Connection($connectionString);
+        $pool             = new Pool();
+        $eventService     = new EventTriggerService();
 
         $eventService->registerEventDispatcher($this->app->make(LaravelEventTrigger::class));
 
         $pool->addConnection($connection);
         $this->app->instance(Pool::class, $pool);
-        $this->app->instance(CacheComponent::class, $cacheComponent);
         $this->app->instance(EventTriggerService::class, $eventService);
+        $this->app->bind(CacheComponentInterface::class, function ($app) {
+            return new LaravelCacheComponent($app[CacheRepository::class], $app[Serializer::class]);
+        });
 
         $connection->defaultDatabase = $config
             ->get('database.mongodb.default.database', 'mongolid');
