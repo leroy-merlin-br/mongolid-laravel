@@ -139,7 +139,10 @@ class MongolidModelTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldHashAttributesOnSave()
+    /**
+     * @dataProvider getMethods
+     */
+    public function testShouldHashAttributesOnSaveAndUpdate($method)
     {
         // Set
         $dataMapper = m::mock(DataMapper::class);
@@ -158,7 +161,7 @@ class MongolidModelTest extends TestCase
         $model->password_confirmation = '123456';
 
         // Expectations
-        $dataMapper->shouldReceive('save')
+        $dataMapper->shouldReceive($method)
             ->once()
             ->withAnyArgs()
             ->andReturn(true);
@@ -169,7 +172,7 @@ class MongolidModelTest extends TestCase
             ->andReturn('HASHED_PASSWORD');
 
         // Actions
-        $result = $model->save();
+        $result = $model->$method();
 
         // Assertions
         $this->assertTrue($result);
@@ -408,5 +411,16 @@ class MongolidModelTest extends TestCase
 
         // Assertions
         $this->assertEquals($database->collection_name, $result);
+    }
+
+    /**
+     * Retrieves methods which should hash attributes before send data to DB
+     */
+    public function getMethods()
+    {
+        return [
+            ['save'],
+            ['update'],
+        ];
     }
 }

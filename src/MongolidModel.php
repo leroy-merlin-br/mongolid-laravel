@@ -90,6 +90,16 @@ abstract class MongolidModel extends ActiveRecord
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function update()
+    {
+        $this->hashAttributes();
+
+        return parent::update();
+    }
+
+    /**
      * Overwrites the delete method in order to be able to check for
      * the expectation in the localMock in order to call the delete method
      * into the existing mock and avoid touching the database.
