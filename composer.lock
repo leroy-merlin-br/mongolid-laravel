@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8e05919700b781544c4b255f6b079ed5",
-    "content-hash": "88acec1e8919c0612769a91ba4411e0b",
+    "hash": "112211eb82490bab634d66e58562c512",
+    "content-hash": "8c80c411d3317b87e0557eb1ea0b62ab",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -576,16 +576,16 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v2.0.0-beta2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leroy-merlin-br/mongolid.git",
-                "reference": "51e2bb400a08dcacaf6f517cd45d7afaccc03eb7"
+                "reference": "2dc82113e2e50d6f473ff1bc891327f003b8386a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/51e2bb400a08dcacaf6f517cd45d7afaccc03eb7",
-                "reference": "51e2bb400a08dcacaf6f517cd45d7afaccc03eb7",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/2dc82113e2e50d6f473ff1bc891327f003b8386a",
+                "reference": "2dc82113e2e50d6f473ff1bc891327f003b8386a",
                 "shasum": ""
             },
             "require": {
@@ -633,7 +633,7 @@
                 "nosql",
                 "odm"
             ],
-            "time": "2016-08-24 14:29:51"
+            "time": "2016-08-24 20:28:14"
         },
         {
             "name": "mongodb/mongodb",
@@ -3933,7 +3933,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "leroy-merlin-br/mongolid": 10
+        "leroy-merlin-br/mongolid": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -327,7 +327,7 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
-        $dataMapper->shouldReceive('firstOrNew')
+        $dataMapper->shouldReceive('first')
             ->once()
             ->withAnyArgs()
             ->andReturn($model);
