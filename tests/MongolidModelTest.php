@@ -316,6 +316,49 @@ class MongolidModelTest extends TestCase
         $this->assertEquals($model, $result);
     }
 
+    public function testShouldGetFirstOrNew()
+    {
+        // Set
+        $dataMapper = m::mock(DataMapper::class);
+        $this->app->instance(DataMapper::class, $dataMapper);
+
+        $model = new class() extends MongolidModel {
+            protected $collection = 'collection_name';
+        };
+
+        // Expectations
+        $dataMapper->shouldReceive('first')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($model);
+
+        // Actions
+        $result = $model->firstOrNew('123');
+
+        // Assertions
+        $this->assertEquals($model, $result);
+    }
+
+    public function testShouldMockFirstOrNew()
+    {
+        // Set
+        $model = new class() extends MongolidModel {
+            protected $collection = 'collection_name';
+        };
+
+        // Expectations
+        $model::shouldReceive('firstOrNew')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($model);
+
+        // Actions
+        $result = $model->firstOrNew('123');
+
+        // Assertions
+        $this->assertEquals($model, $result);
+    }
+
     public function testShouldGetWhere()
     {
         // Set
