@@ -304,6 +304,40 @@ abstract class MongolidModel extends ActiveRecord
     }
 
     /**
+     * Gets the first entity of this kind that matches the query. If no
+     * document was found, throws ModelNotFoundException.
+     *
+     * @param  mixed   $query      MongoDB selection criteria.
+     * @param  array   $projection Fields to project in Mongo query.
+     * @param  boolean $useCache   Retrieves the entity through a CacheableCursor.
+     *
+     * @throws ModelNotFoundException If no document was found.
+     *
+     * @return ActiveRecord
+     */
+    public static function firstOrFail(
+        $query = [],
+        array $projection = [],
+        bool $useCache = false
+    ) {
+        return static::callMockOrParent('firstOrFail', func_get_args());
+    }
+
+    /**
+     * Gets the first entity of this kind that matches the query. If no
+     * document was found, a new entity will be returned with the
+     * _if field filled.
+     *
+     * @param  mixed $id Document id.
+     *
+     * @return ActiveRecord
+     */
+    public static function firstOrCreate($id)
+    {
+        return static::callMockOrParent('firstOrCreate', func_get_args());
+    }
+
+    /**
      * Gets a cursor of this kind of entities that matches the query from the
      * database.
      *
