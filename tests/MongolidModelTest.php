@@ -32,7 +32,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class() extends MongolidModel {
-            public static $rules = [
+            public $rules = [
                 'name'    => 'required',
                 'address' => 'min:100',
             ];
@@ -57,7 +57,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class() extends MongolidModel {
-            public static $rules = [
+            public $rules = [
                 'name' => 'required',
             ];
 
@@ -80,7 +80,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class() extends MongolidModel {
-            public static $rules = [
+            public $rules = [
                 'password' => 'required',
             ];
 
@@ -184,7 +184,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class() extends MongolidModel {
-            public static $rules = [
+            public $rules = [
                 'name'    => 'required',
                 'address' => 'min:100',
             ];
@@ -209,7 +209,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class() extends MongolidModel {
-            public static $rules = [
+            public $rules = [
                 'name'    => 'required',
                 'address' => 'min:100',
             ];

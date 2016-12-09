@@ -34,7 +34,7 @@ abstract class MongolidModel extends ActiveRecord
      *
      * @var array
      */
-    public static $rules = null;
+    public $rules = null;
 
     /**
      * Error message bag.
@@ -117,20 +117,20 @@ abstract class MongolidModel extends ActiveRecord
 
     /**
      * Verify if the model is valid by running its validation rules,
-     * defined on static attribute `$rules`.
+     * defined on attribute `$rules`.
      *
      * @return bool
      */
     public function isValid()
     {
         // Return true if there aren't validation rules
-        if (!is_array(static::$rules)) {
+        if (!is_array($this->rules)) {
             return true;
         }
 
         // Get the attributes and the rules to validate then
         $attributes = $this->attributes;
-        $rules = static::$rules;
+        $rules = $this->rules;
 
         // Verify attributes that are hashed and that have not changed
         // those doesn't need to be validated.
