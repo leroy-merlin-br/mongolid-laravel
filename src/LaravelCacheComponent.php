@@ -13,7 +13,7 @@ use stdClass;
 class LaravelCacheComponent implements CacheComponentInterface
 {
     /**
-     * Injects the dependencies of LaravelCacheComponent
+     * Injects the dependencies of LaravelCacheComponent.
      *
      * @param Repository $laravelCache Cache component that will be used to store.
      * @param Serializer $serializer   Serializer that will serialize the objects.
@@ -21,13 +21,13 @@ class LaravelCacheComponent implements CacheComponentInterface
     public function __construct(Repository $laravelCache, Serializer $serializer)
     {
         $this->laravelCache = $laravelCache;
-        $this->serializer   = $serializer;
+        $this->serializer = $serializer;
     }
 
     /**
      * Retrieve an item from the cache by key.
      *
-     * @param  string $key Cache key of the item to be retrieved.
+     * @param string $key Cache key of the item to be retrieved.
      *
      * @return mixed
      */
@@ -69,7 +69,7 @@ class LaravelCacheComponent implements CacheComponentInterface
      * if the ttl of the given cache key has been expired and will free the
      * memory if so.
      *
-     * @param  string $key Cache key of the item.
+     * @param string $key Cache key of the item.
      *
      * @return bool Has cache key.
      */
