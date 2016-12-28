@@ -448,7 +448,6 @@ class MongolidModelTest extends TestCase
             ->with()
             ->andReturnSelf();
 
-
         // Actions
         $result = $model->rawCollection();
 
@@ -457,7 +456,7 @@ class MongolidModelTest extends TestCase
     }
 
     /**
-     * Retrieves methods which should hash attributes before send data to DB
+     * Retrieves methods which should hash attributes before send data to DB.
      */
     public function getMethods()
     {

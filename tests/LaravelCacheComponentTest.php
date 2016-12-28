@@ -2,8 +2,8 @@
 
 namespace MongolidLaravel;
 
-use Mockery as m;
 use Illuminate\Cache\Repository;
+use Mockery as m;
 use Mongolid\Serializer\Serializer;
 use TestCase;
 
@@ -12,11 +12,11 @@ class LaravelCacheComponentTest extends TestCase
     public function testShouldGet()
     {
         // Set
-        $cacheRepo  = m::mock(Repository::class);
+        $cacheRepo = m::mock(Repository::class);
         $serializer = m::mock(Serializer::class);
-        $component  = new LaravelCacheComponent($cacheRepo, $serializer);
-        $key        = 'foo';
-        $value      = 'bar';
+        $component = new LaravelCacheComponent($cacheRepo, $serializer);
+        $key = 'foo';
+        $value = 'bar';
 
         // Expectations
         $cacheRepo->shouldReceive('get')
@@ -31,11 +31,11 @@ class LaravelCacheComponentTest extends TestCase
     public function testShouldPut()
     {
         // Set
-        $cacheRepo  = m::mock(Repository::class);
+        $cacheRepo = m::mock(Repository::class);
         $serializer = m::mock(Serializer::class);
-        $component  = new LaravelCacheComponent($cacheRepo, $serializer);
-        $key        = 'foo';
-        $value      = [(object) ['name' => 'batata']];
+        $component = new LaravelCacheComponent($cacheRepo, $serializer);
+        $key = 'foo';
+        $value = [(object) ['name' => 'batata']];
 
         // Expectations
         $serializer->shouldReceive('convert')
@@ -55,11 +55,11 @@ class LaravelCacheComponentTest extends TestCase
     public function testShouldCheckIfHave()
     {
         // Set
-        $cacheRepo  = m::mock(Repository::class);
+        $cacheRepo = m::mock(Repository::class);
         $serializer = m::mock(Serializer::class);
-        $component  = new LaravelCacheComponent($cacheRepo, $serializer);
-        $key        = 'foo';
-        $exists     = true;
+        $component = new LaravelCacheComponent($cacheRepo, $serializer);
+        $key = 'foo';
+        $exists = true;
 
         // Expectations
         $cacheRepo->shouldReceive('has')

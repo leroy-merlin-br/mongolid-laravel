@@ -317,9 +317,9 @@ abstract class MongolidModel extends ActiveRecord
      * Gets the first entity of this kind that matches the query. If no
      * document was found, throws ModelNotFoundException.
      *
-     * @param mixed   $query      MongoDB selection criteria.
-     * @param array   $projection Fields to project in Mongo query.
-     * @param boolean $useCache   Retrieves the entity through a CacheableCursor.
+     * @param mixed $query      MongoDB selection criteria.
+     * @param array $projection Fields to project in Mongo query.
+     * @param bool  $useCache   Retrieves the entity through a CacheableCursor.
      *
      * @throws ModelNotFoundException If no document was found.
      *

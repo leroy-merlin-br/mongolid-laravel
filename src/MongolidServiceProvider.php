@@ -52,9 +52,9 @@ class MongolidServiceProvider extends ServiceProvider
         MongolidIoc::setContainer($this->app);
 
         $connectionString = $this->buildConnectionString();
-        $connection       = new Connection($connectionString);
-        $pool             = new Pool();
-        $eventService     = new EventTriggerService();
+        $connection = new Connection($connectionString);
+        $pool = new Pool();
+        $eventService = new EventTriggerService();
 
         $eventService->registerEventDispatcher($this->app->make(LaravelEventTrigger::class));
 
