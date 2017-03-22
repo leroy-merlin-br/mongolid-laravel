@@ -4,7 +4,6 @@ namespace MongolidLaravel;
 
 use Illuminate\Cache\Repository;
 use Mockery as m;
-use Mongolid\Serializer\Serializer;
 use TestCase;
 
 class LaravelCacheComponentTest extends TestCase
@@ -13,8 +12,7 @@ class LaravelCacheComponentTest extends TestCase
     {
         // Set
         $cacheRepo = m::mock(Repository::class);
-        $serializer = m::mock(Serializer::class);
-        $component = new LaravelCacheComponent($cacheRepo, $serializer);
+        $component = new LaravelCacheComponent($cacheRepo);
         $key = 'foo';
         $value = 'bar';
 
@@ -32,17 +30,11 @@ class LaravelCacheComponentTest extends TestCase
     {
         // Set
         $cacheRepo = m::mock(Repository::class);
-        $serializer = m::mock(Serializer::class);
-        $component = new LaravelCacheComponent($cacheRepo, $serializer);
+        $component = new LaravelCacheComponent($cacheRepo);
         $key = 'foo';
         $value = [(object) ['name' => 'batata']];
 
         // Expectations
-        $serializer->shouldReceive('convert')
-            ->once()
-            ->with([['name' => 'batata']])
-            ->andReturn([['name' => 'chips']]);
-
         $cacheRepo->shouldReceive('put')
             ->once()
             ->with($key, [['name' => 'chips']], 3)
@@ -56,8 +48,7 @@ class LaravelCacheComponentTest extends TestCase
     {
         // Set
         $cacheRepo = m::mock(Repository::class);
-        $serializer = m::mock(Serializer::class);
-        $component = new LaravelCacheComponent($cacheRepo, $serializer);
+        $component = new LaravelCacheComponent($cacheRepo);
         $key = 'foo';
         $exists = true;
 
