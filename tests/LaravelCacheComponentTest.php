@@ -37,7 +37,7 @@ class LaravelCacheComponentTest extends TestCase
         // Expectations
         $cacheRepo->shouldReceive('put')
             ->once()
-            ->with($key, [['name' => 'chips']], 3)
+            ->with($key, [['name' => 'batata']], 3)
             ->andReturn($value);
 
         // Assertion
