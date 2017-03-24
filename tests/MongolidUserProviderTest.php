@@ -5,7 +5,7 @@ namespace MongolidLaravel;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;
-use Mongolid\Serializer\Type\ObjectID;
+use MongoDB\BSON\ObjectID;
 use TestCase;
 
 class MongolidUserProviderTest extends TestCase

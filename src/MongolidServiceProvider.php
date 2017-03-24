@@ -9,7 +9,6 @@ use Mongolid\Connection\Connection;
 use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc as MongolidIoc;
 use Mongolid\Event\EventTriggerService;
-use Mongolid\Serializer\Serializer;
 use Mongolid\Util\CacheComponentInterface;
 
 class MongolidServiceProvider extends ServiceProvider
@@ -62,7 +61,7 @@ class MongolidServiceProvider extends ServiceProvider
         $this->app->instance(Pool::class, $pool);
         $this->app->instance(EventTriggerService::class, $eventService);
         $this->app->bind(CacheComponentInterface::class, function ($app) {
-            return new LaravelCacheComponent($app[CacheRepository::class], $app[Serializer::class]);
+            return new LaravelCacheComponent($app[CacheRepository::class]);
         });
 
         $connection->defaultDatabase = $config

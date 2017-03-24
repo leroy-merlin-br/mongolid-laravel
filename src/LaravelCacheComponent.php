@@ -3,7 +3,6 @@
 namespace MongolidLaravel;
 
 use Illuminate\Cache\Repository;
-use Mongolid\Serializer\Serializer;
 use Mongolid\Util\CacheComponentInterface;
 use stdClass;
 
@@ -16,12 +15,10 @@ class LaravelCacheComponent implements CacheComponentInterface
      * Injects the dependencies of LaravelCacheComponent.
      *
      * @param Repository $laravelCache Cache component that will be used to store.
-     * @param Serializer $serializer   Serializer that will serialize the objects.
      */
-    public function __construct(Repository $laravelCache, Serializer $serializer)
+    public function __construct(Repository $laravelCache)
     {
         $this->laravelCache = $laravelCache;
-        $this->serializer = $serializer;
     }
 
     /**
@@ -33,13 +30,7 @@ class LaravelCacheComponent implements CacheComponentInterface
      */
     public function get(string $key)
     {
-        $result = $this->laravelCache->get($key, null);
-
-        if (is_array($result)) {
-            return $this->serializer->unconvert($result);
-        }
-
-        return $result;
+        return $this->laravelCache->get($key, null);
     }
 
     /**
@@ -61,7 +52,7 @@ class LaravelCacheComponent implements CacheComponentInterface
             }
         }
 
-        $this->laravelCache->put($key, $this->serializer->convert($value), $minutes);
+        $this->laravelCache->put($key, $value, $minutes);
     }
 
     /**
