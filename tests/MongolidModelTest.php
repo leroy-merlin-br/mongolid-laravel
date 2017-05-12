@@ -17,7 +17,8 @@ class MongolidModelTest extends TestCase
     public function testShouldValidateWithNoRules()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
         };
 
         // Actions
@@ -31,9 +32,10 @@ class MongolidModelTest extends TestCase
     public function testShouldNotValidateWithUnattendedRules()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
-                'name'    => 'required',
+                'name' => 'required',
                 'address' => 'min:100',
             ];
         };
@@ -56,7 +58,8 @@ class MongolidModelTest extends TestCase
     public function testValidateShouldSkipUnchangedHashedAttributes()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
                 'name' => 'required',
             ];
@@ -78,7 +81,8 @@ class MongolidModelTest extends TestCase
     public function testShouldValidateChangedHashedAttributes()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
                 'password' => 'required',
             ];
@@ -101,11 +105,14 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'users';
         };
 
         // Expectations
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
         $dataMapper->shouldReceive('save')
             ->once()
             ->withAnyArgs()
@@ -121,7 +128,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockSave()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
         };
 
         // Expectations
@@ -146,8 +154,10 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'users';
+
             protected $hashedAttributes = ['password'];
         };
 
@@ -155,6 +165,8 @@ class MongolidModelTest extends TestCase
         $model->password_confirmation = '123456';
 
         // Expectations
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
         $dataMapper->shouldReceive($method)
             ->once()
             ->withAnyArgs()
@@ -177,9 +189,10 @@ class MongolidModelTest extends TestCase
     public function testShouldNotAttemptToSaveWhenInvalid()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
-                'name'    => 'required',
+                'name' => 'required',
                 'address' => 'min:100',
             ];
         };
@@ -202,9 +215,10 @@ class MongolidModelTest extends TestCase
     public function testShouldForceSaving()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
-                'name'    => 'required',
+                'name' => 'required',
                 'address' => 'min:100',
             ];
         };
@@ -230,11 +244,14 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
         $dataMapper->shouldReceive('delete')
             ->once()
             ->withAnyArgs()
@@ -250,7 +267,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockDelete()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
         };
 
         // Expectations
@@ -271,11 +289,14 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
         $dataMapper->shouldReceive('first')
             ->once()
             ->withAnyArgs()
@@ -291,7 +312,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockFirst()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
@@ -313,11 +335,14 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
         $dataMapper->shouldReceive('first')
             ->once()
             ->withAnyArgs()
@@ -333,7 +358,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockFirstOrNew()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
@@ -356,11 +382,14 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $cursor = m::mock(Cursor::class);
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
         $dataMapper->shouldReceive('where')
             ->once()
             ->withAnyArgs()
@@ -379,11 +408,14 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $cursor = m::mock(Cursor::class);
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
         $dataMapper->shouldReceive('all')
             ->once()
             ->withAnyArgs()
@@ -399,7 +431,8 @@ class MongolidModelTest extends TestCase
     public function testShouldIgnoreInvalidStaticCalls()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
         };
 
         // Actions
@@ -409,15 +442,15 @@ class MongolidModelTest extends TestCase
     public function testShouldGetCollection()
     {
         // Set
-        $pool = m::mock(Pool::class);
-        $this->app->instance(Pool::class, $pool);
+        $pool = $this->instance(Pool::class, m::mock(Pool::class));
 
         $connection = m::mock(Connection::class);
         $database = m::mock(Database::class);
         $connection->mongolid = $database;
         $database->collection_name = m::mock(Collection::class);
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
 
             public function rawCollection()
