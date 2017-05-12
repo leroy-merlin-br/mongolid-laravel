@@ -99,8 +99,7 @@ class MongolidModelTest extends TestCase
     public function testShouldSave()
     {
         // Set
-        $dataMapper = m::mock(DataMapper::class);
-        $this->app->instance(DataMapper::class, $dataMapper);
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'users';
@@ -144,11 +143,8 @@ class MongolidModelTest extends TestCase
     public function testShouldHashAttributesOnSaveAndUpdate($method)
     {
         // Set
-        $dataMapper = m::mock(DataMapper::class);
-        $this->app->instance(DataMapper::class, $dataMapper);
-
-        $hasher = m::mock(Hasher::class);
-        $this->app->instance(Hasher::class, $hasher);
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'users';
@@ -232,8 +228,7 @@ class MongolidModelTest extends TestCase
     public function testShouldDelete()
     {
         // Set
-        $dataMapper = m::mock(DataMapper::class);
-        $this->app->instance(DataMapper::class, $dataMapper);
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -274,8 +269,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirst()
     {
         // Set
-        $dataMapper = m::mock(DataMapper::class);
-        $this->app->instance(DataMapper::class, $dataMapper);
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -317,8 +311,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirstOrNew()
     {
         // Set
-        $dataMapper = m::mock(DataMapper::class);
-        $this->app->instance(DataMapper::class, $dataMapper);
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -360,8 +353,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetWhere()
     {
         // Set
-        $dataMapper = m::mock(DataMapper::class);
-        $this->app->instance(DataMapper::class, $dataMapper);
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $cursor = m::mock(Cursor::class);
 
         $model = new class() extends MongolidModel {
@@ -384,8 +376,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetAll()
     {
         // Set
-        $dataMapper = m::mock(DataMapper::class);
-        $this->app->instance(DataMapper::class, $dataMapper);
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $cursor = m::mock(Cursor::class);
 
         $model = new class() extends MongolidModel {
