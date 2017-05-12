@@ -66,7 +66,6 @@ class MongolidModelTest extends TestCase
 
         $model->name = 'name';
         $model->password = 'HASHED_PASSWORD';
-        $model->storeOriginalAttributes();
 
         // Actions
         $result = $model->isValid();
@@ -156,7 +155,6 @@ class MongolidModelTest extends TestCase
             protected $hashedAttributes = ['password'];
         };
 
-        $model->storeOriginalAttributes();
         $model->password = '123456';
         $model->password_confirmation = '123456';
 
