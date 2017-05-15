@@ -30,6 +30,7 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 
 - Laravel 4.2 `"leroy-merlin-br/mongolid-laravel": "^0.7"`
 - Laravel 5.1 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta4"`
+- Laravel 5.2 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta5"`
 
 Install with `composer require` (use one of the above tags if needed)
 
@@ -65,7 +66,7 @@ And least, be sure to configure a database connection in `config/database.php`:
 Paste the settings bellow at the end of your `config/database.php`, before the last `);`:
 
 **Notice:** It must be **outside** of `connections` array.
- 
+
 ```php
 /*
 |--------------------------------------------------------------------------
@@ -103,7 +104,7 @@ use MongolidLaravel\MongolidModel;
 
 class User extends MongolidModel
 {
-    
+
 }
 ```
 
@@ -178,7 +179,7 @@ class User extends MongolidModel implements Authenticatable
     {
         return $this->remember_token;
     }
-    
+
 
     /**
      * Set the token value for the "remember me" session.
