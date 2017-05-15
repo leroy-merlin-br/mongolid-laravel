@@ -67,13 +67,12 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function extendsAuthManager()
     {
-        // MongoLid Auth Driver
-        $this->app['auth']->extend(
-            'mongoLid',
+        $this->app['auth']->provider(
+            'mongolid',
             function ($app) {
-                $provider = new MongolidUserProvider($app['hash'], $app['config']->get('auth.model'));
-
-                return new Guard($provider, $app['session.store']);
+                return new MongolidUserProvider(
+                    $app['hash'], $app['config']->get('auth.model')
+                );
             }
         );
     }

@@ -14,7 +14,7 @@ class MongolidServiceProviderTest extends TestCase
     {
         // Set
         $provider = new MongolidServiceProvider($this->app);
-        config(['auth.driver' => 'mongoLid']);
+        config(['auth.providers.users.driver' => 'mongolid']);
 
         // Actions
         $provider->boot();
