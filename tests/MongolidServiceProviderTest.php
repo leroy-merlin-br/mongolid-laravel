@@ -4,6 +4,8 @@ namespace MongolidLaravel;
 
 use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc;
+use Mongolid\Event\EventTriggerService;
+use Mongolid\Util\CacheComponentInterface;
 use TestCase;
 
 class MongolidServiceProviderTest extends TestCase
@@ -22,19 +24,23 @@ class MongolidServiceProviderTest extends TestCase
         $this->assertInstanceOf(MongolidUserProvider::class, $result);
     }
 
-    public function testShouldRegisterConnector()
+    public function testShouldRegister()
     {
         // Set
         $provider = new MongolidServiceProvider($this->app);
         config(['database.mongodb.default.database' => 'databaseName']);
 
         // Actions
-        $provider->registerConnector();
+        $provider->register();
 
         $pool = Ioc::make(Pool::class);
+        $eventService = Ioc::make(EventTriggerService::class);
+        $cacheComponent = Ioc::make(CacheComponentInterface::class);
 
         // Assertions
         $this->assertEquals('databaseName', $pool->getConnection()->defaultDatabase);
+        $this->assertInstanceOf(EventTriggerService::class, $eventService);
+        $this->assertInstanceOf(LaravelCacheComponent::class, $cacheComponent);
     }
 
     public function testShouldRegisterConnectorWithUsernameAndPassword()

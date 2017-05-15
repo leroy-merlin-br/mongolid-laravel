@@ -2,6 +2,7 @@ language: php
 
 php:
   - 7.0
+  - 7.1
 
 cache:
   directories:
@@ -11,8 +12,8 @@ before_install:
   - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
-    - travis_retry composer install ${COMPOSER_FLAGS} --ignore-platform-reqs --no-interaction --prefer-dist
-    - mkdir -p build/logs
+  - travis_retry composer install ${COMPOSER_FLAGS} --ignore-platform-reqs --no-interaction --prefer-dist
+  - mkdir -p build/logs
 
 script:
   - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml

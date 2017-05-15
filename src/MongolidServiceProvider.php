@@ -22,8 +22,6 @@ class MongolidServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -32,8 +30,6 @@ class MongolidServiceProvider extends ServiceProvider
 
     /**
      * Register the mongoLid driver in auth AuthManager.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -42,8 +38,6 @@ class MongolidServiceProvider extends ServiceProvider
 
     /**
      * Register MongoDbConnector within the application.
-     *
-     * @return void
      */
     public function registerConnector()
     {
@@ -70,8 +64,6 @@ class MongolidServiceProvider extends ServiceProvider
 
     /**
      * Registers mongoLid Driver in AuthManager.
-     *
-     * @return void
      */
     public function extendsAuthManager()
     {
@@ -97,7 +89,6 @@ class MongolidServiceProvider extends ServiceProvider
         $config = $this->app->make('config');
 
         if (!$result = $config->get('database.mongodb.default.connectionString')) {
-
             // Connection string should begin with "mongodb://"
             $result = 'mongodb://';
 

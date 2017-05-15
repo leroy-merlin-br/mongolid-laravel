@@ -70,7 +70,7 @@ abstract class MongolidModel extends ActiveRecord
      * checks for the presence of the localMock in order to call the save
      * method into the existing Mock in order not to touch the database.
      *
-     * @param bool $force Force save even if the object is invalid.
+     * @param bool $force force save even if the object is invalid
      *
      * @return bool
      */
@@ -191,8 +191,6 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Hashes the attributes specified in the hashedAttributes
      * array.
-     *
-     * @return void
      */
     protected function hashAttributes()
     {
@@ -213,8 +211,8 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Initiate a mock expectation on the facade.
      *
-     * @param string $name      Name of the method being called.
-     * @param array  $arguments Method arguments.
+     * @param string $name      name of the method being called
+     * @param array  $arguments method arguments
      *
      * @return Expectation|void
      */
@@ -275,7 +273,7 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Initiate a mockery expectation that is specific for the given method.
      *
-     * @param string $method Name of the method being mocked.
+     * @param string $method name of the method being mocked
      *
      * @return Expectation
      */
@@ -287,7 +285,7 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Check for a expectation for given method on local mock.
      *
-     * @param string $method Name of the method being checked.
+     * @param string $method name of the method being checked
      *
      * @return bool
      */
@@ -299,9 +297,9 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Gets the first entity of this kind that matches the query.
      *
-     * @param mixed $query      MongoDB selection criteria.
-     * @param array $projection Fields to project in MongoDB query.
-     * @param bool  $useCache   Retrieves the entity through a CacheableCursor.
+     * @param mixed $query      mongoDB selection criteria
+     * @param array $projection fields to project in MongoDB query
+     * @param bool  $useCache   retrieves the entity through a CacheableCursor
      *
      * @return ActiveRecord
      */
@@ -317,11 +315,11 @@ abstract class MongolidModel extends ActiveRecord
      * Gets the first entity of this kind that matches the query. If no
      * document was found, throws ModelNotFoundException.
      *
-     * @param mixed $query      MongoDB selection criteria.
-     * @param array $projection Fields to project in Mongo query.
-     * @param bool  $useCache   Retrieves the entity through a CacheableCursor.
+     * @param mixed $query      mongoDB selection criteria
+     * @param array $projection fields to project in Mongo query
+     * @param bool  $useCache   retrieves the entity through a CacheableCursor
      *
-     * @throws ModelNotFoundException If no document was found.
+     * @throws \Mongolid\Exception\ModelNotFoundException if no document was found
      *
      * @return ActiveRecord
      */
@@ -338,7 +336,7 @@ abstract class MongolidModel extends ActiveRecord
      * document was found, a new entity will be returned with the
      * _id field filled.
      *
-     * @param mixed $id Document id.
+     * @param mixed $id document id
      *
      * @return ActiveRecord
      */
@@ -351,9 +349,9 @@ abstract class MongolidModel extends ActiveRecord
      * Gets a cursor of this kind of entities that matches the query from the
      * database.
      *
-     * @param array $query      MongoDB selection criteria.
-     * @param array $projection Fields to project in MongoDB query.
-     * @param bool  $useCache   Retrieves a CacheableCursor instead.
+     * @param array $query      mongoDB selection criteria
+     * @param array $projection fields to project in MongoDB query
+     * @param bool  $useCache   retrieves a CacheableCursor instead
      *
      * @return \Mongolid\Cursor\Cursor
      */
@@ -376,8 +374,8 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * Calls mock method if its have expectations. Calls parent method otherwise.
      *
-     * @param string $method    Name of the method being called.
-     * @param array  $arguments Arguments to pass in method call.
+     * @param string $method    name of the method being called
+     * @param array  $arguments arguments to pass in method call
      *
      * @return mixed See parent implementation
      */
