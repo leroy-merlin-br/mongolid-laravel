@@ -26,10 +26,15 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 
 ## Installation
 
- - For Laravel 5.1
+**Note:** Mongolid Laravel 2.0 only supports Laravel 5.4+. For older versions use the tags:
+
+- Laravel 4.2 `"leroy-merlin-br/mongolid-laravel": "^0.7"`
+- Laravel 5.1 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta4"`
+
+Install with `composer require` (use one of the above tags if needed)
 
 ```shell
-composer require "leroy-merlin-br/mongolid-laravel=~2.0"
+composer require leroy-merlin-br/mongolid-laravel
 ```
 
 In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
