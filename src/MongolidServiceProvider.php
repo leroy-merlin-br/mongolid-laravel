@@ -2,7 +2,6 @@
 
 namespace MongolidLaravel;
 
-use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
