@@ -10,6 +10,7 @@ use Mongolid\Connection\Connection;
 use Mongolid\Connection\Pool;
 use Mongolid\Cursor\Cursor;
 use Mongolid\DataMapper\DataMapper;
+use Mongolid\Exception\ModelNotFoundException;
 use TestCase;
 
 class MongolidModelTest extends TestCase
@@ -329,7 +330,7 @@ class MongolidModelTest extends TestCase
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
 
-        $dataMapper->shouldReceive('firstOrNew')
+        $dataMapper->shouldReceive('first')
             ->once()
             ->withAnyArgs()
             ->andReturn($model);
@@ -356,6 +357,73 @@ class MongolidModelTest extends TestCase
 
         // Actions
         $result = $model->firstOrNew('123');
+
+        // Assertions
+        $this->assertEquals($model, $result);
+    }
+
+    public function testShouldGetFirstOrFailAndFoundIt()
+    {
+        // Set
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+
+        $model = new class() extends MongolidModel {
+            protected $collection = 'collection_name';
+        };
+
+        // Expectations
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
+        $dataMapper->shouldReceive('firstOrFail')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($model);
+
+        // Actions
+        $result = $model->firstOrFail('123');
+
+        // Assertions
+        $this->assertEquals($model, $result);
+    }
+
+    public function testShouldGetFirstOrFailAndFail()
+    {
+        // Set
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+
+        $model = new class() extends MongolidModel {
+            protected $collection = 'collection_name';
+        };
+
+        // Expectations
+        $this->expectException(ModelNotFoundException::class);
+
+        $dataMapper->shouldReceive('setSchema')->passthru();
+
+        $dataMapper->shouldReceive('firstOrFail')
+            ->once()
+            ->withAnyArgs()
+            ->andThrow(ModelNotFoundException::class);
+
+        // Actions
+        $model->firstOrFail('123');
+    }
+
+    public function testShouldMockFirstOrFail()
+    {
+        // Set
+        $model = new class() extends MongolidModel {
+            protected $collection = 'collection_name';
+        };
+
+        // Expectations
+        $model::shouldReceive('firstOrFail')
+            ->once()
+            ->withAnyArgs()
+            ->andReturn($model);
+
+        // Actions
+        $result = $model->firstOrFail('123');
 
         // Assertions
         $this->assertEquals($model, $result);

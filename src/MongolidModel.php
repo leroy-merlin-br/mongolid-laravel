@@ -319,7 +319,7 @@ abstract class MongolidModel extends ActiveRecord
      * @param array $projection fields to project in Mongo query
      * @param bool  $useCache   retrieves the entity through a CacheableCursor
      *
-     * @throws ModelNotFoundException if no document was found
+     * @throws \Mongolid\Exception\ModelNotFoundException if no document was found
      *
      * @return ActiveRecord
      */
