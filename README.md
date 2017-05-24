@@ -30,7 +30,7 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 
 - Laravel 4.2 `"leroy-merlin-br/mongolid-laravel": "^0.7"`
 - Laravel 5.1 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta4"`
-- Laravel 5.2 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta5"`
+- Laravel 5.2 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
 
 Install with `composer require` (use one of the above tags if needed)
 
@@ -115,25 +115,29 @@ In a nutshell, that's it!
 
 ## Authentication
 
-MongoLid Laravel comes with a Laravel auth driver.
-In order to use it, simply change the `'driver'` value in your `config/auth.php` to `mongoLid`
+MongoLid Laravel comes with a Laravel auth provider.
+In order to use it, simply change the `'driver'` provider value in your `config/auth.php` to `mongolid`
 and make sure that the class specified in `model` is a MongoLid model that implements the `Authenticatable` contract:
 
 ```php
 
-...
+    'providers' => [
 
-'driver' => 'mongoLid',
+        // ...
 
-...
+        'users' => [
+            'driver' => 'mongolid',
+            'model' => \App\User::class
+        ],
 
-'model' => App\User::class,
+        // ...
 
-...
+    ],
 
 ```
 
 The `User` model should implement the `Authenticatable` contract:
+
 ```php
 <?php
 namespace App;
@@ -149,6 +153,16 @@ class User extends MongolidModel implements Authenticatable
      * @var string
      */
     protected $collection = 'users';
+
+    /**
+     * Get the name of the unique identifier for the user.
+     *
+     * @return string
+     */
+    public function getAuthIdentifierName()
+    {
+        return '_id';
+    }
 
     /**
      * Get the unique identifier for the user.
@@ -205,7 +219,7 @@ class User extends MongolidModel implements Authenticatable
 ```
 
 Now, to log a user into your application, you may use the `auth()->attempt()` method.
-You can use [any method regarding authentication](https://laravel.com/docs/5.1/authentication#included-authenticating).
+You can use [any method regarding authentication](https://laravel.com/docs/5.2/authentication#included-authenticating).
 
 ## Troubleshooting
 

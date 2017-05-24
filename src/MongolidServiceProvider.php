@@ -68,9 +68,9 @@ class MongolidServiceProvider extends ServiceProvider
     {
         $this->app['auth']->provider(
             'mongolid',
-            function ($app) {
+            function ($app, array $config) {
                 return new MongolidUserProvider(
-                    $app['hash'], $app['config']->get('auth.model')
+                    $app['hash'], $config['model']
                 );
             }
         );
