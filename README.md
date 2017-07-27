@@ -33,10 +33,13 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 - Laravel 5.2 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
 - Laravel 5.3 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
 
-Install with `composer require` (use one of the above tags if needed)
+Install with `composer require` (use one of the above tags if needed).
+
+Make sure to set minimum stability to `dev` when using a beta tag (`composer config minimum-stability dev`).
 
 ```shell
-composer require leroy-merlin-br/mongolid-laravel
+# For Laravel 5.4+
+composer require leroy-merlin-br/mongolid-laravel=2.0.0-beta7
 ```
 
 In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
