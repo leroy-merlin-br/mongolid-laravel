@@ -1,13 +1,21 @@
 language: php
 
-php: 
-  - 5.4
-  - 5.5
-  - 5.6
+php:
   - 7.0
 
-before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install
+cache:
+  directories:
+    - $HOME/.composer/cache
 
-script: phpunit
+before_install:
+  - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+before_script:
+    - travis_retry composer install ${COMPOSER_FLAGS} --ignore-platform-reqs --no-interaction --prefer-dist
+    - mkdir -p build/logs
+
+script:
+  - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
+
+after_success:
+  - travis_retry php vendor/bin/coveralls

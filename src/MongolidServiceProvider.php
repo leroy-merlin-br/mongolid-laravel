@@ -2,10 +2,12 @@
 
 namespace MongolidLaravel;
 
+use Illuminate\Auth\Guard;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc as MongolidIoc;
+use Mongolid\Event\EventTriggerService;
 use Mongolid\Util\CacheComponent;
 
 class MongolidServiceProvider extends ServiceProvider
@@ -28,7 +30,7 @@ class MongolidServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the mongoLid driver in auth AuthManager
+     * Register the mongoLid driver in auth AuthManager.
      *
      * @return void
      */
@@ -38,7 +40,7 @@ class MongolidServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register MongoDbConnector within the application
+     * Register MongoDbConnector within the application.
      *
      * @return void
      */
@@ -46,22 +48,26 @@ class MongolidServiceProvider extends ServiceProvider
     {
         MongolidIoc::setContainer($this->app);
 
-        $config           = $this->app->make('config');
+        $config = $this->app->make('config');
         $connectionString = $this->buildConnectionString();
-        $connection       = new Connection($connectionString);
-        $pool             = new Pool;
-        $cacheComponent   = new CacheComponent;
+        $connection = new Connection($connectionString);
+        $pool = new Pool();
+        $cacheComponent = new CacheComponent();
+        $eventService = new EventTriggerService();
+
+        $eventService->registerEventDispatcher($this->app->make(LaravelEventTrigger::class));
 
         $pool->addConnection($connection);
         $this->app->instance(Pool::class, $pool);
         $this->app->instance(CacheComponent::class, $cacheComponent);
+        $this->app->instance(EventTriggerService::class, $eventService);
 
         $connection->defaultDatabase = $config
             ->get('database.mongodb.default.database', 'mongolid');
     }
 
     /**
-     * Registers mongoLid Driver in AuthManager
+     * Registers mongoLid Driver in AuthManager.
      *
      * @return void
      */
@@ -71,7 +77,7 @@ class MongolidServiceProvider extends ServiceProvider
         $this->app['auth']->extend(
             'mongoLid',
             function ($app) {
-                $provider =  new MongoLidUserProvider($app['hash'], $app['config']->get('auth.model'));
+                $provider = new MongolidUserProvider($app['hash'], $app['config']->get('auth.model'));
 
                 return new Guard($provider, $app['session.store']);
             }
@@ -88,7 +94,7 @@ class MongolidServiceProvider extends ServiceProvider
     {
         $config = $this->app->make('config');
 
-        if (! $result = $config->get('database.mongodb.default.connectionString')) {
+        if (!$result = $config->get('database.mongodb.default.connectionString')) {
 
             // Connection string should begin with "mongodb://"
             $result = 'mongodb://';
@@ -105,7 +111,6 @@ class MongolidServiceProvider extends ServiceProvider
                 $config->get('database.mongodb.default.host', '127.0.0.1').':'.
                 $config->get('database.mongodb.default.port', 27017).'/'.
                 $config->get('database.mongodb.default.database', 'mongolid');
-
         }
 
         return $result;
