@@ -6,7 +6,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/unstable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
 [![License](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/license.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
 
-![MongoLid](https://dl.dropboxusercontent.com/u/12506137/libs_bundles/mongolid_banner.png)
+![MongoLid](https://user-images.githubusercontent.com/1991286/28967747-fe5c258a-78f2-11e7-91c7-8850ffb32004.png)
 
 # MongoLid (Laravel Package)
 
