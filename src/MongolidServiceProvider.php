@@ -40,25 +40,24 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function registerConnector()
     {
-        $config = $this->app->make('config');
+        $config = $this->app['config']->get('database.mongodb.default');
         MongolidIoc::setContainer($this->app);
 
-        $connectionString = $this->buildConnectionString();
+        $connectionString = $this->buildConnectionString($config);
         $connection = new Connection($connectionString);
-        $pool = new Pool();
-        $eventService = new EventTriggerService();
+        $connection->defaultDatabase = $config['database'] ?? 'mongolid';
 
+        $pool = new Pool();
+        $pool->addConnection($connection);
+
+        $eventService = new EventTriggerService();
         $eventService->registerEventDispatcher($this->app->make(LaravelEventTrigger::class));
 
-        $pool->addConnection($connection);
         $this->app->instance(Pool::class, $pool);
         $this->app->instance(EventTriggerService::class, $eventService);
         $this->app->bind(CacheComponentInterface::class, function ($app) {
             return new LaravelCacheComponent($app[CacheRepository::class]);
         });
-
-        $connection->defaultDatabase = $config
-            ->get('database.mongodb.default.database', 'mongolid');
     }
 
     /**
@@ -80,30 +79,68 @@ class MongolidServiceProvider extends ServiceProvider
      * Builds the connection string based in the laravel's config/database.php
      * config file.
      *
+     * @param array $config Config to build connection string
+     *
      * @return string The connection string
      */
-    protected function buildConnectionString()
+    protected function buildConnectionString(array $config): string
     {
-        $config = $this->app->make('config');
+        if (isset($config['connectionString'])) {
+            return $config['connectionString'];
+        }
 
-        if (!$result = $config->get('database.mongodb.default.connectionString')) {
-            // Connection string should begin with "mongodb://"
-            $result = 'mongodb://';
+        $result = 'mongodb://';
 
-            // If username is present, append "<username>:<password>@"
-            if ($config->get('database.mongodb.default.username')) {
-                $result .=
-                    $config->get('database.mongodb.default.username').':'.
-                    $config->get('database.mongodb.default.password', '').'@';
-            }
+        // If username is present, append "<username>:<password>@"
+        if (isset($config['username'])) {
+            $result .= sprintf(
+                '%s:%s@',
+                $config['username'],
+                $config['password'] ?? ''
+            );
+        }
 
-            // Append "<host>:<port>/<database>"
-            $result .=
-                $config->get('database.mongodb.default.host', '127.0.0.1').':'.
-                $config->get('database.mongodb.default.port', 27017).'/'.
-                $config->get('database.mongodb.default.database', 'mongolid');
+        // Append "<hostname>/<database>"
+        $result .= sprintf(
+            '%s/%s',
+            $this->buildHostname($config),
+            $config['database'] ?? 'mongolid'
+        );
+
+        if (isset($config['cluster']['replica_set'])) {
+            $result .= '?replicaSet='.$config['cluster']['replica_set'];
         }
 
         return $result;
+    }
+
+    /**
+     * Build connection string hostname part in <host>:<port>
+     * format or <host>:<port>,<host>:<port> in case of
+     * cluster configuration.
+     *
+     * @param array $config Config to build hostname
+     *
+     * @return string Hostname string
+     */
+    private function buildHostname(array $config): string
+    {
+        if (isset($config['cluster'])) {
+            foreach ($$config['cluster']['nodes'] as $node) {
+                $nodes[] = sprintf(
+                    '%s:%s',
+                    $config['host'] ?? '127.0.0.1',
+                    $config['port'] ?? 27017
+                );
+            }
+
+            return implode(',', $nodes ?? ['127.0.0.1:27017']);
+        }
+
+        return sprintf(
+            '%s:%s',
+            $config['host'] ?? '127.0.0.1',
+            $config['port'] ?? 27017
+        );
     }
 }
