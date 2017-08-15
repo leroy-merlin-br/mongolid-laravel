@@ -40,11 +40,15 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function registerConnector()
     {
-        $config = $this->app['config']->get('database.mongodb.default');
         MongolidIoc::setContainer($this->app);
 
+        $config = $this->app['config']->get('database.mongodb.default');
+
         $connectionString = $this->buildConnectionString($config);
-        $connection = new Connection($connectionString);
+        $options = $config['options'] ?? [];
+        $driverOptions = $config['driver_options'] ?? [];
+
+        $connection = new Connection($connectionString, $options, $driverOptions);
         $connection->defaultDatabase = $config['database'] ?? 'mongolid';
 
         $pool = new Pool();
