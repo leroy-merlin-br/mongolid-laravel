@@ -67,7 +67,7 @@ In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the 
 
 And least, be sure to configure a database connection in `config/database.php`:
 
-Paste the settings bellow at the end of your `config/database.php`, before the last `);`:
+Paste the settings bellow at the end of your `config/database.php`, before the last `];`:
 
 **Notice:** It must be **outside** of `connections` array.
 
@@ -77,7 +77,12 @@ Paste the settings bellow at the end of your `config/database.php`, before the l
 | MongoDB Databases
 |--------------------------------------------------------------------------
 |
+| MongoDB is a document database with the scalability and flexibility
+| that you want with the querying and indexing that you need.
+| Mongolid Laravel use this config to starting querying right now.
+|
 */
+
 'mongodb' => [
     'default' => [
         'host'     => env('DB_HOST', '127.0.0.1'),
@@ -89,10 +94,48 @@ Paste the settings bellow at the end of your `config/database.php`, before the l
 ],
 ```
 
+For cluster with automatic failover, you need to set `cluster` key containing all hosts along with replica set name.
+
+```php
+'mongodb' => [
+    'default' => [
+        'cluster' => [
+            'replicaSet' => env('DB_REPLICA_SET', ''),
+            'nodes' => [
+                'primary' => [
+                    'host' => env('DB_HOST_A', 'host-a'),
+                    'port' => env('DB_PORT_A', 27017),
+                ],
+                'secondary' => [
+                    'host' => env('DB_HOST_B', 'host-b'),
+                    'port' => env('DB_PORT_B', 27017),
+                ],
+            ],
+        ],
+        'database' => env('DB_DATABASE', 'mongolid'),
+        'username' => env('DB_USERNAME', ''),
+        'password' => env('DB_PASSWORD', ''),
+    ],
+],
+```
+
+You can configure as much nodes are needed, `primary` and `secondary` nodes names are optional.
+
+
 > **Note:** If you don't specify the key above in your `config/database.php`.
 The MongoLid will automatically try to connect to 127.0.0.1:27017 and use a database named 'mongolid'.
 
-You may optionally provide a `connectionString` key to set a fully-assembled connection string (useful for configuring fun things like read preference, replica sets, etc.) this will override all other connection options.
+You may optionally provide a `connectionString` key to set a fully-assembled connection string that will override all other connection options. More info about connection string are found in [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string/).
+
+```php
+'mongodb' => [
+    'default' => [
+        'connectionString' => 'mongodb://host-a:27017,host-b:27917/mongolid?replicaSet=rs-ds123',
+    ],
+],
+```
+
+Also, it is possible to pass `options` and `driver_options` to MongoDB Client. Mongolid always overrides `typeMap` configuration of driver options to `array` because makes easier to use internally in Mongolid. Possible options and driver options are present on [`MongoDB\Client` documentation](https://docs.mongodb.com/php-library/master/reference/method/MongoDBClient__construct/).
 
 ## Basic Usage
 
@@ -115,7 +158,7 @@ class User extends MongolidModel
 In a nutshell, that's it!
 
 ### For further reading about models, CRUD operations, relationships and more, check the [Read the Docs: <small>leroy-merlin-br.github.com/mongolid</small>](http://leroy-merlin-br.github.io/mongolid/).
-[![Mongolid Docs](https://dl.dropboxusercontent.com/u/12506137/libs_bundles/MongolidDocs.png)](http://leroy-merlin-br.github.com/mongolid)
+[![Mongolid Docs](https://user-images.githubusercontent.com/1991286/28967747-fe5c258a-78f2-11e7-91c7-8850ffb32004.png)](http://leroy-merlin-br.github.com/mongolid)
 
 ## Authentication
 
@@ -229,8 +272,8 @@ You can use [any method regarding authentication](https://laravel.com/docs/5.2/a
 
 **"PHP Fatal error: Class 'MongoDB\Client' not found in ..."**
 
-The `MongoDB\Client` class is contained in the [MongoDB driver](https://pecl.php.net/package/mongodb) for PHP.
-[Here is an installation guide](http://php.net/manual/en/mongodb.setup.php).
+The `MongoDB\Client` class is contained in the [MongoDB PHP Library](https://docs.mongodb.com/php-library/master/) and requires [MongoDB driver](https://pecl.php.net/package/mongodb) for PHP.
+Here is an [installation guide](http://php.net/manual/en/mongodb.setup.php) for this driver.
 The driver is a PHP extension written in C and maintained by [MongoDB](https://mongodb.com).
 MongoLid and most other MongoDB PHP libraries utilize it in order to be fast and reliable.
 
@@ -263,4 +306,4 @@ Mongolid was proudly built by the [Leroy Merlin Brazil](https://github.com/leroy
 
 Any questions, feel free to contact us.
 
-Any issues, please [report here](https://github.com/Zizaco/mongolid-laravel)
+Any issues, please [report here](https://github.com/leroy-merlin-br/mongolid-laravel/issues).
