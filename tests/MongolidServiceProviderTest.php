@@ -72,7 +72,7 @@ class MongolidServiceProviderTest extends TestCase
             'custom host and port' => [
                 'config' => [
                     'host' => 'localhost',
-                    'port' => 27917
+                    'port' => 27917,
                 ],
                 'connectionString' => 'mongodb://localhost:27917/mongolid',
             ],
