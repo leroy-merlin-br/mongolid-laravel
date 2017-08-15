@@ -43,22 +43,92 @@ class MongolidServiceProviderTest extends TestCase
         $this->assertInstanceOf(LaravelCacheComponent::class, $cacheComponent);
     }
 
-    public function testShouldRegisterConnectorWithUsernameAndPassword()
+    /**
+     * @dataProvider connectionVariations
+     */
+    public function testShouldRegisterConnector($config, $connectionString)
     {
         // Set
         $provider = new MongolidServiceProvider($this->app);
-        config([
-            'database.mongodb.default.database' => 'databaseName',
-            'database.mongodb.default.username' => 'us3r',
-            'database.mongodb.default.password' => 'p455',
-        ]);
+        config(['database.mongodb.default' => $config]);
 
         // Actions
         $provider->registerConnector();
 
         $pool = Ioc::make(Pool::class);
+        $mongoClient = $pool->getConnection()->getRawConnection();
 
         // Assertions
-        $this->assertEquals('databaseName', $pool->getConnection()->defaultDatabase);
+        $this->assertEquals($connectionString, (string) $mongoClient);
+    }
+
+    public function connectionVariations()
+    {
+        return [
+            'default values' => [
+                'config' => [],
+                'connectionString' => 'mongodb://127.0.0.1:27017/mongolid',
+            ],
+            'custom host and port' => [
+                'config' => [
+                    'host' => 'localhost',
+                    'port' => 27917
+                ],
+                'connectionString' => 'mongodb://localhost:27917/mongolid',
+            ],
+            'username and password' => [
+                'config' => [
+                    'database' => 'databaseName',
+                    'username' => 'us3r',
+                    'password' => 'p455',
+                ],
+                'connectionString' => 'mongodb://us3r:p455@127.0.0.1:27017/databaseName',
+            ],
+            'cluster connection with replica set' => [
+                'config' => [
+                    'cluster' => [
+                        'replica_set' => 'rs-ds123',
+                        'nodes' => [
+                            'primary' => [
+                                'host' => 'host-a',
+                                'port' => 27017,
+                            ],
+                            'secondary' => [
+                                'host' => 'host-b',
+                                'port' => 27917,
+                            ],
+                        ],
+                    ],
+                ],
+                'connectionString' => 'mongodb://host-a:27017,host-b:27917/mongolid?replicaSet=rs-ds123',
+            ],
+            'shared cluster (without replica set)' => [
+                'config' => [
+                    'cluster' => [
+                        'nodes' => [
+                            'primary' => [
+                                'host' => 'host-a',
+                                'port' => 27017,
+                            ],
+                            'secondary' => [
+                                'host' => 'host-b',
+                                'port' => 27917,
+                            ],
+                        ],
+                    ],
+                    'database' => 'database',
+                ],
+                'connectionString' => 'mongodb://host-a:27017,host-b:27917/database',
+            ],
+            'connection string overwrite all' => [
+                'config' => [
+                    'database' => 'databaseName',
+                    'username' => 'us3r',
+                    'password' => 'p455',
+                    'connectionString' => 'mongodb://user:pass@localhost:27017/my_db',
+                ],
+                'connectionString' => 'mongodb://user:pass@localhost:27017/my_db',
+            ],
+        ];
     }
 }

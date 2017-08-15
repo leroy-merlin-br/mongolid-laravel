@@ -126,11 +126,11 @@ class MongolidServiceProvider extends ServiceProvider
     private function buildHostname(array $config): string
     {
         if (isset($config['cluster'])) {
-            foreach ($$config['cluster']['nodes'] as $node) {
+            foreach ($config['cluster']['nodes'] as $node) {
                 $nodes[] = sprintf(
                     '%s:%s',
-                    $config['host'] ?? '127.0.0.1',
-                    $config['port'] ?? 27017
+                    $node['host'] ?? '127.0.0.1',
+                    $node['port'] ?? 27017
                 );
             }
 
