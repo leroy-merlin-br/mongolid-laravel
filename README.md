@@ -88,8 +88,8 @@ Paste the settings bellow at the end of your `config/database.php`, before the l
         'host'     => env('DB_HOST', '127.0.0.1'),
         'port'     => env('DB_PORT_NUMBER', 27017),
         'database' => env('DB_DATABASE', 'my_database'),
-        'username' => env('DB_USERNAME', ''),
-        'password' => env('DB_PASSWORD', ''),
+        'username' => env('DB_USERNAME', null),
+        'password' => env('DB_PASSWORD', null),
     ],
 ],
 ```
@@ -100,7 +100,7 @@ For cluster with automatic failover, you need to set `cluster` key containing al
 'mongodb' => [
     'default' => [
         'cluster' => [
-            'replica_set' => env('DB_REPLICA_SET', ''),
+            'replica_set' => env('DB_REPLICA_SET', null),
             'nodes' => [
                 'primary' => [
                     'host' => env('DB_HOST_A', 'host-a'),
@@ -113,8 +113,8 @@ For cluster with automatic failover, you need to set `cluster` key containing al
             ],
         ],
         'database' => env('DB_DATABASE', 'mongolid'),
-        'username' => env('DB_USERNAME', ''),
-        'password' => env('DB_PASSWORD', ''),
+        'username' => env('DB_USERNAME', null),
+        'password' => env('DB_PASSWORD', null),
     ],
 ],
 ```
