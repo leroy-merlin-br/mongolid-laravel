@@ -94,13 +94,13 @@ Paste the settings bellow at the end of your `config/database.php`, before the l
 ],
 ```
 
-For cluster with automatic failover, you need to set `cluster` key containing all hosts along with replica set name.
+For cluster with automatic failover, you need to set `cluster` key containing all `nodes` along with `replica_set` name.
 
 ```php
 'mongodb' => [
     'default' => [
         'cluster' => [
-            'replicaSet' => env('DB_REPLICA_SET', ''),
+            'replica_set' => env('DB_REPLICA_SET', ''),
             'nodes' => [
                 'primary' => [
                     'host' => env('DB_HOST_A', 'host-a'),
@@ -119,8 +119,7 @@ For cluster with automatic failover, you need to set `cluster` key containing al
 ],
 ```
 
-You can configure as much nodes are needed, `primary` and `secondary` nodes names are optional.
-
+You can configure as much nodes as needed, node names (e.g. `primary` and `secondary` ) are optional.
 
 > **Note:** If you don't specify the `mongodb` key in your `config/database.php` MongoLid will automatically try to connect to '127.0.0.1:27017' and use a database named 'mongolid'.
 
@@ -134,7 +133,7 @@ You may optionally provide a `connectionString` key to set a fully-assembled con
 ],
 ```
 
-Also, it is possible to pass `options` and `driver_options` to MongoDB Client. Mongolid always overrides `typeMap` configuration of driver options to `array` because makes easier to use internally in Mongolid. Possible options and driver options are present on [`MongoDB\Client` documentation](https://docs.mongodb.com/php-library/master/reference/method/MongoDBClient__construct/).
+Also, it is possible to pass `options` and `driver_options` to MongoDB Client. Mongolid always overrides `typeMap` configuration of `driver_options` to `array` because it makes easier to use internally with models. Possible `options` and `driver_options` are present on [`MongoDB\Client` documentation](https://docs.mongodb.com/php-library/master/reference/method/MongoDBClient__construct/).
 
 ## Basic Usage
 
@@ -182,7 +181,7 @@ and make sure that the class specified in `model` is a MongoLid model that imple
 
 ```
 
-The `User` model should implement the `Authenticatable` contract:
+The `User` model should implement the `Authenticatable` interface:
 
 ```php
 <?php
@@ -271,7 +270,7 @@ You can use [any method regarding authentication](https://laravel.com/docs/5.2/a
 
 **"PHP Fatal error: Class 'MongoDB\Client' not found in ..."**
 
-The `MongoDB\Client` class is contained in the [MongoDB PHP Library](https://docs.mongodb.com/php-library/master/) and requires [MongoDB driver](https://pecl.php.net/package/mongodb) for PHP.
+The `MongoDB\Client` class is contained in the [MongoDB PHP Library](https://docs.mongodb.com/php-library/master/) and it requires [MongoDB driver for PHP](https://pecl.php.net/package/mongodb).
 Here is an [installation guide](http://php.net/manual/en/mongodb.setup.php) for this driver.
 The driver is a PHP extension written in C and maintained by [MongoDB](https://mongodb.com).
 MongoLid and most other MongoDB PHP libraries utilize it in order to be fast and reliable.
