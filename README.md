@@ -65,7 +65,7 @@ In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the 
 ],
 ```
 
-And least, be sure to configure a database connection in `config/database.php`:
+Lastly, be sure to configure a database connection in `config/database.php`:
 
 Paste the settings bellow at the end of your `config/database.php`, before the last `];`:
 
@@ -122,8 +122,7 @@ For cluster with automatic failover, you need to set `cluster` key containing al
 You can configure as much nodes are needed, `primary` and `secondary` nodes names are optional.
 
 
-> **Note:** If you don't specify the key above in your `config/database.php`.
-The MongoLid will automatically try to connect to 127.0.0.1:27017 and use a database named 'mongolid'.
+> **Note:** If you don't specify the `mongodb` key in your `config/database.php` MongoLid will automatically try to connect to '127.0.0.1:27017' and use a database named 'mongolid'.
 
 You may optionally provide a `connectionString` key to set a fully-assembled connection string that will override all other connection options. More info about connection string are found in [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string/).
 
