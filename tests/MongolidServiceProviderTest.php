@@ -125,7 +125,7 @@ class MongolidServiceProviderTest extends TestCase
                     'database' => 'databaseName',
                     'username' => 'us3r',
                     'password' => 'p455',
-                    'connectionString' => 'mongodb://user:pass@localhost:27017/my_db',
+                    'connection_string' => 'mongodb://user:pass@localhost:27017/my_db',
                 ],
                 'connectionString' => 'mongodb://user:pass@localhost:27017/my_db',
             ],

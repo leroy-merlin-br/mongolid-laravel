@@ -89,8 +89,8 @@ class MongolidServiceProvider extends ServiceProvider
      */
     protected function buildConnectionString(array $config): string
     {
-        if (isset($config['connectionString'])) {
-            return $config['connectionString'];
+        if (isset($config['connection_string'])) {
+            return $config['connection_string'];
         }
 
         $result = 'mongodb://';

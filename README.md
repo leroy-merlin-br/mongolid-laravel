@@ -123,12 +123,12 @@ You can configure as much nodes as needed, node names (e.g. `primary` and `secon
 
 > **Note:** If you don't specify the `mongodb` key in your `config/database.php` MongoLid will automatically try to connect to '127.0.0.1:27017' and use a database named 'mongolid'.
 
-You may optionally provide a `connectionString` key to set a fully-assembled connection string that will override all other connection options. More info about connection string are found in [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string/).
+You may optionally provide a `connection_string` key to set a fully-assembled connection string that will override all other connection options. More info about connection string are found in [MongoDB documentation](https://docs.mongodb.com/manual/reference/connection-string/).
 
 ```php
 'mongodb' => [
     'default' => [
-        'connectionString' => 'mongodb://host-a:27017,host-b:27917/mongolid?replicaSet=rs-ds123',
+        'connection_string' => 'mongodb://host-a:27017,host-b:27917/mongolid?replicaSet=rs-ds123',
     ],
 ],
 ```
