@@ -42,6 +42,8 @@ Make sure to set minimum stability to `dev` when using a beta tag (`composer con
 composer require leroy-merlin-br/mongolid-laravel=2.0.0-beta7
 ```
 
+> **Note**: If you are using Laravel 5.5, the next steps for providers and aliases are unnecessaries. MongoLid supports Laravel new [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
+
 In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
 
 ```php
