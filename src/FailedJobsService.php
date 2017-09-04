@@ -4,10 +4,10 @@ namespace MongolidLaravel;
 
 use MongoDB\BSON\ObjectID;
 use MongoDB\Collection;
-use Mongolid\Connection\Pool;
-use MongoDB\InsertOneResult;
 use MongoDB\DeleteResult;
 use MongoDB\Driver\Cursor;
+use MongoDB\InsertOneResult;
+use Mongolid\Connection\Pool;
 
 /**
  * Persistence layer that is used to save failed queue jobs on MongoDB.

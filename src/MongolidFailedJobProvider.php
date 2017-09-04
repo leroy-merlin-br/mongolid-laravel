@@ -2,7 +2,11 @@
 
 namespace MongolidLaravel;
 
+use DateTime;
 use Illuminate\Queue\Failed\FailedJobProviderInterface;
+use MongoDB\BSON\UTCDateTime;
+use Mongolid\Util\LocalDateTime;
+use Mongolid\Util\ObjectIdUtils;
 
 /**
  * Mongolid implementation to use Laravel Failed Queue Services Provider.
@@ -37,10 +41,11 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
                 'queue' => $queue,
                 'payload' => $payload,
                 'exception' => (string) $exception,
+                'failed_at' => new UTCDateTime(),
             ]
         );
 
-        return $result->getInsertedCount();
+        return (string) $result->getInsertedId();
     }
 
     /**
@@ -51,7 +56,7 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
     public function all()
     {
         foreach ($this->failedJobs->all() as $job) {
-            $jobs[] = (array) $job;
+            $jobs[] = $this->presentJob($job);
         }
 
         return $jobs ?? [];
@@ -62,11 +67,11 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
      *
      * @param  mixed $id
      *
-     * @return array
+     * @return object|null
      */
     public function find($id)
     {
-        return (array) $this->failedJobs->find($id);
+        return $this->failedJobs->find($id);
     }
 
     /**
@@ -89,5 +94,26 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
     public function flush()
     {
         $this->failedJobs->drop();
+    }
+
+    /**
+     * Prepare job to be consumed by Laravel Commands.
+     *
+     * @param $job
+     *
+     * @return object
+     */
+    private function presentJob($job)
+    {
+        $job = (array) $job;
+
+        return (object) [
+            'id' => (string) $job['_id'],
+            'connection' => $job['connection'],
+            'queue' => $job['queue'],
+            'payload' => $job['payload'],
+            'exception' => $job['exception'],
+            'failed_at' => LocalDateTime::format($job['failed_at'], DateTime::ATOM),
+        ];
     }
 }
