@@ -38,6 +38,14 @@
     "extra": {
         "branch-alias": {
             "dev-master": "v2.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "MongolidLaravel\\MongolidServiceProvider"
+            ],
+            "aliases": {
+                "MongoLid": "MongolidLaravel\\MongoLidModel"
+            }
         }
     }
 }
