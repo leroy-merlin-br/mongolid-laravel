@@ -6,7 +6,6 @@ use DateTime;
 use Illuminate\Queue\Failed\FailedJobProviderInterface;
 use MongoDB\BSON\UTCDateTime;
 use Mongolid\Util\LocalDateTime;
-use Mongolid\Util\ObjectIdUtils;
 
 /**
  * Mongolid implementation to use Laravel Failed Queue Services Provider.
@@ -26,10 +25,10 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
     /**
      * Log a failed job into storage.
      *
-     * @param  string     $connection
-     * @param  string     $queue
-     * @param  string     $payload
-     * @param  \Exception $exception
+     * @param string     $connection
+     * @param string     $queue
+     * @param string     $payload
+     * @param \Exception $exception
      *
      * @return int
      */
@@ -65,7 +64,7 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
     /**
      * Get a single failed job.
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return object|null
      */
@@ -77,7 +76,7 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
     /**
      * Delete a single failed job from storage.
      *
-     * @param  mixed $id
+     * @param mixed $id
      *
      * @return bool
      */

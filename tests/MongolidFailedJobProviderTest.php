@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use ArrayObject;
@@ -11,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class MongolidFailedJobProviderTest extends TestCase
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function tearDown()
     {

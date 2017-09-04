@@ -172,7 +172,7 @@ class MongolidServiceProvider extends ServiceProvider
      * Build Mongolid Failed Job Provider.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
-     * @param string $collection
+     * @param string                                       $collection
      *
      * @return MongolidFailedJobProvider
      */

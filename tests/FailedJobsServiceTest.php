@@ -16,7 +16,7 @@ use stdClass;
 class FailedJobsServiceTest extends TestCase
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected function tearDown()
     {
