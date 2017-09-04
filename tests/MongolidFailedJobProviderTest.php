@@ -10,7 +10,7 @@ use MongoDB\BSON\UTCDateTime;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
 use Mongolid\Util\LocalDateTime;
-use PHPUnit\Framework\TestCase;
+use TestCase;
 
 class MongolidFailedJobProviderTest extends TestCase
 {
@@ -36,17 +36,17 @@ class MongolidFailedJobProviderTest extends TestCase
         $payload = json_encode(['some' => 'payload']);
         $exception = new Exception();
 
+        $insertData = [
+            'connection' => $connection,
+            'queue' => $queue,
+            'payload' => $payload,
+            'exception' => (string) $exception,
+            'failed_at' => new UTCDateTime(),
+        ];
+
         // Expectations
         $service->shouldReceive('insert')
-            ->with(
-                [
-                    'connection' => $connection,
-                    'queue' => $queue,
-                    'payload' => $payload,
-                    'exception' => (string) $exception,
-                    'failed_at' => new UTCDateTime(),
-                ]
-            )
+            ->with($this->expectEquals($insertData))
             ->once()
             ->andReturn($insertResult);
 
