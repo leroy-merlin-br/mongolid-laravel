@@ -3,10 +3,13 @@
 namespace MongolidLaravel;
 
 use ArrayObject;
+use DateTime;
 use Exception;
 use Mockery as m;
+use MongoDB\BSON\UTCDateTime;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
+use Mongolid\Util\LocalDateTime;
 use PHPUnit\Framework\TestCase;
 
 class MongolidFailedJobProviderTest extends TestCase
@@ -41,21 +44,22 @@ class MongolidFailedJobProviderTest extends TestCase
                     'queue' => $queue,
                     'payload' => $payload,
                     'exception' => (string) $exception,
+                    'failed_at' => new UTCDateTime(),
                 ]
             )
             ->once()
             ->andReturn($insertResult);
 
-        $insertResult->shouldReceive('getInsertedCount')
+        $insertResult->shouldReceive('getInsertedId')
             ->withNoArgs()
             ->once()
-            ->andReturn(1);
+            ->andReturn('xpto1');
 
         // Actions
         $result = $provider->log($connection, $queue, $payload, $exception);
 
         // Assertions
-        $this->assertEquals(1, $result);
+        $this->assertEquals('xpto1', $result);
     }
 
     public function testAllShouldReturnAllJobs()
@@ -66,20 +70,34 @@ class MongolidFailedJobProviderTest extends TestCase
 
         $data = [
             [
-                'id' => 'xpto1',
+                '_id' => 'xpto1',
                 'connection' => 'sqs',
                 'queue' => 'heavy',
                 'payload' => '{some:json}',
                 'exception' => 'Exception: Xtpo',
+                'failed_at' => new UTCDateTime(),
             ],
             [
-                'id' => 'xpto2',
+                '_id' => 'xpto2',
                 'connection' => 'sqs',
                 'queue' => 'heavy',
                 'payload' => '{some:json}',
                 'exception' => 'Exception: Xtpo',
+                'failed_at' => new UTCDateTime(),
             ],
         ];
+
+        foreach ($data as $job) {
+            $job['id'] = $job['_id'];
+            $job['failed_at'] = LocalDateTime::format(
+                $job['failed_at'],
+                DateTime::ATOM
+            );
+            unset($job['_id']);
+
+            $expected[] = (object) $job;
+        }
+
         $cursor = new ArrayObject($data);
 
         // Expectations
@@ -92,7 +110,7 @@ class MongolidFailedJobProviderTest extends TestCase
         $result = $provider->all();
 
         // Assertions
-        $this->assertEquals($data, $result);
+        $this->assertEquals($expected, $result);
     }
 
     public function testFindShouldReturnJob()
