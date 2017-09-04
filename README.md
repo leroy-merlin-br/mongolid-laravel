@@ -266,6 +266,19 @@ class User extends MongolidModel implements Authenticatable
 Now, to log a user into your application, you may use the `auth()->attempt()` method.
 You can use [any method regarding authentication](https://laravel.com/docs/5.2/authentication#included-authenticating).
 
+## Queue Failed Job Provider
+
+Mongolid Laravel replaces Laravel queue failed job provider to use a collection instead of a table. To configure the provider, update `failed` key on `queue.php` to include `collection` name:
+
+```php
+    'failed' => [
+        'database' => 'mongodb',
+        'collection' => 'failed_jobs',
+    ],
+```
+
+**Note:** `database` key is irrelevant.
+
 ## Troubleshooting
 
 **"PHP Fatal error: Class 'MongoDB\Client' not found in ..."**
