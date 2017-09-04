@@ -156,7 +156,7 @@ class MongolidServiceProvider extends ServiceProvider
      */
     private function replaceQueueFailer()
     {
-        $this->app->singleton(
+        $this->app->extend(
             'queue.failer',
             function ($app) {
                 $collection = $app['config']['queue.failed.collection'];
