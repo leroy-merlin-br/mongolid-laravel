@@ -3,6 +3,7 @@
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Connection\Pool;
@@ -33,6 +34,8 @@ class MongolidServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->extendsAuthManager();
+
+        $this->replaceQueueFailer();
     }
 
     /**
@@ -145,6 +148,38 @@ class MongolidServiceProvider extends ServiceProvider
             '%s:%s',
             $config['host'] ?? '127.0.0.1',
             $config['port'] ?? 27017
+        );
+    }
+
+    /**
+     * Rebind Laravel Failed Queue Job Provider to use Mongolid.
+     */
+    private function replaceQueueFailer()
+    {
+        $this->app->extend(
+            'queue.failer',
+            function ($app) {
+                $collection = $app['config']['queue.failed.collection'];
+
+                return isset($collection)
+                    ? $this->buildMongolidFailedJobProvider($app, $collection)
+                    : new NullFailedJobProvider();
+            }
+        );
+    }
+
+    /**
+     * Build Mongolid Failed Job Provider.
+     *
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param string                                       $collection
+     *
+     * @return MongolidFailedJobProvider
+     */
+    private function buildMongolidFailedJobProvider($app, $collection)
+    {
+        return new MongolidFailedJobProvider(
+            $app->makeWith(FailedJobsService::class, compact('collection'))
         );
     }
 }
