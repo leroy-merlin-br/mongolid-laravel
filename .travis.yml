@@ -9,7 +9,6 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
-  - pecl install -f mongodb-1.2.9
   - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
