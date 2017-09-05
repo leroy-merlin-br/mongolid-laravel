@@ -9,6 +9,8 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
+  - echo $TRAVIS_PHP_VERSION
+  - if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then pecl install mongodb; fi
   - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
