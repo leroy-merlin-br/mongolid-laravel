@@ -158,7 +158,7 @@ class MongolidServiceProvider extends ServiceProvider
     {
         $this->app->extend(
             'queue.failer',
-            function ($app) {
+            function ($concrete, $app) {
                 $collection = $app['config']['queue.failed.collection'];
 
                 return isset($collection)
