@@ -47,6 +47,10 @@ class MongolidServiceProvider extends ServiceProvider
 
         $config = $this->app['config']->get('database.mongodb.default');
 
+        if (! is_array($config)) {
+            $config = [];
+        }
+
         $connectionString = $this->buildConnectionString($config);
         $options = $config['options'] ?? [];
         $driverOptions = $config['driver_options'] ?? [];
