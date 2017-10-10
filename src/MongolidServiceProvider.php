@@ -45,7 +45,7 @@ class MongolidServiceProvider extends ServiceProvider
     {
         MongolidIoc::setContainer($this->app);
 
-        $config = $this->app['config']->get('database.mongodb.default');
+        $config = $this->app['config']->get('database.mongodb.default') ?? [];
 
         $connectionString = $this->buildConnectionString($config);
         $options = $config['options'] ?? [];
