@@ -62,7 +62,7 @@ class MongolidServiceProvider extends ServiceProvider
 
         $this->app->instance(Pool::class, $pool);
         $this->app->instance(EventTriggerService::class, $eventService);
-        $this->app->bind(CacheComponentInterface::class, function ($app) {
+        $this->app->singleton(CacheComponentInterface::class, function ($app) {
             return new LaravelCacheComponent($app[CacheRepository::class]);
         });
     }

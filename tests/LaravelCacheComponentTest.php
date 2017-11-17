@@ -26,6 +26,28 @@ class LaravelCacheComponentTest extends TestCase
         $this->assertEquals($value, $component->get($key));
     }
 
+    public function testShouldGetFromInMemoryCache()
+    {
+        // Set
+        $cacheRepo = m::mock(Repository::class);
+        $component = new LaravelCacheComponent($cacheRepo);
+        $key = 'foo';
+        $value = 'bar';
+
+        // Expectations
+        $cacheRepo->shouldReceive('get')
+            ->once()
+            ->with($key, null)
+            ->andReturn($value);
+
+        // Actions
+        $component->get($key);
+        $result = $component->get($key);
+
+        // Assertion
+        $this->assertEquals($value, $result);
+    }
+
     public function testShouldPut()
     {
         // Set
@@ -50,15 +72,14 @@ class LaravelCacheComponentTest extends TestCase
         $cacheRepo = m::mock(Repository::class);
         $component = new LaravelCacheComponent($cacheRepo);
         $key = 'foo';
-        $exists = true;
 
         // Expectations
         $cacheRepo->shouldReceive('has')
             ->once()
             ->with($key)
-            ->andReturn($exists);
+            ->andReturn(true);
 
         // Assertion
-        $this->assertEquals($exists, $component->has($key));
+        $this->assertTrue($component->has($key));
     }
 }
