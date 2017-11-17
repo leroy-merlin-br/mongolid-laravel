@@ -7,10 +7,19 @@ use Mongolid\Util\CacheComponentInterface;
 use stdClass;
 
 /**
- * Wraps the Laravel's event Dispatcher in order to trigger Mongolid events.
+ * Wraps the Laravel's Cache Repository to implement Mongolid Interface.
+ * Add a second layer of cache in memory to avoid hitting
+ * Laravel's cache twice for large results.
  */
 class LaravelCacheComponent implements CacheComponentInterface
 {
+    /**
+     * Copy cache result in memory array.
+     *
+     * @var array
+     */
+    private $inMemoryCache = [];
+
     /**
      * Injects the dependencies of LaravelCacheComponent.
      *
@@ -30,7 +39,11 @@ class LaravelCacheComponent implements CacheComponentInterface
      */
     public function get(string $key)
     {
-        return $this->laravelCache->get($key, null);
+        if (isset($this->inMemoryCache[$key])) {
+            return $this->inMemoryCache[$key];
+        }
+
+        return $this->inMemoryCache[$key] = $this->laravelCache->get($key, null);
     }
 
     /**
