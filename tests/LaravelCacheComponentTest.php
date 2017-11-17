@@ -44,7 +44,6 @@ class LaravelCacheComponentTest extends TestCase
         $component->get($key);
         $result = $component->get($key);
 
-
         // Assertion
         $this->assertEquals($value, $result);
     }
