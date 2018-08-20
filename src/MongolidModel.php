@@ -218,7 +218,7 @@ abstract class MongolidModel extends ActiveRecord
      */
     public static function __callStatic($name, $arguments)
     {
-        if ($name === 'shouldReceive') {
+        if ('shouldReceive' === $name) {
             $class = get_called_class();
             static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
 
@@ -253,7 +253,7 @@ abstract class MongolidModel extends ActiveRecord
      */
     protected function hasLocalMock(): bool
     {
-        return $this->localMock !== null;
+        return null !== $this->localMock;
     }
 
     /**

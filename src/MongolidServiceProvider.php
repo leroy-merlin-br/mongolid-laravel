@@ -45,26 +45,38 @@ class MongolidServiceProvider extends ServiceProvider
     {
         MongolidIoc::setContainer($this->app);
 
-        $config = $this->app['config']->get('database.mongodb.default');
+        $this->app->singleton(
+            Pool::class,
+            function ($app) {
+                $config = $app['config']->get('database.mongodb.default') ?? [];
+                $connectionString = $this->buildConnectionString($config);
+                $options = $config['options'] ?? [];
+                $driverOptions = $config['driver_options'] ?? [];
 
-        $connectionString = $this->buildConnectionString($config);
-        $options = $config['options'] ?? [];
-        $driverOptions = $config['driver_options'] ?? [];
+                $connection = new Connection($connectionString, $options, $driverOptions);
+                $connection->defaultDatabase = $config['database'] ?? 'mongolid';
 
-        $connection = new Connection($connectionString, $options, $driverOptions);
-        $connection->defaultDatabase = $config['database'] ?? 'mongolid';
+                $pool = new Pool();
+                $pool->addConnection($connection);
 
-        $pool = new Pool();
-        $pool->addConnection($connection);
+                return $pool;
+            }
+        );
+        $this->app->singleton(
+            EventTriggerService::class,
+            function ($app) {
+                $eventService = new EventTriggerService();
+                $eventService->registerEventDispatcher($app->make(LaravelEventTrigger::class));
 
-        $eventService = new EventTriggerService();
-        $eventService->registerEventDispatcher($this->app->make(LaravelEventTrigger::class));
-
-        $this->app->instance(Pool::class, $pool);
-        $this->app->instance(EventTriggerService::class, $eventService);
-        $this->app->bind(CacheComponentInterface::class, function ($app) {
-            return new LaravelCacheComponent($app[CacheRepository::class]);
-        });
+                return $eventService;
+            }
+        );
+        $this->app->singleton(
+            CacheComponentInterface::class,
+            function ($app) {
+                return new LaravelCacheComponent($app[CacheRepository::class]);
+            }
+        );
     }
 
     /**
