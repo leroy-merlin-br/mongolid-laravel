@@ -203,15 +203,12 @@ class MongolidServiceProvider extends ServiceProvider
     {
         $validator = $this->app->make(Factory::class);
 
-        // Define "mongolid_unique" rule
         $validator->extend('mongolid_unique', Rules::class.'@unique');
         $validator->replacer('mongolid_unique', Rules::class.'@message');
 
-        // Define "mongolid_exists" rule
         $validator->extend('mongolid_exists', Rules::class.'@exists');
         $validator->replacer('mongolid_exists', Rules::class.'@message');
 
-        // Define "object_id" rule
         $validator->extend('object_id', Rules::class.'@objectId');
         $validator->replacer('object_id', Rules::class.'@objectIdMessage');
     }

@@ -21,7 +21,19 @@ class Rules
     /**
      * mongolid_unique:collection,field?,except?,idField?
      *
-     * @see https://laravel.com/docs/5.5/validation#rule-unique
+     * @example Using attribute name as query field
+     *   'email' => mongolid_unique:users
+     *
+     * @example Using other query field
+     *   'email' => mongolid_unique:users,user_email
+     *
+     * @example Excluding itself from verification
+     *   'email' => mongolid_unique:users,email,5ba3bc0836e5eb03f12a3c31
+     *
+     * @example Excluding itself from verification using other field for Id
+     *   'email' => mongolid_unique:users,email,5ba3bc0836e5eb03f12a3c31,user_id
+     *
+     * @see https://laravel.com/docs/5.6/validation#rule-unique
      */
     public function unique(string $attribute, $value, array $parameters)
     {
@@ -42,7 +54,13 @@ class Rules
     /**
      * mongolid_exists:collection,field?
      *
-     * @see https://laravel.com/docs/5.5/validation#rule-exists
+     * @example Using attribute name as query field
+     *   'email' => mongolid_exists:users
+     *
+     * @example Using other query field
+     *   'email' => mongolid_exists:users,user_email
+     *
+     * @see https://laravel.com/docs/5.6/validation#rule-exists
      */
     public function exists(string $attribute, $value, array $parameters)
     {
@@ -71,6 +89,9 @@ class Rules
     /**
      * Given attribute should be an ObjectId
      * object_id
+     *
+     * @example Using attribute name as query field
+     *   'product_id' => object_id
      *
      * @see ObjectId
      */
