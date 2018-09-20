@@ -34,14 +34,14 @@ abstract class MongolidModel extends ActiveRecord
      *
      * @var array
      */
-    public $rules = null;
+    protected $rules;
 
     /**
      * Error message bag.
      *
      * @var MessageBag
      */
-    public $errors;
+    protected $errors;
 
     /**
      * Public static mock.
@@ -123,14 +123,11 @@ abstract class MongolidModel extends ActiveRecord
      */
     public function isValid()
     {
-        // Return true if there aren't validation rules
-        if (!is_array($this->rules)) {
+        if (!$rules = $this->rules()) {
             return true;
         }
 
-        // Get the attributes and the rules to validate then
-        $attributes = $this->attributes;
-        $rules = $this->rules;
+        $attributes = $this->getAttributes();
 
         // Verify attributes that are hashed and that have not changed
         // those doesn't need to be validated.
@@ -163,6 +160,14 @@ abstract class MongolidModel extends ActiveRecord
         }
 
         return $this->errors;
+    }
+
+    /**
+     * Get the contents of rules attribute.
+     */
+    public function rules(): array
+    {
+        return $this->rules ?? [];
     }
 
     /**
