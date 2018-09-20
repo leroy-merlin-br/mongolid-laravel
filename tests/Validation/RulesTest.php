@@ -251,4 +251,72 @@ class RulesTest extends TestCase
         // Assertions
         $this->assertSame($result, $expectedMessage);
     }
+
+    public function testShouldBeAnObjectIdWhenUsingObject()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+
+        // Actions
+        $result = $rules->objectId('_id', new ObjectId());
+
+        // Assertions
+        $this->assertTrue($result);
+    }
+
+    public function testShouldBeAnObjectIdWhenUsingString()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+
+        // Actions
+        $result = $rules->objectId('productBank', (string) (new ObjectId()));
+
+        // Assertions
+        $this->assertTrue($result);
+    }
+
+    public function testShouldNotBeAnObjectId()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+
+        // Actions
+        $result = $rules->objectId('productBank', '1234');
+
+        // Assertions
+        $this->assertFalse($result);
+    }
+
+    public function testShouldRetrieveAlreadyTranslatedMessageForObjectId()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+        $message = 'You shall not pass';
+
+        // Actions
+        $result = $rules->objectIdMessage($message, '_id', 'object_id');
+
+        // Assertions
+        $this->assertSame($result, $message);
+    }
+
+    public function testShouldTranslateAMessageForObjectId()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+        $expectedMessage = 'The productBank must be an MongoDB ObjectId.';
+
+        // Actions
+        $result = $rules->objectIdMessage('validation.object_id', 'productBank', 'object_id');
+
+        // Assertions
+        $this->assertSame($result, $expectedMessage);
+    }
+
 }

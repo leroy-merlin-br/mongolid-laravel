@@ -69,6 +69,32 @@ class Rules
     }
 
     /**
+     * Given attribute should be an ObjectId
+     * object_id
+     *
+     * @see ObjectId
+     */
+    public function objectId(string $attribute, $value)
+    {
+        return $this->isObjectId($value);
+    }
+
+    /**
+     * Given attribute should be an ObjectId
+     * object_id
+     *
+     * @see ObjectId
+     */
+    public function objectIdMessage(string $message, string $attribute, string $rule)
+    {
+        if ("validation.{$rule}" !== $message) {
+            return $message;
+        }
+
+        return "The {$attribute} must be an MongoDB ObjectId.";
+    }
+
+    /**
      * Require a certain number of parameters to be present.
      *
      * @throws InvalidArgumentException
@@ -99,7 +125,7 @@ class Rules
      */
     private function transformIfId($value)
     {
-        if ($value && ObjectIdUtils::isObjectId($value)) {
+        if ($value && $this->isObjectId($value)) {
             $value = new ObjectId($value);
         }
 
@@ -121,5 +147,13 @@ class Rules
         $attribute = $attributeTranslation === $attributeKey ? $attribute : $attributeTranslation;
 
         return trans("validation.{$rule}", compact('attribute'));
+    }
+
+    /**
+     * @param mixed $value
+     */
+    private function isObjectId($value): bool
+    {
+        return ObjectIdUtils::isObjectId($value);
     }
 }
