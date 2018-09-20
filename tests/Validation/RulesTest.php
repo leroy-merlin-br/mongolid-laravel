@@ -1,6 +1,7 @@
 <?php
 namespace MongolidLaravel\Validation;
 
+use InvalidArgumentException;
 use Mockery as m;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Client;
@@ -144,6 +145,26 @@ class RulesTest extends TestCase
         $this->assertFalse($result);
     }
 
+    public function testUniqueShouldValidateParameters()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+
+        $parameters = [];
+
+        // Expectations
+        $pool->expects()
+            ->getConnection()
+            ->never();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Validation rule mongolid_unique requires at least 1 parameters.');
+
+        // Actions
+        $rules->unique('email', 'john@doe.com', $parameters);
+    }
+
     public function testShouldExist()
     {
         // Set
@@ -222,6 +243,26 @@ class RulesTest extends TestCase
 
         // Assertions
         $this->assertFalse($result);
+    }
+
+    public function testExistsShouldValidateParameters()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+
+        $parameters = [];
+
+        // Expectations
+        $pool->expects()
+            ->getConnection()
+            ->never();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Validation rule mongolid_exists requires at least 1 parameters.');
+
+        // Actions
+        $rules->exists('email', 'john@doe.com', $parameters);
     }
 
     public function testShouldRetrieveAlreadyTranslatedMessage()
@@ -318,5 +359,4 @@ class RulesTest extends TestCase
         // Assertions
         $this->assertSame($result, $expectedMessage);
     }
-
 }
