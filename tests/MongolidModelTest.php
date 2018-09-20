@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
@@ -11,7 +10,6 @@ use Mongolid\Connection\Pool;
 use Mongolid\Cursor\Cursor;
 use Mongolid\DataMapper\DataMapper;
 use Mongolid\Exception\ModelNotFoundException;
-use TestCase;
 
 class MongolidModelTest extends TestCase
 {

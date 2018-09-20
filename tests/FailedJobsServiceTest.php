@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Mockery as m;
@@ -10,7 +9,6 @@ use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
 use Mongolid\Connection\Pool;
 use Mongolid\Connection\Connection;
-use TestCase;
 use stdClass;
 
 class FailedJobsServiceTest extends TestCase

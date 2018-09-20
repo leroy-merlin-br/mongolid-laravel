@@ -1,8 +1,11 @@
 <?php
+namespace MongolidLaravel;
 
+use Mockery as m;
 use Mongolid\Container\Ioc;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
-class TestCase extends Orchestra\Testbench\TestCase
+class TestCase extends BaseTestCase
 {
     /**
      * {@inheritdoc}
@@ -26,7 +29,7 @@ class TestCase extends Orchestra\Testbench\TestCase
      */
     protected function expectEquals($expected, float $delta = 100)
     {
-        return Mockery::on(
+        return m::on(
              function ($value) use ($expected, $delta) {
                  $this->assertEquals($expected, $value, '', $delta);
 

@@ -1,11 +1,9 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Mockery as m;
 use MongoDB\BSON\ObjectID;
-use TestCase;
 
 class LaravelEventTriggerTest extends TestCase
 {

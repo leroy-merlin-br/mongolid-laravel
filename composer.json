@@ -32,9 +32,9 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests"
-        ]
+        "psr-4": {
+            "MongolidLaravel\\": "tests"
+        }
     },
     "extra": {
         "branch-alias": {
