@@ -33,7 +33,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class() extends MongolidModel {
-            public $rules = [
+            protected $rules = [
                 'name' => 'required',
                 'address' => 'min:100',
             ];
