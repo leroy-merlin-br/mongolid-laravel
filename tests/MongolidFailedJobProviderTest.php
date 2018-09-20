@@ -12,15 +12,6 @@ use Mongolid\Util\LocalDateTime;
 
 class MongolidFailedJobProviderTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        m::close();
-        parent::tearDown();
-    }
-
     public function testLogShouldPersistFailedJob()
     {
         // Set

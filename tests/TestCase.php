@@ -10,10 +10,16 @@ class TestCase extends BaseTestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
         Ioc::setContainer($this->app);
+    }
+
+    protected function tearDown()
+    {
+        m::close();
+        parent::tearDown();
     }
 
     /**

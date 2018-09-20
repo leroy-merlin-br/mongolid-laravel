@@ -13,15 +13,6 @@ use stdClass;
 
 class FailedJobsServiceTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        m::close();
-        parent::tearDown();
-    }
-
     public function testAllShouldReturnWholeCollection()
     {
         // Set
