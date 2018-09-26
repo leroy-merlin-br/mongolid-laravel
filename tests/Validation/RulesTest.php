@@ -145,6 +145,98 @@ class RulesTest extends TestCase
         $this->assertFalse($result);
     }
 
+    public function testShouldBeUniqueCastingIdToInt()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+
+        $connection = m::mock(Connection::class);
+        $connection->defaultDatabase = 'mongolid';
+        $client = m::mock(Client::class);
+        $database = m::mock(Database::class);
+        $collection = m::mock(Collection::class);
+        $parameters = ['users', 'email_field', '88991122', 'id', 'true'];
+
+        $query = [
+            'email_field' => 'john@doe.com',
+            'id' => ['$ne' => 88991122],
+        ];
+
+        // Expectations
+        $pool->expects()
+            ->getConnection()
+            ->andReturn($connection);
+
+        $connection->expects()
+            ->getRawConnection()
+            ->andReturn($client);
+
+        $client->expects()
+            ->selectDatabase('mongolid')
+            ->andReturn($database);
+
+        $database->expects()
+            ->selectCollection('users')
+            ->andReturn($collection);
+
+        $collection->expects()
+            ->count($query)
+            ->andReturn(0);
+
+        // Actions
+        $result = $rules->unique('email', 'john@doe.com', $parameters);
+
+        // Assertions
+        $this->assertTrue($result);
+    }
+
+    public function testShouldBeUniqueCastingIdToIntUsingDefaultIdKey()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+
+        $connection = m::mock(Connection::class);
+        $connection->defaultDatabase = 'mongolid';
+        $client = m::mock(Client::class);
+        $database = m::mock(Database::class);
+        $collection = m::mock(Collection::class);
+        $parameters = ['users', 'email_field', '1234', '', 'true'];
+
+        $query = [
+            'email_field' => 'john@doe.com',
+            '_id' => ['$ne' => 1234],
+        ];
+
+        // Expectations
+        $pool->expects()
+            ->getConnection()
+            ->andReturn($connection);
+
+        $connection->expects()
+            ->getRawConnection()
+            ->andReturn($client);
+
+        $client->expects()
+            ->selectDatabase('mongolid')
+            ->andReturn($database);
+
+        $database->expects()
+            ->selectCollection('users')
+            ->andReturn($collection);
+
+        $collection->expects()
+            ->count($query)
+            ->andReturn(0);
+
+        // Actions
+        $result = $rules->unique('email', 'john@doe.com', $parameters);
+
+        // Assertions
+        $this->assertTrue($result);
+    }
+
     public function testUniqueShouldValidateParameters()
     {
         // Set
@@ -200,6 +292,46 @@ class RulesTest extends TestCase
 
         // Actions
         $result = $rules->exists('email', 'john@doe.com', ['users']);
+
+        // Assertions
+        $this->assertTrue($result);
+    }
+
+    public function testShouldExistWithIntValue()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $rules = new Rules($pool);
+
+        $connection = m::mock(Connection::class);
+        $connection->defaultDatabase = 'mongolid';
+        $client = m::mock(Client::class);
+        $database = m::mock(Database::class);
+        $collection = m::mock(Collection::class);
+
+        // Expectations
+        $pool->expects()
+            ->getConnection()
+            ->andReturn($connection);
+
+        $connection->expects()
+            ->getRawConnection()
+            ->andReturn($client);
+
+        $client->expects()
+            ->selectDatabase('mongolid')
+            ->andReturn($database);
+
+        $database->expects()
+            ->selectCollection('users')
+            ->andReturn($collection);
+
+        $collection->expects()
+            ->count(['user_id' => 1234])
+            ->andReturn(1);
+
+        // Actions
+        $result = $rules->exists('user_id', 1234, ['users']);
 
         // Assertions
         $this->assertTrue($result);
