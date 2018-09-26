@@ -46,9 +46,9 @@ class Rules
         $query = [$field => $this->transformIfId($value)];
 
         if ($except = $parameters[2] ?? false) {
-            $idColumn = !empty($parameters[3]) ? $parameters[3] : '_id';
+            $idColumn = $parameters[3] ?? '_id';
 
-            if ($parameters[4] ?? false) {
+            if ('true' === ($parameters[4] ?? false)) {
                 $except = (int) $except;
             }
 

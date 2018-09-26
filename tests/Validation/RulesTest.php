@@ -191,7 +191,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldBeUniqueCastingIdToIntUsingDefaultIdKey()
+    public function testShouldNotCastIdToIntIfParameterIsNotStringTrue()
     {
         // Set
         $pool = m::mock(Pool::class);
@@ -202,11 +202,11 @@ class RulesTest extends TestCase
         $client = m::mock(Client::class);
         $database = m::mock(Database::class);
         $collection = m::mock(Collection::class);
-        $parameters = ['users', 'email_field', '1234', '', 'true'];
+        $parameters = ['users', 'email_field', '88991122', 'id', 'foo'];
 
         $query = [
             'email_field' => 'john@doe.com',
-            '_id' => ['$ne' => 1234],
+            'id' => ['$ne' => '88991122'],
         ];
 
         // Expectations
