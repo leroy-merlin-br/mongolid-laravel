@@ -5,7 +5,7 @@ use Illuminate\Filesystem\Filesystem;
 use Mockery as m;
 use MongolidLaravel\TestCase;
 
-class DatabaseMigrationCreatorTest extends TestCase
+class MigrationCreatorTest extends TestCase
 {
     public function testBasicCreateMethodStoresMigrationFile()
     {

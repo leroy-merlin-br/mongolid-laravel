@@ -1,14 +1,14 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace MongolidLaravel\Migrations\Commands;
 
 use Mockery as m;
+use MongolidLaravel\Migrations\Migrator;
 use MongolidLaravel\TestCase;
 use Illuminate\Foundation\Application;
-use MongolidLaravel\Migrations\Commands\MigrateCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class DatabaseMigrationMigrateCommandTest extends TestCase
+class MigrateCommandTest extends TestCase
 {
     public function testBasicMigrationsCallMigratorWithProperArguments()
     {

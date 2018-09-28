@@ -1,14 +1,14 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace MongolidLaravel\Migrations\Commands;
 
 use Mockery as m;
+use MongolidLaravel\Migrations\Migrator;
 use MongolidLaravel\TestCase;
 use Illuminate\Foundation\Application;
-use MongolidLaravel\Migrations\Commands\ResetCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class DatabaseMigrationResetCommandTest extends TestCase
+class ResetCommandTest extends TestCase
 {
     public function testResetCommandCallsMigratorWithProperArguments()
     {

@@ -1,18 +1,14 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace MongolidLaravel\Migrations\Commands;
 
 use Mockery as m;
 use MongolidLaravel\TestCase;
 use Illuminate\Foundation\Application;
-use MongolidLaravel\Migrations\Commands\ResetCommand;
-use MongolidLaravel\Migrations\Commands\MigrateCommand;
-use MongolidLaravel\Migrations\Commands\RefreshCommand;
-use MongolidLaravel\Migrations\Commands\RollbackCommand;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class DatabaseMigrationRefreshCommandTest extends TestCase
+class RefreshCommandTest extends TestCase
 {
     public function testRefreshCommandCallsCommandsWithProperArguments()
     {

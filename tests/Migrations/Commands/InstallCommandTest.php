@@ -1,14 +1,14 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Foundation\Application;
 use Mockery as m;
-use MongolidLaravel\Migrations\Commands\InstallCommand;
+use MongolidLaravel\Migrations\MigrationRepositoryInterface;
 use MongolidLaravel\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class DatabaseMigrationInstallCommandTest extends TestCase
+class InstallCommandTest extends TestCase
 {
     public function testFireCallsRepositoryToInstall()
     {

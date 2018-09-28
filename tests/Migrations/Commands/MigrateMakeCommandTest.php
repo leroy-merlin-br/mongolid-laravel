@@ -1,15 +1,15 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Composer;
 use Mockery as m;
+use MongolidLaravel\Migrations\MigrationCreator;
 use MongolidLaravel\TestCase;
-use MongolidLaravel\Migrations\Commands\MigrateMakeCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class DatabaseMigrationMakeCommandTest extends TestCase
+class MigrateMakeCommandTest extends TestCase
 {
     public function testBasicCreateDumpsAutoload()
     {
