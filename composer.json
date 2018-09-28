@@ -32,6 +32,9 @@
         }
     },
     "autoload-dev": {
+        "files": [
+            "tests/Migrations/stubs/MigrationCreatorFakeMigration.php"
+        ],
         "psr-4": {
             "MongolidLaravel\\": "tests"
         }
