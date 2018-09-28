@@ -1,6 +1,7 @@
 <?php
 namespace MongolidLaravel\Migrations;
 
+use Illuminate\Filesystem\Filesystem;
 use Mockery as m;
 use MongolidLaravel\TestCase;
 
@@ -71,8 +72,8 @@ class DatabaseMigrationCreatorTest extends TestCase
 
     protected function getCreator()
     {
-        $files = m::mock('Illuminate\Filesystem\Filesystem');
+        $files = m::mock(Filesystem::class);
 
-        return $this->getMockBuilder('Illuminate\Database\Migrations\MigrationCreator')->setMethods(['getDatePrefix'])->setConstructorArgs([$files])->getMock();
+        return $this->getMockBuilder(MigrationCreator::class)->setMethods(['getDatePrefix'])->setConstructorArgs([$files])->getMock();
     }
 }

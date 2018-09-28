@@ -4,13 +4,15 @@ namespace MongolidLaravel\Migrations;
 use Mockery as m;
 use MongolidLaravel\TestCase;
 use Illuminate\Foundation\Application;
-use Illuminate\Database\Console\Migrations\ResetCommand;
+use MongolidLaravel\Migrations\Commands\ResetCommand;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 class DatabaseMigrationResetCommandTest extends TestCase
 {
     public function testResetCommandCallsMigratorWithProperArguments()
     {
-        $command = new ResetCommand($migrator = m::mock('Illuminate\Database\Migrations\Migrator'));
+        $command = new ResetCommand($migrator = m::mock(Migrator::class));
         $app = new ApplicationDatabaseResetStub(['path.database' => __DIR__]);
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
@@ -25,7 +27,7 @@ class DatabaseMigrationResetCommandTest extends TestCase
 
     public function testResetCommandCanBePretended()
     {
-        $command = new ResetCommand($migrator = m::mock('Illuminate\Database\Migrations\Migrator'));
+        $command = new ResetCommand($migrator = m::mock(Migrator::class));
         $app = new ApplicationDatabaseResetStub(['path.database' => __DIR__]);
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
@@ -40,7 +42,7 @@ class DatabaseMigrationResetCommandTest extends TestCase
 
     protected function runCommand($command, $input = [])
     {
-        return $command->run(new \Symfony\Component\Console\Input\ArrayInput($input), new \Symfony\Component\Console\Output\NullOutput);
+        return $command->run(new ArrayInput($input), new NullOutput());
     }
 }
 

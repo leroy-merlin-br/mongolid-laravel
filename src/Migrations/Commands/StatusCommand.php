@@ -2,7 +2,7 @@
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Migrations\Migrator;
+use MongolidLaravel\Migrations\Migrator;
 use Symfony\Component\Console\Input\InputOption;
 
 class StatusCommand extends BaseCommand
@@ -24,14 +24,14 @@ class StatusCommand extends BaseCommand
     /**
      * The migrator instance.
      *
-     * @var \Illuminate\Database\Migrations\Migrator
+     * @var \MongolidLaravel\Migrations\Migrator
      */
     protected $migrator;
 
     /**
      * Create a new migration rollback command instance.
      *
-     * @param  \Illuminate\Database\Migrations\Migrator $migrator
+     * @param  \MongolidLaravel\Migrations\Migrator $migrator
      * @return void
      */
     public function __construct(Migrator $migrator)

@@ -2,7 +2,7 @@
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\ConfirmableTrait;
-use Illuminate\Database\Migrations\Migrator;
+use MongolidLaravel\Migrations\Migrator;
 use Symfony\Component\Console\Input\InputOption;
 
 class ResetCommand extends BaseCommand
@@ -26,14 +26,14 @@ class ResetCommand extends BaseCommand
     /**
      * The migrator instance.
      *
-     * @var \Illuminate\Database\Migrations\Migrator
+     * @var \MongolidLaravel\Migrations\Migrator
      */
     protected $migrator;
 
     /**
      * Create a new migration rollback command instance.
      *
-     * @param  \Illuminate\Database\Migrations\Migrator  $migrator
+     * @param  \MongolidLaravel\Migrations\Migrator  $migrator
      * @return void
      */
     public function __construct(Migrator $migrator)

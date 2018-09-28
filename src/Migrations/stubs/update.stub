@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use MongolidLaravel\Migrations\Migration;
 
 class DummyClass extends Migration
 {

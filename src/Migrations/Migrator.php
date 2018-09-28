@@ -13,7 +13,7 @@ class Migrator
     /**
      * The migration repository implementation.
      *
-     * @var \Illuminate\Database\Migrations\MigrationRepositoryInterface
+     * @var \MongolidLaravel\Migrations\MigrationRepositoryInterface
      */
     protected $repository;
 
@@ -55,7 +55,7 @@ class Migrator
     /**
      * Create a new migrator instance.
      *
-     * @param  \Illuminate\Database\Migrations\MigrationRepositoryInterface  $repository
+     * @param  \MongolidLaravel\Migrations\MigrationRepositoryInterface  $repository
      * @param  \Illuminate\Database\ConnectionResolverInterface  $resolver
      * @param  \Illuminate\Filesystem\Filesystem  $files
      * @return void
@@ -538,7 +538,7 @@ class Migrator
     /**
      * Get the migration repository instance.
      *
-     * @return \Illuminate\Database\Migrations\MigrationRepositoryInterface
+     * @return \MongolidLaravel\Migrations\MigrationRepositoryInterface
      */
     public function getRepository()
     {

@@ -3,7 +3,7 @@ namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Illuminate\Database\Migrations\MigrationRepositoryInterface;
+use MongolidLaravel\Migrations\MigrationRepositoryInterface;
 
 class InstallCommand extends Command
 {
@@ -24,14 +24,14 @@ class InstallCommand extends Command
     /**
      * The repository instance.
      *
-     * @var \Illuminate\Database\Migrations\MigrationRepositoryInterface
+     * @var \MongolidLaravel\Migrations\MigrationRepositoryInterface
      */
     protected $repository;
 
     /**
      * Create a new migration install command instance.
      *
-     * @param  \Illuminate\Database\Migrations\MigrationRepositoryInterface  $repository
+     * @param  \MongolidLaravel\Migrations\MigrationRepositoryInterface  $repository
      * @return void
      */
     public function __construct(MigrationRepositoryInterface $repository)

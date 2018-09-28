@@ -3,7 +3,7 @@ namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Composer;
-use Illuminate\Database\Migrations\MigrationCreator;
+use MongolidLaravel\Migrations\MigrationCreator;
 
 class MigrateMakeCommand extends BaseCommand
 {
@@ -28,7 +28,7 @@ class MigrateMakeCommand extends BaseCommand
     /**
      * The migration creator instance.
      *
-     * @var \Illuminate\Database\Migrations\MigrationCreator
+     * @var \MongolidLaravel\Migrations\MigrationCreator
      */
     protected $creator;
 
@@ -42,7 +42,7 @@ class MigrateMakeCommand extends BaseCommand
     /**
      * Create a new migration install command instance.
      *
-     * @param  \Illuminate\Database\Migrations\MigrationCreator  $creator
+     * @param  \MongolidLaravel\Migrations\MigrationCreator  $creator
      * @param  \Illuminate\Support\Composer  $composer
      * @return void
      */

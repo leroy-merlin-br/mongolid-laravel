@@ -4,12 +4,13 @@ namespace MongolidLaravel\Migrations;
 use Mockery as m;
 use MongolidLaravel\TestCase;
 use Illuminate\Foundation\Application;
-use Illuminate\Database\Migrations\Migrator;
-use Illuminate\Database\Console\Migrations\ResetCommand;
-use Illuminate\Database\Console\Migrations\MigrateCommand;
-use Illuminate\Database\Console\Migrations\RefreshCommand;
-use Illuminate\Database\Console\Migrations\RollbackCommand;
+use MongolidLaravel\Migrations\Commands\ResetCommand;
+use MongolidLaravel\Migrations\Commands\MigrateCommand;
+use MongolidLaravel\Migrations\Commands\RefreshCommand;
+use MongolidLaravel\Migrations\Commands\RollbackCommand;
 use Symfony\Component\Console\Application as ConsoleApplication;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 class DatabaseMigrationRefreshCommandTest extends TestCase
 {
@@ -61,14 +62,14 @@ class DatabaseMigrationRefreshCommandTest extends TestCase
 
     protected function runCommand($command, $input = [])
     {
-        return $command->run(new \Symfony\Component\Console\Input\ArrayInput($input), new \Symfony\Component\Console\Output\NullOutput);
+        return $command->run(new ArrayInput($input), new NullOutput());
     }
 }
 
 class InputMatcher extends m\Matcher\MatcherAbstract
 {
     /**
-     * @param  \Symfony\Component\Console\Input\ArrayInput  $actual
+     * @param  ArrayInput  $actual
      * @return bool
      */
     public function match(&$actual)
