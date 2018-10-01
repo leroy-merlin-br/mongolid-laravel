@@ -4,7 +4,7 @@ namespace MongolidLaravel;
 use Illuminate\Support\ServiceProvider;
 use MongolidLaravel\Migrations\Migrator;
 use MongolidLaravel\Migrations\MigrationCreator;
-use MongolidLaravel\Migrations\DatabaseMigrationRepository;
+use MongolidLaravel\Migrations\MongolidMigrationRepository;
 
 class MigrationServiceProvider extends ServiceProvider
 {
@@ -39,7 +39,7 @@ class MigrationServiceProvider extends ServiceProvider
         $this->app->singleton('migration.repository', function ($app) {
             $collection = $app['config']['database.mongodb.default.migrations'];
 
-            return new DatabaseMigrationRepository($app['db'], $collection);
+            return new MongolidMigrationRepository($app['db'], $collection);
         });
     }
 

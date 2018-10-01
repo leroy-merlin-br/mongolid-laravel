@@ -20,40 +20,40 @@ class MigrationCreatorTest extends TestCase
 
     public function testBasicCreateMethodCallsPostCreateHooks()
     {
-        $table = 'baz';
+        $collection = 'baz';
 
         $creator = $this->getCreator();
         unset($_SERVER['__migration.creator']);
-        $creator->afterCreate(function ($table) {
-            $_SERVER['__migration.creator'] = $table;
+        $creator->afterCreate(function ($collection) {
+            $_SERVER['__migration.creator'] = $collection;
         });
 
         $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/update.stub')->andReturn('DummyClass DummyTable');
+        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/update.stub')->andReturn('DummyClass DummyCollection');
         $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar baz');
 
-        $creator->create('create_bar', 'foo', $table);
+        $creator->create('create_bar', 'foo', $collection);
 
-        $this->assertEquals($_SERVER['__migration.creator'], $table);
+        $this->assertEquals($_SERVER['__migration.creator'], $collection);
 
         unset($_SERVER['__migration.creator']);
     }
 
-    public function testTableUpdateMigrationStoresMigrationFile()
+    public function testCollectionUpdateMigrationStoresMigrationFile()
     {
         $creator = $this->getCreator();
         $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/update.stub')->andReturn('DummyClass DummyTable');
+        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/update.stub')->andReturn('DummyClass DummyCollection');
         $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar baz');
 
         $creator->create('create_bar', 'foo', 'baz');
     }
 
-    public function testTableCreationMigrationStoresMigrationFile()
+    public function testCollectionCreationMigrationStoresMigrationFile()
     {
         $creator = $this->getCreator();
         $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/create.stub')->andReturn('DummyClass DummyTable');
+        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/create.stub')->andReturn('DummyClass DummyCollection');
         $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar baz');
 
         $creator->create('create_bar', 'foo', 'baz', true);
@@ -63,7 +63,7 @@ class MigrationCreatorTest extends TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage A MigrationCreatorFakeMigration class already exists.
      */
-    public function testTableUpdateMigrationWontCreateDuplicateClass()
+    public function testCollectionUpdateMigrationWontCreateDuplicateClass()
     {
         $creator = $this->getCreator();
 

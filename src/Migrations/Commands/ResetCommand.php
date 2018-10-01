@@ -56,11 +56,11 @@ class ResetCommand extends BaseCommand
 
         $this->migrator->setConnection($this->option('database'));
 
-        // First, we'll make sure that the migration table actually exists before we
+        // First, we'll make sure that the migration collection actually exists before we
         // start trying to rollback and re-run all of the migrations. If it's not
         // present we'll just bail out with an info message for the developers.
         if (! $this->migrator->repositoryExists()) {
-            return $this->comment('Migration table not found.');
+            return $this->comment('Migration collection not found.');
         }
 
         $this->migrator->setOutput($this->output)->reset(

@@ -38,30 +38,30 @@ class MigrationCreator
      *
      * @param  string  $name
      * @param  string  $path
-     * @param  string  $table
+     * @param  string  $collection
      * @param  bool    $create
      * @return string
      *
      * @throws \Exception
      */
-    public function create($name, $path, $table = null, $create = false)
+    public function create($name, $path, $collection = null, $create = false)
     {
         $this->ensureMigrationDoesntAlreadyExist($name);
 
         // First we will get the stub file for the migration, which serves as a type
         // of template for the migration. Once we have those we will populate the
         // various place-holders, save the file, and run the post create event.
-        $stub = $this->getStub($table, $create);
+        $stub = $this->getStub($collection, $create);
 
         $this->files->put(
             $path = $this->getPath($name, $path),
-            $this->populateStub($name, $stub, $table)
+            $this->populateStub($name, $stub, $collection)
         );
 
         // Next, we will fire any hooks that are supposed to fire after a migration is
         // created. Once that is done we'll be ready to return the full path to the
         // migration file so it can be used however it's needed by the developer.
-        $this->firePostCreateHooks($table);
+        $this->firePostCreateHooks($collection);
 
         return $path;
     }
@@ -84,19 +84,19 @@ class MigrationCreator
     /**
      * Get the migration stub file.
      *
-     * @param  string  $table
+     * @param  string  $collection
      * @param  bool    $create
      * @return string
      */
-    protected function getStub($table, $create)
+    protected function getStub($collection, $create)
     {
-        if (is_null($table)) {
+        if (is_null($collection)) {
             return $this->files->get($this->stubPath().'/blank.stub');
         }
 
-        // We also have stubs for creating new tables and modifying existing tables
-        // to save the developer some typing when they are creating a new tables
-        // or modifying existing tables. We'll grab the appropriate stub here.
+        // We also have stubs for creating new collections and modifying existing collections
+        // to save the developer some typing when they are creating a new collections
+        // or modifying existing collections. We'll grab the appropriate stub here.
         $stub = $create ? 'create.stub' : 'update.stub';
 
         return $this->files->get($this->stubPath()."/{$stub}");
@@ -107,18 +107,18 @@ class MigrationCreator
      *
      * @param  string  $name
      * @param  string  $stub
-     * @param  string  $table
+     * @param  string  $collection
      * @return string
      */
-    protected function populateStub($name, $stub, $table)
+    protected function populateStub($name, $stub, $collection)
     {
         $stub = str_replace('DummyClass', $this->getClassName($name), $stub);
 
-        // Here we will replace the table place-holders with the table specified by
-        // the developer, which is useful for quickly creating a tables creation
+        // Here we will replace the collection place-holders with the collection specified by
+        // the developer, which is useful for quickly creating a collections creation
         // or update migration from the console instead of typing it manually.
-        if (! is_null($table)) {
-            $stub = str_replace('DummyTable', $table, $stub);
+        if (! is_null($collection)) {
+            $stub = str_replace('DummyCollection', $collection, $stub);
         }
 
         return $stub;
@@ -150,13 +150,13 @@ class MigrationCreator
     /**
      * Fire the registered post create hooks.
      *
-     * @param  string  $table
+     * @param  string  $collection
      * @return void
      */
-    protected function firePostCreateHooks($table)
+    protected function firePostCreateHooks($collection)
     {
         foreach ($this->postCreate as $callback) {
-            call_user_func($callback, $table);
+            call_user_func($callback, $collection);
         }
     }
 

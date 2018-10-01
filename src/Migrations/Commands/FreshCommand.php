@@ -21,7 +21,7 @@ class FreshCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Drop all tables and re-run all migrations';
+    protected $description = 'Drop all collections and re-run all migrations';
 
     /**
      * Execute the console command.
@@ -42,9 +42,9 @@ class FreshCommand extends Command
             $this->info('Dropped all views successfully.');
         }
 
-        $this->dropAllTables($database);
+        $this->dropAllCollections($database);
 
-        $this->info('Dropped all tables successfully.');
+        $this->info('Dropped all collections successfully.');
 
         $this->call('migrate', [
             '--database' => $database,
@@ -59,16 +59,16 @@ class FreshCommand extends Command
     }
 
     /**
-     * Drop all of the database tables.
+     * Drop all of the database collections.
      *
      * @param  string  $database
      * @return void
      */
-    protected function dropAllTables($database)
+    protected function dropAllCollections($database)
     {
         $this->laravel['db']->connection($database)
                     ->getSchemaBuilder()
-                    ->dropAllTables();
+                    ->dropAllCollections();
     }
 
     /**
@@ -119,7 +119,7 @@ class FreshCommand extends Command
         return [
             ['database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use'],
 
-            ['drop-views', null, InputOption::VALUE_NONE, 'Drop all tables and views'],
+            ['drop-views', null, InputOption::VALUE_NONE, 'Drop all collections and views'],
 
             ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production'],
 

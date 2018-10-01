@@ -18,6 +18,9 @@ class TestCase extends BaseTestCase
 
     protected function tearDown()
     {
+        $this->addToAssertionCount(
+            m::getContainer()->mockery_getExpectationCount()
+        );
         m::close();
         parent::tearDown();
     }

@@ -54,7 +54,7 @@ class MigrateMakeCommandTest extends TestCase
         $this->runCommand($command, ['name' => 'CreateFoo']);
     }
 
-    public function testBasicCreateGivesCreatorProperArgumentsWhenTableIsSet()
+    public function testBasicCreateGivesCreatorProperArgumentsWhenCollectionIsSet()
     {
         $command = new MigrateMakeCommand(
             $creator = m::mock(MigrationCreator::class),
@@ -68,7 +68,7 @@ class MigrateMakeCommandTest extends TestCase
         $this->runCommand($command, ['name' => 'create_foo', '--create' => 'users']);
     }
 
-    public function testBasicCreateGivesCreatorProperArgumentsWhenCreateTablePatternIsFound()
+    public function testBasicCreateGivesCreatorProperArgumentsWhenCreateCollectionPatternIsFound()
     {
         $command = new MigrateMakeCommand(
             $creator = m::mock(MigrationCreator::class),
@@ -77,9 +77,9 @@ class MigrateMakeCommandTest extends TestCase
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $creator->shouldReceive('create')->once()->with('create_users_table', __DIR__.DIRECTORY_SEPARATOR.'migrations', 'users', true);
+        $creator->shouldReceive('create')->once()->with('create_users_collection', __DIR__.DIRECTORY_SEPARATOR.'migrations', 'users', true);
 
-        $this->runCommand($command, ['name' => 'create_users_table']);
+        $this->runCommand($command, ['name' => 'create_users_collection']);
     }
 
     public function testCanSpecifyPathToCreateMigrationsIn()
