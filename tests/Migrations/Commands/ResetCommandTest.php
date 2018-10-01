@@ -1,10 +1,11 @@
 <?php
 namespace MongolidLaravel\Migrations\Commands;
 
+use Illuminate\Console\OutputStyle;
+use Illuminate\Foundation\Application;
 use Mockery as m;
 use MongolidLaravel\Migrations\Migrator;
 use MongolidLaravel\TestCase;
-use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -12,36 +13,37 @@ class ResetCommandTest extends TestCase
 {
     public function testResetCommandCallsMigratorWithProperArguments()
     {
-        $command = new ResetCommand($migrator = m::mock(Migrator::class));
-        $app = new ApplicationDatabaseResetStub(['path.database' => __DIR__]);
+        // Set
+        $migrator = m::mock(Migrator::class);
+        $command = new ResetCommand($migrator);
+        $app = m::mock(Application::class.'[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $migrator->shouldReceive('paths')->once()->andReturn([]);
-        $migrator->shouldReceive('setConnection')->once()->with(null);
-        $migrator->shouldReceive('repositoryExists')->once()->andReturn(true);
-        $migrator->shouldReceive('setOutput')->once()->andReturn($migrator);
-        $migrator->shouldReceive('reset')->once()->with([__DIR__.DIRECTORY_SEPARATOR.'migrations']);
 
-        $this->runCommand($command);
-    }
+        // Expectations
+        $app->expects()
+            ->environment()
+            ->andReturn('development');
 
-    protected function runCommand($command, $input = [])
-    {
-        return $command->run(new ArrayInput($input), new NullOutput());
-    }
-}
+        $migrator->expects()
+            ->paths()
+            ->andReturn([]);
 
-class ApplicationDatabaseResetStub extends Application
-{
-    public function __construct(array $data = [])
-    {
-        foreach ($data as $abstract => $instance) {
-            $this->instance($abstract, $instance);
-        }
-    }
+        $migrator->expects()
+            ->setConnection(null);
 
-    public function environment()
-    {
-        return 'development';
+        $migrator->expects()
+            ->repositoryExists()
+            ->andReturn(true);
+
+        $migrator->expects()
+            ->setOutput(m::type(OutputStyle::class))
+            ->andReturn($migrator);
+
+        $migrator->expects()
+            ->reset([__DIR__.DIRECTORY_SEPARATOR.'migrations']);
+
+        // Actions
+        $command->run(new ArrayInput([]), new NullOutput());
     }
 }

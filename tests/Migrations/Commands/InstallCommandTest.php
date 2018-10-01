@@ -12,16 +12,19 @@ class InstallCommandTest extends TestCase
 {
     public function testFireCallsRepositoryToInstall()
     {
-        $command = new InstallCommand($repo = m::mock(MigrationRepositoryInterface::class));
+        // Set
+        $repository = m::mock(MigrationRepositoryInterface::class);
+        $command = new InstallCommand($repository);
         $command->setLaravel(new Application());
-        $repo->shouldReceive('setSource')->once()->with('foo');
-        $repo->shouldReceive('createRepository')->once();
 
-        $this->runCommand($command, ['--database' => 'foo']);
-    }
+        // Expectations
+        $repository->expects()
+            ->setSource('foo');
 
-    protected function runCommand($command, $options = [])
-    {
-        return $command->run(new ArrayInput($options), new NullOutput());
+        $repository->expects()
+            ->createRepository();
+
+        // Actions
+        $command->run(new ArrayInput(['--database' => 'foo']), new NullOutput());
     }
 }

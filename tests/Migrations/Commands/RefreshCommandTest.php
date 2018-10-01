@@ -1,9 +1,10 @@
 <?php
 namespace MongolidLaravel\Migrations\Commands;
 
+use Illuminate\Console\OutputStyle;
+use Illuminate\Foundation\Application;
 use Mockery as m;
 use MongolidLaravel\TestCase;
-use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -12,9 +13,10 @@ class RefreshCommandTest extends TestCase
 {
     public function testRefreshCommandCallsCommandsWithProperArguments()
     {
-        $command = new RefreshCommand($migrator = m::mock(Migrator::class));
+        // Set
+        $command = new RefreshCommand();
 
-        $app = new ApplicationDatabaseRefreshStub(['path.database' => __DIR__]);
+        $app = m::mock(Application::class.'[environment]');
         $console = m::mock(ConsoleApplication::class)->makePartial();
         $console->__construct();
         $command->setLaravel($app);
@@ -23,21 +25,43 @@ class RefreshCommandTest extends TestCase
         $resetCommand = m::mock(ResetCommand::class);
         $migrateCommand = m::mock(MigrateCommand::class);
 
-        $console->shouldReceive('find')->with('migrate:reset')->andReturn($resetCommand);
-        $console->shouldReceive('find')->with('migrate')->andReturn($migrateCommand);
-
         $quote = DIRECTORY_SEPARATOR == '\\' ? '"' : "'";
-        $resetCommand->shouldReceive('run')->with(new InputMatcher("--database --path --realpath --force {$quote}migrate:reset{$quote}"), m::any());
-        $migrateCommand->shouldReceive('run')->with(new InputMatcher('--database --path --realpath --force migrate'), m::any());
 
-        $this->runCommand($command);
+        // Expectations
+        $app->expects()
+            ->environment()
+            ->andReturn('development');
+
+        $console->expects()
+            ->find('migrate:reset')
+            ->andReturn($resetCommand);
+
+        $console->expects()
+            ->find('migrate')
+            ->andReturn($migrateCommand);
+
+        $resetCommand->expects()
+            ->run(
+                new InputMatcher("--database --path --realpath --force {$quote}migrate:reset{$quote}"),
+                m::type(OutputStyle::class)
+            );
+
+        $migrateCommand->expects()
+            ->run(
+                new InputMatcher('--database --path --realpath --force migrate'),
+                m::type(OutputStyle::class)
+            );
+
+        // Actions
+        $command->run(new ArrayInput([]), new NullOutput());
     }
 
     public function testRefreshCommandCallsCommandsWithStep()
     {
-        $command = new RefreshCommand($migrator = m::mock(Migrator::class));
+        // Set
+        $command = new RefreshCommand();
 
-        $app = new ApplicationDatabaseRefreshStub(['path.database' => __DIR__]);
+        $app = m::mock(Application::class.'[environment]');
         $console = m::mock(ConsoleApplication::class)->makePartial();
         $console->__construct();
         $command->setLaravel($app);
@@ -46,26 +70,43 @@ class RefreshCommandTest extends TestCase
         $rollbackCommand = m::mock(RollbackCommand::class);
         $migrateCommand = m::mock(MigrateCommand::class);
 
-        $console->shouldReceive('find')->with('migrate:rollback')->andReturn($rollbackCommand);
-        $console->shouldReceive('find')->with('migrate')->andReturn($migrateCommand);
-
         $quote = DIRECTORY_SEPARATOR == '\\' ? '"' : "'";
-        $rollbackCommand->shouldReceive('run')->with(new InputMatcher("--database --path --realpath --step=2 --force {$quote}migrate:rollback{$quote}"), m::any());
-        $migrateCommand->shouldReceive('run')->with(new InputMatcher('--database --path --realpath --force migrate'), m::any());
 
-        $this->runCommand($command, ['--step' => 2]);
-    }
+        // Expectations
+        $app->expects()
+            ->environment()
+            ->andReturn('development');
 
-    protected function runCommand($command, $input = [])
-    {
-        return $command->run(new ArrayInput($input), new NullOutput());
+        $console->expects()
+            ->find('migrate:rollback')
+            ->andReturn($rollbackCommand);
+
+        $console->expects()
+            ->find('migrate')
+            ->andReturn($migrateCommand);
+
+        $rollbackCommand->expects()
+            ->run(
+                new InputMatcher("--database --path --realpath --step=2 --force {$quote}migrate:rollback{$quote}"),
+                m::type(OutputStyle::class)
+            );
+
+        $migrateCommand->expects()
+            ->run(
+                new InputMatcher('--database --path --realpath --force migrate'),
+                m::type(OutputStyle::class)
+            );
+
+        // Actions
+        $command->run(new ArrayInput(['--step' => 2]), new NullOutput());
     }
 }
 
 class InputMatcher extends m\Matcher\MatcherAbstract
 {
     /**
-     * @param  ArrayInput  $actual
+     * @param  ArrayInput $actual
+     *
      * @return bool
      */
     public function match(&$actual)
@@ -76,20 +117,5 @@ class InputMatcher extends m\Matcher\MatcherAbstract
     public function __toString()
     {
         return '';
-    }
-}
-
-class ApplicationDatabaseRefreshStub extends Application
-{
-    public function __construct(array $data = [])
-    {
-        foreach ($data as $abstract => $instance) {
-            $this->instance($abstract, $instance);
-        }
-    }
-
-    public function environment()
-    {
-        return 'development';
     }
 }

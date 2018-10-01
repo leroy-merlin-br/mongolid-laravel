@@ -1,10 +1,11 @@
 <?php
 namespace MongolidLaravel\Migrations\Commands;
 
+use Illuminate\Console\OutputStyle;
+use Illuminate\Foundation\Application;
 use Mockery as m;
 use MongolidLaravel\Migrations\Migrator;
 use MongolidLaravel\TestCase;
-use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -12,84 +13,151 @@ class MigrateCommandTest extends TestCase
 {
     public function testBasicMigrationsCallMigratorWithProperArguments()
     {
-        $command = new MigrateCommand($migrator = m::mock(Migrator::class));
-        $app = new ApplicationDatabaseMigrationStub(['path.database' => __DIR__]);
+        // Set
+        $migrator = m::mock(Migrator::class);
+        $command = new MigrateCommand($migrator);
+        $app = m::mock(Application::class.'[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $migrator->shouldReceive('paths')->once()->andReturn([]);
-        $migrator->shouldReceive('setConnection')->once()->with(null);
-        $migrator->shouldReceive('setOutput')->once()->andReturn($migrator);
-        $migrator->shouldReceive('run')->once()->with([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
-        $migrator->shouldReceive('getNotes')->andReturn([]);
-        $migrator->shouldReceive('repositoryExists')->once()->andReturn(true);
 
-        $this->runCommand($command);
+        // Expectations
+        $app->expects()
+            ->environment()
+            ->andReturn('development');
+
+        $migrator->expects()
+            ->paths()
+            ->andReturn([]);
+
+        $migrator->expects()
+            ->setConnection(null);
+
+        $migrator->expects()
+            ->setOutput(m::type(OutputStyle::class))
+            ->andReturn($migrator);
+
+        $migrator->expects()
+            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
+
+        $migrator->expects()
+            ->repositoryExists()
+            ->andReturn(true);
+
+        // Actions
+        $command->run(new ArrayInput([]), new NullOutput());
     }
 
     public function testMigrationRepositoryCreatedWhenNecessary()
     {
-        $params = [$migrator = m::mock(Migrator::class)];
-        $command = $this->getMockBuilder(MigrateCommand::class)->setMethods(['call'])->setConstructorArgs($params)->getMock();
-        $app = new ApplicationDatabaseMigrationStub(['path.database' => __DIR__]);
+        // Set
+        $migrator = m::mock(Migrator::class);
+        $command = m::mock(MigrateCommand::class.'[call]', [$migrator]);
+        $app = m::mock(Application::class.'[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $migrator->shouldReceive('paths')->once()->andReturn([]);
-        $migrator->shouldReceive('setConnection')->once()->with(null);
-        $migrator->shouldReceive('setOutput')->once()->andReturn($migrator);
-        $migrator->shouldReceive('run')->once()->with([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
-        $migrator->shouldReceive('repositoryExists')->once()->andReturn(false);
-        $command->expects($this->once())->method('call')->with($this->equalTo('migrate:install'), $this->equalTo(['--database' => null]));
 
-        $this->runCommand($command);
+        // Expectations
+        $app->expects()
+            ->environment()
+            ->andReturn('development');
+
+        $migrator->expects()
+            ->paths()
+            ->andReturn([]);
+
+        $migrator->expects()
+            ->setConnection(null);
+
+        $migrator->expects()
+            ->setOutput(m::type(OutputStyle::class))
+            ->andReturn($migrator);
+
+        $migrator->expects()
+            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
+
+        $migrator->expects()
+            ->repositoryExists()
+            ->andReturn(false);
+
+        $command->expects()
+            ->call(
+                'migrate:install',
+                ['--database' => null]
+            );
+
+        // Actions
+        $command->run(new ArrayInput([]), new NullOutput());
     }
 
     public function testTheDatabaseMayBeSet()
     {
-        $command = new MigrateCommand($migrator = m::mock(Migrator::class));
-        $app = new ApplicationDatabaseMigrationStub(['path.database' => __DIR__]);
+        // Set
+        $migrator = m::mock(Migrator::class);
+        $command = new MigrateCommand($migrator);
+        $app = m::mock(Application::class.'[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $migrator->shouldReceive('paths')->once()->andReturn([]);
-        $migrator->shouldReceive('setConnection')->once()->with('foo');
-        $migrator->shouldReceive('setOutput')->once()->andReturn($migrator);
-        $migrator->shouldReceive('run')->once()->with([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
-        $migrator->shouldReceive('repositoryExists')->once()->andReturn(true);
 
-        $this->runCommand($command, ['--database' => 'foo']);
+        // Expectations
+        $app->expects()
+            ->environment()
+            ->andReturn('development');
+
+        $migrator->expects()
+            ->paths()
+            ->andReturn([]);
+
+        $migrator->expects()
+            ->setConnection('foo');
+
+        $migrator->expects()
+            ->setOutput(m::type(OutputStyle::class))
+            ->andReturn($migrator);
+
+        $migrator->expects()
+            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
+
+        $migrator->expects()
+            ->repositoryExists()
+            ->andReturn(true);
+
+        // Actions
+        $command->run(new ArrayInput(['--database' => 'foo']), new NullOutput());
     }
 
     public function testStepMayBeSet()
     {
-        $command = new MigrateCommand($migrator = m::mock(Migrator::class));
-        $app = new ApplicationDatabaseMigrationStub(['path.database' => __DIR__]);
+        // Set
+        $migrator = m::mock(Migrator::class);
+        $command = new MigrateCommand($migrator);
+        $app = m::mock(Application::class.'[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $migrator->shouldReceive('paths')->once()->andReturn([]);
-        $migrator->shouldReceive('setConnection')->once()->with(null);
-        $migrator->shouldReceive('setOutput')->once()->andReturn($migrator);
-        $migrator->shouldReceive('run')->once()->with([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => true]);
-        $migrator->shouldReceive('repositoryExists')->once()->andReturn(true);
 
-        $this->runCommand($command, ['--step' => true]);
-    }
+        // Expectations
+        $app->expects()
+            ->environment()
+            ->andReturn('development');
 
-    protected function runCommand($command, $input = [])
-    {
-        return $command->run(new ArrayInput($input), new NullOutput());
-    }
-}
+        $migrator->expects()
+            ->paths()
+            ->andReturn([]);
 
-class ApplicationDatabaseMigrationStub extends Application
-{
-    public function __construct(array $data = [])
-    {
-        foreach ($data as $abstract => $instance) {
-            $this->instance($abstract, $instance);
-        }
-    }
+        $migrator->expects()
+            ->setConnection(null);
 
-    public function environment()
-    {
-        return 'development';
+        $migrator->expects()
+            ->setOutput(m::type(OutputStyle::class))
+            ->andReturn($migrator);
+
+        $migrator->expects()
+            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => true]);
+
+        $migrator->expects()
+            ->repositoryExists()
+            ->andReturn(true);
+
+        // Actions
+        $command->run(new ArrayInput(['--step' => true]), new NullOutput());
     }
 }

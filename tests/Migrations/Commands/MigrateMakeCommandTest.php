@@ -13,90 +13,136 @@ class MigrateMakeCommandTest extends TestCase
 {
     public function testBasicCreateDumpsAutoload()
     {
-        $command = new MigrateMakeCommand(
-            $creator = m::mock(MigrationCreator::class),
-            $composer = m::mock(Composer::class)
-        );
+        // Set
+        $creator = m::mock(MigrationCreator::class);
+        $composer = m::mock(Composer::class);
+        $command = new MigrateMakeCommand($creator, $composer);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $creator->shouldReceive('create')->once()->with('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
-        $composer->shouldReceive('dumpAutoloads')->once();
 
-        $this->runCommand($command, ['name' => 'create_foo']);
+        // Expectations
+        $creator->expects()
+            ->create('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
+
+        $composer->expects()
+            ->dumpAutoloads();
+
+        // Actions
+        $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
     }
 
     public function testBasicCreateGivesCreatorProperArguments()
     {
-        $command = new MigrateMakeCommand(
-            $creator = m::mock(MigrationCreator::class),
-            m::mock(Composer::class)->shouldIgnoreMissing()
-        );
+        // Set
+        $creator = m::mock(MigrationCreator::class);
+        $composer = m::mock(Composer::class);
+        $command = new MigrateMakeCommand($creator, $composer);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $creator->shouldReceive('create')->once()->with('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
 
-        $this->runCommand($command, ['name' => 'create_foo']);
+        // Expectations
+        $creator->expects()
+            ->create('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
+
+        $composer->expects()
+            ->dumpAutoloads();
+
+        // Actions
+        $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
     }
 
     public function testBasicCreateGivesCreatorProperArgumentsWhenNameIsStudlyCase()
     {
-        $command = new MigrateMakeCommand(
-            $creator = m::mock(MigrationCreator::class),
-            m::mock(Composer::class)->shouldIgnoreMissing()
-        );
+        // Set
+        $creator = m::mock(MigrationCreator::class);
+        $composer = m::mock(Composer::class);
+        $command = new MigrateMakeCommand($creator, $composer);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $creator->shouldReceive('create')->once()->with('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
 
-        $this->runCommand($command, ['name' => 'CreateFoo']);
+        // Expectations
+        $creator->expects()
+            ->create('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
+
+        $composer->expects()
+            ->dumpAutoloads();
+
+        // Actions
+        $command->run(new ArrayInput(['name' => 'CreateFoo']), new NullOutput());
     }
 
     public function testBasicCreateGivesCreatorProperArgumentsWhenCollectionIsSet()
     {
-        $command = new MigrateMakeCommand(
-            $creator = m::mock(MigrationCreator::class),
-            m::mock(Composer::class)->shouldIgnoreMissing()
-        );
+        // Set
+        $creator = m::mock(MigrationCreator::class);
+        $composer = m::mock(Composer::class);
+        $command = new MigrateMakeCommand($creator, $composer);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $creator->shouldReceive('create')->once()->with('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
 
-        $this->runCommand($command, ['name' => 'create_foo']);
+        // Expectations
+        $creator->expects()
+            ->create('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
+
+        $composer->expects()
+            ->dumpAutoloads();
+
+        // Actions
+        $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
     }
 
     public function testBasicCreateGivesCreatorProperArgumentsWhenCreateCollectionPatternIsFound()
     {
-        $command = new MigrateMakeCommand(
-            $creator = m::mock(MigrationCreator::class),
-            m::mock(Composer::class)->shouldIgnoreMissing()
-        );
+        // Set
+        $creator = m::mock(MigrationCreator::class);
+        $composer = m::mock(Composer::class);
+        $command = new MigrateMakeCommand($creator, $composer);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
-        $creator->shouldReceive('create')->once()->with('create_users_collection', __DIR__.DIRECTORY_SEPARATOR.'migrations');
 
-        $this->runCommand($command, ['name' => 'create_users_collection']);
+        // Expectations
+        $creator->expects()
+            ->create(
+                'create_users_collection',
+                __DIR__.DIRECTORY_SEPARATOR.'migrations'
+            );
+
+        $composer->expects()
+            ->dumpAutoloads();
+
+        // Actions
+        $command->run(new ArrayInput(['name' => 'create_users_collection']), new NullOutput());
     }
 
     public function testCanSpecifyPathToCreateMigrationsIn()
     {
-        $command = new MigrateMakeCommand(
-            $creator = m::mock(MigrationCreator::class),
-            m::mock(Composer::class)->shouldIgnoreMissing()
-        );
+        // Set
+        $creator = m::mock(MigrationCreator::class);
+        $composer = m::mock(Composer::class);
+        $command = new MigrateMakeCommand($creator, $composer);
         $app = new Application();
         $command->setLaravel($app);
         $app->setBasePath('/home/laravel');
-        $creator->shouldReceive('create')->once()->with('create_foo', '/home/laravel/vendor/laravel-package/migrations');
-        $this->runCommand($command, ['name' => 'create_foo', '--path' => 'vendor/laravel-package/migrations']);
-    }
 
-    protected function runCommand($command, $input = [])
-    {
-        return $command->run(new ArrayInput($input), new NullOutput());
+        // Expectations
+        $creator->expects()
+            ->create(
+                'create_foo',
+                '/home/laravel/vendor/laravel-package/migrations'
+            );
+
+        $composer->expects()
+            ->dumpAutoloads();
+
+        // Actions
+        $command->run(
+            new ArrayInput(['name' => 'create_foo', '--path' => 'vendor/laravel-package/migrations']),
+            new NullOutput()
+        );
     }
 }

@@ -2,6 +2,7 @@
 namespace MongolidLaravel\Migrations;
 
 use Illuminate\Filesystem\Filesystem;
+use InvalidArgumentException;
 use Mockery as m;
 use MongolidLaravel\TestCase;
 
@@ -9,67 +10,117 @@ class MigrationCreatorTest extends TestCase
 {
     public function testBasicCreateMethodStoresMigrationFile()
     {
-        $creator = $this->getCreator();
+        // Set
+        $files = m::mock(Filesystem::class);
+        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
+        $creator->shouldAllowMockingProtectedMethods();
 
-        $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
-        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar');
+        // Expectations
+        $creator->expects()
+            ->getDatePrefix()
+            ->andReturn('foo');
 
+        $files->expects()
+            ->get($creator->stubPath().'/blank.stub')
+            ->andReturn('DummyClass');
+
+        $files->expects()
+            ->put('foo/foo_create_bar.php', 'CreateBar');
+
+        // Actions
         $creator->create('create_bar', 'foo');
     }
 
     public function testBasicCreateMethodCallsPostCreateHooks()
     {
-        $creator = $this->getCreator();
+        // Set
+        $files = m::mock(Filesystem::class);
+        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
+        $creator->shouldAllowMockingProtectedMethods();
+
         $hasRun = false;
-        $creator->afterCreate(function () use (&$hasRun) {
-            $hasRun = true;
-        });
+        $creator->afterCreate(
+            function () use (&$hasRun) {
+                $hasRun = true;
+            }
+        );
 
-        $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
-        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar');
+        // Expectations
+        $creator->expects()
+            ->getDatePrefix()
+            ->andReturn('foo');
 
+        $files->expects()
+            ->get($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
+
+        $files->expects()
+            ->put('foo/foo_create_bar.php', 'CreateBar');
+
+        // Actions
         $creator->create('create_bar', 'foo');
 
+        // Assertions
         $this->assertTrue($hasRun);
     }
 
     public function testCollectionUpdateMigrationStoresMigrationFile()
     {
-        $creator = $this->getCreator();
-        $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
-        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar');
+        // Set
+        $files = m::mock(Filesystem::class);
+        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
+        $creator->shouldAllowMockingProtectedMethods();
 
+        // Expectations
+        $creator->expects()
+            ->getDatePrefix()
+            ->andReturn('foo');
+
+        $files->expects()
+            ->get($creator->stubPath().'/blank.stub')
+            ->andReturn('DummyClass');
+
+        $files->expects()
+            ->put('foo/foo_create_bar.php', 'CreateBar');
+
+        // Actions
         $creator->create('create_bar', 'foo');
     }
 
     public function testCollectionCreationMigrationStoresMigrationFile()
     {
-        $creator = $this->getCreator();
-        $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
-        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar');
+        // Set
+        $files = m::mock(Filesystem::class);
+        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
+        $creator->shouldAllowMockingProtectedMethods();
 
+        // Expectations
+        $creator->expects()
+            ->getDatePrefix()
+            ->andReturn('foo');
+
+        $files->expects()
+            ->get($creator->stubPath().'/blank.stub')
+            ->andReturn('DummyClass');
+
+        $files->expects()
+            ->put('foo/foo_create_bar.php', 'CreateBar');
+
+        // Actions
         $creator->create('create_bar', 'foo');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A MigrationCreatorFakeMigration class already exists.
-     */
     public function testCollectionUpdateMigrationWontCreateDuplicateClass()
     {
-        $creator = $this->getCreator();
-
-        $creator->create('migration_creator_fake_migration', 'foo');
-    }
-
-    protected function getCreator()
-    {
+        // Set
         $files = m::mock(Filesystem::class);
+        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
+        $creator->shouldAllowMockingProtectedMethods();
 
-        return $this->getMockBuilder(MigrationCreator::class)->setMethods(['getDatePrefix'])->setConstructorArgs([$files])->getMock();
+        // Expectations
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('A MigrationCreatorFakeMigration class already exists.');
+
+        // Actions
+        $creator->create('migration_creator_fake_migration', 'foo');
     }
 }
