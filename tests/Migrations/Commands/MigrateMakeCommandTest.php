@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Foundation\Application;

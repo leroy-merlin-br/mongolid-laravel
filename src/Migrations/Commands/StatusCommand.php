@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Support\Collection;
@@ -31,8 +32,7 @@ class StatusCommand extends BaseCommand
     /**
      * Create a new migration rollback command instance.
      *
-     * @param  \MongolidLaravel\Migrations\Migrator $migrator
-     * @return void
+     * @param \MongolidLaravel\Migrations\Migrator $migrator
      */
     public function __construct(Migrator $migrator)
     {
@@ -43,14 +43,12 @@ class StatusCommand extends BaseCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
         $this->migrator->setConnection($this->option('database'));
 
-        if (! $this->migrator->repositoryExists()) {
+        if (!$this->migrator->repositoryExists()) {
             return $this->error('No migrations found.');
         }
 
@@ -68,8 +66,9 @@ class StatusCommand extends BaseCommand
     /**
      * Get the status for the given ran migrations.
      *
-     * @param  array  $ran
-     * @param  array  $batches
+     * @param array $ran
+     * @param array $batches
+     *
      * @return \Illuminate\Support\Collection
      */
     protected function getStatusFor(array $ran, array $batches)

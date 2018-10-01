@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations;
 
 use Closure;
@@ -25,8 +26,7 @@ class MigrationCreator
     /**
      * Create a new migration creator instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @return void
+     * @param \Illuminate\Filesystem\Filesystem $files
      */
     public function __construct(Filesystem $files)
     {
@@ -36,8 +36,9 @@ class MigrationCreator
     /**
      * Create a new migration at the given path.
      *
-     * @param  string  $name
-     * @param  string  $path
+     * @param string $name
+     * @param string $path
+     *
      * @return string
      *
      * @throws \Exception
@@ -67,8 +68,7 @@ class MigrationCreator
     /**
      * Ensure that a migration with the given name doesn't already exist.
      *
-     * @param  string  $name
-     * @return void
+     * @param string $name
      *
      * @throws \InvalidArgumentException
      */
@@ -92,8 +92,9 @@ class MigrationCreator
     /**
      * Populate the place-holders in the migration stub.
      *
-     * @param  string  $name
-     * @param  string  $stub
+     * @param string $name
+     * @param string $stub
+     *
      * @return string
      */
     protected function populateStub($name, $stub)
@@ -104,7 +105,8 @@ class MigrationCreator
     /**
      * Get the class name of a migration name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function getClassName($name)
@@ -115,8 +117,9 @@ class MigrationCreator
     /**
      * Get the full path to the migration.
      *
-     * @param  string  $name
-     * @param  string  $path
+     * @param string $name
+     * @param string $path
+     *
      * @return string
      */
     protected function getPath($name, $path)
@@ -126,8 +129,6 @@ class MigrationCreator
 
     /**
      * Fire the registered post create hooks.
-     *
-     * @return void
      */
     protected function firePostCreateHooks()
     {
@@ -139,8 +140,7 @@ class MigrationCreator
     /**
      * Register a post migration create hook.
      *
-     * @param  \Closure  $callback
-     * @return void
+     * @param \Closure $callback
      */
     public function afterCreate(Closure $callback)
     {

@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Support\ServiceProvider;
@@ -17,8 +18,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -31,8 +30,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the migration repository service.
-     *
-     * @return void
      */
     protected function registerRepository()
     {
@@ -45,8 +42,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the migrator service.
-     *
-     * @return void
      */
     protected function registerMigrator()
     {
@@ -62,8 +57,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the migration creator.
-     *
-     * @return void
      */
     protected function registerCreator()
     {

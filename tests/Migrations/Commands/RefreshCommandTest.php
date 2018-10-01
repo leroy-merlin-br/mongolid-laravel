@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\OutputStyle;
@@ -105,7 +106,7 @@ class RefreshCommandTest extends TestCase
 class InputMatcher extends m\Matcher\MatcherAbstract
 {
     /**
-     * @param  ArrayInput $actual
+     * @param ArrayInput $actual
      *
      * @return bool
      */

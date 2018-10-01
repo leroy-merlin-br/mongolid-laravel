@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Support\Str;
@@ -40,9 +41,8 @@ class MigrateMakeCommand extends BaseCommand
     /**
      * Create a new migration install command instance.
      *
-     * @param  \MongolidLaravel\Migrations\MigrationCreator  $creator
-     * @param  \Illuminate\Support\Composer  $composer
-     * @return void
+     * @param \MongolidLaravel\Migrations\MigrationCreator $creator
+     * @param \Illuminate\Support\Composer                 $composer
      */
     public function __construct(MigrationCreator $creator, Composer $composer)
     {
@@ -54,8 +54,6 @@ class MigrateMakeCommand extends BaseCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
@@ -75,8 +73,7 @@ class MigrateMakeCommand extends BaseCommand
     /**
      * Write the migration file to disk.
      *
-     * @param  string  $name
-     * @return void
+     * @param string $name
      */
     protected function writeMigration($name)
     {
@@ -94,8 +91,8 @@ class MigrateMakeCommand extends BaseCommand
      */
     protected function getMigrationPath()
     {
-        if (! is_null($targetPath = $this->input->getOption('path'))) {
-            return ! $this->usingRealPath()
+        if (!is_null($targetPath = $this->input->getOption('path'))) {
+            return !$this->usingRealPath()
                             ? $this->laravel->basePath().'/'.$targetPath
                             : $targetPath;
         }

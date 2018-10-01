@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations;
 
 interface MigrationRepositoryInterface
@@ -13,7 +14,8 @@ interface MigrationRepositoryInterface
     /**
      * Get list of migrations.
      *
-     * @param  int  $steps
+     * @param int $steps
+     *
      * @return array
      */
     public function getMigrations($steps);
@@ -35,17 +37,15 @@ interface MigrationRepositoryInterface
     /**
      * Log that a migration was run.
      *
-     * @param  string  $file
-     * @param  int  $batch
-     * @return void
+     * @param string $file
+     * @param int    $batch
      */
     public function log($file, $batch);
 
     /**
      * Remove a migration from the log.
      *
-     * @param  object  $migration
-     * @return void
+     * @param object $migration
      */
     public function delete($migration);
 
@@ -58,8 +58,6 @@ interface MigrationRepositoryInterface
 
     /**
      * Create the migration repository data store.
-     *
-     * @return void
      */
     public function createRepository();
 
@@ -73,8 +71,7 @@ interface MigrationRepositoryInterface
     /**
      * Set the information source to gather data.
      *
-     * @param  string  $name
-     * @return void
+     * @param string $name
      */
     public function setSource($name);
 }
