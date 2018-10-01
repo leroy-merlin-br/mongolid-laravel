@@ -484,7 +484,10 @@ class MongolidModelTest extends TestCase
         };
 
         // Actions
-        $model::foobar();
+        $result = $model::foobar();
+
+        // Assertions
+        $this->assertNull($result);
     }
 
     public function testShouldGetCollection()
