@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations;
 
 use Mockery as m;
@@ -175,7 +176,6 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         $collection->expects()
             ->deleteOne(['migration' => 'create_foo_index']);
-
 
         // Actions
         $repository->delete($migration);

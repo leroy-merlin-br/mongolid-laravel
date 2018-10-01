@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\Command;
@@ -25,12 +26,10 @@ class RefreshCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return;
         }
 
@@ -72,11 +71,10 @@ class RefreshCommand extends Command
     /**
      * Run the rollback command.
      *
-     * @param  string  $database
-     * @param  string  $path
-     * @param  bool  $step
-     * @param  bool  $force
-     * @return void
+     * @param string $database
+     * @param string $path
+     * @param bool   $step
+     * @param bool   $force
      */
     protected function runRollback($database, $path, $step, $force)
     {
@@ -92,10 +90,9 @@ class RefreshCommand extends Command
     /**
      * Run the reset command.
      *
-     * @param  string  $database
-     * @param  string  $path
-     * @param  bool  $force
-     * @return void
+     * @param string $database
+     * @param string $path
+     * @param bool   $force
      */
     protected function runReset($database, $path, $force)
     {
@@ -120,8 +117,7 @@ class RefreshCommand extends Command
     /**
      * Run the database seeder command.
      *
-     * @param  string  $database
-     * @return void
+     * @param string $database
      */
     protected function runSeeder($database)
     {

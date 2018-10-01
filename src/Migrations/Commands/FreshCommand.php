@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\Command;
@@ -25,12 +26,10 @@ class FreshCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return;
         }
 
@@ -55,8 +54,7 @@ class FreshCommand extends Command
     /**
      * Drop all of the database collections.
      *
-     * @param  string  $database
-     * @return void
+     * @param string $database
      */
     protected function dropAllCollections($database)
     {
@@ -79,8 +77,7 @@ class FreshCommand extends Command
     /**
      * Run the database seeder command.
      *
-     * @param  string  $database
-     * @return void
+     * @param string $database
      */
     protected function runSeeder($database)
     {

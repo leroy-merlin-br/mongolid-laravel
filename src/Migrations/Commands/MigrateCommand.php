@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\ConfirmableTrait;
@@ -37,8 +38,7 @@ class MigrateCommand extends BaseCommand
     /**
      * Create a new migration command instance.
      *
-     * @param  \MongolidLaravel\Migrations\Migrator  $migrator
-     * @return void
+     * @param \MongolidLaravel\Migrations\Migrator $migrator
      */
     public function __construct(Migrator $migrator)
     {
@@ -49,12 +49,10 @@ class MigrateCommand extends BaseCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return;
         }
 
@@ -78,14 +76,12 @@ class MigrateCommand extends BaseCommand
 
     /**
      * Prepare the migration database for running.
-     *
-     * @return void
      */
     protected function prepareDatabase()
     {
         $this->migrator->setConnection($this->option('database'));
 
-        if (! $this->migrator->repositoryExists()) {
+        if (!$this->migrator->repositoryExists()) {
             $this->call(
                 'migrate:install', ['--database' => $this->option('database')]
             );

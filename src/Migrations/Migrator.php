@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations;
 
 use Illuminate\Support\Arr;
@@ -47,9 +48,8 @@ class Migrator
     /**
      * Create a new migrator instance.
      *
-     * @param  \MongolidLaravel\Migrations\MigrationRepositoryInterface  $repository
-     * @param  \Illuminate\Filesystem\Filesystem  $files
-     * @return void
+     * @param \MongolidLaravel\Migrations\MigrationRepositoryInterface $repository
+     * @param \Illuminate\Filesystem\Filesystem                        $files
      */
     public function __construct(MigrationRepositoryInterface $repository, Filesystem $files)
     {
@@ -60,8 +60,9 @@ class Migrator
     /**
      * Run the pending migrations at a given path.
      *
-     * @param  array|string  $paths
-     * @param  array  $options
+     * @param array|string $paths
+     * @param array        $options
+     *
      * @return array
      */
     public function run($paths = [], array $options = [])
@@ -88,8 +89,9 @@ class Migrator
     /**
      * Get the migration files that have not yet run.
      *
-     * @param  array  $files
-     * @param  array  $ran
+     * @param array $files
+     * @param array $ran
+     *
      * @return array
      */
     protected function pendingMigrations($files, $ran)
@@ -103,16 +105,15 @@ class Migrator
     /**
      * Run an array of migrations.
      *
-     * @param  array  $migrations
-     * @param  array  $options
-     * @return void
+     * @param array $migrations
+     * @param array $options
      */
     public function runPending(array $migrations, array $options = [])
     {
         // First we will just make sure that there are any migrations to run. If there
         // aren't, we will just make a note of it to the developer so they're aware
         // that all of the migrations have been run against this database system.
-        if (count($migrations) === 0) {
+        if (0 === count($migrations)) {
             $this->note('<info>Nothing to migrate.</info>');
 
             return;
@@ -132,7 +133,7 @@ class Migrator
             $this->runUp($file, $batch);
 
             if ($step) {
-                $batch++;
+                ++$batch;
             }
         }
     }
@@ -140,9 +141,8 @@ class Migrator
     /**
      * Run "up" a migration instance.
      *
-     * @param  string  $file
-     * @param  int     $batch
-     * @return void
+     * @param string $file
+     * @param int    $batch
      */
     protected function runUp($file, $batch)
     {
@@ -168,8 +168,9 @@ class Migrator
     /**
      * Rollback the last migration operation.
      *
-     * @param  array|string $paths
-     * @param  array  $options
+     * @param array|string $paths
+     * @param array        $options
+     *
      * @return array
      */
     public function rollback($paths = [], array $options = [])
@@ -181,7 +182,7 @@ class Migrator
         // of them "down" to reverse the last migration "operation" which ran.
         $migrations = $this->getMigrationsForRollback($options);
 
-        if (count($migrations) === 0) {
+        if (0 === count($migrations)) {
             $this->note('<info>Nothing to rollback.</info>');
 
             return [];
@@ -193,7 +194,8 @@ class Migrator
     /**
      * Get the migrations for a rollback operation.
      *
-     * @param  array  $options
+     * @param array $options
+     *
      * @return array
      */
     protected function getMigrationsForRollback(array $options)
@@ -208,9 +210,10 @@ class Migrator
     /**
      * Rollback the given migrations.
      *
-     * @param  array  $migrations
-     * @param  array|string  $paths
-     * @param  array  $options
+     * @param array        $migrations
+     * @param array|string $paths
+     * @param array        $options
+     *
      * @return array
      */
     protected function rollbackMigrations(array $migrations, $paths)
@@ -225,7 +228,7 @@ class Migrator
         foreach ($migrations as $migration) {
             $migration = (object) $migration;
 
-            if (! $file = Arr::get($files, $migration->migration)) {
+            if (!$file = Arr::get($files, $migration->migration)) {
                 $this->note("<fg=red>Migration not found:</> {$migration->migration}");
 
                 continue;
@@ -242,7 +245,8 @@ class Migrator
     /**
      * Rolls all of the currently applied migrations back.
      *
-     * @param  array|string $paths
+     * @param array|string $paths
+     *
      * @return array
      */
     public function reset($paths = [])
@@ -254,7 +258,7 @@ class Migrator
         // the database back into its "empty" state ready for the migrations.
         $migrations = array_reverse($this->repository->getRan());
 
-        if (count($migrations) === 0) {
+        if (0 === count($migrations)) {
             $this->note('<info>Nothing to rollback.</info>');
 
             return [];
@@ -266,8 +270,9 @@ class Migrator
     /**
      * Reset the given migrations.
      *
-     * @param  array  $migrations
-     * @param  array  $paths
+     * @param array $migrations
+     * @param array $paths
+     *
      * @return array
      */
     protected function resetMigrations(array $migrations, array $paths)
@@ -285,9 +290,8 @@ class Migrator
     /**
      * Run "down" a migration instance.
      *
-     * @param  string  $file
-     * @param  object  $migration
-     * @return void
+     * @param string $file
+     * @param object $migration
      */
     protected function runDown($file, $migration)
     {
@@ -312,9 +316,8 @@ class Migrator
     /**
      * Run a migration inside a transaction if the database supports it.
      *
-     * @param  object  $migration
-     * @param  string  $method
-     * @return void
+     * @param object $migration
+     * @param string $method
      */
     protected function runMigration($migration, $method)
     {
@@ -330,20 +333,22 @@ class Migrator
     /**
      * Resolve a migration instance from a file.
      *
-     * @param  string  $file
+     * @param string $file
+     *
      * @return object
      */
     public function resolve($file)
     {
         $class = Str::studly(implode('_', array_slice(explode('_', $file), 4)));
 
-        return new $class;
+        return new $class();
     }
 
     /**
      * Get all of the migration files in a given path.
      *
-     * @param  string|array  $paths
+     * @param string|array $paths
+     *
      * @return array
      */
     public function getMigrationFiles($paths)
@@ -360,8 +365,7 @@ class Migrator
     /**
      * Require in all the migration files in a given path.
      *
-     * @param  array   $files
-     * @return void
+     * @param array $files
      */
     public function requireFiles(array $files)
     {
@@ -373,7 +377,8 @@ class Migrator
     /**
      * Get the name of the migration.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return string
      */
     public function getMigrationName($path)
@@ -384,8 +389,7 @@ class Migrator
     /**
      * Register a custom migration path.
      *
-     * @param  string  $path
-     * @return void
+     * @param string $path
      */
     public function path($path)
     {
@@ -415,8 +419,7 @@ class Migrator
     /**
      * Set the default connection name.
      *
-     * @param  string  $name
-     * @return void
+     * @param string $name
      */
     public function setConnection($name)
     {
@@ -458,7 +461,8 @@ class Migrator
     /**
      * Set the output implementation that should be used by the console.
      *
-     * @param  \Illuminate\Console\OutputStyle  $output
+     * @param \Illuminate\Console\OutputStyle $output
+     *
      * @return $this
      */
     public function setOutput(OutputStyle $output)
@@ -471,8 +475,7 @@ class Migrator
     /**
      * Write a note to the console's output.
      *
-     * @param  string  $message
-     * @return void
+     * @param string $message
      */
     protected function note($message)
     {

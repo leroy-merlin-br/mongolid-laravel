@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\Command;
@@ -31,8 +32,7 @@ class InstallCommand extends Command
     /**
      * Create a new migration install command instance.
      *
-     * @param  \MongolidLaravel\Migrations\MigrationRepositoryInterface  $repository
-     * @return void
+     * @param \MongolidLaravel\Migrations\MigrationRepositoryInterface $repository
      */
     public function __construct(MigrationRepositoryInterface $repository)
     {
@@ -43,8 +43,6 @@ class InstallCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle()
     {
