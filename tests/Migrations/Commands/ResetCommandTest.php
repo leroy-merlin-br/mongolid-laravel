@@ -20,24 +20,9 @@ class ResetCommandTest extends TestCase
         $migrator->shouldReceive('setConnection')->once()->with(null);
         $migrator->shouldReceive('repositoryExists')->once()->andReturn(true);
         $migrator->shouldReceive('setOutput')->once()->andReturn($migrator);
-        $migrator->shouldReceive('reset')->once()->with([__DIR__.DIRECTORY_SEPARATOR.'migrations'], false);
+        $migrator->shouldReceive('reset')->once()->with([__DIR__.DIRECTORY_SEPARATOR.'migrations']);
 
         $this->runCommand($command);
-    }
-
-    public function testResetCommandCanBePretended()
-    {
-        $command = new ResetCommand($migrator = m::mock(Migrator::class));
-        $app = new ApplicationDatabaseResetStub(['path.database' => __DIR__]);
-        $app->useDatabasePath(__DIR__);
-        $command->setLaravel($app);
-        $migrator->shouldReceive('paths')->once()->andReturn([]);
-        $migrator->shouldReceive('setConnection')->once()->with('foo');
-        $migrator->shouldReceive('repositoryExists')->once()->andReturn(true);
-        $migrator->shouldReceive('setOutput')->once()->andReturn($migrator);
-        $migrator->shouldReceive('reset')->once()->with([__DIR__.DIRECTORY_SEPARATOR.'migrations'], true);
-
-        $this->runCommand($command, ['--pretend' => true, '--database' => 'foo']);
     }
 
     protected function runCommand($command, $input = [])

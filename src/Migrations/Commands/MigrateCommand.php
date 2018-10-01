@@ -17,7 +17,6 @@ class MigrateCommand extends BaseCommand
                 {--force : Force the operation to run when in production}
                 {--path= : The path to the migrations files to be executed}
                 {--realpath : Indicate any provided migration file paths are pre-resolved absolute paths}
-                {--pretend : Dump the SQL queries that would be run}
                 {--seed : Indicates if the seed task should be re-run}
                 {--step : Force the migrations to be run so they can be rolled back individually}';
 
@@ -66,7 +65,6 @@ class MigrateCommand extends BaseCommand
         // so that migrations may be run for any path within the applications.
         $this->migrator->setOutput($this->output)
                 ->run($this->getMigrationPaths(), [
-                    'pretend' => $this->option('pretend'),
                     'step' => $this->option('step'),
                 ]);
 

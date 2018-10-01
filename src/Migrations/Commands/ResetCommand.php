@@ -64,7 +64,7 @@ class ResetCommand extends BaseCommand
         }
 
         $this->migrator->setOutput($this->output)->reset(
-            $this->getMigrationPaths(), $this->option('pretend')
+            $this->getMigrationPaths()
         );
     }
 
@@ -83,8 +83,6 @@ class ResetCommand extends BaseCommand
             ['path', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'The path(s) to the migrations files to be executed'],
 
             ['realpath', null, InputOption::VALUE_NONE, 'Indicate any provided migration file paths are pre-resolved absolute paths'],
-
-            ['pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run'],
         ];
     }
 }

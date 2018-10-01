@@ -58,7 +58,6 @@ class RollbackCommand extends BaseCommand
 
         $this->migrator->setOutput($this->output)->rollback(
             $this->getMigrationPaths(), [
-                'pretend' => $this->option('pretend'),
                 'step' => (int) $this->option('step'),
             ]
         );
@@ -79,8 +78,6 @@ class RollbackCommand extends BaseCommand
             ['path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations files to be executed'],
 
             ['realpath', null, InputOption::VALUE_NONE, 'Indicate any provided migration file paths are pre-resolved absolute paths'],
-
-            ['pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run'],
 
             ['step', null, InputOption::VALUE_OPTIONAL, 'The number of migrations to be reverted'],
         ];
