@@ -246,7 +246,6 @@ class User extends MongolidModel implements Authenticatable
      * Set the token value for the "remember me" session.
      *
      * @param  string  $value
-     * @return void
      */
     public function setRememberToken($value)
     {

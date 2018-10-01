@@ -124,8 +124,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the command.
-     *
-     * @return void
      */
     protected function registerMigrateCommand()
     {
@@ -139,8 +137,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the command.
-     *
-     * @return void
      */
     protected function registerMigrateFreshCommand()
     {
@@ -154,8 +150,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the command.
-     *
-     * @return void
      */
     protected function registerMigrateInstallCommand()
     {
@@ -169,8 +163,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the command.
-     *
-     * @return void
      */
     protected function registerMigrateMakeCommand()
     {
@@ -191,23 +183,19 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the command.
-     *
-     * @return void
      */
     protected function registerMigrateRefreshCommand()
     {
         $this->app->singleton(
             'command.mongolid-migrate.refresh',
             function () {
-                return new RefreshCommand;
+                return new RefreshCommand();
             }
         );
     }
 
     /**
      * Register the command.
-     *
-     * @return void
      */
     protected function registerMigrateResetCommand()
     {
@@ -221,8 +209,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the command.
-     *
-     * @return void
      */
     protected function registerMigrateRollbackCommand()
     {
@@ -236,8 +222,6 @@ class MigrationServiceProvider extends ServiceProvider
 
     /**
      * Register the command.
-     *
-     * @return void
      */
     protected function registerMigrateStatusCommand()
     {
