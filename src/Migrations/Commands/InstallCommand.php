@@ -3,8 +3,8 @@
 namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 use MongolidLaravel\Migrations\MigrationRepositoryInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 class InstallCommand extends Command
 {

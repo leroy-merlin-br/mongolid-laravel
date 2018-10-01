@@ -2,11 +2,11 @@
 
 namespace MongolidLaravel\Migrations;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
 use Illuminate\Console\OutputStyle;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class Migrator
 {
@@ -74,9 +74,12 @@ class Migrator
         // run each of the outstanding migrations against a database connection.
         $files = $this->getMigrationFiles($paths);
 
-        $this->requireFiles($migrations = $this->pendingMigrations(
-            $files, $this->repository->getRan()
-        ));
+        $this->requireFiles(
+            $migrations = $this->pendingMigrations(
+                $files,
+                $this->repository->getRan()
+            )
+        );
 
         // Once we have all these migrations that are outstanding we are ready to run
         // we will go ahead and run them "up". This will execute each migration as
@@ -97,9 +100,11 @@ class Migrator
     protected function pendingMigrations($files, $ran)
     {
         return Collection::make($files)
-                ->reject(function ($file) use ($ran) {
+            ->reject(
+                function ($file) use ($ran) {
                     return in_array($this->getMigrationName($file), $ran);
-                })->values()->all();
+                }
+            )->values()->all();
     }
 
     /**
@@ -280,9 +285,11 @@ class Migrator
         // Since the getRan method that retrieves the migration name just gives us the
         // migration name, we will format the names into objects with the name as a
         // property on the objects so that we can pass it to the rollback method.
-        $migrations = collect($migrations)->map(function ($m) {
-            return (object) ['migration' => $m];
-        })->all();
+        $migrations = collect($migrations)->map(
+            function ($m) {
+                return (object) ['migration' => $m];
+            }
+        )->all();
 
         return $this->rollbackMigrations($migrations, $paths);
     }
@@ -353,13 +360,19 @@ class Migrator
      */
     public function getMigrationFiles($paths)
     {
-        return Collection::make($paths)->flatMap(function ($path) {
-            return $this->files->glob($path.'/*_*.php');
-        })->filter()->sortBy(function ($file) {
-            return $this->getMigrationName($file);
-        })->values()->keyBy(function ($file) {
-            return $this->getMigrationName($file);
-        })->all();
+        return Collection::make($paths)->flatMap(
+            function ($path) {
+                return $this->files->glob($path.'/*_*.php');
+            }
+        )->filter()->sortBy(
+            function ($file) {
+                return $this->getMigrationName($file);
+            }
+        )->values()->keyBy(
+            function ($file) {
+                return $this->getMigrationName($file);
+            }
+        )->all();
     }
 
     /**

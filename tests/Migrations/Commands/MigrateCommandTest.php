@@ -48,6 +48,50 @@ class MigrateCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
+    public function testShouldRunMigrateCommandWithDbSeed()
+    {
+        // Set
+        $migrator = m::mock(Migrator::class);
+        $command = m::mock(MigrateCommand::class.'[call]', [$migrator]);
+        $app = m::mock(Application::class.'[environment]');
+        $app->useDatabasePath(__DIR__);
+        $command->setLaravel($app);
+
+        // Expectations
+        $app->expects()
+            ->environment()
+            ->andReturn('development');
+
+        $migrator->expects()
+            ->paths()
+            ->andReturn([]);
+
+        $migrator->expects()
+            ->setConnection(null);
+
+        $migrator->expects()
+            ->setOutput(m::type(OutputStyle::class))
+            ->andReturn($migrator);
+
+        $migrator->expects()
+            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
+
+        $migrator->expects()
+            ->repositoryExists()
+            ->andReturn(true);
+
+        $command->expects()
+            ->call(
+                'db:seed',
+                [
+                    '--force' => true,
+                ]
+            );
+
+        // Actions
+        $command->run(new ArrayInput(['--seed' => true]), new NullOutput());
+    }
+
     public function testMigrationRepositoryCreatedWhenNecessary()
     {
         // Set
@@ -160,5 +204,27 @@ class MigrateCommandTest extends TestCase
 
         // Actions
         $command->run(new ArrayInput(['--step' => true]), new NullOutput());
+    }
+
+    public function testShouldConfirmToRun()
+    {
+        // Set
+        $migrator = m::mock(Migrator::class);
+        $command = m::mock(MigrateCommand::class.'[confirmToProceed]', [$migrator]);
+        $app = new Application();
+        $app->useDatabasePath(__DIR__);
+        $command->setLaravel($app);
+
+        // Expectations
+        $command->expects()
+            ->confirmToProceed()
+            ->andReturn(false);
+
+        $migrator->expects()
+            ->paths()
+            ->never();
+
+        // Actions
+        $command->run(new ArrayInput([]), new NullOutput());
     }
 }

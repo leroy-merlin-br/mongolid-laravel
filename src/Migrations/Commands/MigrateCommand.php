@@ -62,9 +62,12 @@ class MigrateCommand extends BaseCommand
         // we will use the path relative to the root of this installation folder
         // so that migrations may be run for any path within the applications.
         $this->migrator->setOutput($this->output)
-                ->run($this->getMigrationPaths(), [
+            ->run(
+                $this->getMigrationPaths(),
+                [
                     'step' => $this->option('step'),
-                ]);
+                ]
+            );
 
         // Finally, if the "seed" option has been given, we will re-run the database
         // seed task to re-populate the database, which is convenient when adding
@@ -83,7 +86,8 @@ class MigrateCommand extends BaseCommand
 
         if (!$this->migrator->repositoryExists()) {
             $this->call(
-                'mongolid-migrate:install', ['--database' => $this->option('database')]
+                'mongolid-migrate:install',
+                ['--database' => $this->option('database')]
             );
         }
     }

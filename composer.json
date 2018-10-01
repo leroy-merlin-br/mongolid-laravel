@@ -33,6 +33,7 @@
     },
     "autoload-dev": {
         "files": [
+            "tests/Migrations/stubs/DropAdmin.php",
             "tests/Migrations/stubs/MigrationCreatorFakeMigration.php"
         ],
         "psr-4": {

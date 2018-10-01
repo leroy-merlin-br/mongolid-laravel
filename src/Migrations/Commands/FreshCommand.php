@@ -51,12 +51,15 @@ class FreshCommand extends Command
 
         $this->info('Dropped database successfully.');
 
-        $this->call('mongolid-migrate', [
-            '--database' => $database,
-            '--path' => $this->input->getOption('path'),
-            '--realpath' => $this->input->getOption('realpath'),
-            '--force' => true,
-        ]);
+        $this->call(
+            'mongolid-migrate',
+            [
+                '--database' => $database,
+                '--path' => $this->input->getOption('path'),
+                '--realpath' => $this->input->getOption('realpath'),
+                '--force' => true,
+            ]
+        );
 
         if ($this->needsSeeding()) {
             $this->runSeeder($database);
@@ -93,11 +96,14 @@ class FreshCommand extends Command
      */
     protected function runSeeder($database)
     {
-        $this->call('db:seed', [
-            '--database' => $database,
-            '--class' => $this->option('seeder') ?: 'DatabaseSeeder',
-            '--force' => $this->option('force'),
-        ]);
+        $this->call(
+            'db:seed',
+            [
+                '--database' => $database,
+                '--class' => $this->option('seeder') ?: 'DatabaseSeeder',
+                '--force' => $this->option('force'),
+            ]
+        );
     }
 
     /**
@@ -114,7 +120,12 @@ class FreshCommand extends Command
 
             ['path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations files to be executed'],
 
-            ['realpath', null, InputOption::VALUE_NONE, 'Indicate any provided migration file paths are pre-resolved absolute paths'],
+            [
+                'realpath',
+                null,
+                InputOption::VALUE_NONE,
+                'Indicate any provided migration file paths are pre-resolved absolute paths',
+            ],
 
             ['seed', null, InputOption::VALUE_NONE, 'Indicates if the seed task should be re-run'],
 

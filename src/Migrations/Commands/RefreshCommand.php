@@ -56,12 +56,15 @@ class RefreshCommand extends Command
         // The refresh command is essentially just a brief aggregate of a few other of
         // the migration commands and just provides a convenient wrapper to execute
         // them in succession. We'll also see if we need to re-seed the database.
-        $this->call('mongolid-migrate', [
-            '--database' => $database,
-            '--path' => $path,
-            '--realpath' => $this->input->getOption('realpath'),
-            '--force' => $force,
-        ]);
+        $this->call(
+            'mongolid-migrate',
+            [
+                '--database' => $database,
+                '--path' => $path,
+                '--realpath' => $this->input->getOption('realpath'),
+                '--force' => $force,
+            ]
+        );
 
         if ($this->needsSeeding()) {
             $this->runSeeder($database);
@@ -78,13 +81,16 @@ class RefreshCommand extends Command
      */
     protected function runRollback($database, $path, $step, $force)
     {
-        $this->call('mongolid-migrate:rollback', [
-            '--database' => $database,
-            '--path' => $path,
-            '--realpath' => $this->input->getOption('realpath'),
-            '--step' => $step,
-            '--force' => $force,
-        ]);
+        $this->call(
+            'mongolid-migrate:rollback',
+            [
+                '--database' => $database,
+                '--path' => $path,
+                '--realpath' => $this->input->getOption('realpath'),
+                '--step' => $step,
+                '--force' => $force,
+            ]
+        );
     }
 
     /**
@@ -96,12 +102,15 @@ class RefreshCommand extends Command
      */
     protected function runReset($database, $path, $force)
     {
-        $this->call('mongolid-migrate:reset', [
-            '--database' => $database,
-            '--path' => $path,
-            '--realpath' => $this->input->getOption('realpath'),
-            '--force' => $force,
-        ]);
+        $this->call(
+            'mongolid-migrate:reset',
+            [
+                '--database' => $database,
+                '--path' => $path,
+                '--realpath' => $this->input->getOption('realpath'),
+                '--force' => $force,
+            ]
+        );
     }
 
     /**
@@ -121,11 +130,14 @@ class RefreshCommand extends Command
      */
     protected function runSeeder($database)
     {
-        $this->call('db:seed', [
-            '--database' => $database,
-            '--class' => $this->option('seeder') ?: 'DatabaseSeeder',
-            '--force' => $this->option('force'),
-        ]);
+        $this->call(
+            'db:seed',
+            [
+                '--database' => $database,
+                '--class' => $this->option('seeder') ?: 'DatabaseSeeder',
+                '--force' => $this->option('force'),
+            ]
+        );
     }
 
     /**
@@ -142,7 +154,12 @@ class RefreshCommand extends Command
 
             ['path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations files to be executed'],
 
-            ['realpath', null, InputOption::VALUE_NONE, 'Indicate any provided migration file paths are pre-resolved absolute paths'],
+            [
+                'realpath',
+                null,
+                InputOption::VALUE_NONE,
+                'Indicate any provided migration file paths are pre-resolved absolute paths',
+            ],
 
             ['seed', null, InputOption::VALUE_NONE, 'Indicates if the seed task should be re-run'],
 

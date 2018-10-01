@@ -13,31 +13,25 @@ class MigrationCreatorTest extends TestCase
     {
         // Set
         $files = m::mock(Filesystem::class);
-        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
-        $creator->shouldAllowMockingProtectedMethods();
+        $creator = new MigrationCreator($files);
 
         // Expectations
-        $creator->expects()
-            ->getDatePrefix()
-            ->andReturn('foo');
-
         $files->expects()
             ->get($creator->stubPath().'/blank.stub')
             ->andReturn('DummyClass');
 
         $files->expects()
-            ->put('foo/foo_create_bar.php', 'CreateBar');
+            ->put(m::pattern("/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_create_bar.php/"), 'CreateBar');
 
         // Actions
-        $creator->create('create_bar', 'foo');
+        $creator->create('create_bar', 'database/migrations');
     }
 
     public function testBasicCreateMethodCallsPostCreateHooks()
     {
         // Set
         $files = m::mock(Filesystem::class);
-        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
-        $creator->shouldAllowMockingProtectedMethods();
+        $creator = new MigrationCreator($files);
 
         $hasRun = false;
         $creator->afterCreate(
@@ -47,81 +41,43 @@ class MigrationCreatorTest extends TestCase
         );
 
         // Expectations
-        $creator->expects()
-            ->getDatePrefix()
-            ->andReturn('foo');
-
         $files->expects()
             ->get($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
 
         $files->expects()
-            ->put('foo/foo_create_bar.php', 'CreateBar');
+            ->put(m::pattern("/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_add_bar_index.php/"), 'AddBarIndex');
 
         // Actions
-        $creator->create('create_bar', 'foo');
+        $creator->create('add_bar_index', 'database/migrations');
 
         // Assertions
         $this->assertTrue($hasRun);
     }
 
-    public function testCollectionUpdateMigrationStoresMigrationFile()
-    {
-        // Set
-        $files = m::mock(Filesystem::class);
-        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
-        $creator->shouldAllowMockingProtectedMethods();
-
-        // Expectations
-        $creator->expects()
-            ->getDatePrefix()
-            ->andReturn('foo');
-
-        $files->expects()
-            ->get($creator->stubPath().'/blank.stub')
-            ->andReturn('DummyClass');
-
-        $files->expects()
-            ->put('foo/foo_create_bar.php', 'CreateBar');
-
-        // Actions
-        $creator->create('create_bar', 'foo');
-    }
-
-    public function testCollectionCreationMigrationStoresMigrationFile()
-    {
-        // Set
-        $files = m::mock(Filesystem::class);
-        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
-        $creator->shouldAllowMockingProtectedMethods();
-
-        // Expectations
-        $creator->expects()
-            ->getDatePrefix()
-            ->andReturn('foo');
-
-        $files->expects()
-            ->get($creator->stubPath().'/blank.stub')
-            ->andReturn('DummyClass');
-
-        $files->expects()
-            ->put('foo/foo_create_bar.php', 'CreateBar');
-
-        // Actions
-        $creator->create('create_bar', 'foo');
-    }
-
     public function testCollectionUpdateMigrationWontCreateDuplicateClass()
     {
         // Set
-        $files = m::mock(Filesystem::class);
-        $creator = m::mock(MigrationCreator::class.'[getDatePrefix]', [$files]);
-        $creator->shouldAllowMockingProtectedMethods();
+        $files = new Filesystem();
+        $creator = new MigrationCreator($files);
 
         // Expectations
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('A MigrationCreatorFakeMigration class already exists.');
 
         // Actions
-        $creator->create('migration_creator_fake_migration', 'foo');
+        $creator->create('migration_creator_fake_migration', 'database/migrations');
+    }
+
+    public function testShouldGetFilesystem()
+    {
+        // Set
+        $files = new Filesystem();
+        $creator = new MigrationCreator($files);
+
+        // Actions
+        $result = $creator->getFilesystem();
+
+        // Assertions
+        $this->assertSame($files, $result);
     }
 }

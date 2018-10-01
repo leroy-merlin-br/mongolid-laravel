@@ -74,13 +74,15 @@ class StatusCommand extends BaseCommand
     protected function getStatusFor(array $ran, array $batches)
     {
         return Collection::make($this->getAllMigrationFiles())
-                    ->map(function ($migration) use ($ran, $batches) {
-                        $migrationName = $this->migrator->getMigrationName($migration);
+            ->map(
+                function ($migration) use ($ran, $batches) {
+                    $migrationName = $this->migrator->getMigrationName($migration);
 
-                        return in_array($migrationName, $ran)
-                                ? ['<info>Yes</info>', $migrationName, $batches[$migrationName]]
-                                : ['<fg=red>No</fg=red>', $migrationName];
-                    });
+                    return in_array($migrationName, $ran)
+                        ? ['<info>Yes</info>', $migrationName, $batches[$migrationName]]
+                        : ['<fg=red>No</fg=red>', $migrationName];
+                }
+            );
     }
 
     /**
@@ -105,7 +107,12 @@ class StatusCommand extends BaseCommand
 
             ['path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations files to use'],
 
-            ['realpath', null, InputOption::VALUE_NONE, 'Indicate any provided migration file paths are pre-resolved absolute paths'],
+            [
+                'realpath',
+                null,
+                InputOption::VALUE_NONE,
+                'Indicate any provided migration file paths are pre-resolved absolute paths',
+            ],
         ];
     }
 }

@@ -75,4 +75,26 @@ class RollbackCommandTest extends TestCase
         // Actions
         $command->run(new ArrayInput(['--step' => 2]), new NullOutput());
     }
+
+    public function testShouldConfirmToRun()
+    {
+        // Set
+        $migrator = m::mock(Migrator::class);
+        $command = m::mock(RollbackCommand::class.'[confirmToProceed]', [$migrator]);
+        $app = new Application();
+        $app->useDatabasePath(__DIR__);
+        $command->setLaravel($app);
+
+        // Expectations
+        $command->expects()
+            ->confirmToProceed()
+            ->andReturn(false);
+
+        $migrator->expects()
+            ->paths()
+            ->never();
+
+        // Actions
+        $command->run(new ArrayInput([]), new NullOutput());
+    }
 }

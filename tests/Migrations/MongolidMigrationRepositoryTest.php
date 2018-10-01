@@ -55,6 +55,50 @@ class MongolidMigrationRepositoryTest extends TestCase
         $this->assertSame(['bar'], $result);
     }
 
+    public function testGetMigrationsList()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $repository = new MongolidMigrationRepository($pool, 'migrations');
+
+        $connection = m::mock(Connection::class);
+        $connection->defaultDatabase = 'mongolid';
+        $client = m::mock(Client::class);
+        $collection = m::mock(Collection::class);
+
+        $steps = 10;
+        $list = [(object) ['migration' => 'bar']];
+
+        // Expectations
+        $pool->expects()
+            ->getConnection()
+            ->andReturn($connection);
+
+        $connection->expects()
+            ->getRawConnection()
+            ->andReturn($client);
+
+        $client->expects()
+            ->selectCollection('mongolid', 'migrations')
+            ->andReturn($collection);
+
+        $collection->expects()
+            ->find(
+                ['batch' => ['$gte' => 1]],
+                [
+                    'sort' => ['batch' => -1, 'migration' => -1],
+                    'limit' => $steps,
+                ]
+            )
+            ->andReturn(SplFixedArray::fromArray($list));
+
+        // Actions
+        $result = $repository->getMigrations($steps);
+
+        // Assertions
+        $this->assertSame($list, $result);
+    }
+
     public function testGetLastMigrationsGetsAllMigrationsWithTheLatestBatchNumber()
     {
         // Set
@@ -116,6 +160,58 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Assertions
         $this->assertSame($migrations, $result);
+    }
+
+    public function testGetMigrationBatches()
+    {
+        // Set
+        $pool = m::mock(Pool::class);
+        $repository = new MongolidMigrationRepository($pool, 'migrations');
+
+        $connection = m::mock(Connection::class);
+        $connection->defaultDatabase = 'mongolid';
+        $client = m::mock(Client::class);
+        $collection = m::mock(Collection::class);
+
+        $list = [
+            (object) ['_id' => new ObjectId(), 'batch' => 1, 'migration' => 'create_user_indexes'],
+            (object) ['_id' => new ObjectId(), 'batch' => 2, 'migration' => 'create_user_email_indexes'],
+            (object) ['_id' => new ObjectId(), 'batch' => 2, 'migration' => 'drop_old_indexes'],
+        ];
+
+        $expected = [
+            'create_user_indexes' => 1,
+            'create_user_email_indexes' => 2,
+            'drop_old_indexes' => 2,
+        ];
+
+        // Expectations
+        $pool->expects()
+            ->getConnection()
+            ->andReturn($connection);
+
+        $connection->expects()
+            ->getRawConnection()
+            ->andReturn($client);
+
+        $client->expects()
+            ->selectCollection('mongolid', 'migrations')
+            ->andReturn($collection);
+
+        $collection->expects()
+            ->find(
+                [],
+                [
+                    'sort' => ['batch' => 1, 'migration' => 1],
+                ]
+            )
+            ->andReturn(SplFixedArray::fromArray($list));
+
+        // Actions
+        $result = $repository->getMigrationBatches();
+
+        // Assertions
+        $this->assertSame($expected, $result);
     }
 
     public function testLogMethodInsertsRecordIntoMigrationCollection()

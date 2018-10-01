@@ -73,6 +73,14 @@ class MigrationServiceProvider extends ServiceProvider
             'mongolid.migrator',
             'mongolid.migration.repository',
             'mongolid.migration.creator',
+            'command.mongolid-migrate',
+            'command.mongolid-migrate.fresh',
+            'command.mongolid-migrate.install',
+            'command.mongolid-migrate.make',
+            'command.mongolid-migrate.refresh',
+            'command.mongolid-migrate.reset',
+            'command.mongolid-migrate.rollback',
+            'command.mongolid-migrate.status',
         ];
     }
 

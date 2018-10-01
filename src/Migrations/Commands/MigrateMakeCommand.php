@@ -2,8 +2,8 @@
 
 namespace MongolidLaravel\Migrations\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Composer;
+use Illuminate\Support\Str;
 use MongolidLaravel\Migrations\MigrationCreator;
 
 class MigrateMakeCommand extends BaseCommand
@@ -77,9 +77,13 @@ class MigrateMakeCommand extends BaseCommand
      */
     protected function writeMigration($name)
     {
-        $file = pathinfo($this->creator->create(
-            $name, $this->getMigrationPath()
-        ), PATHINFO_FILENAME);
+        $file = pathinfo(
+            $this->creator->create(
+                $name,
+                $this->getMigrationPath()
+            ),
+            PATHINFO_FILENAME
+        );
 
         $this->line("<info>Created Migration:</info> {$file}");
     }
@@ -93,8 +97,8 @@ class MigrateMakeCommand extends BaseCommand
     {
         if (!is_null($targetPath = $this->input->getOption('path'))) {
             return !$this->usingRealPath()
-                            ? $this->laravel->basePath().'/'.$targetPath
-                            : $targetPath;
+                ? $this->laravel->basePath().'/'.$targetPath
+                : $targetPath;
         }
 
         return parent::getMigrationPath();
