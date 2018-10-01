@@ -15,7 +15,7 @@ class ResetCommand extends BaseCommand
      *
      * @var string
      */
-    protected $name = 'migrate:reset';
+    protected $name = 'mongolid-migrate:reset';
 
     /**
      * The console command description.

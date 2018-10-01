@@ -49,7 +49,7 @@
                 "MongolidLaravel\\MigrationServiceProvider"
             ],
             "aliases": {
-                "MongoLid": "MongolidLaravel\\MongoLidModel"
+                "MongoLid": "MongolidLaravel\\MongolidModel"
             }
         }
     }

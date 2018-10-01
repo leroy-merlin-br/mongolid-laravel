@@ -13,7 +13,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $name = 'migrate:install';
+    protected $name = 'mongolid-migrate:install';
 
     /**
      * The console command description.

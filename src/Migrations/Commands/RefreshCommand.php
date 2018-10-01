@@ -15,7 +15,7 @@ class RefreshCommand extends Command
      *
      * @var string
      */
-    protected $name = 'migrate:refresh';
+    protected $name = 'mongolid-migrate:refresh';
 
     /**
      * The console command description.
@@ -56,7 +56,7 @@ class RefreshCommand extends Command
         // The refresh command is essentially just a brief aggregate of a few other of
         // the migration commands and just provides a convenient wrapper to execute
         // them in succession. We'll also see if we need to re-seed the database.
-        $this->call('migrate', [
+        $this->call('mongolid-migrate', [
             '--database' => $database,
             '--path' => $path,
             '--realpath' => $this->input->getOption('realpath'),
@@ -78,7 +78,7 @@ class RefreshCommand extends Command
      */
     protected function runRollback($database, $path, $step, $force)
     {
-        $this->call('migrate:rollback', [
+        $this->call('mongolid-migrate:rollback', [
             '--database' => $database,
             '--path' => $path,
             '--realpath' => $this->input->getOption('realpath'),
@@ -96,7 +96,7 @@ class RefreshCommand extends Command
      */
     protected function runReset($database, $path, $force)
     {
-        $this->call('migrate:reset', [
+        $this->call('mongolid-migrate:reset', [
             '--database' => $database,
             '--path' => $path,
             '--realpath' => $this->input->getOption('realpath'),

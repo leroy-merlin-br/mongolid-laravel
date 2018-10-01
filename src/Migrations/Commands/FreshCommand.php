@@ -4,6 +4,7 @@ namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
+use Mongolid\Connection\Pool;
 use Symfony\Component\Console\Input\InputOption;
 
 class FreshCommand extends Command
@@ -15,14 +16,25 @@ class FreshCommand extends Command
      *
      * @var string
      */
-    protected $name = 'migrate:fresh';
+    protected $name = 'mongolid-migrate:fresh';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Drop all collections and re-run all migrations';
+    protected $description = 'Drop database and re-run all migrations';
+
+    /**
+     * @var Pool
+     */
+    private $pool;
+
+    public function __construct(Pool $pool)
+    {
+        parent::__construct();
+        $this->pool = $pool;
+    }
 
     /**
      * Execute the console command.
@@ -35,11 +47,11 @@ class FreshCommand extends Command
 
         $database = $this->input->getOption('database');
 
-        $this->dropAllCollections($database);
+        $this->dropDatabase($database);
 
-        $this->info('Dropped all collections successfully.');
+        $this->info('Dropped database successfully.');
 
-        $this->call('migrate', [
+        $this->call('mongolid-migrate', [
             '--database' => $database,
             '--path' => $this->input->getOption('path'),
             '--realpath' => $this->input->getOption('realpath'),
@@ -56,12 +68,12 @@ class FreshCommand extends Command
      *
      * @param string $database
      */
-    protected function dropAllCollections($database)
+    protected function dropDatabase($database)
     {
-        // TODO fix
-        $this->laravel['db']->connection($database)
-                    ->getSchemaBuilder()
-                    ->dropAllCollections();
+        $connection = $this->pool->getConnection();
+        $database = $database ?? $connection->defaultDatabase;
+
+        $connection->getRawConnection()->dropDatabase($database);
     }
 
     /**

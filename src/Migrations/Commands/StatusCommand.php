@@ -13,7 +13,7 @@ class StatusCommand extends BaseCommand
      *
      * @var string
      */
-    protected $name = 'migrate:status';
+    protected $name = 'mongolid-migrate:status';
 
     /**
      * The console command description.
@@ -56,8 +56,8 @@ class StatusCommand extends BaseCommand
 
         $batches = $this->migrator->getRepository()->getMigrationBatches();
 
-        if (count($migrations = $this->getStatusFor($ran, $batches)) > 0) {
-            $this->collection(['Ran?', 'Migration', 'Batch'], $migrations);
+        if (count($migrations = $this->getStatusFor($ran, $batches))) {
+            $this->table(['Ran?', 'Migration', 'Batch'], $migrations);
         } else {
             $this->error('No migrations found');
         }

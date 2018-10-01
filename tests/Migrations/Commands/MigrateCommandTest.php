@@ -82,7 +82,7 @@ class MigrateCommandTest extends TestCase
 
         $command->expects()
             ->call(
-                'migrate:install',
+                'mongolid-migrate:install',
                 ['--database' => null]
             );
 

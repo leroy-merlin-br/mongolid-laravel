@@ -14,7 +14,7 @@ class MigrateCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'migrate {--database= : The database connection to use}
+    protected $signature = 'mongolid-migrate {--database= : The database connection to use}
                 {--force : Force the operation to run when in production}
                 {--path= : The path to the migrations files to be executed}
                 {--realpath : Indicate any provided migration file paths are pre-resolved absolute paths}
@@ -83,7 +83,7 @@ class MigrateCommand extends BaseCommand
 
         if (!$this->migrator->repositoryExists()) {
             $this->call(
-                'migrate:install', ['--database' => $this->option('database')]
+                'mongolid-migrate:install', ['--database' => $this->option('database')]
             );
         }
     }

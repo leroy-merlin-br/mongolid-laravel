@@ -34,22 +34,22 @@ class RefreshCommandTest extends TestCase
             ->andReturn('development');
 
         $console->expects()
-            ->find('migrate:reset')
+            ->find('mongolid-migrate:reset')
             ->andReturn($resetCommand);
 
         $console->expects()
-            ->find('migrate')
+            ->find('mongolid-migrate')
             ->andReturn($migrateCommand);
 
         $resetCommand->expects()
             ->run(
-                new InputMatcher("--database --path --realpath --force {$quote}migrate:reset{$quote}"),
+                new InputMatcher("--database --path --realpath --force {$quote}mongolid-migrate:reset{$quote}"),
                 m::type(OutputStyle::class)
             );
 
         $migrateCommand->expects()
             ->run(
-                new InputMatcher('--database --path --realpath --force migrate'),
+                new InputMatcher('--database --path --realpath --force mongolid-migrate'),
                 m::type(OutputStyle::class)
             );
 
@@ -79,22 +79,22 @@ class RefreshCommandTest extends TestCase
             ->andReturn('development');
 
         $console->expects()
-            ->find('migrate:rollback')
+            ->find('mongolid-migrate:rollback')
             ->andReturn($rollbackCommand);
 
         $console->expects()
-            ->find('migrate')
+            ->find('mongolid-migrate')
             ->andReturn($migrateCommand);
 
         $rollbackCommand->expects()
             ->run(
-                new InputMatcher("--database --path --realpath --step=2 --force {$quote}migrate:rollback{$quote}"),
+                new InputMatcher("--database --path --realpath --step=2 --force {$quote}mongolid-migrate:rollback{$quote}"),
                 m::type(OutputStyle::class)
             );
 
         $migrateCommand->expects()
             ->run(
-                new InputMatcher('--database --path --realpath --force migrate'),
+                new InputMatcher('--database --path --realpath --force mongolid-migrate'),
                 m::type(OutputStyle::class)
             );
 

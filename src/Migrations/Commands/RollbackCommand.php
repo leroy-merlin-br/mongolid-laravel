@@ -15,7 +15,7 @@ class RollbackCommand extends BaseCommand
      *
      * @var string
      */
-    protected $name = 'migrate:rollback';
+    protected $name = 'mongolid-migrate:rollback';
 
     /**
      * The console command description.
