@@ -38,30 +38,28 @@ class MigrationCreator
      *
      * @param  string  $name
      * @param  string  $path
-     * @param  string  $collection
-     * @param  bool    $create
      * @return string
      *
      * @throws \Exception
      */
-    public function create($name, $path, $collection = null, $create = false)
+    public function create($name, $path)
     {
         $this->ensureMigrationDoesntAlreadyExist($name);
 
         // First we will get the stub file for the migration, which serves as a type
         // of template for the migration. Once we have those we will populate the
         // various place-holders, save the file, and run the post create event.
-        $stub = $this->getStub($collection, $create);
+        $stub = $this->getStub();
 
         $this->files->put(
             $path = $this->getPath($name, $path),
-            $this->populateStub($name, $stub, $collection)
+            $this->populateStub($name, $stub)
         );
 
         // Next, we will fire any hooks that are supposed to fire after a migration is
         // created. Once that is done we'll be ready to return the full path to the
         // migration file so it can be used however it's needed by the developer.
-        $this->firePostCreateHooks($collection);
+        $this->firePostCreateHooks();
 
         return $path;
     }
@@ -84,22 +82,11 @@ class MigrationCreator
     /**
      * Get the migration stub file.
      *
-     * @param  string  $collection
-     * @param  bool    $create
      * @return string
      */
-    protected function getStub($collection, $create)
+    protected function getStub()
     {
-        if (is_null($collection)) {
-            return $this->files->get($this->stubPath().'/blank.stub');
-        }
-
-        // We also have stubs for creating new collections and modifying existing collections
-        // to save the developer some typing when they are creating a new collections
-        // or modifying existing collections. We'll grab the appropriate stub here.
-        $stub = $create ? 'create.stub' : 'update.stub';
-
-        return $this->files->get($this->stubPath()."/{$stub}");
+        return $this->files->get($this->stubPath().'/blank.stub');
     }
 
     /**
@@ -107,21 +94,11 @@ class MigrationCreator
      *
      * @param  string  $name
      * @param  string  $stub
-     * @param  string  $collection
      * @return string
      */
-    protected function populateStub($name, $stub, $collection)
+    protected function populateStub($name, $stub)
     {
-        $stub = str_replace('DummyClass', $this->getClassName($name), $stub);
-
-        // Here we will replace the collection place-holders with the collection specified by
-        // the developer, which is useful for quickly creating a collections creation
-        // or update migration from the console instead of typing it manually.
-        if (! is_null($collection)) {
-            $stub = str_replace('DummyCollection', $collection, $stub);
-        }
-
-        return $stub;
+        return str_replace('DummyClass', $this->getClassName($name), $stub);
     }
 
     /**
@@ -150,13 +127,12 @@ class MigrationCreator
     /**
      * Fire the registered post create hooks.
      *
-     * @param  string  $collection
      * @return void
      */
-    protected function firePostCreateHooks($collection)
+    protected function firePostCreateHooks()
     {
         foreach ($this->postCreate as $callback) {
-            call_user_func($callback, $collection);
+            call_user_func($callback);
         }
     }
 

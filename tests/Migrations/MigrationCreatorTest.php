@@ -20,43 +20,39 @@ class MigrationCreatorTest extends TestCase
 
     public function testBasicCreateMethodCallsPostCreateHooks()
     {
-        $collection = 'baz';
-
         $creator = $this->getCreator();
-        unset($_SERVER['__migration.creator']);
-        $creator->afterCreate(function ($collection) {
-            $_SERVER['__migration.creator'] = $collection;
+        $hasRun = false;
+        $creator->afterCreate(function () use (&$hasRun) {
+            $hasRun = true;
         });
 
         $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/update.stub')->andReturn('DummyClass DummyCollection');
-        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar baz');
+        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
+        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar');
 
-        $creator->create('create_bar', 'foo', $collection);
+        $creator->create('create_bar', 'foo');
 
-        $this->assertEquals($_SERVER['__migration.creator'], $collection);
-
-        unset($_SERVER['__migration.creator']);
+        $this->assertTrue($hasRun);
     }
 
     public function testCollectionUpdateMigrationStoresMigrationFile()
     {
         $creator = $this->getCreator();
         $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/update.stub')->andReturn('DummyClass DummyCollection');
-        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar baz');
+        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
+        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar');
 
-        $creator->create('create_bar', 'foo', 'baz');
+        $creator->create('create_bar', 'foo');
     }
 
     public function testCollectionCreationMigrationStoresMigrationFile()
     {
         $creator = $this->getCreator();
         $creator->expects($this->any())->method('getDatePrefix')->will($this->returnValue('foo'));
-        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/create.stub')->andReturn('DummyClass DummyCollection');
-        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar baz');
+        $creator->getFilesystem()->shouldReceive('get')->once()->with($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
+        $creator->getFilesystem()->shouldReceive('put')->once()->with('foo/foo_create_bar.php', 'CreateBar');
 
-        $creator->create('create_bar', 'foo', 'baz', true);
+        $creator->create('create_bar', 'foo');
     }
 
     /**
