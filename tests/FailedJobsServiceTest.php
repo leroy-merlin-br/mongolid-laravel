@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Mockery as m;
@@ -8,22 +7,12 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
-use Mongolid\Connection\Pool;
 use Mongolid\Connection\Connection;
-use TestCase;
+use Mongolid\Connection\Pool;
 use stdClass;
 
 class FailedJobsServiceTest extends TestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
-    {
-        m::close();
-        parent::tearDown();
-    }
-
     public function testAllShouldReturnWholeCollection()
     {
         // Set

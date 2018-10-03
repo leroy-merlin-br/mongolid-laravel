@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
@@ -11,7 +10,6 @@ use Mongolid\Connection\Pool;
 use Mongolid\Cursor\Cursor;
 use Mongolid\DataMapper\DataMapper;
 use Mongolid\Exception\ModelNotFoundException;
-use TestCase;
 
 class MongolidModelTest extends TestCase
 {
@@ -33,7 +31,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class() extends MongolidModel {
-            public $rules = [
+            protected $rules = [
                 'name' => 'required',
                 'address' => 'min:100',
             ];
@@ -486,7 +484,10 @@ class MongolidModelTest extends TestCase
         };
 
         // Actions
-        $model::foobar();
+        $result = $model::foobar();
+
+        // Assertions
+        $this->assertNull($result);
     }
 
     public function testShouldGetCollection()

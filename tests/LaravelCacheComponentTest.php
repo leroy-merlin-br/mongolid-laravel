@@ -1,10 +1,8 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Cache\Repository;
 use Mockery as m;
-use TestCase;
 
 class LaravelCacheComponentTest extends TestCase
 {

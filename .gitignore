@@ -1,2 +1,5 @@
 /vendor
 composer.lock
+build
+.phpcs-cache
+phpcs.xml

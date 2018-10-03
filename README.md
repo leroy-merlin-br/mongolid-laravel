@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/leroy-merlin-br/mongolid-laravel.svg?branch=master)](https://travis-ci.org/leroy-merlin-br/mongolid-laravel)
 [![Coverage Status](https://coveralls.io/repos/github/leroy-merlin-br/mongolid-laravel/badge.svg?branch=master)](https://coveralls.io/github/leroy-merlin-br/mongolid-laravel?branch=master)
-[![StyleCI](https://styleci.io/repos/9806273/shield)](https://styleci.io/repos/9806273)
 [![Latest Stable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/stable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
 [![Monthly Downloads](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/d/monthly.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
 [![Latest Unstable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/unstable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
@@ -246,7 +245,6 @@ class User extends MongolidModel implements Authenticatable
      * Set the token value for the "remember me" session.
      *
      * @param  string  $value
-     * @return void
      */
     public function setRememberToken($value)
     {
@@ -311,7 +309,8 @@ The new (and improved) version 2.0 of Mongolid Laravel requires php7. If you are
 
 ## License
 
-MongoLid & MongoLid Laravel are free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT)
+MongoLid & MongoLid Laravel are free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
+Some of the code is based on the work of Taylor Otwell and contributors on [laravel/framework](https://github.com/laravel/framework), another free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Additional information
 

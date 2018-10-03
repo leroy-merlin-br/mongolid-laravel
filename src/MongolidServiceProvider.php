@@ -1,8 +1,8 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
@@ -10,6 +10,7 @@ use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc as MongolidIoc;
 use Mongolid\Event\EventTriggerService;
 use Mongolid\Util\CacheComponentInterface;
+use MongolidLaravel\Validation\Rules;
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,8 @@ class MongolidServiceProvider extends ServiceProvider
         $this->extendsAuthManager();
 
         $this->replaceQueueFailer();
+
+        $this->createValidationRules();
     }
 
     /**
@@ -88,7 +91,8 @@ class MongolidServiceProvider extends ServiceProvider
             'mongolid',
             function ($app, array $config) {
                 return new MongolidUserProvider(
-                    $app['hash'], $config['model']
+                    $app['hash'],
+                    $config['model']
                 );
             }
         );
@@ -193,5 +197,19 @@ class MongolidServiceProvider extends ServiceProvider
         return new MongolidFailedJobProvider(
             $app->makeWith(FailedJobsService::class, compact('collection'))
         );
+    }
+
+    private function createValidationRules(): void
+    {
+        $validator = $this->app->make(Factory::class);
+
+        $validator->extend('mongolid_unique', Rules::class.'@unique');
+        $validator->replacer('mongolid_unique', Rules::class.'@message');
+
+        $validator->extend('mongolid_exists', Rules::class.'@exists');
+        $validator->replacer('mongolid_exists', Rules::class.'@message');
+
+        $validator->extend('object_id', Rules::class.'@objectId');
+        $validator->replacer('object_id', Rules::class.'@objectIdMessage');
     }
 }

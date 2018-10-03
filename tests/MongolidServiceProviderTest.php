@@ -1,12 +1,10 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc;
 use Mongolid\Event\EventTriggerService;
 use Mongolid\Util\CacheComponentInterface;
-use TestCase;
 
 class MongolidServiceProviderTest extends TestCase
 {
