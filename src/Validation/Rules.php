@@ -20,7 +20,7 @@ class Rules
     }
 
     /**
-     * mongolid_unique:collection,field?,except?,idField?
+     * mongolid_unique:collection,field?,except?,idField?,isInt?
      *
      * @example Using attribute name as query field
      *   'email' => mongolid_unique:users
@@ -30,6 +30,9 @@ class Rules
      *   'email' => mongolid_unique:users,email,5ba3bc0836e5eb03f12a3c31
      * @example Excluding itself from verification using other field for Id
      *   'email' => mongolid_unique:users,email,5ba3bc0836e5eb03f12a3c31,user_id
+     *
+     * @example Excluding itself from verification using other field for Id and casting Id to int
+     *   'email' => mongolid_unique:users,email,5ba3bc0836e5eb03f12a3c31,user_id,true
      *
      * @see https://laravel.com/docs/5.6/validation#rule-unique
      */
@@ -42,6 +45,10 @@ class Rules
 
         if ($except = $parameters[2] ?? false) {
             $idColumn = $parameters[3] ?? '_id';
+
+            if ('true' === ($parameters[4] ?? false)) {
+                $except = (int) $except;
+            }
 
             $query += [$idColumn => ['$ne' => $this->transformIfId($except)]];
         }

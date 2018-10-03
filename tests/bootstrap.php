@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 require __DIR__.'/../vendor/autoload.php';
