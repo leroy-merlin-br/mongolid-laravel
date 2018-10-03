@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use DateTime;
@@ -98,7 +97,7 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
     /**
      * Prepare job to be consumed by Laravel Commands.
      *
-     * @param $job
+     * @param object $job
      *
      * @return object
      */

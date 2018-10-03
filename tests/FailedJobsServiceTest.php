@@ -7,8 +7,8 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
-use Mongolid\Connection\Pool;
 use Mongolid\Connection\Connection;
+use Mongolid\Connection\Pool;
 use stdClass;
 
 class FailedJobsServiceTest extends TestCase

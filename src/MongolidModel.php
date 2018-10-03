@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
@@ -24,8 +23,6 @@ use Mongolid\Connection\Pool;
  * Remember, this package is meant to be used with Laravel while
  * the "leroy-merlin\mongolid" is meant to be used with other frameworks
  * or even without any.
- *
- * @license MIT
  */
 abstract class MongolidModel extends ActiveRecord
 {
@@ -172,8 +169,6 @@ abstract class MongolidModel extends ActiveRecord
 
     /**
      * Returns the database object (the connection).
-     *
-     * @return Database
      */
     protected function db(): Database
     {
@@ -185,8 +180,6 @@ abstract class MongolidModel extends ActiveRecord
 
     /**
      * Returns the Mongo collection object.
-     *
-     * @return Collection
      */
     protected function collection(): Collection
     {
@@ -253,8 +246,6 @@ abstract class MongolidModel extends ActiveRecord
 
     /**
      * Check if local mock is set.
-     *
-     * @return bool
      */
     protected function hasLocalMock(): bool
     {
@@ -291,8 +282,6 @@ abstract class MongolidModel extends ActiveRecord
      * Check for a expectation for given method on local mock.
      *
      * @param string $method name of the method being checked
-     *
-     * @return bool
      */
     protected function localMockHasExpectationsFor(string $method): bool
     {
@@ -324,7 +313,7 @@ abstract class MongolidModel extends ActiveRecord
      * @param array $projection fields to project in Mongo query
      * @param bool  $useCache   retrieves the entity through a CacheableCursor
      *
-     * @throws \Mongolid\Exception\ModelNotFoundException if no document was found
+     * @throws \Mongolid\Exception\ModelNotFoundException If no document was found
      *
      * @return ActiveRecord
      */

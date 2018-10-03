@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
@@ -26,8 +25,7 @@ class MongolidUserProvider implements UserProvider
     /**
      * Create a new database user provider.
      *
-     * @param \Illuminate\Contracts\Hashing\Hasher $hasher
-     * @param \MongolidLaravel\MongoLidModel       $model
+     * @param \MongolidLaravel\MongoLidModel $model
      */
     public function __construct(HasherContract $hasher, $model)
     {
@@ -64,8 +62,7 @@ class MongolidUserProvider implements UserProvider
     /**
      * Validate a user against the given credentials.
      *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param array                                      $credentials
+     * @param array $credentials
      *
      * @return bool
      */
@@ -108,8 +105,7 @@ class MongolidUserProvider implements UserProvider
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param string                                     $token
+     * @param string $token
      */
     public function updateRememberToken(UserContract $user, $token)
     {
