@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
@@ -92,7 +91,8 @@ class MongolidServiceProvider extends ServiceProvider
             'mongolid',
             function ($app, array $config) {
                 return new MongolidUserProvider(
-                    $app['hash'], $config['model']
+                    $app['hash'],
+                    $config['model']
                 );
             }
         );

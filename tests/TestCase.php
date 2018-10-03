@@ -36,11 +36,11 @@ class TestCase extends BaseTestCase
     protected function expectEquals($expected, float $delta = 100)
     {
         return m::on(
-             function ($value) use ($expected, $delta) {
-                 $this->assertEquals($expected, $value, '', $delta);
+            function ($value) use ($expected, $delta) {
+                    $this->assertEquals($expected, $value, '', $delta);
 
-                 return true;
-             }
-         );
+                    return true;
+            }
+        );
     }
 }

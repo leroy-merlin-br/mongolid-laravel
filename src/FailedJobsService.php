@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use MongoDB\BSON\ObjectID;
@@ -51,8 +50,6 @@ class FailedJobsService
     /**
      * Retrieve a single job from collection.
      *
-     * @param string $id
-     *
      * @return mixed
      */
     public function find(string $id)
@@ -64,8 +61,6 @@ class FailedJobsService
      * Insert a job on collection.
      *
      * @param array $attributes
-     *
-     * @return InsertOneResult
      */
     public function insert(array $attributes): InsertOneResult
     {
@@ -74,10 +69,6 @@ class FailedJobsService
 
     /**
      * Remove a job from collection.
-     *
-     * @param string $id
-     *
-     * @return DeleteResult
      */
     public function delete(string $id): DeleteResult
     {
@@ -94,8 +85,6 @@ class FailedJobsService
 
     /**
      * Get the actual MongoDB Collection object.
-     *
-     * @return Collection
      */
     protected function rawCollection(): Collection
     {
