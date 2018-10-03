@@ -33,6 +33,10 @@
         }
     },
     "autoload-dev": {
+        "files": [
+            "tests/Migrations/stubs/DropAdmin.php",
+            "tests/Migrations/stubs/MigrationCreatorFakeMigration.php"
+        ],
         "psr-4": {
             "MongolidLaravel\\": "tests"
         }
@@ -43,10 +47,11 @@
         },
         "laravel": {
             "providers": [
-                "MongolidLaravel\\MongolidServiceProvider"
+                "MongolidLaravel\\MongolidServiceProvider",
+                "MongolidLaravel\\MigrationServiceProvider"
             ],
             "aliases": {
-                "MongoLid": "MongolidLaravel\\MongoLidModel"
+                "MongoLid": "MongolidLaravel\\MongolidModel"
             }
         }
     }

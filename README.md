@@ -245,7 +245,6 @@ class User extends MongolidModel implements Authenticatable
      * Set the token value for the "remember me" session.
      *
      * @param  string  $value
-     * @return void
      */
     public function setRememberToken($value)
     {
@@ -310,7 +309,8 @@ The new (and improved) version 2.0 of Mongolid Laravel requires php7. If you are
 
 ## License
 
-MongoLid & MongoLid Laravel are free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT)
+MongoLid & MongoLid Laravel are free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
+Some of the code is based on the work of Taylor Otwell and contributors on [laravel/framework](https://github.com/laravel/framework), another free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Additional information
 

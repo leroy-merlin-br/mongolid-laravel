@@ -23,13 +23,10 @@ class Rules
      *
      * @example Using attribute name as query field
      *   'email' => mongolid_unique:users
-     *
      * @example Using other query field
      *   'email' => mongolid_unique:users,user_email
-     *
      * @example Excluding itself from verification
      *   'email' => mongolid_unique:users,email,5ba3bc0836e5eb03f12a3c31
-     *
      * @example Excluding itself from verification using other field for Id
      *   'email' => mongolid_unique:users,email,5ba3bc0836e5eb03f12a3c31,user_id
      *
@@ -63,7 +60,6 @@ class Rules
      *
      * @example Using attribute name as query field
      *   'email' => mongolid_exists:users
-     *
      * @example Using other query field
      *   'email' => mongolid_exists:users,user_email
      *
@@ -95,7 +91,7 @@ class Rules
 
     /**
      * Given attribute should be an ObjectId
-     * object_id
+     * object_id.
      *
      * @example Using attribute name as query field
      *   'product_id' => object_id
@@ -109,7 +105,7 @@ class Rules
 
     /**
      * Given attribute should be an ObjectId
-     * object_id
+     * object_id.
      *
      * @see ObjectId
      */
