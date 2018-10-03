@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel\Validation;
 
 use InvalidArgumentException;

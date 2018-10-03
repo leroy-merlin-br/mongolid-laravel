@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Mockery as m;

@@ -1,11 +1,11 @@
 <?php
+namespace MongolidLaravel\Migrations\Commands;
+
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
 * Copyrights licensed under the MIT License.
 * See the accompanying LICENSE file for terms.
 */
-
-namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\Command;
 use MongolidLaravel\Migrations\MigrationRepositoryInterface;
@@ -36,8 +36,6 @@ class InstallCommand extends Command
 
     /**
      * Create a new migration install command instance.
-     *
-     * @param \MongolidLaravel\Migrations\MigrationRepositoryInterface $repository
      */
     public function __construct(MigrationRepositoryInterface $repository)
     {

@@ -1,11 +1,11 @@
 <?php
+namespace MongolidLaravel\Migrations\Commands;
+
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
 * Copyrights licensed under the MIT License.
 * See the accompanying LICENSE file for terms.
 */
-
-namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\ConfirmableTrait;
 use MongolidLaravel\Migrations\Migrator;
@@ -38,8 +38,6 @@ class RollbackCommand extends BaseCommand
 
     /**
      * Create a new migration rollback command instance.
-     *
-     * @param \MongolidLaravel\Migrations\Migrator $migrator
      */
     public function __construct(Migrator $migrator)
     {

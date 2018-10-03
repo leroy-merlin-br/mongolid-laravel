@@ -1,11 +1,11 @@
 <?php
+namespace MongolidLaravel\Migrations;
+
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
 * Copyrights licensed under the MIT License.
 * See the accompanying LICENSE file for terms.
 */
-
-namespace MongolidLaravel\Migrations;
 
 use Illuminate\Console\OutputStyle;
 use Illuminate\Filesystem\Filesystem;
@@ -52,9 +52,6 @@ class Migrator
 
     /**
      * Create a new migrator instance.
-     *
-     * @param \MongolidLaravel\Migrations\MigrationRepositoryInterface $repository
-     * @param \Illuminate\Filesystem\Filesystem                        $files
      */
     public function __construct(MigrationRepositoryInterface $repository, Filesystem $files)
     {
@@ -222,7 +219,6 @@ class Migrator
      *
      * @param array        $migrations
      * @param array|string $paths
-     * @param array        $options
      *
      * @return array
      */
@@ -478,8 +474,6 @@ class Migrator
 
     /**
      * Set the output implementation that should be used by the console.
-     *
-     * @param \Illuminate\Console\OutputStyle $output
      *
      * @return $this
      */

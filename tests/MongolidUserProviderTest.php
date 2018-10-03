@@ -1,5 +1,4 @@
 <?php
-
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Auth\Authenticatable;

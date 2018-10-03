@@ -1,11 +1,11 @@
 <?php
+namespace MongolidLaravel\Migrations\Commands;
+
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
 * Copyrights licensed under the MIT License.
 * See the accompanying LICENSE file for terms.
 */
-
-namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Support\Composer;
 use Illuminate\Support\Str;
@@ -45,9 +45,6 @@ class MigrateMakeCommand extends BaseCommand
 
     /**
      * Create a new migration install command instance.
-     *
-     * @param \MongolidLaravel\Migrations\MigrationCreator $creator
-     * @param \Illuminate\Support\Composer                 $composer
      */
     public function __construct(MigrationCreator $creator, Composer $composer)
     {

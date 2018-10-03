@@ -1,11 +1,11 @@
 <?php
+namespace MongolidLaravel\Migrations;
+
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
 * Copyrights licensed under the MIT License.
 * See the accompanying LICENSE file for terms.
 */
-
-namespace MongolidLaravel\Migrations;
 
 use Closure;
 use Illuminate\Filesystem\Filesystem;
@@ -30,8 +30,6 @@ class MigrationCreator
 
     /**
      * Create a new migration creator instance.
-     *
-     * @param \Illuminate\Filesystem\Filesystem $files
      */
     public function __construct(Filesystem $files)
     {
@@ -144,8 +142,6 @@ class MigrationCreator
 
     /**
      * Register a post migration create hook.
-     *
-     * @param \Closure $callback
      */
     public function afterCreate(Closure $callback)
     {

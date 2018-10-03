@@ -1,11 +1,11 @@
 <?php
+namespace MongolidLaravel\Migrations;
+
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
 * Copyrights licensed under the MIT License.
 * See the accompanying LICENSE file for terms.
 */
-
-namespace MongolidLaravel\Migrations;
 
 use Illuminate\Filesystem\Filesystem;
 use InvalidArgumentException;
@@ -26,7 +26,7 @@ class MigrationCreatorTest extends TestCase
             ->andReturn('DummyClass');
 
         $files->expects()
-            ->put(m::pattern("/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_create_bar.php/"), 'CreateBar');
+            ->put(m::pattern('/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_create_bar.php/'), 'CreateBar');
 
         // Actions
         $creator->create('create_bar', 'database/migrations');
@@ -50,7 +50,7 @@ class MigrationCreatorTest extends TestCase
             ->get($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
 
         $files->expects()
-            ->put(m::pattern("/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_add_bar_index.php/"), 'AddBarIndex');
+            ->put(m::pattern('/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_add_bar_index.php/'), 'AddBarIndex');
 
         // Actions
         $creator->create('add_bar_index', 'database/migrations');

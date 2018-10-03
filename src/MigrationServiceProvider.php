@@ -1,11 +1,11 @@
 <?php
+namespace MongolidLaravel;
+
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
 * Copyrights licensed under the MIT License.
 * See the accompanying LICENSE file for terms.
 */
-
-namespace MongolidLaravel;
 
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Pool;
