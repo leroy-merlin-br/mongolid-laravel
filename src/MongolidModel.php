@@ -173,7 +173,7 @@ abstract class MongolidModel extends ActiveRecord
     protected function db(): Database
     {
         $conn = app(Pool::class)->getConnection();
-        $database = $conn->defaultDatabase;
+        $database = $this->database ?: $conn->defaultDatabase;
 
         return $conn->getRawConnection()->$database;
     }
