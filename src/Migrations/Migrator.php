@@ -349,7 +349,7 @@ class Migrator
     {
         $class = Str::studly(implode('_', array_slice(explode('_', $file), 4)));
 
-        return new $class();
+        return new $class($this->output);
     }
 
     /**

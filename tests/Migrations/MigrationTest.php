@@ -7,14 +7,18 @@ namespace MongolidLaravel\Migrations;
 * See the accompanying LICENSE file for terms.
 */
 
+use Illuminate\Console\OutputStyle;
 use MongolidLaravel\TestCase;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 class MigrationTest extends TestCase
 {
     public function testGetConnection()
     {
         // Set
-        $migration = new class() extends Migration {
+        $output = new OutputStyle(new ArrayInput([]), new NullOutput());
+        $migration = new class($output) extends Migration {
             /**
              * {@inheritdoc}
              */
