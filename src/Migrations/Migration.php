@@ -7,6 +7,8 @@ namespace MongolidLaravel\Migrations;
 * See the accompanying LICENSE file for terms.
 */
 
+use Illuminate\Console\OutputStyle;
+
 abstract class Migration
 {
     /**
@@ -15,6 +17,16 @@ abstract class Migration
      * @var string
      */
     protected $connection;
+
+    /**
+     * @var OutputStyle
+     */
+    protected $output;
+
+    public function __construct(OutputStyle $output)
+    {
+        $this->output = $output;
+    }
 
     /**
      * Get the migration connection name.
