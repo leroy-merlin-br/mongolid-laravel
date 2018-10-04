@@ -1,6 +1,7 @@
 <?php
 namespace MongolidLaravel;
 
+use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc;
 use Mongolid\Event\EventTriggerService;
@@ -17,9 +18,25 @@ class MongolidServiceProviderTest extends TestCase
         // Actions
         $provider->boot();
         $result = $this->app['auth']->getProvider();
+        $queueFailerResult = Ioc::make('queue.failer');
 
         // Actions
         $this->assertInstanceOf(MongolidUserProvider::class, $result);
+        $this->assertInstanceOf(NullFailedJobProvider::class, $queueFailerResult);
+    }
+
+    public function testShouldBootUsingQueueFailer()
+    {
+        // Set
+        $provider = new MongolidServiceProvider($this->app);
+        config(['queue.failed.collection' => 'failed_jobs']);
+
+        // Actions
+        $provider->boot();
+        $result = Ioc::make('queue.failer');
+
+        // Actions
+        $this->assertInstanceOf(MongolidFailedJobProvider::class, $result);
     }
 
     public function testShouldRegister()
