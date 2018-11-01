@@ -45,9 +45,8 @@ class MongolidUserProviderTest extends TestCase
         $hasher = $this->app->make(Hasher::class);
 
         // Expectations
-        $user->shouldReceive('getAuthPassword')
-            ->once()
-            ->with()
+        $user->expects()
+            ->getAuthPassword()
             ->andReturn($hasher->make('1234'));
 
         // Actions
@@ -98,9 +97,8 @@ class MongolidUserProviderTest extends TestCase
         $user = m::mock(Authenticatable::class);
 
         // Expectations
-        $user->shouldReceive('save')
-            ->once()
-            ->with()
+        $user->expects()
+            ->save()
             ->andReturn(true);
 
         // Actions

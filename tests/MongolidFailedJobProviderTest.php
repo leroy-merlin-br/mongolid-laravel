@@ -34,14 +34,12 @@ class MongolidFailedJobProviderTest extends TestCase
         ];
 
         // Expectations
-        $service->shouldReceive('insert')
-            ->with($this->expectEquals($insertData))
-            ->once()
+        $service->expects()
+            ->insert($this->expectEquals($insertData))
             ->andReturn($insertResult);
 
-        $insertResult->shouldReceive('getInsertedId')
-            ->withNoArgs()
-            ->once()
+        $insertResult->expects()
+            ->getInsertedId()
             ->andReturn('xpto1');
 
         // Actions
@@ -90,9 +88,9 @@ class MongolidFailedJobProviderTest extends TestCase
         $cursor = new ArrayObject($data);
 
         // Expectations
-        $service->shouldReceive('all')
+        $service->expects()
+            ->all()
             ->withAnyArgs()
-            ->once()
             ->andReturn($cursor);
 
         // Actions
@@ -118,9 +116,8 @@ class MongolidFailedJobProviderTest extends TestCase
         ];
 
         // Expectations
-        $service->shouldReceive('find')
-            ->with($id)
-            ->once()
+        $service->expects()
+            ->find($id)
             ->andReturn($data);
 
         // Actions
@@ -140,14 +137,12 @@ class MongolidFailedJobProviderTest extends TestCase
         $deletedResult = m::mock(DeleteResult::class);
 
         // Expectations
-        $service->shouldReceive('delete')
-            ->with($id)
-            ->once()
+        $service->expects()
+            ->delete($id)
             ->andReturn($deletedResult);
 
-        $deletedResult->shouldReceive('getDeletedCount')
-            ->withNoArgs()
-            ->once()
+        $deletedResult->expects()
+            ->getDeletedCount()
             ->andReturn(1);
 
         // Actions
@@ -164,9 +159,8 @@ class MongolidFailedJobProviderTest extends TestCase
         $provider = new MongolidFailedJobProvider($service);
 
         // Expectations
-        $service->shouldReceive('drop')
-            ->withNoArgs()
-            ->once();
+        $service->expects()
+            ->drop();
 
         // Actions
         $provider->flush();
