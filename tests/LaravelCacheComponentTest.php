@@ -15,9 +15,8 @@ class LaravelCacheComponentTest extends TestCase
         $value = 'bar';
 
         // Expectations
-        $cacheRepo->shouldReceive('get')
-            ->once()
-            ->with($key, null)
+        $cacheRepo->expects()
+            ->get($key, null)
             ->andReturn($value);
 
         // Assertion
@@ -33,9 +32,8 @@ class LaravelCacheComponentTest extends TestCase
         $value = 'bar';
 
         // Expectations
-        $cacheRepo->shouldReceive('get')
-            ->once()
-            ->with($key, null)
+        $cacheRepo->expects()
+            ->get($key, null)
             ->andReturn($value);
 
         // Actions
@@ -55,9 +53,8 @@ class LaravelCacheComponentTest extends TestCase
         $value = [(object) ['name' => 'batata']];
 
         // Expectations
-        $cacheRepo->shouldReceive('put')
-            ->once()
-            ->with($key, [['name' => 'batata']], 3)
+        $cacheRepo->expects()
+            ->put($key, [['name' => 'batata']], 3)
             ->andReturn($value);
 
         // Assertion
@@ -72,9 +69,8 @@ class LaravelCacheComponentTest extends TestCase
         $key = 'foo';
 
         // Expectations
-        $cacheRepo->shouldReceive('has')
-            ->once()
-            ->with($key)
+        $cacheRepo->expects()
+            ->has($key)
             ->andReturn(true);
 
         // Assertion

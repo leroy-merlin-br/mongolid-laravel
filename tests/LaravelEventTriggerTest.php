@@ -17,9 +17,8 @@ class LaravelEventTriggerTest extends TestCase
         $halt = false;
 
         // Expectations
-        $dispatcher->shouldReceive('fire')
-            ->once()
-            ->with($event, $payload, $halt)
+        $dispatcher->expects()
+            ->fire($event, $payload, $halt)
             ->andReturn(true);
 
         // Actions

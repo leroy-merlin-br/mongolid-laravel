@@ -15,7 +15,8 @@ class MongolidModelTest extends TestCase
     public function testShouldValidateWithNoRules()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
         };
 
         // Actions
@@ -29,7 +30,8 @@ class MongolidModelTest extends TestCase
     public function testShouldNotValidateWithUnattendedRules()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $rules = [
                 'name' => 'required',
                 'address' => 'min:100',
@@ -54,7 +56,8 @@ class MongolidModelTest extends TestCase
     public function testValidateShouldSkipUnchangedHashedAttributes()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
                 'name' => 'required',
             ];
@@ -76,7 +79,8 @@ class MongolidModelTest extends TestCase
     public function testShouldValidateChangedHashedAttributes()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
                 'password' => 'required',
             ];
@@ -99,15 +103,19 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'users';
         };
 
         // Expectations
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive('save')
-            ->once()
+        $dataMapper->expects()
+            ->save()
             ->withAnyArgs()
             ->andReturn(true);
 
@@ -121,12 +129,12 @@ class MongolidModelTest extends TestCase
     public function testShouldMockSave()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
         };
 
         // Expectations
         $model->shouldReceiveSave()
-            ->once()
             ->withNoArgs()
             ->andReturn(true);
 
@@ -146,7 +154,8 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'users';
 
             protected $hashedAttributes = ['password'];
@@ -156,16 +165,18 @@ class MongolidModelTest extends TestCase
         $model->password_confirmation = '123456';
 
         // Expectations
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive($method)
-            ->once()
+        $dataMapper->expects()
+            ->{$method}()
             ->withAnyArgs()
             ->andReturn(true);
 
-        $hasher->shouldReceive('make')
-            ->once()
-            ->with('123456')
+        $hasher->expects()
+            ->make('123456')
             ->andReturn('HASHED_PASSWORD');
 
         // Actions
@@ -180,7 +191,8 @@ class MongolidModelTest extends TestCase
     public function testShouldNotAttemptToSaveWhenInvalid()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
                 'name' => 'required',
                 'address' => 'min:100',
@@ -205,7 +217,8 @@ class MongolidModelTest extends TestCase
     public function testShouldForceSaving()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             public $rules = [
                 'name' => 'required',
                 'address' => 'min:100',
@@ -216,7 +229,6 @@ class MongolidModelTest extends TestCase
 
         // Expectations
         $model->shouldReceiveSave()
-            ->once()
             ->withNoArgs()
             ->andReturn(true);
 
@@ -233,15 +245,19 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive('delete')
-            ->once()
+        $dataMapper->expects()
+            ->delete()
             ->withAnyArgs()
             ->andReturn(true);
 
@@ -255,13 +271,13 @@ class MongolidModelTest extends TestCase
     public function testShouldMockDelete()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
         };
 
         // Expectations
         $model->shouldReceiveDelete()
-            ->once()
-            ->with()
+            ->withNoArgs()
             ->andReturn(true);
 
         // Actions
@@ -276,15 +292,19 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive('first')
-            ->once()
+        $dataMapper->expects()
+            ->first()
             ->withAnyArgs()
             ->andReturn($model);
 
@@ -298,7 +318,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockFirst()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
@@ -320,15 +341,19 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive('first')
-            ->once()
+        $dataMapper->expects()
+            ->first()
             ->withAnyArgs()
             ->andReturn($model);
 
@@ -342,7 +367,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockFirstOrNew()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
@@ -364,15 +390,19 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive('firstOrFail')
-            ->once()
+        $dataMapper->expects()
+            ->firstOrFail()
             ->withAnyArgs()
             ->andReturn($model);
 
@@ -388,17 +418,21 @@ class MongolidModelTest extends TestCase
         // Set
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
         $this->expectException(ModelNotFoundException::class);
 
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive('firstOrFail')
-            ->once()
+        $dataMapper->expects()
+            ->firstOrFail()
             ->withAnyArgs()
             ->andThrow(ModelNotFoundException::class);
 
@@ -409,7 +443,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockFirstOrFail()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
@@ -432,15 +467,19 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $cursor = m::mock(Cursor::class);
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive('where')
-            ->once()
+        $dataMapper->expects()
+            ->where()
             ->withAnyArgs()
             ->andReturn($cursor);
 
@@ -457,15 +496,19 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $cursor = m::mock(Cursor::class);
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
         };
 
         // Expectations
-        $dataMapper->shouldReceive('setSchema')->passthru();
+        $dataMapper->expects()
+            ->setSchema()
+            ->withAnyArgs()
+            ->passthru();
 
-        $dataMapper->shouldReceive('all')
-            ->once()
+        $dataMapper->expects()
+            ->all()
             ->withAnyArgs()
             ->andReturn($cursor);
 
@@ -479,7 +522,8 @@ class MongolidModelTest extends TestCase
     public function testShouldIgnoreInvalidStaticCalls()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
         };
 
         // Actions
@@ -497,7 +541,8 @@ class MongolidModelTest extends TestCase
         $connection->mongolid = $database;
         $database->collection_name = m::mock(Collection::class);
 
-        $model = new class() extends MongolidModel {
+        $model = new class() extends MongolidModel
+        {
             protected $collection = 'collection_name';
 
             public function rawCollection()
@@ -507,9 +552,8 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
-        $connection->shouldReceive('getRawConnection')
-            ->once()
-            ->with()
+        $connection->expects()
+            ->getRawConnection()
             ->andReturnSelf();
 
         // Actions

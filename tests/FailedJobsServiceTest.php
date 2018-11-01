@@ -23,9 +23,8 @@ class FailedJobsServiceTest extends TestCase
         $failedJobs = new FailedJobsService($connection);
 
         // Expectations
-        $rawCollection->shouldReceive('find')
-            ->withNoArgs()
-            ->once()
+        $rawCollection->expects()
+            ->find()
             ->andReturn($cursor);
 
         // Actions
@@ -47,9 +46,8 @@ class FailedJobsServiceTest extends TestCase
         $failedJobs = new FailedJobsService($connection);
 
         // Expectations
-        $rawCollection->shouldReceive('findOne')
-            ->with(['_id' => new ObjectID($id)])
-            ->once()
+        $rawCollection->expects()
+            ->findOne(['_id' => new ObjectID($id)])
             ->andReturn($job);
 
         // Actions
@@ -71,9 +69,8 @@ class FailedJobsServiceTest extends TestCase
         $failedJobs = new FailedJobsService($connection);
 
         // Expectations
-        $rawCollection->shouldReceive('insertOne')
-            ->with($job)
-            ->once()
+        $rawCollection->expects()
+            ->insertOne($job)
             ->andReturn($resultInsert);
 
         // Actions
@@ -95,9 +92,9 @@ class FailedJobsServiceTest extends TestCase
         $failedJobs = new FailedJobsService($connection);
 
         // Expectations
-        $rawCollection->shouldReceive('deleteOne')
+        $rawCollection->expects()
+            ->deleteOne()
             ->with(['_id' => new ObjectID($id)])
-            ->once()
             ->andReturn($resultDelete);
 
         // Actions
@@ -117,16 +114,18 @@ class FailedJobsServiceTest extends TestCase
         $failedJobs = new FailedJobsService($connection);
 
         // Expectations
-        $rawCollection->shouldReceive('drop')
-            ->withNoArgs()
-            ->once();
+        $rawCollection->expects()
+            ->drop();
 
         // Actions
         $failedJobs->drop();
     }
 
-    private function mockRawCollection(Connection $connection, Collection $rawCollection, string $collection = 'failed_jobs'): void
-    {
+    private function mockRawCollection(
+        Connection $connection,
+        Collection $rawCollection,
+        string $collection = 'failed_jobs'
+    ): void {
         $rawClient = m::mock(Client::class);
 
         $connection->defaultDatabase = 'database';
