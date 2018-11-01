@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  php:
+    image: leroymerlinbr/php
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+    environment:
+      - DB_HOST=db
+
+  db:
+    image: mongo:4.0
+    command: mongod --smallfiles
+    volumes:
+      - db:/data/db
+      - .:/var/www/html
+
+volumes:
+  db:
+    driver: local
