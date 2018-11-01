@@ -5,7 +5,6 @@ use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Support\MessageBag;
 use Mockery;
-use Mockery\Expectation;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
@@ -23,6 +22,10 @@ use Mongolid\Model\ActiveRecord;
  * Remember, this package is meant to be used with Laravel while
  * the "leroy-merlin\mongolid" is meant to be used with other frameworks
  * or even without any.
+ *
+ * @method static MongolidModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage shouldReceive(...$arguments)
+ * @method static MongolidModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage expects(...$arguments)
+ * @method static MongolidModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage allows(...$arguments)
  */
 abstract class MongolidModel extends ActiveRecord
 {
@@ -45,7 +48,7 @@ abstract class MongolidModel extends ActiveRecord
      *
      * @var Mockery\Mock
      */
-    public static $mock;
+    protected static $mock;
 
     /**
      * List of attribute names which should be hashed on save. For
@@ -193,15 +196,15 @@ abstract class MongolidModel extends ActiveRecord
      * @param string $name      name of the method being called
      * @param array  $arguments method arguments
      *
-     * @return Expectation|void
+     * @return \Mockery\ExpectationInterface|\Mockery\HigherOrderMessage|null
      */
     public static function __callStatic($name, $arguments)
     {
-        if ('shouldReceive' === $name) {
+        if (in_array($name, ['shouldReceive', 'expects', 'allows'])) {
             $class = static::class;
             static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
 
-            return static::$mock[$class]->shouldReceive(...$arguments);
+            return static::$mock[$class]->{$name}(...$arguments);
         }
     }
 
@@ -277,9 +280,9 @@ abstract class MongolidModel extends ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function all()
+    public static function all(...$arguments)
     {
-        return static::callMockOrParent('all', func_get_args());
+        return static::callMockOrParent('all', $arguments);
     }
 
     /**
@@ -292,14 +295,20 @@ abstract class MongolidModel extends ActiveRecord
      */
     protected static function callMockOrParent(string $method, array $arguments)
     {
-        $classToCall = 'parent';
-        $class = static::class;
-        $mock = static::$mock[$class] ?? null;
+        $mock = static::$mock[static::class] ?? null;
 
         if ($mock && $mock->mockery_getExpectationsFor($method)) {
-            $classToCall = $mock;
+            return $mock->{$method}(...$arguments);
         }
 
-        return call_user_func_array([$classToCall, $method], $arguments);
+        return parent::{$method}(...$arguments);
+    }
+
+    /**
+     * Clear created mocks.
+     */
+    public static function clearMocks(): void
+    {
+        static::$mock = [];
     }
 }
