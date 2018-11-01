@@ -48,13 +48,6 @@ abstract class MongolidModel extends ActiveRecord
     public static $mock;
 
     /**
-     * Public local mock.
-     *
-     * @var Mockery\Mock
-     */
-    public $localMock;
-
-    /**
      * List of attribute names which should be hashed on save. For
      * example: array('password');.
      *
@@ -63,9 +56,7 @@ abstract class MongolidModel extends ActiveRecord
     protected $hashedAttributes = [];
 
     /**
-     * Save the model to the database if it's valid. This method also
-     * checks for the presence of the localMock in order to call the save
-     * method into the existing Mock in order not to touch the database.
+     * Save the model to the database if it's valid.
      *
      * @param bool $force force save even if the object is invalid
      *
@@ -73,10 +64,6 @@ abstract class MongolidModel extends ActiveRecord
      */
     public function save(bool $force = false)
     {
-        if ($this->localMockHasExpectationsFor('save')) {
-            return $this->getLocalMock()->save();
-        }
-
         if ($force || $this->isValid()) {
             $this->hashAttributes();
 
@@ -94,22 +81,6 @@ abstract class MongolidModel extends ActiveRecord
         $this->hashAttributes();
 
         return parent::update();
-    }
-
-    /**
-     * Overwrites the delete method in order to be able to check for
-     * the expectation in the localMock in order to call the delete method
-     * into the existing mock and avoid touching the database.
-     *
-     * @return bool
-     */
-    public function delete()
-    {
-        if ($this->localMockHasExpectationsFor('delete')) {
-            return $this->getLocalMock()->delete();
-        }
-
-        return parent::delete();
     }
 
     /**
@@ -224,70 +195,6 @@ abstract class MongolidModel extends ActiveRecord
 
             return static::$mock[$class]->shouldReceive(...$arguments);
         }
-    }
-
-    /**
-     * Initiate a mock expectation that is specific for the save method.
-     *
-     * @return Expectation
-     */
-    public function shouldReceiveSave()
-    {
-        return $this->localMockShouldReceive('save');
-    }
-
-    /**
-     * Initiate a mock expectation that is specific for the delete method.
-     *
-     * @return Expectation
-     */
-    public function shouldReceiveDelete()
-    {
-        return $this->localMockShouldReceive('delete');
-    }
-
-    /**
-     * Check if local mock is set.
-     */
-    protected function hasLocalMock(): bool
-    {
-        return null !== $this->localMock;
-    }
-
-    /**
-     * Get a local mock instance.
-     *
-     * @return Mockery\Mock|Mockery\MockInterface
-     */
-    protected function getLocalMock()
-    {
-        if (!$this->hasLocalMock()) {
-            $this->localMock = Mockery::mock();
-        }
-
-        return $this->localMock;
-    }
-
-    /**
-     * Initiate a mockery expectation that is specific for the given method.
-     *
-     * @param string $method name of the method being mocked
-     *
-     * @return Expectation
-     */
-    protected function localMockShouldReceive(string $method)
-    {
-        return $this->getLocalMock()->shouldReceive($method);
-    }
-
-    /**
-     * Check for a expectation for given method on local mock.
-     *
-     * @param string $method name of the method being checked
-     */
-    protected function localMockHasExpectationsFor(string $method): bool
-    {
-        return $this->hasLocalMock() && $this->getLocalMock()->mockery_getExpectationsFor($method);
     }
 
     /**
