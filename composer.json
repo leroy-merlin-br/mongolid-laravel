@@ -1,13 +1,7 @@
 {
     "name": "leroy-merlin-br/mongolid-laravel",
     "description": "Easy, powerful and ultrafast MongoDB ODM for Laravel.",
-    "keywords": [
-        "odm",
-        "mongodb",
-        "nosql",
-        "laravel",
-        "illuminate"
-    ],
+    "keywords": ["odm", "mongodb", "nosql", "laravel", "illuminate", "nosql", "active record", "data mapper"],
     "license": "MIT",
     "authors": [
         {
@@ -17,11 +11,17 @@
         {
             "name": "Guilherme Guitte",
             "email": "guilherme.guitte@gmail.com"
+        },
+        {
+            "name": "Boitatá",
+            "email": "boitata@leroymerlin.com.br"
         }
     ],
     "require": {
         "php": ">=7.1",
-        "leroy-merlin-br/mongolid": "^2.0",
+        "ext-mongodb": "*",
+        "mongodb/mongodb": "^1.4",
+        "leroy-merlin-br/mongolid": "^3.0",
         "illuminate/support": "^5.4 || ^6.0 || ^7.0 || ^8.0",
         "illuminate/auth": "^5.4 || ^6.0 || ^7.0 || ^8.0",
         "illuminate/queue": "^5.4 || ^6.0 || ^7.0 || ^8.0"
@@ -59,5 +59,10 @@
                 "MongoLid": "MongolidLaravel\\MongolidModel"
             }
         }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
     }
 }
