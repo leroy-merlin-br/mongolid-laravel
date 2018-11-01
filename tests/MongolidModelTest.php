@@ -6,7 +6,6 @@ use Mockery as m;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
-use Mongolid\Connection\Pool;
 use Mongolid\Cursor\Cursor;
 use Mongolid\DataMapper\DataMapper;
 use Mongolid\Exception\ModelNotFoundException;
@@ -521,9 +520,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetCollection()
     {
         // Set
-        $pool = $this->instance(Pool::class, m::mock(Pool::class));
-
-        $connection = m::mock(Connection::class);
+        $connection = $this->instance(Connection::class, m::mock(Connection::class));
         $database = m::mock(Database::class);
         $connection->mongolid = $database;
         $database->collection_name = m::mock(Collection::class);
@@ -538,11 +535,6 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
-        $pool->shouldReceive('getConnection')
-            ->once()
-            ->withAnyArgs()
-            ->andReturn($connection);
-
         $connection->shouldReceive('getRawConnection')
             ->once()
             ->with()

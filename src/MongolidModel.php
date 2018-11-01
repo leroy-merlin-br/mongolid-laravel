@@ -8,8 +8,8 @@ use Mockery;
 use Mockery\Expectation;
 use MongoDB\Collection;
 use MongoDB\Database;
-use Mongolid\ActiveRecord;
-use Mongolid\Connection\Pool;
+use Mongolid\Connection\Connection;
+use Mongolid\Model\ActiveRecord;
 
 /**
  * This class extends the Mongolid\ActiveRecord, so, in order
@@ -124,12 +124,13 @@ abstract class MongolidModel extends ActiveRecord
             return true;
         }
 
-        $attributes = $this->getAttributes();
+        $attributes = $this->attributes();
 
         // Verify attributes that are hashed and that have not changed
         // those doesn't need to be validated.
         foreach ($this->hashedAttributes as $hashedAttr) {
-            if (isset($this->original[$hashedAttr]) && $this->$hashedAttr == $this->original[$hashedAttr]) {
+            $originalAttributes = $this->originalAttributes();
+            if (isset($originalAttributes[$hashedAttr]) && $this->$hashedAttr == $originalAttributes[$hashedAttr]) {
                 unset($rules[$hashedAttr]);
             }
         }
@@ -180,10 +181,10 @@ abstract class MongolidModel extends ActiveRecord
      */
     protected function db(): Database
     {
-        $conn = app(Pool::class)->getConnection();
-        $database = $conn->defaultDatabase;
+        $connection = app(Connection::class);
+        $database = $connection->defaultDatabase;
 
-        return $conn->getRawConnection()->$database;
+        return $connection->getRawConnection()->{$database};
     }
 
     /**
@@ -202,7 +203,8 @@ abstract class MongolidModel extends ActiveRecord
     {
         foreach ($this->hashedAttributes as $attr) {
             // Hash attribute if changed
-            if (!isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
+            $originalAttributes = $this->originalAttributes();
+            if (!isset($originalAttributes[$attr]) || $this->$attr != $originalAttributes[$attr]) {
                 $this->$attr = app(Hasher::class)->make($this->$attr);
             }
 
