@@ -6,7 +6,6 @@ use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
-use Mongolid\Connection\Pool;
 use Mongolid\Container\Ioc as MongolidIoc;
 use Mongolid\Event\EventTriggerService;
 use Mongolid\Util\CacheComponentInterface;
@@ -49,7 +48,7 @@ class MongolidServiceProvider extends ServiceProvider
         MongolidIoc::setContainer($this->app);
 
         $this->app->singleton(
-            Pool::class,
+            Connection::class,
             function ($app) {
                 $config = $app['config']->get('database.mongodb.default') ?? [];
                 $connectionString = $this->buildConnectionString($config);
@@ -59,10 +58,7 @@ class MongolidServiceProvider extends ServiceProvider
                 $connection = new Connection($connectionString, $options, $driverOptions);
                 $connection->defaultDatabase = $config['database'] ?? 'mongolid';
 
-                $pool = new Pool();
-                $pool->addConnection($connection);
-
-                return $pool;
+                return $connection;
             }
         );
         $this->app->singleton(

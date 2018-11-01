@@ -3,19 +3,19 @@ namespace MongolidLaravel\Validation;
 
 use InvalidArgumentException;
 use MongoDB\BSON\ObjectId;
-use Mongolid\Connection\Pool;
+use Mongolid\Connection\Connection;
 use Mongolid\Util\ObjectIdUtils;
 
 class Rules
 {
     /**
-     * @var Pool
+     * @var Connection
      */
-    private $pool;
+    private $connection;
 
-    public function __construct(Pool $pool)
+    public function __construct(Connection $connection)
     {
-        $this->pool = $pool;
+        $this->connection = $connection;
     }
 
     /**
@@ -135,11 +135,10 @@ class Rules
      */
     private function hasResults(string $collection, array $query): bool
     {
-        $mongolidConnection = $this->pool->getConnection();
-        $connection = $mongolidConnection->getRawConnection();
-        $database = $mongolidConnection->defaultDatabase;
+        $connection = $this->connection->getRawConnection();
+        $database = $this->connection->defaultDatabase;
 
-        return (bool) $connection->$database->$collection->count($query);
+        return (bool) $connection->{$database}->{$collection}->count($query);
     }
 
     /**

@@ -8,7 +8,6 @@ use MongoDB\Collection;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
 use Mongolid\Connection\Connection;
-use Mongolid\Connection\Pool;
 use stdClass;
 
 class FailedJobsServiceTest extends TestCase
@@ -16,12 +15,12 @@ class FailedJobsServiceTest extends TestCase
     public function testAllShouldReturnWholeCollection()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connection = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
-        $this->mockRawCollection($connPool, $rawCollection);
+        $this->mockRawCollection($connection, $rawCollection);
         $cursor = m::mock(stdClass::class);
 
-        $failedJobs = new FailedJobsService($connPool);
+        $failedJobs = new FailedJobsService($connection);
 
         // Expectations
         $rawCollection->shouldReceive('find')
@@ -39,13 +38,13 @@ class FailedJobsServiceTest extends TestCase
     public function testFindShouldReturnWholeCollection()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connection = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
-        $this->mockRawCollection($connPool, $rawCollection);
+        $this->mockRawCollection($connection, $rawCollection);
         $job = ['job' => 'attributes'];
         $id = '59a86805401fec4f572fdd21';
 
-        $failedJobs = new FailedJobsService($connPool);
+        $failedJobs = new FailedJobsService($connection);
 
         // Expectations
         $rawCollection->shouldReceive('findOne')
@@ -63,13 +62,13 @@ class FailedJobsServiceTest extends TestCase
     public function testInsertShouldAddOneJob()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connection = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
-        $this->mockRawCollection($connPool, $rawCollection);
+        $this->mockRawCollection($connection, $rawCollection);
         $job = ['job' => 'attributes'];
         $resultInsert = m::mock(InsertOneResult::class);
 
-        $failedJobs = new FailedJobsService($connPool);
+        $failedJobs = new FailedJobsService($connection);
 
         // Expectations
         $rawCollection->shouldReceive('insertOne')
@@ -87,13 +86,13 @@ class FailedJobsServiceTest extends TestCase
     public function testDeleteShouldRemoveOneJob()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connection = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
-        $this->mockRawCollection($connPool, $rawCollection);
+        $this->mockRawCollection($connection, $rawCollection);
         $id = '59a86805401fec4f572fdd21';
         $resultDelete = m::mock(DeleteResult::class);
 
-        $failedJobs = new FailedJobsService($connPool);
+        $failedJobs = new FailedJobsService($connection);
 
         // Expectations
         $rawCollection->shouldReceive('deleteOne')
@@ -111,11 +110,11 @@ class FailedJobsServiceTest extends TestCase
     public function testDropShouldCleanWholeCollection()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connection = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
-        $this->mockRawCollection($connPool, $rawCollection);
+        $this->mockRawCollection($connection, $rawCollection);
 
-        $failedJobs = new FailedJobsService($connPool);
+        $failedJobs = new FailedJobsService($connection);
 
         // Expectations
         $rawCollection->shouldReceive('drop')
@@ -126,9 +125,8 @@ class FailedJobsServiceTest extends TestCase
         $failedJobs->drop();
     }
 
-    private function mockRawCollection($connPool, $rawCollection, $collection = 'failed_jobs')
+    private function mockRawCollection(Connection $connection, Collection $rawCollection, string $collection = 'failed_jobs'): void
     {
-        $connection = m::mock(Connection::class);
         $rawClient = m::mock(Client::class);
 
         $connection->defaultDatabase = 'database';
@@ -136,14 +134,8 @@ class FailedJobsServiceTest extends TestCase
         $database->{$collection} = $rawCollection;
         $rawClient->database = $database;
 
-        $connPool->shouldReceive('getConnection')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($connection);
-
-        $connection->shouldReceive('getRawConnection')
-            ->withNoArgs()
-            ->once()
+        $connection->expects()
+            ->getRawConnection()
             ->andReturn($rawClient);
     }
 }
