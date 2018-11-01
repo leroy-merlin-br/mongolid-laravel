@@ -1,0 +1,52 @@
+#!/bin/bash
+
+STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR | grep \.php`
+
+# Determine if a file list is passed
+if [ "$#" -eq 1 ]
+then
+  oIFS=$IFS
+  IFS='
+  '
+  SFILES="$1"
+  IFS=$oIFS
+fi
+SFILES=${SFILES:-$STAGED_FILES_CMD}
+
+# Fix path for docker
+for FILE in $SFILES
+do
+  FILES="$FILES $FILE"
+done
+
+if [ "$FILES" != "" ]
+then
+  echo -e "\033[1;33m"Running Code Sniffer..."\033[0m"
+  docker-compose run --rm --no-deps -T php vendor/bin/phpcs $FILES
+
+  if [ $? != 0 ]
+  then
+    # Allows us to read user input below, assigns stdin to keyboard
+    exec < /dev/tty
+
+    read -p "There are some Coding Standards violations. Do you want to fix the auto-fixable ones? (Yes) " choice
+    [ "$choice" = "" ] && choice='Y'
+
+    case ${choice:0:1} in
+    y|Y )
+      echo -e "\033[1;33m"Running Code Beautifier..."\033[0m"
+      docker-compose run --rm --no-deps -T php vendor/bin/phpcbf $FILES
+      echo -e "\033[0;32m"Done. Please add the fixes before commit."\033[0m"
+
+      exit 1
+    ;;
+    * )
+      echo -e "\033[41m"Please, fix the Coding Standards violations before commit."\033[0m"
+
+      exit 1
+    ;;
+    esac
+  fi
+fi
+
+exit $?
