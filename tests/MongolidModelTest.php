@@ -317,8 +317,7 @@ class MongolidModelTest extends TestCase
             ->passthru();
 
         $dataMapper->expects()
-            ->first()
-            ->withAnyArgs()
+            ->first('123', [], false)
             ->andReturn($model);
 
         // Actions
@@ -337,9 +336,8 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
-        $model::shouldReceive('first')
-            ->once()
-            ->withAnyArgs()
+        $model::expects()
+            ->first('123')
             ->andReturn($model);
 
         // Actions
@@ -366,8 +364,7 @@ class MongolidModelTest extends TestCase
             ->passthru();
 
         $dataMapper->expects()
-            ->first()
-            ->withAnyArgs()
+            ->first('123')
             ->andReturn($model);
 
         // Actions
@@ -386,9 +383,8 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
-        $model::shouldReceive('firstOrNew')
-            ->once()
-            ->withAnyArgs()
+        $model::expects()
+            ->firstOrNew('123')
             ->andReturn($model);
 
         // Actions
@@ -462,9 +458,8 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
-        $model::shouldReceive('firstOrFail')
-            ->once()
-            ->withAnyArgs()
+        $model::expects()
+            ->firstOrFail('123')
             ->andReturn($model);
 
         // Actions
@@ -530,20 +525,6 @@ class MongolidModelTest extends TestCase
 
         // Assertions
         $this->assertEquals($cursor, $result);
-    }
-
-    public function testShouldIgnoreInvalidStaticCalls()
-    {
-        // Set
-        $model = new class() extends MongolidModel
-        {
-        };
-
-        // Actions
-        $result = $model::foobar();
-
-        // Assertions
-        $this->assertNull($result);
     }
 
     public function testShouldGetCollection()
