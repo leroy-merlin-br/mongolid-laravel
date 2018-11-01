@@ -157,13 +157,17 @@ class MongolidModelTest extends TestCase
     public function testShouldMockSave()
     {
         // Set
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper->makePartial();
         $model = new class() extends MongolidModel
         {
+            protected $collection = 'models';
         };
 
         // Expectations
-        $model->shouldReceiveSave()
-            ->withNoArgs()
+        $dataMapper->expects()
+            ->save()
+            ->withAnyArgs()
             ->andReturn(true);
 
         // Actions
@@ -245,8 +249,12 @@ class MongolidModelTest extends TestCase
     public function testShouldForceSaving()
     {
         // Set
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper->makePartial();
         $model = new class() extends MongolidModel
         {
+            protected $collection = 'models';
+
             public $rules = [
                 'name' => 'required',
                 'address' => 'min:100',
@@ -256,8 +264,9 @@ class MongolidModelTest extends TestCase
         $model->address = 'small address';
 
         // Expectations
-        $model->shouldReceiveSave()
-            ->withNoArgs()
+        $dataMapper->expects()
+            ->save()
+            ->withAnyArgs()
             ->andReturn(true);
 
         // Actions
@@ -265,7 +274,7 @@ class MongolidModelTest extends TestCase
 
         // Assertions
         $this->assertTrue($result);
-        $this->assertEmpty($model->errors()->all());
+        $this->assertFalse($model->errors()->any());
     }
 
     public function testShouldDelete()
@@ -299,13 +308,17 @@ class MongolidModelTest extends TestCase
     public function testShouldMockDelete()
     {
         // Set
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper->makePartial();
         $model = new class() extends MongolidModel
         {
+            protected $collection = 'models';
         };
 
         // Expectations
-        $model->shouldReceiveDelete()
-            ->withNoArgs()
+        $dataMapper->expects()
+            ->delete()
+            ->withAnyArgs()
             ->andReturn(true);
 
         // Actions
