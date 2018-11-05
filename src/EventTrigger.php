@@ -38,6 +38,6 @@ class EventTrigger implements EventTriggerInterface
      */
     public function fire(string $event, $payload, bool $halt)
     {
-        return $this->dispatcher->fire($event, $payload, $halt);
+        return $this->dispatcher->dispatch($event, $payload, $halt);
     }
 }
