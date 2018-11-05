@@ -42,7 +42,7 @@ Make sure to set minimum stability to `dev` when using a beta tag (`composer con
 
 > **Note**: If you are using Laravel 5.5, the next steps for providers and aliases are unnecessary. MongoLid supports Laravel's [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
 
-In your `config/app.php` add `'MongolidLaravel\Providers\MongolidServiceProvider'` to the end of the `$providers` array
+In your `config/app.php` add `'Mongolid\Laravel\Providers\MongolidServiceProvider'` to the end of the `$providers` array
 
 ```php
 'providers' => [
@@ -50,18 +50,18 @@ In your `config/app.php` add `'MongolidLaravel\Providers\MongolidServiceProvider
     Illuminate\Validation\ValidationServiceProvider::class,
     Illuminate\View\ViewServiceProvider::class,
     ...
-    MongolidLaravel\Providers\MongolidServiceProvider::class,
+    Mongolid\Laravel\Providers\MongolidServiceProvider::class,
 ],
 ```
 
-(**Optional**) At the end of `config/app.php` add `'MongoLid'    => 'MongolidLaravel\MongoLidModel'` to the `$aliases` array
+(**Optional**) At the end of `config/app.php` add `'MongoLid'    => 'Mongolid\Laravel\MongoLidModel'` to the `$aliases` array
 
 ```php
 'aliases' => [
     'App'         => Illuminate\Support\Facades\App::class,
     'Artisan'     => Illuminate\Support\Facades\Artisan::class,
     ...
-    'MongoLid'    => MongolidLaravel\MongoLidModel::class,
+    'MongoLid'    => Mongolid\Laravel\MongoLidModel::class,
 ],
 ```
 
@@ -145,7 +145,7 @@ To get started, create an MongoLid model. Models typically live in the `app/mode
 <?php
 namespace App;
 
-use MongolidLaravel\MongolidModel;
+use Mongolid\Laravel\MongolidModel;
 
 class User extends MongolidModel
 {
@@ -185,7 +185,7 @@ The `User` model should implement the `Authenticatable` interface:
 namespace App;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use MongolidLaravel\MongolidModel;
+use Mongolid\Laravel\MongolidModel;
 
 class User extends MongolidModel implements Authenticatable
 {

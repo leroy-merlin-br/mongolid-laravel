@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Providers;
+namespace Mongolid\Laravel\Providers;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Contracts\Validation\Factory;
@@ -8,11 +8,11 @@ use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Container\Ioc as MongolidIoc;
 use Mongolid\Event\EventTriggerService;
+use Mongolid\Laravel\FailedJobsService;
+use Mongolid\Laravel\LaravelCacheComponent;
+use Mongolid\Laravel\LaravelEventTrigger;
+use Mongolid\Laravel\Validation\Rules;
 use Mongolid\Util\CacheComponentInterface;
-use MongolidLaravel\FailedJobsService;
-use MongolidLaravel\LaravelCacheComponent;
-use MongolidLaravel\LaravelEventTrigger;
-use MongolidLaravel\Validation\Rules;
 
 class MongolidServiceProvider extends ServiceProvider
 {

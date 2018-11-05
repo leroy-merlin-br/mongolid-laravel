@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace Mongolid\Laravel;
 
 use Mockery as m;
 use Mockery\Matcher\Closure;

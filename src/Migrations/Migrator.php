@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace Mongolid\Laravel\Migrations;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -18,7 +18,7 @@ class Migrator
     /**
      * The migration repository implementation.
      *
-     * @var \MongolidLaravel\Migrations\MigrationRepositoryInterface
+     * @var \Mongolid\Laravel\Migrations\MigrationRepositoryInterface
      */
     protected $repository;
 
@@ -445,7 +445,7 @@ class Migrator
     /**
      * Get the migration repository instance.
      *
-     * @return \MongolidLaravel\Migrations\MigrationRepositoryInterface
+     * @return \Mongolid\Laravel\Migrations\MigrationRepositoryInterface
      */
     public function getRepository()
     {

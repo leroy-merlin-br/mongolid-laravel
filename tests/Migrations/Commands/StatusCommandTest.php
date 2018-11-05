@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations\Commands;
+namespace Mongolid\Laravel\Migrations\Commands;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -9,9 +9,9 @@ namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Foundation\Application;
 use Mockery as m;
-use MongolidLaravel\Migrations\MigrationRepositoryInterface;
-use MongolidLaravel\Migrations\Migrator;
-use MongolidLaravel\TestCase;
+use Mongolid\Laravel\Migrations\MigrationRepositoryInterface;
+use Mongolid\Laravel\Migrations\Migrator;
+use Mongolid\Laravel\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 

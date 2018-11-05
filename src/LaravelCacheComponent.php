@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace Mongolid\Laravel;
 
 use Illuminate\Cache\Repository;
 use Mongolid\Util\CacheComponentInterface;

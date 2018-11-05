@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace Mongolid\Laravel\Migrations;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -8,7 +8,7 @@ namespace MongolidLaravel\Migrations;
 */
 
 use Illuminate\Console\OutputStyle;
-use MongolidLaravel\TestCase;
+use Mongolid\Laravel\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 

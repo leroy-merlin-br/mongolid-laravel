@@ -35,7 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "MongolidLaravel\\": "src"
+            "Mongolid\\Laravel\\": "src"
         }
     },
     "autoload-dev": {
@@ -44,7 +44,7 @@
             "tests/Migrations/stubs/MigrationCreatorFakeMigration.php"
         ],
         "psr-4": {
-            "MongolidLaravel\\": "tests"
+            "Mongolid\\Laravel\\": "tests"
         }
     },
     "extra": {
@@ -53,11 +53,11 @@
         },
         "laravel": {
             "providers": [
-                "MongolidLaravel\\Providers\\MongolidServiceProvider",
-                "MongolidLaravel\\Providers\\MigrationServiceProvider"
+                "Mongolid\\Laravel\\Providers\\MongolidServiceProvider",
+                "Mongolid\\Laravel\\Providers\\MigrationServiceProvider"
             ],
             "aliases": {
-                "MongoLid": "MongolidLaravel\\MongolidModel"
+                "MongoLid": "Mongolid\\Laravel\\MongolidModel"
             }
         }
     },

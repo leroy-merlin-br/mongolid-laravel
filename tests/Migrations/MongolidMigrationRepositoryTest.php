@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace Mongolid\Laravel\Migrations;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -12,7 +12,7 @@ use MongoDB\BSON\ObjectId;
 use MongoDB\Client;
 use MongoDB\Collection;
 use Mongolid\Connection\Connection;
-use MongolidLaravel\TestCase;
+use Mongolid\Laravel\TestCase;
 use SplFixedArray;
 use stdClass;
 

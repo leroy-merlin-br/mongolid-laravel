@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Providers;
+namespace Mongolid\Laravel\Providers;
 
 use ArrayObject;
 use DateTime;
@@ -8,9 +8,9 @@ use Mockery as m;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
+use Mongolid\Laravel\FailedJobsService;
+use Mongolid\Laravel\TestCase;
 use Mongolid\Util\LocalDateTime;
-use MongolidLaravel\FailedJobsService;
-use MongolidLaravel\TestCase;
 
 class MongolidFailedJobProviderTest extends TestCase
 {

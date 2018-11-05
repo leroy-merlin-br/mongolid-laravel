@@ -1,13 +1,13 @@
 <?php
-namespace MongolidLaravel\Providers;
+namespace Mongolid\Laravel\Providers;
 
 use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Container\Ioc;
 use Mongolid\Event\EventTriggerService;
+use Mongolid\Laravel\LaravelCacheComponent;
+use Mongolid\Laravel\TestCase;
 use Mongolid\Util\CacheComponentInterface;
-use MongolidLaravel\LaravelCacheComponent;
-use MongolidLaravel\TestCase;
 
 class MongolidServiceProviderTest extends TestCase
 {

@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Providers;
+namespace Mongolid\Laravel\Providers;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -9,17 +9,17 @@ namespace MongolidLaravel\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
-use MongolidLaravel\Migrations\Commands\FreshCommand;
-use MongolidLaravel\Migrations\Commands\InstallCommand;
-use MongolidLaravel\Migrations\Commands\MigrateCommand;
-use MongolidLaravel\Migrations\Commands\MigrateMakeCommand;
-use MongolidLaravel\Migrations\Commands\RefreshCommand;
-use MongolidLaravel\Migrations\Commands\ResetCommand;
-use MongolidLaravel\Migrations\Commands\RollbackCommand;
-use MongolidLaravel\Migrations\Commands\StatusCommand;
-use MongolidLaravel\Migrations\MigrationCreator;
-use MongolidLaravel\Migrations\Migrator;
-use MongolidLaravel\Migrations\MongolidMigrationRepository;
+use Mongolid\Laravel\Migrations\Commands\FreshCommand;
+use Mongolid\Laravel\Migrations\Commands\InstallCommand;
+use Mongolid\Laravel\Migrations\Commands\MigrateCommand;
+use Mongolid\Laravel\Migrations\Commands\MigrateMakeCommand;
+use Mongolid\Laravel\Migrations\Commands\RefreshCommand;
+use Mongolid\Laravel\Migrations\Commands\ResetCommand;
+use Mongolid\Laravel\Migrations\Commands\RollbackCommand;
+use Mongolid\Laravel\Migrations\Commands\StatusCommand;
+use Mongolid\Laravel\Migrations\MigrationCreator;
+use Mongolid\Laravel\Migrations\Migrator;
+use Mongolid\Laravel\Migrations\MongolidMigrationRepository;
 
 class MigrationServiceProvider extends ServiceProvider
 {
