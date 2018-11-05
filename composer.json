@@ -39,11 +39,12 @@
     },
     "autoload-dev": {
         "files": [
-            "tests/Migrations/stubs/DropAdmin.php",
-            "tests/Migrations/stubs/MigrationCreatorFakeMigration.php"
+            "tests/Unit/Migrations/stubs/DropAdmin.php",
+            "tests/Unit/Migrations/stubs/MigrationCreatorFakeMigration.php"
         ],
         "psr-4": {
-            "Mongolid\\Laravel\\": "tests"
+            "Mongolid\\Laravel\\": "tests/Unit",
+            "Mongolid\\Laravel\\Tests\\Util\\": "tests/Util"
         }
     },
     "extra": {

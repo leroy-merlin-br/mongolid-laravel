@@ -4,6 +4,7 @@ namespace Mongolid\Laravel;
 use Mockery as m;
 use Mockery\Matcher\Closure;
 use Mongolid\Container\Ioc;
+use Mongolid\Laravel\Tests\Util\UTCDateTimeComparator;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
