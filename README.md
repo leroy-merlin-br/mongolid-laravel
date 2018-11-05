@@ -38,12 +38,11 @@ composer require leroy-merlin-br/mongolid-laravel
 - Laravel 5.2 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
 - Laravel 5.3 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
 
-
 Make sure to set minimum stability to `dev` when using a beta tag (`composer config minimum-stability dev`).
 
-> **Note**: If you are using Laravel 5.5, the next steps for providers and aliases are unnecessaries. MongoLid supports Laravel new [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
+> **Note**: If you are using Laravel 5.5, the next steps for providers and aliases are unnecessary. MongoLid supports Laravel's [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
 
-In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
+In your `config/app.php` add `'MongolidLaravel\Providers\MongolidServiceProvider'` to the end of the `$providers` array
 
 ```php
 'providers' => [
@@ -51,7 +50,7 @@ In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the 
     Illuminate\Validation\ValidationServiceProvider::class,
     Illuminate\View\ViewServiceProvider::class,
     ...
-    MongolidLaravel\MongolidServiceProvider::class,
+    MongolidLaravel\Providers\MongolidServiceProvider::class,
 ],
 ```
 
@@ -150,7 +149,6 @@ use MongolidLaravel\MongolidModel;
 
 class User extends MongolidModel
 {
-
 }
 ```
 
@@ -166,20 +164,18 @@ In order to use it, simply change the `'driver'` provider value in your `config/
 and make sure that the class specified in `model` is a MongoLid model that implements the `Authenticatable` contract:
 
 ```php
+'providers' => [
 
-    'providers' => [
+    // ...
 
-        // ...
-
-        'users' => [
-            'driver' => 'mongolid',
-            'model' => \App\User::class
-        ],
-
-        // ...
-
+    'users' => [
+        'driver' => 'mongolid',
+        'model' => \App\User::class
     ],
 
+    // ...
+
+],
 ```
 
 The `User` model should implement the `Authenticatable` interface:
@@ -271,10 +267,10 @@ You can use [any method regarding authentication](https://laravel.com/docs/5.2/a
 Mongolid Laravel replaces Laravel queue failed job provider to use a collection instead of a table. To configure the provider, update `failed` key on `queue.php` to include `collection` name:
 
 ```php
-    'failed' => [
-        'database' => 'mongodb',
-        'collection' => 'failed_jobs',
-    ],
+'failed' => [
+    'database' => 'mongodb',
+    'collection' => 'failed_jobs',
+],
 ```
 
 **Note:** `database` key is irrelevant.
@@ -300,7 +296,7 @@ To check if PHP in the CLI environment is importing the driver properly run `php
 $ php -i | grep mongo
 mongodb
 mongodb support => enabled
-...
+# etc...
 ```
 
 **"This package requires php >=7.0 but your PHP version (X.X.X) does not satisfy that requirement."**

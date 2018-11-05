@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace MongolidLaravel\Providers;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -19,6 +19,7 @@ use MongolidLaravel\Migrations\Commands\StatusCommand;
 use MongolidLaravel\Migrations\MigrationCreator;
 use MongolidLaravel\Migrations\Migrator;
 use MongolidLaravel\Migrations\MongolidMigrationRepository;
+use MongolidLaravel\TestCase;
 
 class MigrationServiceProviderTest extends TestCase
 {

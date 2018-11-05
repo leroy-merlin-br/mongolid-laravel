@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace MongolidLaravel\Providers;
 
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 use Illuminate\Contracts\Auth\UserProvider;

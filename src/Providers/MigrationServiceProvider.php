@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace MongolidLaravel\Providers;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
