@@ -64,5 +64,8 @@
     "prefer-stable": true,
     "config": {
         "sort-packages": true
+    },
+    "suggest": {
+        "leroy-merlin-br/mongolid-passport": "Mongolid Passport provides OAuth2 server support to Laravel and Mongolid."
     }
 }
