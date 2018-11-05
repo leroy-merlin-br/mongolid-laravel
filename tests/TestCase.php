@@ -2,6 +2,7 @@
 namespace MongolidLaravel;
 
 use Mockery as m;
+use Mockery\Matcher\Closure;
 use Mongolid\Container\Ioc;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
@@ -14,6 +15,7 @@ class TestCase extends BaseTestCase
     {
         parent::setUp();
         Ioc::setContainer($this->app);
+        $this->registerComparator(new UTCDateTimeComparator());
     }
 
     protected function tearDown(): void
@@ -34,10 +36,8 @@ class TestCase extends BaseTestCase
      *
      * @param mixed $expected Expected value for a with() parameter
      * @param float $delta    Possible delta variation, useful for dates
-     *
-     * @return m\Matcher\Closure
      */
-    protected function expectEquals($expected, float $delta = 100)
+    protected function expectEquals($expected, float $delta = 100.0): Closure
     {
         return m::on(
             function ($value) use ($expected, $delta) {

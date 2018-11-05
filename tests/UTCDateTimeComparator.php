@@ -1,6 +1,7 @@
 <?php
 namespace MongolidLaravel;
 
+use DateTime;
 use MongoDB\BSON\UTCDateTime;
 use SebastianBergmann\Comparator\Comparator;
 use SebastianBergmann\Comparator\ComparisonFailure;
