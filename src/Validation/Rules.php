@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Validation;
+namespace Mongolid\Laravel\Validation;
 
 use InvalidArgumentException;
 use MongoDB\BSON\ObjectId;

@@ -1,6 +1,6 @@
 <?php
 
-use MongolidLaravel\Migrations\Migration;
+use Mongolid\Laravel\Migrations\Migration;
 
 class DummyClass extends Migration
 {

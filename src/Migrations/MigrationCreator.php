@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace Mongolid\Laravel\Migrations;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil

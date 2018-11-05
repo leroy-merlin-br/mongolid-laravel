@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations\Commands;
+namespace Mongolid\Laravel\Migrations\Commands;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -11,7 +11,7 @@ use Illuminate\Foundation\Application;
 use Mockery as m;
 use MongoDB\Client;
 use Mongolid\Connection\Connection;
-use MongolidLaravel\TestCase;
+use Mongolid\Laravel\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 

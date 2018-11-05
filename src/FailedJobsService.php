@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace Mongolid\Laravel;
 
 use MongoDB\BSON\ObjectID;
 use MongoDB\Collection;

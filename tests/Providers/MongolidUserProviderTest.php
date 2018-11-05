@@ -1,12 +1,12 @@
 <?php
-namespace MongolidLaravel\Providers;
+namespace Mongolid\Laravel\Providers;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;
 use MongoDB\BSON\ObjectID;
-use MongolidLaravel\MongolidModel;
-use MongolidLaravel\TestCase;
+use Mongolid\Laravel\MongolidModel;
+use Mongolid\Laravel\TestCase;
 
 class MongolidUserProviderTest extends TestCase
 {

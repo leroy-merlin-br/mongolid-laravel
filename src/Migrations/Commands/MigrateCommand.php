@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations\Commands;
+namespace Mongolid\Laravel\Migrations\Commands;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -8,7 +8,7 @@ namespace MongolidLaravel\Migrations\Commands;
 */
 
 use Illuminate\Console\ConfirmableTrait;
-use MongolidLaravel\Migrations\Migrator;
+use Mongolid\Laravel\Migrations\Migrator;
 
 class MigrateCommand extends BaseCommand
 {
@@ -36,7 +36,7 @@ class MigrateCommand extends BaseCommand
     /**
      * The migrator instance.
      *
-     * @var \MongolidLaravel\Migrations\Migrator
+     * @var \Mongolid\Laravel\Migrations\Migrator
      */
     protected $migrator;
 

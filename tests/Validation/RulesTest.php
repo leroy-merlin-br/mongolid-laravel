@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Validation;
+namespace Mongolid\Laravel\Validation;
 
 use InvalidArgumentException;
 use Mockery as m;
@@ -8,7 +8,7 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
-use MongolidLaravel\TestCase;
+use Mongolid\Laravel\TestCase;
 
 class RulesTest extends TestCase
 {

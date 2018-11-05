@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace Mongolid\Laravel;
 
 use DateTime;
 use MongoDB\BSON\UTCDateTime;

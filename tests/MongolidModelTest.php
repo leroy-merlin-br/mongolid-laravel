@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace Mongolid\Laravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;

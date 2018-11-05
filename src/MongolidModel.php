@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel;
+namespace Mongolid\Laravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
@@ -15,7 +15,7 @@ use Mongolid\Model\ActiveRecord;
  * to understand the ODM implementation make sure to check the
  * base class.
  *
- * The MongolidLaravel\MongolidModel simply extends the original
+ * The Mongolid\Laravel\MongolidModel simply extends the original
  * and framework agnostic model of MongoLid and implements some
  * validation rules using Laravel validation components.
  *

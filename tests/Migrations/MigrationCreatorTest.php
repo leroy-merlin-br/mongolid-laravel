@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations;
+namespace Mongolid\Laravel\Migrations;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -10,7 +10,7 @@ namespace MongolidLaravel\Migrations;
 use Illuminate\Filesystem\Filesystem;
 use InvalidArgumentException;
 use Mockery as m;
-use MongolidLaravel\TestCase;
+use Mongolid\Laravel\TestCase;
 
 class MigrationCreatorTest extends TestCase
 {

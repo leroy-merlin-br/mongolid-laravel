@@ -1,11 +1,11 @@
 <?php
-namespace MongolidLaravel\Providers;
+namespace Mongolid\Laravel\Providers;
 
 use DateTime;
 use Illuminate\Queue\Failed\FailedJobProviderInterface;
 use MongoDB\BSON\UTCDateTime;
+use Mongolid\Laravel\FailedJobsService;
 use Mongolid\Util\LocalDateTime;
-use MongolidLaravel\FailedJobsService;
 
 /**
  * Mongolid implementation to use Laravel Failed Queue Services Provider.
