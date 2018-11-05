@@ -60,7 +60,7 @@ class EventTriggerTest extends TestCase
 
         // Expectations
         $dispatcher->expects()
-            ->fire($event, $payload, $halt)
+            ->dispatch($event, $payload, $halt)
             ->andReturn(true);
 
         // Actions
