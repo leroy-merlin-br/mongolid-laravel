@@ -23,11 +23,11 @@ use Mongolid\Model\ActiveRecord;
  * the "leroy-merlin\mongolid" is meant to be used with other frameworks
  * or even without any.
  *
- * @method static MongolidModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage shouldReceive(...$arguments)
- * @method static MongolidModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage expects(...$arguments)
- * @method static MongolidModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage allows(...$arguments)
+ * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage shouldReceive(...$arguments)
+ * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage expects(...$arguments)
+ * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage allows(...$arguments)
  */
-abstract class MongolidModel extends ActiveRecord
+abstract class Model extends ActiveRecord
 {
     /**
      * Validation rules.

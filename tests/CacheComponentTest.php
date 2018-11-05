@@ -4,13 +4,13 @@ namespace Mongolid\Laravel;
 use Illuminate\Cache\Repository;
 use Mockery as m;
 
-class LaravelCacheComponentTest extends TestCase
+class CacheComponentTest extends TestCase
 {
     public function testShouldGet()
     {
         // Set
         $cacheRepo = m::mock(Repository::class);
-        $component = new LaravelCacheComponent($cacheRepo);
+        $component = new CacheComponent($cacheRepo);
         $key = 'foo';
         $value = 'bar';
 
@@ -27,7 +27,7 @@ class LaravelCacheComponentTest extends TestCase
     {
         // Set
         $cacheRepo = m::mock(Repository::class);
-        $component = new LaravelCacheComponent($cacheRepo);
+        $component = new CacheComponent($cacheRepo);
         $key = 'foo';
         $value = 'bar';
 
@@ -48,7 +48,7 @@ class LaravelCacheComponentTest extends TestCase
     {
         // Set
         $cacheRepo = m::mock(Repository::class);
-        $component = new LaravelCacheComponent($cacheRepo);
+        $component = new CacheComponent($cacheRepo);
         $key = 'foo';
         $value = [(object) ['name' => 'batata']];
 
@@ -65,7 +65,7 @@ class LaravelCacheComponentTest extends TestCase
     {
         // Set
         $cacheRepo = m::mock(Repository::class);
-        $component = new LaravelCacheComponent($cacheRepo);
+        $component = new CacheComponent($cacheRepo);
         $key = 'foo';
 
         // Expectations

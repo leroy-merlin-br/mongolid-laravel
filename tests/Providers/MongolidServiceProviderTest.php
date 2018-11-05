@@ -5,7 +5,7 @@ use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Container\Ioc;
 use Mongolid\Event\EventTriggerService;
-use Mongolid\Laravel\LaravelCacheComponent;
+use Mongolid\Laravel\CacheComponent;
 use Mongolid\Laravel\TestCase;
 use Mongolid\Util\CacheComponentInterface;
 
@@ -38,7 +38,7 @@ class MongolidServiceProviderTest extends TestCase
         $result = Ioc::make('queue.failer');
 
         // Actions
-        $this->assertInstanceOf(MongolidFailedJobProvider::class, $result);
+        $this->assertInstanceOf(FailedJobProvider::class, $result);
     }
 
     public function testShouldRegister()
@@ -57,7 +57,7 @@ class MongolidServiceProviderTest extends TestCase
         // Assertions
         $this->assertEquals('databaseName', $connection->defaultDatabase);
         $this->assertInstanceOf(EventTriggerService::class, $eventService);
-        $this->assertInstanceOf(LaravelCacheComponent::class, $cacheComponent);
+        $this->assertInstanceOf(CacheComponent::class, $cacheComponent);
     }
 
     /**

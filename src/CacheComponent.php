@@ -10,7 +10,7 @@ use stdClass;
  * Add a second layer of cache in memory to avoid hitting
  * Laravel's cache twice for large results.
  */
-class LaravelCacheComponent implements CacheComponentInterface
+class CacheComponent implements CacheComponentInterface
 {
     /**
      * Copy cache result in memory array.
@@ -18,6 +18,11 @@ class LaravelCacheComponent implements CacheComponentInterface
      * @var array
      */
     private $inMemoryCache = [];
+
+    /**
+     * @var Repository
+     */
+    private $laravelCache;
 
     /**
      * Injects the dependencies of LaravelCacheComponent.

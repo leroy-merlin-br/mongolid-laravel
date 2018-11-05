@@ -12,13 +12,13 @@ use Mongolid\Laravel\FailedJobsService;
 use Mongolid\Laravel\TestCase;
 use Mongolid\Util\LocalDateTime;
 
-class MongolidFailedJobProviderTest extends TestCase
+class FailedJobProviderTest extends TestCase
 {
     public function testLogShouldPersistFailedJob()
     {
         // Set
         $service = m::mock(FailedJobsService::class);
-        $provider = new MongolidFailedJobProvider($service);
+        $provider = new FailedJobProvider($service);
 
         $insertResult = m::mock(InsertOneResult::class);
 
@@ -55,7 +55,7 @@ class MongolidFailedJobProviderTest extends TestCase
     {
         // Set
         $service = m::mock(FailedJobsService::class);
-        $provider = new MongolidFailedJobProvider($service);
+        $provider = new FailedJobProvider($service);
 
         $data = [
             [
@@ -106,7 +106,7 @@ class MongolidFailedJobProviderTest extends TestCase
     {
         // Set
         $service = m::mock(FailedJobsService::class);
-        $provider = new MongolidFailedJobProvider($service);
+        $provider = new FailedJobProvider($service);
 
         $id = 'xpto1';
         $data = [
@@ -133,7 +133,7 @@ class MongolidFailedJobProviderTest extends TestCase
     {
         // Set
         $service = m::mock(FailedJobsService::class);
-        $provider = new MongolidFailedJobProvider($service);
+        $provider = new FailedJobProvider($service);
 
         $id = 'xpto1';
         $deletedResult = m::mock(DeleteResult::class);
@@ -158,7 +158,7 @@ class MongolidFailedJobProviderTest extends TestCase
     {
         // Set
         $service = m::mock(FailedJobsService::class);
-        $provider = new MongolidFailedJobProvider($service);
+        $provider = new FailedJobProvider($service);
 
         // Expectations
         $service->expects()
