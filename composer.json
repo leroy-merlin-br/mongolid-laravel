@@ -52,8 +52,8 @@
         },
         "laravel": {
             "providers": [
-                "MongolidLaravel\\MongolidServiceProvider",
-                "MongolidLaravel\\MigrationServiceProvider"
+                "MongolidLaravel\\Providers\\MongolidServiceProvider",
+                "MongolidLaravel\\Providers\\MigrationServiceProvider"
             ],
             "aliases": {
                 "MongoLid": "MongolidLaravel\\MongolidModel"
