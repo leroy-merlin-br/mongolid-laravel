@@ -23,7 +23,7 @@ class TestCase extends BaseTestCase
         $this->addToAssertionCount(
             m::getContainer()->mockery_getExpectationCount()
         );
-        MongolidModel::clearMocks();
+        Model::clearMocks();
         m::close();
         parent::tearDown();
     }

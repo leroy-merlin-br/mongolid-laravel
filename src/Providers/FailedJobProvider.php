@@ -10,7 +10,7 @@ use Mongolid\Util\LocalDateTime;
 /**
  * Mongolid implementation to use Laravel Failed Queue Services Provider.
  */
-class MongolidFailedJobProvider implements FailedJobProviderInterface
+class FailedJobProvider implements FailedJobProviderInterface
 {
     /**
      * @var FailedJobsService

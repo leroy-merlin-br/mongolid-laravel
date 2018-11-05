@@ -5,10 +5,10 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;
 use MongoDB\BSON\ObjectID;
-use Mongolid\Laravel\MongolidModel;
+use Mongolid\Laravel\Model;
 use Mongolid\Laravel\TestCase;
 
-class MongolidUserProviderTest extends TestCase
+class UserProviderTest extends TestCase
 {
     public function testShouldRetrieveById()
     {
@@ -21,7 +21,7 @@ class MongolidUserProviderTest extends TestCase
         $result = $provider->retrieveByID($params);
 
         // Assertions
-        $this->assertInstanceOf(MongolidModel::class, $result);
+        $this->assertInstanceOf(Model::class, $result);
     }
 
     public function testShouldRetrieveByCredentials()
@@ -35,7 +35,7 @@ class MongolidUserProviderTest extends TestCase
         $result = $provider->retrieveByCredentials($params);
 
         // Assertions
-        $this->assertInstanceOf(MongolidModel::class, $result);
+        $this->assertInstanceOf(Model::class, $result);
     }
 
     public function testShouldValidateCredentials()
@@ -67,13 +67,13 @@ class MongolidUserProviderTest extends TestCase
         $result = $provider->retrieveByToken('1234', '4321');
 
         // Assertions
-        $this->assertInstanceOf(MongolidModel::class, $result);
+        $this->assertInstanceOf(Model::class, $result);
     }
 
     public function testShouldNotRetrieveByToken()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends Model {
             public static function first(
                 $query = [],
                 array $projection = [],
@@ -115,13 +115,13 @@ class MongolidUserProviderTest extends TestCase
      */
     protected function getProvider()
     {
-        $model = new class() extends MongolidModel {
+        $model = new class() extends Model {
             public static function first(
                 $query = [],
                 array $projection = [],
                 bool $useCache = false
             ) {
-                return m::mock(MongolidModel::class);
+                return m::mock(Model::class);
             }
         };
 

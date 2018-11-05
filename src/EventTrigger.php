@@ -7,12 +7,10 @@ use Mongolid\Event\EventTriggerInterface;
 /**
  * Wraps the Laravel's event Dispatcher in order to trigger Mongolid events.
  */
-class LaravelEventTrigger implements EventTriggerInterface
+class EventTrigger implements EventTriggerInterface
 {
     /**
-     * Laravel's Event dispatcher.
-     *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var Dispatcher
      */
     protected $dispatcher;
 

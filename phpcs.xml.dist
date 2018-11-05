@@ -19,6 +19,6 @@
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingPropertyTypeHint">
-        <exclude-pattern>tests/MongolidModelTest.php</exclude-pattern>
+        <exclude-pattern>tests/ModelTest.php</exclude-pattern>
     </rule>
 </ruleset>

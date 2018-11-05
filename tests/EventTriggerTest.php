@@ -5,11 +5,13 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Mockery as m;
 use MongoDB\BSON\ObjectID;
 
-class LaravelEventTriggerTest extends TestCase
+class EventTriggerTest extends TestCase
 {
     public function testShouldFire()
     {
         // Set
+        $dispatcher = m::mock(Dispatcher::class);
+        $trigger = new EventTrigger($dispatcher);
         $dispatcher = m::mock(new class implements Dispatcher {
             public function fire($event, $payload = [], $halt = false)
             {
