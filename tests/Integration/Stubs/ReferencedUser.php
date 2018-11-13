@@ -6,7 +6,7 @@ use Mongolid\Connection\Connection;
 use Mongolid\Container\Ioc;
 use Mongolid\Laravel\Model;
 
-class User extends Model
+class ReferencedUser extends Model
 {
     /**
      * @var string
@@ -30,11 +30,26 @@ class User extends Model
 
     public function parent()
     {
-        return $this->referencesOne(User::class, 'parent');
+        return $this->referencesOne(ReferencedUser::class);
     }
 
     public function siblings()
     {
-        return $this->referencesMany(User::class, 'siblings');
+        return $this->referencesMany(ReferencedUser::class);
+    }
+
+    public function son()
+    {
+        return $this->referencesOne(ReferencedUser::class, 'arbitrary_field', 'code');
+    }
+
+    public function grandsons()
+    {
+        return $this->referencesMany(ReferencedUser::class, null, 'code');
+    }
+
+    public function invalid()
+    {
+        return 'I am not a relation!';
     }
 }
