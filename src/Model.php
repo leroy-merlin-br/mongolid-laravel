@@ -8,10 +8,11 @@ use Mockery;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
-use Mongolid\Model\ActiveRecord;
+use Mongolid\Cursor\CursorInterface;
+use Mongolid\Model\AbstractActiveRecord;
 
 /**
- * This class extends the Mongolid\ActiveRecord, so, in order
+ * This class extends the Mongolid\Model\AbstractActiveRecord, so, in order
  * to understand the ODM implementation make sure to check the
  * base class.
  *
@@ -23,11 +24,13 @@ use Mongolid\Model\ActiveRecord;
  * the "leroy-merlin\mongolid" is meant to be used with other frameworks
  * or even without any.
  *
+ * @see AbstractActiveRecord
+ *
  * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage shouldReceive(...$arguments)
  * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage expects(...$arguments)
  * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage allows(...$arguments)
  */
-abstract class Model extends ActiveRecord
+abstract class Model extends AbstractActiveRecord
 {
     /**
      * Validation rules.
@@ -98,12 +101,12 @@ abstract class Model extends ActiveRecord
             return true;
         }
 
-        $attributes = $this->attributes();
+        $attributes = $this->getDocumentAttributes();
 
         // Verify attributes that are hashed and that have not changed
         // those doesn't need to be validated.
         foreach ($this->hashedAttributes as $hashedAttr) {
-            $originalAttributes = $this->originalAttributes();
+            $originalAttributes = $this->getOriginalDocumentAttributes();
             if (isset($originalAttributes[$hashedAttr]) && $this->$hashedAttr == $originalAttributes[$hashedAttr]) {
                 unset($rules[$hashedAttr]);
             }
@@ -177,7 +180,7 @@ abstract class Model extends ActiveRecord
     {
         foreach ($this->hashedAttributes as $attr) {
             // Hash attribute if changed
-            $originalAttributes = $this->originalAttributes();
+            $originalAttributes = $this->getOriginalDocumentAttributes();
             if (!isset($originalAttributes[$attr]) || $this->$attr != $originalAttributes[$attr]) {
                 $this->$attr = app(Hasher::class)->make($this->$attr);
             }
@@ -215,7 +218,7 @@ abstract class Model extends ActiveRecord
      * @param array $projection fields to project in MongoDB query
      * @param bool  $useCache   retrieves the entity through a CacheableCursor
      *
-     * @return ActiveRecord
+     * @return AbstractActiveRecord
      */
     public static function first(
         $query = [],
@@ -235,7 +238,7 @@ abstract class Model extends ActiveRecord
      *
      * @throws \Mongolid\Exception\ModelNotFoundException If no document was found
      *
-     * @return ActiveRecord
+     * @return AbstractActiveRecord
      */
     public static function firstOrFail(
         $query = [],
@@ -252,7 +255,7 @@ abstract class Model extends ActiveRecord
      *
      * @param mixed $id document id
      *
-     * @return ActiveRecord
+     * @return AbstractActiveRecord
      */
     public static function firstOrNew($id)
     {
@@ -273,14 +276,14 @@ abstract class Model extends ActiveRecord
         array $query = [],
         array $projection = [],
         bool $useCache = false
-    ) {
+    ): CursorInterface {
         return static::callMockOrParent('where', func_get_args());
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function all(...$arguments)
+    public static function all(...$arguments): CursorInterface
     {
         return static::callMockOrParent('all', $arguments);
     }
