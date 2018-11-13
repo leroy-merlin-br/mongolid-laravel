@@ -54,14 +54,14 @@ In your `config/app.php` add `'Mongolid\Laravel\Providers\MongolidServiceProvide
 ],
 ```
 
-(**Optional**) At the end of `config/app.php` add `'MongoLid'    => 'Mongolid\Laravel\MongoLidModel'` to the `$aliases` array
+(**Optional**) At the end of `config/app.php` add `'MongoLid'    => Mongolid\Laravel\Model::class` to the `$aliases` array
 
 ```php
 'aliases' => [
     'App'         => Illuminate\Support\Facades\App::class,
     'Artisan'     => Illuminate\Support\Facades\Artisan::class,
     ...
-    'MongoLid'    => Mongolid\Laravel\MongoLidModel::class,
+    'MongoLid'    => Mongolid\Laravel\Model::class,
 ],
 ```
 
@@ -145,9 +145,9 @@ To get started, create an MongoLid model. Models typically live in the `app/mode
 <?php
 namespace App;
 
-use Mongolid\Laravel\MongolidModel;
+use Mongolid\Laravel\Model;
 
-class User extends MongolidModel
+class User extends Model
 {
 }
 ```
@@ -185,9 +185,9 @@ The `User` model should implement the `Authenticatable` interface:
 namespace App;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Mongolid\Laravel\MongolidModel;
+use Mongolid\Laravel\Model;
 
-class User extends MongolidModel implements Authenticatable
+class User extends Model implements Authenticatable
 {
     /**
      * The database collection used by the model.

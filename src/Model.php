@@ -16,7 +16,7 @@ use Mongolid\Model\AbstractActiveRecord;
  * to understand the ODM implementation make sure to check the
  * base class.
  *
- * The Mongolid\Laravel\MongolidModel simply extends the original
+ * The Mongolid\Laravel\Model simply extends the original
  * and framework agnostic model of MongoLid and implements some
  * validation rules using Laravel validation components.
  *
