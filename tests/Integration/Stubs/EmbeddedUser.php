@@ -18,6 +18,7 @@ class EmbeddedUser extends Model
      */
     protected $fields = [
         '_id' => 'objectId',
+        'created_at' => 'createdAtTimestamp',
     ];
 
     public function collection(): Collection
