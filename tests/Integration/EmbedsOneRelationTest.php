@@ -2,6 +2,7 @@
 namespace Mongolid\Laravel\Tests\Integration;
 
 use MongoDB\BSON\ObjectId;
+use MongoDB\BSON\UTCDateTime;
 use Mongolid\Laravel\Tests\Integration\Stubs\EmbeddedUser;
 use Mongolid\Model\Relations\InvalidFieldNameException;
 
@@ -44,7 +45,7 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         // changing the field directly
         $john->parent()->add($bob);
         $this->assertParent($bob, $john);
-        $john->embedded_parent = [$chuck];
+        $john->embedded_parent = [$chuck->toArray()];
         $this->assertParent($chuck, $john);
 
         $john->parent()->removeAll();
@@ -52,7 +53,7 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         // changing the field with fillable
         $john->parent()->add($bob);
         $this->assertParent($bob, $john);
-        $john->fill(['embedded_parent' => [$chuck]], true);
+        $john->fill(['embedded_parent' => [$chuck->toArray()]], true);
         $this->assertParent($chuck, $john);
     }
 
@@ -92,7 +93,7 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         // changing the field directly
         $john->son()->add($bob);
         $this->assertSon($bob, $john);
-        $john->arbitrary_field = [$chuck];
+        $john->arbitrary_field = [$chuck->toArray()];
         $this->assertSon($chuck, $john);
 
         $john->son()->removeAll();
@@ -100,7 +101,7 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         // changing the field with fillable
         $john->son()->add($bob);
         $this->assertSon($bob, $john);
-        $john->fill(['arbitrary_field' => [$chuck]], true);
+        $john->fill(['arbitrary_field' => [$chuck->toArray()]], true);
         $this->assertSon($chuck, $john);
     }
 
@@ -131,27 +132,31 @@ class EmbedsOneRelationTest extends IntegrationTestCase
     {
         $parent = $model->parent;
         $this->assertInstanceOf(EmbeddedUser::class, $parent);
+        $this->assertInstanceOf(UTCDateTime::class, $parent->created_at);
         $this->assertEquals($expected, $parent);
-        $this->assertSame([$expected], $model->embedded_parent); // TODO store as single array
+        $this->assertSame([$expected->toArray()], $model->embedded_parent); // TODO store as single array
 
         // hit cache
         $parent = $model->parent;
         $this->assertInstanceOf(EmbeddedUser::class, $parent);
+        $this->assertInstanceOf(UTCDateTime::class, $parent->created_at);
         $this->assertEquals($expected, $parent);
-        $this->assertSame([$expected], $model->embedded_parent);
+        $this->assertSame([$expected->toArray()], $model->embedded_parent);
     }
 
     private function assertSon($expected, EmbeddedUser $model)
     {
         $son = $model->son;
         $this->assertInstanceOf(EmbeddedUser::class, $son);
+        $this->assertInstanceOf(UTCDateTime::class, $son->created_at);
         $this->assertEquals($expected, $son);
-        $this->assertSame([$expected], $model->arbitrary_field); // TODO store as single array
+        $this->assertSame([$expected->toArray()], $model->arbitrary_field); // TODO store as single array
 
         // hit cache
         $son = $model->son;
         $this->assertInstanceOf(EmbeddedUser::class, $son);
+        $this->assertInstanceOf(UTCDateTime::class, $son->created_at);
         $this->assertEquals($expected, $son);
-        $this->assertSame([$expected], $model->arbitrary_field);
+        $this->assertSame([$expected->toArray()], $model->arbitrary_field);
     }
 }
