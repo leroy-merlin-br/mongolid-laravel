@@ -73,12 +73,10 @@ class UserProviderTest extends TestCase
     public function testShouldNotRetrieveByToken()
     {
         // Set
-        $model = new class() extends Model {
-            public static function first(
-                $query = [],
-                array $projection = [],
-                bool $useCache = false
-            ) {
+        $model = new class() extends Model
+        {
+            public static function first($query = [], array $projection = [])
+            {
             }
         };
 
@@ -115,12 +113,10 @@ class UserProviderTest extends TestCase
      */
     protected function getProvider()
     {
-        $model = new class() extends Model {
-            public static function first(
-                $query = [],
-                array $projection = [],
-                bool $useCache = false
-            ) {
+        $model = new class() extends Model
+        {
+            public static function first($query = [], array $projection = [])
+            {
                 return m::mock(Model::class);
             }
         };

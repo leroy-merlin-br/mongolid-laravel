@@ -41,12 +41,13 @@ class PersistedDataTest extends IntegrationTestCase
 
         // Actions
         $saveResult = $user->save();
-        $result = (array) $user->collection()->findOne(['_id' => $this->_id]);
-        $result['_id'] = (string) ($result['_id'] ?? '');
+        $result = $user->collection()->findOne(['_id' => $user->_id]);
+        $result->_id = (string) $result->_id;
 
         // Assertions
         $this->assertTrue($saveResult);
-        $this->assertSame($expected, $result);
+        $this->assertInstanceOf(ReferencedUser::class, $result);
+        $this->assertSame($expected, $result->toArray());
     }
 
     public function testSaveUpdatingData()
@@ -82,12 +83,13 @@ class PersistedDataTest extends IntegrationTestCase
 
         // Actions
         $updateResult = $user->save();
-        $result = (array) $user->collection()->findOne(['_id' => $user->_id]);
-        $result['_id'] = (string) ($result['_id'] ?? '');
+        $result = $user->collection()->findOne(['_id' => $user->_id]);
+        $result->_id = (string) $result->_id;
 
         // Assertions
         $this->assertTrue($updateResult);
-        $this->assertSame($expected, $result);
+        $this->assertInstanceOf(ReferencedUser::class, $result);
+        $this->assertSame($expected, $result->toArray());
     }
 
     public function testUpdateData()
@@ -123,12 +125,13 @@ class PersistedDataTest extends IntegrationTestCase
 
         // Actions
         $updateResult = $user->update();
-        $result = (array) $user->collection()->findOne(['_id' => $user->_id]);
-        $result['_id'] = (string) ($result['_id'] ?? '');
+        $result = $user->collection()->findOne(['_id' => $user->_id]);
+        $result->_id = (string) $result->_id;
 
         // Assertions
         $this->assertTrue($updateResult);
-        $this->assertSame($expected, $result);
+        $this->assertInstanceOf(ReferencedUser::class, $result);
+        $this->assertSame($expected, $result->toArray());
     }
 
     private function getUser(bool $save = false): ReferencedUser
