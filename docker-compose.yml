@@ -2,11 +2,13 @@ version: '3'
 
 services:
   php:
-    build: docker
+    build: docker/php
     depends_on:
       - db
     volumes:
       - .:/var/www/html:rw
+    environment:
+      - DB_HOST=db
 
   db:
     image: mongo:4.0
