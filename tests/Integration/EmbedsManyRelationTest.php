@@ -54,7 +54,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         // changing the field directly
         $john->siblings()->add($bob);
         $this->assertSiblings([$bob], $john);
-        $john->embedded_siblings = [$chuck->toArray()];
+        $john->embedded_siblings = [$chuck];
         $this->assertSiblings([$chuck], $john);
 
         $john->siblings()->removeAll();
@@ -62,7 +62,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         // changing the field with fillable
         $john->siblings()->add($bob);
         $this->assertSiblings([$bob], $john);
-        $john->fill(['embedded_siblings' => [$chuck->toArray()]], true);
+        $john->fill(['embedded_siblings' => [$chuck]], true);
         $this->assertSiblings([$chuck], $john);
     }
 
@@ -112,7 +112,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         // changing the field directly
         $john->grandsons()->add($bob);
         $this->assertGrandsons([$bob], $john);
-        $john->other_arbitrary_field = [$chuck->toArray()];
+        $john->other_arbitrary_field = [$chuck];
         $this->assertGrandsons([$chuck], $john);
 
         $john->grandsons()->removeAll();
@@ -120,7 +120,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         // changing the field with fillable
         $john->grandsons()->add($bob);
         $this->assertGrandsons([$bob], $john);
-        $john->fill(['other_arbitrary_field' => [$chuck->toArray()]], true);
+        $john->fill(['other_arbitrary_field' => [$chuck]], true);
         $this->assertGrandsons([$chuck], $john);
     }
 
@@ -138,7 +138,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
     {
         $expected = [];
         foreach ($expectedSiblings as $sibling) {
-            $expected[] = $sibling->toArray();
+            $expected[] = $sibling;
             $this->assertInstanceOf(UTCDateTime::class, $sibling->created_at);
         }
 
@@ -158,7 +158,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
     {
         $expected = [];
         foreach ($expectedGrandsons as $grandson) {
-            $expected[] = $grandson->toArray();
+            $expected[] = $grandson;
             $this->assertInstanceOf(UTCDateTime::class, $grandson->created_at);
         }
 

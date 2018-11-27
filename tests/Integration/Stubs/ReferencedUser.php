@@ -16,9 +16,7 @@ class ReferencedUser extends Model
     /**
      * @var array
      */
-    protected $fields = [
-        '_id' => 'objectId',
-    ];
+    protected $timestamps = false;
 
     public function collection(): Collection
     {

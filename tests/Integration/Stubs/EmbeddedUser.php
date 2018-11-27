@@ -16,10 +16,7 @@ class EmbeddedUser extends Model
     /**
      * @var array
      */
-    protected $fields = [
-        '_id' => 'objectId',
-        'created_at' => 'createdAtTimestamp',
-    ];
+    protected $timestamps = true;
 
     public function collection(): Collection
     {

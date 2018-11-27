@@ -7,8 +7,8 @@ use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
 use Mongolid\Cursor\Cursor;
-use Mongolid\DataMapper\DataMapper;
-use Mongolid\Exception\ModelNotFoundException;
+use Mongolid\Model\Exception\ModelNotFoundException;
+use Mongolid\Query\Builder;
 
 class ModelTest extends TestCase
 {
@@ -101,7 +101,7 @@ class ModelTest extends TestCase
     public function testShouldSave()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends Model
         {
@@ -109,12 +109,7 @@ class ModelTest extends TestCase
         };
 
         // Expectations
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
+        $builder->expects()
             ->save()
             ->withAnyArgs()
             ->andReturn(true);
@@ -129,15 +124,15 @@ class ModelTest extends TestCase
     public function testShouldMockSave()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
-        $dataMapper->makePartial();
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
+        $builder->makePartial();
         $model = new class() extends Model
         {
             protected $collection = 'models';
         };
 
         // Expectations
-        $dataMapper->expects()
+        $builder->expects()
             ->save()
             ->withAnyArgs()
             ->andReturn(true);
@@ -155,7 +150,7 @@ class ModelTest extends TestCase
     public function testShouldHashAttributesOnSaveAndUpdate($method)
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
         $model = new class() extends Model
@@ -169,12 +164,7 @@ class ModelTest extends TestCase
         $model->password_confirmation = '123456';
 
         // Expectations
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
+        $builder->expects()
             ->{$method}()
             ->withAnyArgs()
             ->andReturn(true);
@@ -221,8 +211,8 @@ class ModelTest extends TestCase
     public function testShouldForceSaving()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
-        $dataMapper->makePartial();
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
+        $builder->makePartial();
         $model = new class() extends Model
         {
             protected $collection = 'models';
@@ -236,7 +226,7 @@ class ModelTest extends TestCase
         $model->address = 'small address';
 
         // Expectations
-        $dataMapper->expects()
+        $builder->expects()
             ->save()
             ->withAnyArgs()
             ->andReturn(true);
@@ -252,7 +242,7 @@ class ModelTest extends TestCase
     public function testShouldDelete()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends Model
         {
@@ -260,12 +250,7 @@ class ModelTest extends TestCase
         };
 
         // Expectations
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
+        $builder->expects()
             ->delete()
             ->withAnyArgs()
             ->andReturn(true);
@@ -280,15 +265,15 @@ class ModelTest extends TestCase
     public function testShouldMockDelete()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
-        $dataMapper->makePartial();
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
+        $builder->makePartial();
         $model = new class() extends Model
         {
             protected $collection = 'models';
         };
 
         // Expectations
-        $dataMapper->expects()
+        $builder->expects()
             ->delete()
             ->withAnyArgs()
             ->andReturn(true);
@@ -303,7 +288,7 @@ class ModelTest extends TestCase
     public function testShouldGetFirst()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends Model
         {
@@ -311,13 +296,8 @@ class ModelTest extends TestCase
         };
 
         // Expectations
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
-            ->first('123', [], false)
+        $builder->expects()
+            ->first(m::type(get_class($model)), '123', [])
             ->andReturn($model);
 
         // Actions
@@ -350,7 +330,7 @@ class ModelTest extends TestCase
     public function testShouldGetFirstOrNew()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends Model
         {
@@ -358,13 +338,8 @@ class ModelTest extends TestCase
         };
 
         // Expectations
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
-            ->first('123')
+        $builder->expects()
+            ->first(m::type(get_class($model)), '123', [])
             ->andReturn($model);
 
         // Actions
@@ -397,7 +372,7 @@ class ModelTest extends TestCase
     public function testShouldGetFirstOrFailAndFoundIt()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends Model
         {
@@ -405,12 +380,7 @@ class ModelTest extends TestCase
         };
 
         // Expectations
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
+        $builder->expects()
             ->firstOrFail()
             ->withAnyArgs()
             ->andReturn($model);
@@ -425,7 +395,7 @@ class ModelTest extends TestCase
     public function testShouldGetFirstOrFailAndFail()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends Model
         {
@@ -435,12 +405,7 @@ class ModelTest extends TestCase
         // Expectations
         $this->expectException(ModelNotFoundException::class);
 
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
+        $builder->expects()
             ->firstOrFail()
             ->withAnyArgs()
             ->andThrow(ModelNotFoundException::class);
@@ -472,7 +437,7 @@ class ModelTest extends TestCase
     public function testShouldGetWhere()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $cursor = m::mock(Cursor::class);
 
         $model = new class() extends Model
@@ -481,12 +446,7 @@ class ModelTest extends TestCase
         };
 
         // Expectations
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
+        $builder->expects()
             ->where()
             ->withAnyArgs()
             ->andReturn($cursor);
@@ -501,7 +461,7 @@ class ModelTest extends TestCase
     public function testShouldGetAll()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $cursor = m::mock(Cursor::class);
 
         $model = new class() extends Model
@@ -510,12 +470,7 @@ class ModelTest extends TestCase
         };
 
         // Expectations
-        $dataMapper->expects()
-            ->setSchema()
-            ->withAnyArgs()
-            ->passthru();
-
-        $dataMapper->expects()
+        $builder->expects()
             ->all()
             ->withAnyArgs()
             ->andReturn($cursor);

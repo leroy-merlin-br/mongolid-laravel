@@ -1,18 +1,15 @@
 <?php
 namespace Mongolid\Laravel\Providers;
 
-use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Container\Ioc as MongolidIoc;
 use Mongolid\Event\EventTriggerService;
-use Mongolid\Laravel\CacheComponent;
 use Mongolid\Laravel\EventTrigger;
 use Mongolid\Laravel\FailedJobsService;
 use Mongolid\Laravel\Validation\Rules;
-use Mongolid\Util\CacheComponentInterface;
 
 class MongolidServiceProvider extends ServiceProvider
 {
@@ -71,12 +68,6 @@ class MongolidServiceProvider extends ServiceProvider
                 $eventService->registerEventDispatcher($app->make(EventTrigger::class));
 
                 return $eventService;
-            }
-        );
-        $this->app->singleton(
-            CacheComponentInterface::class,
-            function ($app) {
-                return new CacheComponent($app[CacheRepository::class]);
             }
         );
     }
