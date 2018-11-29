@@ -1,44 +1,36 @@
-[![Build Status](https://github.com/leroy-merlin-br/mongolid-laravel/workflows/Tests/badge.svg)](https://github.com/leroy-merlin-br/mongolid-laravel/actions?query=workflow%3ATests)
-[![Coverage Status](https://app.codacy.com/project/badge/Coverage/1ed42ceb8f994627b9887a97d296d11f)](https://www.codacy.com/gh/leroy-merlin-br/mongolid-laravel/dashboard?utm_source=github.com&utm_medium=referral&utm_content=leroy-merlin-br/mongolid-laravel&utm_campaign=Badge_Coverage)
-[![Latest Stable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/stable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
-[![Monthly Downloads](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/d/monthly.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
-[![Latest Unstable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/unstable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
-[![License](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/license.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
+# Mongolid ODM for MongoDB (Laravel Package)
 
-![MongoLid](https://user-images.githubusercontent.com/1991286/28967747-fe5c258a-78f2-11e7-91c7-8850ffb32004.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/1991286/28967747-fe5c258a-78f2-11e7-91c7-8850ffb32004.png" alt="Mongolid"></p>
 
-# MongoLid (Laravel Package)
+<p align="center">
+<a href="https://travis-ci.org/leroy-merlin-br/mongolid-laravel"><img src="https://travis-ci.org/leroy-merlin-br/mongolid-laravel.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/leroy-merlin-br/mongolid-laravel?branch=master"><img src="https://coveralls.io/repos/github/leroy-merlin-br/mongolid-laravel/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://packagist.org/packages/leroy-merlin-br/mongolid-laravel"><img src="https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/stable" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/leroy-merlin-br/mongolid-laravel"><img src="https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/downloads" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/leroy-merlin-br/mongolid-laravel"><img src="https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/license" alt="License"></a>
+</p>
 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Basic Usage](#basic-usage)
-- [Authentication](#authentication)
-- [Troubleshooting](#troubleshooting)
-- [License](#license)
-- [Additional Information](#additional_information)
+## About Mongolid Laravel
+Easy, powerful and ultrafast ODM for PHP 7.1+ build on top of the [new mongodb driver](https://docs.mongodb.org/ecosystem/drivers/php/).
+
+Mongolid supports **ActiveRecord** pattern.
 
 ## Introduction
-
-MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementation for working with MongoDB. Each database collection can have a corresponding "Model" which is used to interact with that collection.
+Mongolid ODM (Object Document Mapper) provides a beautiful, simple implementation for working with MongoDB. Each database collection can have a corresponding "Model" which is used to interact with that collection.
 
 > Note: The ODM implementation is within the [(non laravel) mongolid repository](https://github.com/leroy-merlin-br/mongolid).
 
+## Requirements
+- PHP **7.1** or superior
+- [MongoDB Driver](http://php.net/manual/en/set.mongodb.php)
+- Laravel **5.4** or superior
+
 ## Installation
+You can install the library through Composer:
 
-Install with `composer require` (use one of the above tags if needed).
-
-```shell
-composer require leroy-merlin-br/mongolid-laravel
 ```
-
-**Note:** Mongolid Laravel 2.0 only supports Laravel 5.4+. For older versions use the tags:
-
-- Laravel 4.2 `"leroy-merlin-br/mongolid-laravel": "^0.7"`
-- Laravel 5.1 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta4"`
-- Laravel 5.2 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
-- Laravel 5.3 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
-
-Make sure to set minimum stability to `dev` when using a beta tag (`composer config minimum-stability dev`).
+$ composer require leroy-merlin-br/mongolid-laravel
+```
 
 > **Note**: If you are using Laravel 5.5, the next steps for providers and aliases are unnecessary. MongoLid supports Laravel's [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
 
@@ -61,7 +53,7 @@ In your `config/app.php` add `'Mongolid\Laravel\Providers\MongolidServiceProvide
     'App'         => Illuminate\Support\Facades\App::class,
     'Artisan'     => Illuminate\Support\Facades\Artisan::class,
     ...
-    'MongoLid'    => Mongolid\Laravel\Model::class,
+    'Mongolid'    => Mongolid\Laravel\Model::class,
 ],
 ```
 
@@ -137,29 +129,33 @@ Also, it is possible to pass `options` and `driver_options` to MongoDB Client. M
 
 ## Basic Usage
 
-To get started, create an MongoLid model. Models typically live in the `app/models` directory, but you are free to place them anywhere that can be auto-loaded according to your `composer.json` file.
+To get started, create a model. You are free to place them anywhere that can be auto-loaded according to your `composer.json` file.
 
-**Defining a MongoLid Model**
+### Defining a Model
 
 ```php
 <?php
 namespace App;
 
-use Mongolid\Laravel\Model;
+use Mongolid\Laravel\AbstractModel;
 
-class User extends Model
+class User extends AbstractModel
 {
+    /**
+     * @var string 
+     */
+    protected $collection = 'users';
 }
 ```
 
 In a nutshell, that's it!
 
-### For further reading about models, CRUD operations, relationships and more, check the [Read the Docs: <small>leroy-merlin-br.github.com/mongolid</small>](http://leroy-merlin-br.github.io/mongolid/).
-[![Mongolid Docs](https://user-images.githubusercontent.com/1991286/28967747-fe5c258a-78f2-11e7-91c7-8850ffb32004.png)](http://leroy-merlin-br.github.com/mongolid)
+## Documentation
+You can access the full documentation [here](http://leroy-merlin-br.github.com/mongolid).
 
 ## Authentication
 
-MongoLid Laravel comes with a Laravel auth provider.
+Mongolid Laravel comes with a Laravel auth provider.
 In order to use it, simply change the `'driver'` provider value in your `config/auth.php` to `mongolid`
 and make sure that the class specified in `model` is a MongoLid model that implements the `Authenticatable` contract:
 
@@ -185,16 +181,22 @@ The `User` model should implement the `Authenticatable` interface:
 namespace App;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Mongolid\Laravel\Model;
+use Mongolid\Laravel\AbstractModel;
 
-class User extends Model implements Authenticatable
+class User extends AbstractModel implements Authenticatable
 {
     /**
-     * The database collection used by the model.
-     *
      * @var string
      */
     protected $collection = 'users';
+    
+    /**
+     * @var array
+     */
+    protected $guarded = [
+        'remember_token',
+        'password',
+    ];
 
     /**
      * Get the name of the unique identifier for the user.
@@ -275,43 +277,14 @@ Mongolid Laravel replaces Laravel queue failed job provider to use a collection 
 
 **Note:** `database` key is irrelevant.
 
-## Troubleshooting
-
-**"PHP Fatal error: Class 'MongoDB\Client' not found in ..."**
-
-The `MongoDB\Client` class is contained in the [MongoDB PHP Library](https://docs.mongodb.com/php-library/master/) and it requires [MongoDB driver for PHP](https://pecl.php.net/package/mongodb).
-Here is an [installation guide](http://php.net/manual/en/mongodb.setup.php) for this driver.
-The driver is a PHP extension written in C and maintained by [MongoDB](https://mongodb.com).
-MongoLid and most other MongoDB PHP libraries utilize it in order to be fast and reliable.
-
-**"Class 'MongoDB\Client' not found in ..." in CLI persists even with MongoDB driver installed.**
-
-Make sure that the **php.ini** file used in the CLI environment includes the MongoDB extension. In some systems, the default PHP installation uses different **.ini** files for the web and CLI environments.
-
-Run `php --ini` in a terminal to check the **.ini** that is being used.
-
-To check if PHP in the CLI environment is importing the driver properly run `php -i | grep mongo` in your terminal. You should get output similar to:
-
-```shell
-$ php -i | grep mongo
-mongodb
-mongodb support => enabled
-# etc...
-```
-
-**"This package requires php >=7.0 but your PHP version (X.X.X) does not satisfy that requirement."**
-
-The new (and improved) version 2.0 of Mongolid Laravel requires php7. If you are looking for the old PHP 5.x version, or other Laravel versions, head to the [v0.8 branch](https://github.com/leroy-merlin-br/mongolid-laravel/tree/v0.8-dev).
-
 ## License
 
-MongoLid & MongoLid Laravel are free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
+Mongolid & Mongolid Laravel are free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
 Some of the code is based on the work of Taylor Otwell and contributors on [laravel/framework](https://github.com/laravel/framework), another free software distributed under the terms of the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Additional information
+Made with ❤ by [Leroy Merlin Brazil](https://github.com/leroy-merlin-br) and [all contributors](https://github.com/leroy-merlin-br/mongolid-laravel/graphs/contributors).
 
-Mongolid was proudly built by the [Leroy Merlin Brazil](https://github.com/leroy-merlin-br) team. [See all the contributors](https://github.com/leroy-merlin-br/mongolid/graphs/contributors).
+If you have any questions, feel free to contact us.
 
-Any questions, feel free to contact us.
-
-Any issues, please [report here](https://github.com/leroy-merlin-br/mongolid-laravel/issues).
+If you any issues, please [report here](https://github.com/leroy-merlin-br/mongolid-laravel/issues).
