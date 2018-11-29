@@ -1,12 +1,9 @@
 <?php
 namespace Mongolid\Laravel\Tests\Integration\Stubs;
 
-use MongoDB\Collection;
-use Mongolid\Connection\Connection;
-use Mongolid\Container\Ioc;
-use Mongolid\Laravel\Model;
+use Mongolid\Laravel\AbstractModel;
 
-class EmbeddedUser extends Model
+class EmbeddedUser extends AbstractModel
 {
     /**
      * @var string
@@ -17,14 +14,6 @@ class EmbeddedUser extends Model
      * @var array
      */
     protected $timestamps = true;
-
-    public function collection(): Collection
-    {
-        $connection = Ioc::make(Connection::class);
-        $client = $connection->getRawConnection();
-
-        return $client->{$connection->defaultDatabase}->{$this->collection};
-    }
 
     public function parent()
     {

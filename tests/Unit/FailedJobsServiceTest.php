@@ -134,7 +134,7 @@ class FailedJobsServiceTest extends TestCase
         $rawClient->database = $database;
 
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($rawClient);
     }
 }

@@ -45,8 +45,7 @@
         ],
         "psr-4": {
             "Mongolid\\Laravel\\": "tests/Unit",
-            "Mongolid\\Laravel\\Tests\\Integration\\": "tests/Integration",
-            "Mongolid\\Laravel\\Tests\\Util\\": "tests/Util"
+            "Mongolid\\Laravel\\Tests\\": "tests"
         }
     },
     "extra": {

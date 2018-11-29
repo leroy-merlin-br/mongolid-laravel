@@ -25,7 +25,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -66,7 +66,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -107,7 +107,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -148,7 +148,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -189,7 +189,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -222,7 +222,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->never();
 
         $this->expectException(InvalidArgumentException::class);
@@ -245,7 +245,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -280,7 +280,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -315,7 +315,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -348,7 +348,7 @@ class RulesTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->never();
 
         $this->expectException(InvalidArgumentException::class);

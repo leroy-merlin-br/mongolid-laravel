@@ -29,29 +29,29 @@ class ReferencesOneRelationTest extends IntegrationTestCase
         // detach all
         $john->parent()->attach($bob);
         $this->assertParent($bob, $john);
-        $john->parent()->detachAll();
+        $john->parent()->detach();
         $this->assertNull($john->parent_id);
         $this->assertNull($john->parent);
 
         // detach
         $john->parent()->attach($bob);
         $this->assertParent($bob, $john);
-        $john->parent()->detach($bob);
+        $john->parent()->detach();
         $this->assertNull($john->parent_id);
         $this->assertNull($john->parent);
 
         // changing the field directly
         $john->parent()->attach($bob);
         $this->assertParent($bob, $john);
-        $john->parent_id = [$chuck->_id];
+        $john->parent_id = $chuck->_id;
         $this->assertParent($chuck, $john);
 
-        $john->parent()->detachAll();
+        $john->parent()->detach();
 
         // changing the field with fillable
         $john->parent()->attach($bob);
         $this->assertParent($bob, $john);
-        $john->fill(['parent_id' => [$chuck->_id]], true);
+        $john = ReferencedUser::fill(['parent_id' => $chuck->_id], $john, true);
         $this->assertParent($chuck, $john);
     }
 
@@ -74,32 +74,32 @@ class ReferencesOneRelationTest extends IntegrationTestCase
         $this->assertNull($john->arbitrary_field);
         $this->assertNull($john->son);
 
-        // detachAll
+        // detach
         $john->son()->attach($bob);
         $this->assertSon($bob, $john);
-        $john->son()->detachAll();
+        $john->son()->detach();
         $this->assertNull($john->arbitrary_field);
         $this->assertNull($john->son);
 
         // detach
         $john->son()->attach($bob);
         $this->assertSon($bob, $john);
-        $john->son()->detach($bob);
+        $john->son()->detach();
         $this->assertNull($john->arbitrary_field);
         $this->assertNull($john->son);
 
         // changing the field directly
         $john->son()->attach($bob);
         $this->assertSon($bob, $john);
-        $john->arbitrary_field = [$chuck->code];
+        $john->arbitrary_field = $chuck->code;
         $this->assertSon($chuck, $john);
 
-        $john->son()->detachAll();
+        $john->son()->detach();
 
         // changing the field with fillable
         $john->son()->attach($bob);
         $this->assertSon($bob, $john);
-        $john->fill(['arbitrary_field' => [$chuck->code]], true);
+        $john = ReferencedUser::fill(['arbitrary_field' => $chuck->code], $john, true);
         $this->assertSon($chuck, $john);
     }
 
@@ -134,13 +134,13 @@ class ReferencesOneRelationTest extends IntegrationTestCase
         $parent = $model->parent;
         $this->assertInstanceOf(ReferencedUser::class, $parent);
         $this->assertEquals($expected, $parent);
-        $this->assertEquals([$expected->_id], $model->parent_id); // TODO store as single code (not array)
+        $this->assertSame($expected->_id, $model->parent_id);
 
         // hit cache
         $parent = $model->parent;
         $this->assertInstanceOf(ReferencedUser::class, $parent);
         $this->assertEquals($expected, $parent);
-        $this->assertEquals([$expected->_id], $model->parent_id);
+        $this->assertSame($expected->_id, $model->parent_id);
     }
 
     private function assertSon($expected, ReferencedUser $model)
@@ -148,12 +148,12 @@ class ReferencesOneRelationTest extends IntegrationTestCase
         $son = $model->son;
         $this->assertInstanceOf(ReferencedUser::class, $son);
         $this->assertEquals($expected, $son);
-        $this->assertSame([$expected->code], $model->arbitrary_field); // TODO store as single code (not array)
+        $this->assertSame($expected->code, $model->arbitrary_field);
 
         // hit cache
         $son = $model->son;
         $this->assertInstanceOf(ReferencedUser::class, $son);
         $this->assertEquals($expected, $son);
-        $this->assertSame([$expected->code], $model->arbitrary_field);
+        $this->assertSame($expected->code, $model->arbitrary_field);
     }
 }

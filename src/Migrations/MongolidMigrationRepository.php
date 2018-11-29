@@ -145,7 +145,7 @@ class MongolidMigrationRepository implements MigrationRepositoryInterface
         if (!$this->cachedCollection) {
             $database = $this->database ?? $this->connection->defaultDatabase;
 
-            $this->cachedCollection = $this->connection->getRawConnection()
+            $this->cachedCollection = $this->connection->getClient()
                 ->selectCollection($database, $this->collection);
         }
 

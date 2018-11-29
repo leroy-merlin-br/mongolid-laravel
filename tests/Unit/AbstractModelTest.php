@@ -3,19 +3,16 @@ namespace Mongolid\Laravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;
-use MongoDB\Collection;
-use MongoDB\Database;
-use Mongolid\Connection\Connection;
 use Mongolid\Cursor\Cursor;
 use Mongolid\Model\Exception\ModelNotFoundException;
 use Mongolid\Query\Builder;
 
-class ModelTest extends TestCase
+class AbstractModelTest extends TestCase
 {
     public function testShouldValidateWithNoRules()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
         };
 
@@ -30,7 +27,7 @@ class ModelTest extends TestCase
     public function testShouldNotValidateWithUnattendedRules()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $rules = [
                 'name' => 'required',
@@ -56,7 +53,7 @@ class ModelTest extends TestCase
     public function testValidateShouldSkipUnchangedHashedAttributes()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             public $rules = [
                 'name' => 'required',
@@ -79,7 +76,7 @@ class ModelTest extends TestCase
     public function testShouldValidateChangedHashedAttributes()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             public $rules = [
                 'password' => 'required',
@@ -103,7 +100,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'users';
         };
@@ -126,7 +123,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $builder->makePartial();
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'models';
         };
@@ -153,7 +150,7 @@ class ModelTest extends TestCase
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'users';
 
@@ -185,7 +182,7 @@ class ModelTest extends TestCase
     public function testShouldNotAttemptToSaveWhenInvalid()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             public $rules = [
                 'name' => 'required',
@@ -213,7 +210,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $builder->makePartial();
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'models';
 
@@ -244,7 +241,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -267,7 +264,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $builder->makePartial();
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'models';
         };
@@ -290,7 +287,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -310,7 +307,7 @@ class ModelTest extends TestCase
     public function testShouldMockFirst()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -332,7 +329,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -352,7 +349,7 @@ class ModelTest extends TestCase
     public function testShouldMockFirstOrNew()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -374,7 +371,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -397,7 +394,7 @@ class ModelTest extends TestCase
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -417,7 +414,7 @@ class ModelTest extends TestCase
     public function testShouldMockFirstOrFail()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -440,7 +437,7 @@ class ModelTest extends TestCase
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $cursor = m::mock(Cursor::class);
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -464,7 +461,7 @@ class ModelTest extends TestCase
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
         $cursor = m::mock(Cursor::class);
 
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             protected $collection = 'collection_name';
         };
@@ -480,36 +477,6 @@ class ModelTest extends TestCase
 
         // Assertions
         $this->assertEquals($cursor, $result);
-    }
-
-    public function testShouldGetCollection()
-    {
-        // Set
-        $connection = $this->instance(Connection::class, m::mock(Connection::class));
-        $database = m::mock(Database::class);
-        $connection->mongolid = $database;
-        $database->collection_name = m::mock(Collection::class);
-
-        $model = new class() extends Model
-        {
-            protected $collection = 'collection_name';
-
-            public function rawCollection()
-            {
-                return $this->collection();
-            }
-        };
-
-        // Expectations
-        $connection->expects()
-            ->getRawConnection()
-            ->andReturnSelf();
-
-        // Actions
-        $result = $model->rawCollection();
-
-        // Assertions
-        $this->assertEquals($database->collection_name, $result);
     }
 
     /**

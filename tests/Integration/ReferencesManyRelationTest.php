@@ -17,7 +17,7 @@ class ReferencesManyRelationTest extends IntegrationTestCase
         $this->assertSiblings([$chuck], $john);
 
         $mary = $this->createUser('Mary');
-        $john->siblings()->attach($mary);
+        $john->siblings()->attachMany([$mary]);
 
         $this->assertSiblings([$chuck, $mary], $john);
 
@@ -26,11 +26,10 @@ class ReferencesManyRelationTest extends IntegrationTestCase
         $this->assertSiblings([$mary], $john);
 
         // replace siblings
-        $john->siblings()->detach($mary);
         $bob = $this->createUser('Bob');
 
         // unset
-        $john->siblings()->attach($bob);
+        $john->siblings()->replace([$bob]);
         $this->assertSiblings([$bob], $john);
         unset($john->siblings_ids);
         $this->assertEmpty($john->siblings_ids);
@@ -61,7 +60,11 @@ class ReferencesManyRelationTest extends IntegrationTestCase
         // changing the field with fillable
         $john->siblings()->attach($bob);
         $this->assertSiblings([$bob], $john);
-        $john->fill(['siblings_ids' => [$chuck->_id]], true);
+        $john = ReferencedUser::fill(['siblings_ids' => [$chuck->_id]], $john, true);
+        $this->assertSiblings([$chuck], $john);
+
+        // detach not attached has no problems
+        $john->siblings()->detach(new ReferencedUser());
         $this->assertSiblings([$chuck], $john);
     }
 
@@ -123,7 +126,7 @@ class ReferencesManyRelationTest extends IntegrationTestCase
         // changing the field with fillable
         $john->grandsons()->attach($bob);
         $this->assertGrandsons([$bob], $john);
-        $john->fill(['grandsons_codes' => [$chuck->code]], true);
+        $john = ReferencedUser::fill(['grandsons_codes' => [$chuck->code]], $john, true);
         $this->assertGrandsons([$chuck], $john);
     }
 

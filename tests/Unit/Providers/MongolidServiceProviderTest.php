@@ -3,7 +3,7 @@ namespace Mongolid\Laravel\Providers;
 
 use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Mongolid\Connection\Connection;
-use Mongolid\Container\Ioc;
+use Mongolid\Container\Container;
 use Mongolid\Event\EventTriggerService;
 use Mongolid\Laravel\TestCase;
 
@@ -18,7 +18,7 @@ class MongolidServiceProviderTest extends TestCase
         // Actions
         $provider->boot();
         $result = $this->app['auth']->getProvider();
-        $queueFailerResult = Ioc::make('queue.failer');
+        $queueFailerResult = Container::make('queue.failer');
 
         // Actions
         $this->assertInstanceOf(MongolidUserProvider::class, $result);
@@ -33,7 +33,7 @@ class MongolidServiceProviderTest extends TestCase
 
         // Actions
         $provider->boot();
-        $result = Ioc::make('queue.failer');
+        $result = Container::make('queue.failer');
 
         // Actions
         $this->assertInstanceOf(FailedJobProvider::class, $result);
@@ -48,8 +48,8 @@ class MongolidServiceProviderTest extends TestCase
         // Actions
         $provider->register();
 
-        $connection = Ioc::make(Connection::class);
-        $eventService = Ioc::make(EventTriggerService::class);
+        $connection = Container::make(Connection::class);
+        $eventService = Container::make(EventTriggerService::class);
 
         // Assertions
         $this->assertEquals('databaseName', $connection->defaultDatabase);
@@ -68,8 +68,8 @@ class MongolidServiceProviderTest extends TestCase
         // Actions
         $provider->registerConnector();
 
-        $connection = Ioc::make(Connection::class);
-        $mongoClient = $connection->getRawConnection();
+        $connection = Container::make(Connection::class);
+        $mongoClient = $connection->getClient();
 
         // Assertions
         $this->assertEquals($connectionString, (string) $mongoClient);

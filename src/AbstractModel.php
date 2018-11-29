@@ -9,7 +9,7 @@ use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
 use Mongolid\Cursor\CursorInterface;
-use Mongolid\Model\AbstractModel;
+use Mongolid\Model\AbstractModel as BaseModel;
 
 /**
  * This class extends the Mongolid\Model\AbstractModel, so, in order
@@ -26,11 +26,11 @@ use Mongolid\Model\AbstractModel;
  *
  * @see AbstractModel
  *
- * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage shouldReceive(...$arguments)
- * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage expects(...$arguments)
- * @method static Model|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage allows(...$arguments)
+ * @method static AbstractModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage shouldReceive(...$arguments)
+ * @method static AbstractModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage expects(...$arguments)
+ * @method static AbstractModel|\Mockery\ExpectationInterface|\Mockery\HigherOrderMessage allows(...$arguments)
  */
-abstract class Model extends AbstractModel
+abstract class AbstractModel extends BaseModel
 {
     /**
      * Public static mock.
@@ -259,7 +259,7 @@ abstract class Model extends AbstractModel
         $connection = app(Connection::class);
         $database = $connection->defaultDatabase;
 
-        return $connection->getRawConnection()->{$database};
+        return $connection->getClient()->{$database};
     }
 
     /**

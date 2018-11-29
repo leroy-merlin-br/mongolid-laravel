@@ -9,7 +9,7 @@ namespace Mongolid\Laravel\Migrations;
 
 use Illuminate\Console\OutputStyle;
 
-abstract class Migration
+abstract class AbstractMigration
 {
     /**
      * The name of the database connection to use.

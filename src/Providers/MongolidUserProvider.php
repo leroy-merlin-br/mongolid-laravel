@@ -4,7 +4,7 @@ namespace Mongolid\Laravel\Providers;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
-use Mongolid\Container\Ioc;
+use Mongolid\Container\Container;
 
 class MongolidUserProvider implements UserProvider
 {
@@ -18,14 +18,14 @@ class MongolidUserProvider implements UserProvider
     /**
      * The MongoLid user model.
      *
-     * @var \Mongolid\Laravel\Model
+     * @var \Mongolid\Laravel\AbstractModel
      */
     protected $model;
 
     /**
      * Create a new database user provider.
      *
-     * @param \Mongolid\Laravel\Model $model
+     * @param \Mongolid\Laravel\AbstractModel $model
      */
     public function __construct(HasherContract $hasher, $model)
     {
@@ -76,13 +76,13 @@ class MongolidUserProvider implements UserProvider
     /**
      * Create a new instance of the model.
      *
-     * @return \Mongolid\Laravel\Model
+     * @return \Mongolid\Laravel\AbstractModel
      */
     protected function createModel()
     {
         $class = '\\'.ltrim($this->model, '\\');
 
-        return Ioc::make($class);
+        return Container::make($class);
     }
 
     /**

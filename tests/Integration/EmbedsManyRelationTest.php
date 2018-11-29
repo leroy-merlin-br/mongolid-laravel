@@ -18,7 +18,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         $this->assertSiblings([$chuck], $john);
 
         $mary = $this->createUser('Mary');
-        $john->siblings()->add($mary);
+        $john->siblings()->addMany([$mary]);
 
         $this->assertSiblings([$chuck, $mary], $john);
 
@@ -27,11 +27,10 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         $this->assertSiblings([$mary], $john);
 
         // replace siblings
-        $john->siblings()->remove($mary);
         $bob = $this->createUser('Bob');
 
         // unset
-        $john->siblings()->add($bob);
+        $john->siblings()->replace([$bob]);
         $this->assertSiblings([$bob], $john);
         unset($john->embedded_siblings);
         $this->assertEmpty($john->siblings->all());
@@ -62,7 +61,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         // changing the field with fillable
         $john->siblings()->add($bob);
         $this->assertSiblings([$bob], $john);
-        $john->fill(['embedded_siblings' => [$chuck]], true);
+        $john = EmbeddedUser::fill(['embedded_siblings' => [$chuck]], $john, true);
         $this->assertSiblings([$chuck], $john);
     }
 
@@ -120,7 +119,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         // changing the field with fillable
         $john->grandsons()->add($bob);
         $this->assertGrandsons([$bob], $john);
-        $john->fill(['other_arbitrary_field' => [$chuck]], true);
+        $john = EmbeddedUser::fill(['other_arbitrary_field' => [$chuck]], $john, true);
         $this->assertGrandsons([$chuck], $john);
     }
 
