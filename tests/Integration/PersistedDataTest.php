@@ -41,7 +41,7 @@ class PersistedDataTest extends IntegrationTestCase
 
         // Actions
         $saveResult = $user->save();
-        $result = $user->collection()->findOne(['_id' => $user->_id]);
+        $result = $user->getCollection()->findOne(['_id' => $this->_id]);
         $result->_id = (string) $result->_id;
 
         // Assertions
@@ -83,7 +83,7 @@ class PersistedDataTest extends IntegrationTestCase
 
         // Actions
         $updateResult = $user->save();
-        $result = $user->collection()->findOne(['_id' => $user->_id]);
+        $result = $user->getCollection()->findOne(['_id' => $user->_id]);
         $result->_id = (string) $result->_id;
 
         // Assertions
@@ -125,7 +125,7 @@ class PersistedDataTest extends IntegrationTestCase
 
         // Actions
         $updateResult = $user->update();
-        $result = $user->collection()->findOne(['_id' => $user->_id]);
+        $result = $user->getCollection()->findOne(['_id' => $user->_id]);
         $result->_id = (string) $result->_id;
 
         // Assertions

@@ -12,13 +12,13 @@ use Mongolid\Laravel\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class MigrationTest extends TestCase
+class AbstractMigrationTest extends TestCase
 {
     public function testGetConnection()
     {
         // Set
         $output = new OutputStyle(new ArrayInput([]), new NullOutput());
-        $migration = new class($output) extends Migration {
+        $migration = new class($output) extends AbstractMigration {
             /**
              * {@inheritdoc}
              */

@@ -5,7 +5,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;
 use MongoDB\BSON\ObjectID;
-use Mongolid\Laravel\Model;
+use Mongolid\Laravel\AbstractModel;
 use Mongolid\Laravel\TestCase;
 
 class UserProviderTest extends TestCase
@@ -21,7 +21,7 @@ class UserProviderTest extends TestCase
         $result = $provider->retrieveByID($params);
 
         // Assertions
-        $this->assertInstanceOf(Model::class, $result);
+        $this->assertInstanceOf(AbstractModel::class, $result);
     }
 
     public function testShouldRetrieveByCredentials()
@@ -35,7 +35,7 @@ class UserProviderTest extends TestCase
         $result = $provider->retrieveByCredentials($params);
 
         // Assertions
-        $this->assertInstanceOf(Model::class, $result);
+        $this->assertInstanceOf(AbstractModel::class, $result);
     }
 
     public function testShouldValidateCredentials()
@@ -67,13 +67,13 @@ class UserProviderTest extends TestCase
         $result = $provider->retrieveByToken('1234', '4321');
 
         // Assertions
-        $this->assertInstanceOf(Model::class, $result);
+        $this->assertInstanceOf(AbstractModel::class, $result);
     }
 
     public function testShouldNotRetrieveByToken()
     {
         // Set
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             public static function first($query = [], array $projection = [])
             {
@@ -113,11 +113,11 @@ class UserProviderTest extends TestCase
      */
     protected function getProvider()
     {
-        $model = new class() extends Model
+        $model = new class() extends AbstractModel
         {
             public static function first($query = [], array $projection = [])
             {
-                return m::mock(Model::class);
+                return m::mock(AbstractModel::class);
             }
         };
 

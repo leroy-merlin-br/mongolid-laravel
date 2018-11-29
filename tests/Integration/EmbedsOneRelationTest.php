@@ -31,29 +31,29 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         // remove all
         $john->parent()->add($bob);
         $this->assertParent($bob, $john);
-        $john->parent()->removeAll();
+        $john->parent()->remove();
         $this->assertNull($john->embedded_parent);
         $this->assertNull($john->parent);
 
         // remove
         $john->parent()->add($bob);
         $this->assertParent($bob, $john);
-        $john->parent()->remove($bob);
+        $john->parent()->remove();
         $this->assertNull($john->embedded_parent);
         $this->assertNull($john->parent);
 
         // changing the field directly
         $john->parent()->add($bob);
         $this->assertParent($bob, $john);
-        $john->embedded_parent = [$chuck];
+        $john->embedded_parent = $chuck;
         $this->assertParent($chuck, $john);
 
-        $john->parent()->removeAll();
+        $john->parent()->remove();
 
         // changing the field with fillable
         $john->parent()->add($bob);
         $this->assertParent($bob, $john);
-        $john->fill(['embedded_parent' => [$chuck]], true);
+        $john = EmbeddedUser::fill(['embedded_parent' => $chuck], $john, true);
         $this->assertParent($chuck, $john);
     }
 
@@ -79,29 +79,29 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         // remove all
         $john->son()->add($bob);
         $this->assertSon($bob, $john);
-        $john->son()->removeAll();
+        $john->son()->remove();
         $this->assertNull($john->arbitrary_field);
         $this->assertNull($john->son);
 
         // remove
         $john->son()->add($bob);
         $this->assertSon($bob, $john);
-        $john->son()->remove($bob);
+        $john->son()->remove();
         $this->assertNull($john->arbitrary_field);
         $this->assertNull($john->son);
 
         // changing the field directly
         $john->son()->add($bob);
         $this->assertSon($bob, $john);
-        $john->arbitrary_field = [$chuck];
+        $john->arbitrary_field = $chuck;
         $this->assertSon($chuck, $john);
 
-        $john->son()->removeAll();
+        $john->son()->remove();
 
         // changing the field with fillable
         $john->son()->add($bob);
         $this->assertSon($bob, $john);
-        $john->fill(['arbitrary_field' => [$chuck]], true);
+        $john = EmbeddedUser::fill(['arbitrary_field' => $chuck], $john, true);
         $this->assertSon($chuck, $john);
     }
 
@@ -134,14 +134,14 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         $this->assertInstanceOf(EmbeddedUser::class, $parent);
         $this->assertInstanceOf(UTCDateTime::class, $parent->created_at);
         $this->assertEquals($expected, $parent);
-        $this->assertSame([$expected], $model->embedded_parent); // TODO store as single array
+        $this->assertSame($expected, $model->embedded_parent);
 
         // hit cache
         $parent = $model->parent;
         $this->assertInstanceOf(EmbeddedUser::class, $parent);
         $this->assertInstanceOf(UTCDateTime::class, $parent->created_at);
         $this->assertEquals($expected, $parent);
-        $this->assertSame([$expected], $model->embedded_parent);
+        $this->assertSame($expected, $model->embedded_parent);
     }
 
     private function assertSon($expected, EmbeddedUser $model)
@@ -150,13 +150,13 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         $this->assertInstanceOf(EmbeddedUser::class, $son);
         $this->assertInstanceOf(UTCDateTime::class, $son->created_at);
         $this->assertEquals($expected, $son);
-        $this->assertSame([$expected], $model->arbitrary_field); // TODO store as single array
+        $this->assertSame($expected, $model->arbitrary_field);
 
         // hit cache
         $son = $model->son;
         $this->assertInstanceOf(EmbeddedUser::class, $son);
         $this->assertInstanceOf(UTCDateTime::class, $son->created_at);
         $this->assertEquals($expected, $son);
-        $this->assertSame([$expected], $model->arbitrary_field);
+        $this->assertSame($expected, $model->arbitrary_field);
     }
 }

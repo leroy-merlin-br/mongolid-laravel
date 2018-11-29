@@ -5,7 +5,7 @@ use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
-use Mongolid\Container\Ioc as MongolidIoc;
+use Mongolid\Container\Container;
 use Mongolid\Event\EventTriggerService;
 use Mongolid\Laravel\EventTrigger;
 use Mongolid\Laravel\FailedJobsService;
@@ -45,7 +45,7 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function registerConnector()
     {
-        MongolidIoc::setContainer($this->app);
+        Container::setContainer($this->app);
 
         $this->app->singleton(
             Connection::class,

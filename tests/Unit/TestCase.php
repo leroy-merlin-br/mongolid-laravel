@@ -3,11 +3,11 @@ namespace Mongolid\Laravel;
 
 use Mockery as m;
 use Mockery\Matcher\Closure;
-use Mongolid\Container\Ioc;
+use Mongolid\Container\Container;
 use Mongolid\Laravel\Tests\Util\UTCDateTimeComparator;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
     /**
      * {@inheritdoc}
@@ -15,7 +15,7 @@ class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Ioc::setContainer($this->app);
+        Container::setContainer($this->app);
         $this->registerComparator(new UTCDateTimeComparator());
     }
 
@@ -24,7 +24,7 @@ class TestCase extends BaseTestCase
         $this->addToAssertionCount(
             m::getContainer()->mockery_getExpectationCount()
         );
-        Model::clearMocks();
+        AbstractModel::clearMocks();
         m::close();
         parent::tearDown();
     }

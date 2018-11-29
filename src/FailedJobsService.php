@@ -44,7 +44,7 @@ class FailedJobsService
      */
     public function all()
     {
-        return $this->rawCollection()->find();
+        return $this->collection()->find();
     }
 
     /**
@@ -54,7 +54,7 @@ class FailedJobsService
      */
     public function find(string $id)
     {
-        return $this->rawCollection()->findOne(['_id' => new ObjectID($id)]);
+        return $this->collection()->findOne(['_id' => new ObjectID($id)]);
     }
 
     /**
@@ -64,7 +64,7 @@ class FailedJobsService
      */
     public function insert(array $attributes): InsertOneResult
     {
-        return $this->rawCollection()->insertOne($attributes);
+        return $this->collection()->insertOne($attributes);
     }
 
     /**
@@ -72,7 +72,7 @@ class FailedJobsService
      */
     public function delete(string $id): DeleteResult
     {
-        return $this->rawCollection()->deleteOne(['_id' => new ObjectID($id)]);
+        return $this->collection()->deleteOne(['_id' => new ObjectID($id)]);
     }
 
     /**
@@ -80,16 +80,16 @@ class FailedJobsService
      */
     public function drop()
     {
-        $this->rawCollection()->drop();
+        $this->collection()->drop();
     }
 
     /**
      * Get the actual MongoDB Collection object.
      */
-    protected function rawCollection(): Collection
+    protected function collection(): Collection
     {
         $database = $this->connection->defaultDatabase;
 
-        return $this->connection->getRawConnection()->{$database}->{$this->collection};
+        return $this->connection->getClient()->{$database}->{$this->collection};
     }
 }

@@ -80,7 +80,7 @@ class FreshCommand extends Command
     {
         $database = $database ?? $this->connection->defaultDatabase;
 
-        $this->connection->getRawConnection()->dropDatabase($database);
+        $this->connection->getClient()->dropDatabase($database);
     }
 
     /**

@@ -29,7 +29,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -68,7 +68,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -118,7 +118,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -174,7 +174,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -209,7 +209,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -236,7 +236,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -264,7 +264,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -303,7 +303,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -338,7 +338,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->never();
 
         // Actions
@@ -354,7 +354,7 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Expectations
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->never();
 
         // Actions

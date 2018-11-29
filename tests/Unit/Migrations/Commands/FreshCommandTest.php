@@ -33,7 +33,7 @@ class FreshCommandTest extends TestCase
             ->andReturn(false);
 
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->never();
 
         // Actions
@@ -58,7 +58,7 @@ class FreshCommandTest extends TestCase
             ->andReturn('development');
 
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -97,7 +97,7 @@ class FreshCommandTest extends TestCase
             ->andReturn('development');
 
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()

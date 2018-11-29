@@ -135,7 +135,7 @@ class Rules
      */
     private function hasResults(string $collection, array $query): bool
     {
-        $connection = $this->connection->getRawConnection();
+        $connection = $this->connection->getClient();
         $database = $this->connection->defaultDatabase;
 
         return (bool) $connection->{$database}->{$collection}->count($query);
