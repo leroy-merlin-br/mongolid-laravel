@@ -24,6 +24,24 @@ class AbstractModelTest extends TestCase
         $this->assertEmpty($model->errors()->all());
     }
 
+    public function testShouldReturnNullForInvalidStaticCall()
+    {
+        // Set
+        $model = new class() extends AbstractModel
+        {
+            protected $rules = [
+                'name' => 'required',
+                'address' => 'min:100',
+            ];
+        };
+
+        // Actions
+        $result = $model::invalid();
+
+        // Assertions
+        $this->assertNull($result);
+    }
+
     public function testShouldNotValidateWithUnattendedRules()
     {
         // Set
