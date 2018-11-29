@@ -5,9 +5,6 @@ use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Support\MessageBag;
 use Mockery;
-use MongoDB\Collection;
-use MongoDB\Database;
-use Mongolid\Connection\Connection;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\Model\AbstractModel as BaseModel;
 
@@ -257,25 +254,6 @@ abstract class AbstractModel extends BaseModel
     public function messages(): array
     {
         return [];
-    }
-
-    /**
-     * Returns the database object (the connection).
-     */
-    protected function db(): Database
-    {
-        $connection = app(Connection::class);
-        $database = $connection->defaultDatabase;
-
-        return $connection->getClient()->{$database};
-    }
-
-    /**
-     * Returns the Mongo collection object.
-     */
-    protected function collection(): Collection
-    {
-        return $this->db()->{$this->collection};
     }
 
     /**
