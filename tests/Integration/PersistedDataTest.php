@@ -89,7 +89,7 @@ class PersistedDataTest extends IntegrationTestCase
         // Assertions
         $this->assertTrue($updateResult);
         $this->assertInstanceOf(ReferencedUser::class, $result);
-        $this->assertSame($expected, $result->toArray());
+        $this->assertEquals($expected, $result->toArray());
     }
 
     public function testUpdateData()
@@ -131,7 +131,7 @@ class PersistedDataTest extends IntegrationTestCase
         // Assertions
         $this->assertTrue($updateResult);
         $this->assertInstanceOf(ReferencedUser::class, $result);
-        $this->assertSame($expected, $result->toArray());
+        $this->assertEquals($expected, $result->toArray());
     }
 
     private function getUser(bool $save = false): ReferencedUser
