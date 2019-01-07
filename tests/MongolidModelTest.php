@@ -60,7 +60,7 @@ class MongolidModelTest extends TestCase
                 'name' => 'required',
             ];
 
-            public function messages()
+            public function messages(): array
             {
                 return [
                     'name.required' => 'The name must be fielded.',
