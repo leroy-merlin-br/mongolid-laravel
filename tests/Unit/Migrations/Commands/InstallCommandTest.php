@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class InstallCommandTest extends TestCase
 {
-    public function testFireCallsRepositoryToInstall()
+    public function testFireCallsRepositoryToInstall(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);

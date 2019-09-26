@@ -12,7 +12,7 @@ use stdClass;
 
 class FailedJobsServiceTest extends TestCase
 {
-    public function testAllShouldReturnWholeCollection()
+    public function testAllShouldReturnWholeCollection(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -34,7 +34,7 @@ class FailedJobsServiceTest extends TestCase
         $this->assertSame($cursor, $result);
     }
 
-    public function testFindShouldReturnWholeCollection()
+    public function testFindShouldReturnWholeCollection(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -57,7 +57,7 @@ class FailedJobsServiceTest extends TestCase
         $this->assertSame($job, $result);
     }
 
-    public function testInsertShouldAddOneJob()
+    public function testInsertShouldAddOneJob(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -80,7 +80,7 @@ class FailedJobsServiceTest extends TestCase
         $this->assertSame($resultInsert, $result);
     }
 
-    public function testDeleteShouldRemoveOneJob()
+    public function testDeleteShouldRemoveOneJob(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -104,7 +104,7 @@ class FailedJobsServiceTest extends TestCase
         $this->assertSame($resultDelete, $result);
     }
 
-    public function testDropShouldCleanWholeCollection()
+    public function testDropShouldCleanWholeCollection(): void
     {
         // Set
         $connection = m::mock(Connection::class);

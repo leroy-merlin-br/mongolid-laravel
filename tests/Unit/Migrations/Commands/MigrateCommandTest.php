@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class MigrateCommandTest extends TestCase
 {
-    public function testBasicMigrationsCallMigratorWithProperArguments()
+    public function testBasicMigrationsCallMigratorWithProperArguments(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -53,7 +53,7 @@ class MigrateCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testShouldRunMigrateCommandWithDbSeed()
+    public function testShouldRunMigrateCommandWithDbSeed(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -97,7 +97,7 @@ class MigrateCommandTest extends TestCase
         $command->run(new ArrayInput(['--seed' => true]), new NullOutput());
     }
 
-    public function testMigrationRepositoryCreatedWhenNecessary()
+    public function testMigrationRepositoryCreatedWhenNecessary(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -139,7 +139,7 @@ class MigrateCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testTheDatabaseMayBeSet()
+    public function testTheDatabaseMayBeSet(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -175,7 +175,7 @@ class MigrateCommandTest extends TestCase
         $command->run(new ArrayInput(['--database' => 'foo']), new NullOutput());
     }
 
-    public function testStepMayBeSet()
+    public function testStepMayBeSet(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -211,7 +211,7 @@ class MigrateCommandTest extends TestCase
         $command->run(new ArrayInput(['--step' => true]), new NullOutput());
     }
 
-    public function testShouldConfirmToRun()
+    public function testShouldConfirmToRun(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);

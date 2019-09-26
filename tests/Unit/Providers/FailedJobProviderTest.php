@@ -14,7 +14,7 @@ use Mongolid\Util\LocalDateTime;
 
 class FailedJobProviderTest extends TestCase
 {
-    public function testLogShouldPersistFailedJob()
+    public function testLogShouldPersistFailedJob(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
@@ -51,7 +51,7 @@ class FailedJobProviderTest extends TestCase
         $this->assertEquals('xpto1', $result);
     }
 
-    public function testAllShouldReturnAllJobs()
+    public function testAllShouldReturnAllJobs(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
@@ -102,7 +102,7 @@ class FailedJobProviderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testFindShouldReturnJob()
+    public function testFindShouldReturnJob(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
@@ -129,7 +129,7 @@ class FailedJobProviderTest extends TestCase
         $this->assertEquals($data, $result);
     }
 
-    public function testForgetShouldDeleteJob()
+    public function testForgetShouldDeleteJob(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
@@ -154,7 +154,7 @@ class FailedJobProviderTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testFlushShouldDropWholeCollection()
+    public function testFlushShouldDropWholeCollection(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);

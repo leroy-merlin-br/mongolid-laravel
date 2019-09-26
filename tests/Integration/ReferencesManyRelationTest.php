@@ -7,7 +7,7 @@ use Mongolid\Laravel\Tests\Integration\Stubs\ReferencedUser;
 
 class ReferencesManyRelationTest extends IntegrationTestCase
 {
-    public function testShouldRetrieveSiblingsOfUser()
+    public function testShouldRetrieveSiblingsOfUser(): void
     {
         // create sibling
         $chuck = $this->createUser('Chuck');
@@ -68,7 +68,7 @@ class ReferencesManyRelationTest extends IntegrationTestCase
         $this->assertSiblings([$chuck], $john);
     }
 
-    public function testShouldRetrieveGrandsonsOfUserUsingCustomKey()
+    public function testShouldRetrieveGrandsonsOfUserUsingCustomKey(): void
     {
         // create sibling
         $chuck = $this->createUser('Chuck', '010');

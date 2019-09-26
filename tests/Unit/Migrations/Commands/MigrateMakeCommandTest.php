@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class MigrateMakeCommandTest extends TestCase
 {
-    public function testBasicCreateDumpsAutoload()
+    public function testBasicCreateDumpsAutoload(): void
     {
         // Set
         $creator = m::mock(MigrationCreator::class);
@@ -38,7 +38,7 @@ class MigrateMakeCommandTest extends TestCase
         $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
     }
 
-    public function testBasicCreateGivesCreatorProperArguments()
+    public function testBasicCreateGivesCreatorProperArguments(): void
     {
         // Set
         $creator = m::mock(MigrationCreator::class);
@@ -59,7 +59,7 @@ class MigrateMakeCommandTest extends TestCase
         $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
     }
 
-    public function testBasicCreateGivesCreatorProperArgumentsWhenNameIsStudlyCase()
+    public function testBasicCreateGivesCreatorProperArgumentsWhenNameIsStudlyCase(): void
     {
         // Set
         $creator = m::mock(MigrationCreator::class);
@@ -80,7 +80,7 @@ class MigrateMakeCommandTest extends TestCase
         $command->run(new ArrayInput(['name' => 'CreateFoo']), new NullOutput());
     }
 
-    public function testBasicCreateGivesCreatorProperArgumentsWhenCollectionIsSet()
+    public function testBasicCreateGivesCreatorProperArgumentsWhenCollectionIsSet(): void
     {
         // Set
         $creator = m::mock(MigrationCreator::class);
@@ -101,7 +101,7 @@ class MigrateMakeCommandTest extends TestCase
         $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
     }
 
-    public function testBasicCreateGivesCreatorProperArgumentsWhenCreateCollectionPatternIsFound()
+    public function testBasicCreateGivesCreatorProperArgumentsWhenCreateCollectionPatternIsFound(): void
     {
         // Set
         $creator = m::mock(MigrationCreator::class);
@@ -125,7 +125,7 @@ class MigrateMakeCommandTest extends TestCase
         $command->run(new ArrayInput(['name' => 'create_users_collection']), new NullOutput());
     }
 
-    public function testCanSpecifyPathToCreateMigrationsIn()
+    public function testCanSpecifyPathToCreateMigrationsIn(): void
     {
         // Set
         $creator = m::mock(MigrationCreator::class);

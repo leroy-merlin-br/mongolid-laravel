@@ -8,7 +8,7 @@ use Mongolid\Laravel\Tests\Integration\Stubs\EmbeddedUser;
 
 class EmbedsManyRelationTest extends IntegrationTestCase
 {
-    public function testShouldRetrieveSiblingsOfUser()
+    public function testShouldRetrieveSiblingsOfUser(): void
     {
         // create sibling
         $chuck = $this->createUser('Chuck');
@@ -65,7 +65,7 @@ class EmbedsManyRelationTest extends IntegrationTestCase
         $this->assertSiblings([$chuck], $john);
     }
 
-    public function testShouldRetrieveGrandsonsOfUserUsingCustomKey()
+    public function testShouldRetrieveGrandsonsOfUserUsingCustomKey(): void
     {
         // create grandson
         $chuck = $this->createUser('Chuck');

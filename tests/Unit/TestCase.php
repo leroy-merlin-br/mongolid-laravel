@@ -12,14 +12,14 @@ abstract class TestCase extends BaseTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         Container::setContainer($this->app);
         $this->registerComparator(new UTCDateTimeComparator());
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->addToAssertionCount(
             m::getContainer()->mockery_getExpectationCount()
@@ -42,7 +42,7 @@ abstract class TestCase extends BaseTestCase
     {
         return m::on(
             function ($value) use ($expected, $delta) {
-                    $this->assertEquals($expected, $value, '', $delta);
+                    $this->assertEqualsWithDelta($expected, $value, $delta, '');
 
                     return true;
             }

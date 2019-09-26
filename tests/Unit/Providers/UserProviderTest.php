@@ -10,7 +10,7 @@ use Mongolid\Laravel\TestCase;
 
 class UserProviderTest extends TestCase
 {
-    public function testShouldRetrieveById()
+    public function testShouldRetrieveById(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -24,7 +24,7 @@ class UserProviderTest extends TestCase
         $this->assertInstanceOf(AbstractModel::class, $result);
     }
 
-    public function testShouldRetrieveByCredentials()
+    public function testShouldRetrieveByCredentials(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -38,7 +38,7 @@ class UserProviderTest extends TestCase
         $this->assertInstanceOf(AbstractModel::class, $result);
     }
 
-    public function testShouldValidateCredentials()
+    public function testShouldValidateCredentials(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -58,7 +58,7 @@ class UserProviderTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldRetrieveByToken()
+    public function testShouldRetrieveByToken(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -70,7 +70,7 @@ class UserProviderTest extends TestCase
         $this->assertInstanceOf(AbstractModel::class, $result);
     }
 
-    public function testShouldNotRetrieveByToken()
+    public function testShouldNotRetrieveByToken(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -90,7 +90,7 @@ class UserProviderTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testShouldUpdateRememberToken()
+    public function testShouldUpdateRememberToken(): void
     {
         // Set
         $provider = $this->getProvider();

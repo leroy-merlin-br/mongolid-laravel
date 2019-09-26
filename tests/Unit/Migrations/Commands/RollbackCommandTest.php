@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class RollbackCommandTest extends TestCase
 {
-    public function testRollbackCommandCallsMigratorWithProperArguments()
+    public function testRollbackCommandCallsMigratorWithProperArguments(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -49,7 +49,7 @@ class RollbackCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testRollbackCommandCallsMigratorWithStepOption()
+    public function testRollbackCommandCallsMigratorWithStepOption(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -81,7 +81,7 @@ class RollbackCommandTest extends TestCase
         $command->run(new ArrayInput(['--step' => 2]), new NullOutput());
     }
 
-    public function testShouldConfirmToRun()
+    public function testShouldConfirmToRun(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);

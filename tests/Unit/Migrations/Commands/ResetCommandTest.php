@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class ResetCommandTest extends TestCase
 {
-    public function testResetCommandCallsMigratorWithProperArguments()
+    public function testResetCommandCallsMigratorWithProperArguments(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -53,7 +53,7 @@ class ResetCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testResetCommandShouldNotRunWhenRepositoryDoesNotExist()
+    public function testResetCommandShouldNotRunWhenRepositoryDoesNotExist(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -90,7 +90,7 @@ class ResetCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testShouldConfirmToRun()
+    public function testShouldConfirmToRun(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);

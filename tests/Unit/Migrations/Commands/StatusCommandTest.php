@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class StatusCommandTest extends TestCase
 {
-    public function testShouldNotRunCommandWhenRepositoryDoesNotExist()
+    public function testShouldNotRunCommandWhenRepositoryDoesNotExist(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -42,7 +42,7 @@ class StatusCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testShouldRunCommand()
+    public function testShouldRunCommand(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);
@@ -97,7 +97,7 @@ class StatusCommandTest extends TestCase
         $command->run(new ArrayInput(['--path' => 'database']), new NullOutput());
     }
 
-    public function testShouldRunCommandWithNoMigrations()
+    public function testShouldRunCommandWithNoMigrations(): void
     {
         // Set
         $migrator = m::mock(Migrator::class);

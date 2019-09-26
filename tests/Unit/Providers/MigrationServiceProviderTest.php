@@ -23,7 +23,7 @@ use Mongolid\Laravel\TestCase;
 
 class MigrationServiceProviderTest extends TestCase
 {
-    public function testShouldBoot()
+    public function testShouldBoot(): void
     {
         // Set
         $provider = m::mock(MigrationServiceProvider::class.'[commands]', [$this->app]);
@@ -47,7 +47,7 @@ class MigrationServiceProviderTest extends TestCase
         $provider->boot();
     }
 
-    public function testShouldRegister()
+    public function testShouldRegister(): void
     {
         // Set
         $provider = new MigrationServiceProvider($this->app);
@@ -69,7 +69,7 @@ class MigrationServiceProviderTest extends TestCase
         $this->assertInstanceOf(StatusCommand::class, $this->app['command.mongolid-migrate.status']);
     }
 
-    public function testProvides()
+    public function testProvides(): void
     {
         // Set
         $provider = new MigrationServiceProvider($this->app);

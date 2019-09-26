@@ -12,7 +12,7 @@ use Mongolid\Laravel\TestCase;
 
 class RulesTest extends TestCase
 {
-    public function testShouldBeUnique()
+    public function testShouldBeUnique(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -47,7 +47,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldBeUniqueExcludingId()
+    public function testShouldBeUniqueExcludingId(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -88,7 +88,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldNotBeUniqueWhenThereAreResults()
+    public function testShouldNotBeUniqueWhenThereAreResults(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -129,7 +129,7 @@ class RulesTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testShouldBeUniqueCastingIdToInt()
+    public function testShouldBeUniqueCastingIdToInt(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -170,7 +170,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldNotCastIdToIntIfParameterIsNotStringTrue()
+    public function testShouldNotCastIdToIntIfParameterIsNotStringTrue(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -211,7 +211,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testUniqueShouldValidateParameters()
+    public function testUniqueShouldValidateParameters(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -232,7 +232,7 @@ class RulesTest extends TestCase
         $rules->unique('email', 'john@doe.com', $parameters);
     }
 
-    public function testShouldExist()
+    public function testShouldExist(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -267,7 +267,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldExistWithIntValue()
+    public function testShouldExistWithIntValue(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -302,7 +302,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldNotExistWhenThereIsNoResults()
+    public function testShouldNotExistWhenThereIsNoResults(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -337,7 +337,7 @@ class RulesTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testExistsShouldValidateParameters()
+    public function testExistsShouldValidateParameters(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -358,7 +358,7 @@ class RulesTest extends TestCase
         $rules->exists('email', 'john@doe.com', $parameters);
     }
 
-    public function testShouldRetrieveAlreadyTranslatedMessage()
+    public function testShouldRetrieveAlreadyTranslatedMessage(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -373,7 +373,7 @@ class RulesTest extends TestCase
         $this->assertSame($result, $message);
     }
 
-    public function testShouldTranslateAMessage()
+    public function testShouldTranslateAMessage(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -388,7 +388,7 @@ class RulesTest extends TestCase
         $this->assertSame($result, $expectedMessage);
     }
 
-    public function testShouldBeAnObjectIdWhenUsingObject()
+    public function testShouldBeAnObjectIdWhenUsingObject(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -402,7 +402,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldBeAnObjectIdWhenUsingString()
+    public function testShouldBeAnObjectIdWhenUsingString(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -416,7 +416,7 @@ class RulesTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldNotBeAnObjectId()
+    public function testShouldNotBeAnObjectId(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -430,7 +430,7 @@ class RulesTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testShouldRetrieveAlreadyTranslatedMessageForObjectId()
+    public function testShouldRetrieveAlreadyTranslatedMessageForObjectId(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -445,7 +445,7 @@ class RulesTest extends TestCase
         $this->assertSame($result, $message);
     }
 
-    public function testShouldTranslateAMessageForObjectId()
+    public function testShouldTranslateAMessageForObjectId(): void
     {
         // Set
         $connection = m::mock(Connection::class);
