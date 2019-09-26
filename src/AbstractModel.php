@@ -216,7 +216,7 @@ abstract class AbstractModel extends BaseModel
         }
 
         // Creates validator with attributes and the rules of the object
-        $validator = app(ValidationFactory::class)->make($attributes, $rules);
+        $validator = app(ValidationFactory::class)->make($attributes, $rules, $this->messages());
 
         // Validate and attach errors
         if ($hasErrors = $validator->fails()) {
@@ -246,6 +246,15 @@ abstract class AbstractModel extends BaseModel
     public function rules(): array
     {
         return $this->rules ?? [];
+    }
+
+
+    /**
+     * Get custom messages for validation errors.
+     */
+    public function messages(): array
+    {
+        return [];
     }
 
     /**

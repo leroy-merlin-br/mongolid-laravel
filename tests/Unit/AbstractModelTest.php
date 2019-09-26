@@ -68,7 +68,35 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($expectedErrors, $model->errors()->all());
     }
 
-    public function testValidateShouldSkipUnchangedHashedAttributes(): void
+    public function testShouldValidateRulesWithCustomMessage(): void
+    {
+        // Set
+        $model = new class() extends AbstractModel {
+            protected $rules = [
+                'name' => 'required',
+            ];
+
+            public function messages(): array
+            {
+                return [
+                    'name.required' => 'The name must be fielded.',
+                ];
+            }
+        };
+
+        $expectedErrors = [
+            'The name must be fielded.',
+        ];
+
+        // Actions
+        $result = $model->isValid();
+
+        // Assertions
+        $this->assertFalse($result);
+        $this->assertEquals($expectedErrors, $model->errors()->all());
+    }
+
+    public function testValidateShouldSkipUnchangedHashedAttributes()
     {
         // Set
         $model = new class() extends AbstractModel
