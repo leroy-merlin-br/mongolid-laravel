@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "ext-mongodb": "*",
         "mongodb/mongodb": "^1.4",
         "leroy-merlin-br/mongolid": "^3.0",

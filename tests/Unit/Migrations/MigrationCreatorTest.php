@@ -14,7 +14,7 @@ use Mongolid\Laravel\TestCase;
 
 class MigrationCreatorTest extends TestCase
 {
-    public function testBasicCreateMethodStoresMigrationFile()
+    public function testBasicCreateMethodStoresMigrationFile(): void
     {
         // Set
         $files = m::mock(Filesystem::class);
@@ -32,7 +32,7 @@ class MigrationCreatorTest extends TestCase
         $creator->create('create_bar', 'database/migrations');
     }
 
-    public function testBasicCreateMethodCallsPostCreateHooks()
+    public function testBasicCreateMethodCallsPostCreateHooks(): void
     {
         // Set
         $files = m::mock(Filesystem::class);
@@ -59,7 +59,7 @@ class MigrationCreatorTest extends TestCase
         $this->assertTrue($hasRun);
     }
 
-    public function testCollectionUpdateMigrationWontCreateDuplicateClass()
+    public function testCollectionUpdateMigrationWontCreateDuplicateClass(): void
     {
         // Set
         $files = new Filesystem();
@@ -73,7 +73,7 @@ class MigrationCreatorTest extends TestCase
         $creator->create('migration_creator_fake_migration', 'database/migrations');
     }
 
-    public function testShouldGetFilesystem()
+    public function testShouldGetFilesystem(): void
     {
         // Set
         $files = new Filesystem();

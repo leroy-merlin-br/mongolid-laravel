@@ -11,13 +11,13 @@ class PersistedDataTest extends IntegrationTestCase
      */
     private $_id;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->_id = new ObjectId('5bcb310783a7fcdf1bf1a672');
     }
 
-    public function testSaveInsertingData()
+    public function testSaveInsertingData(): void
     {
         // Set
         $user = $this->getUser();
@@ -50,7 +50,7 @@ class PersistedDataTest extends IntegrationTestCase
         $this->assertSame($expected, $result->toArray());
     }
 
-    public function testSaveUpdatingData()
+    public function testSaveUpdatingData(): void
     {
         // Set
         $user = $this->getUser(true);
@@ -92,7 +92,7 @@ class PersistedDataTest extends IntegrationTestCase
         $this->assertEquals($expected, $result->toArray());
     }
 
-    public function testUpdateData()
+    public function testUpdateData(): void
     {
         // Set
         $user = $this->getUser(true);

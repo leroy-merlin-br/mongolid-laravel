@@ -18,7 +18,7 @@ use stdClass;
 
 class MongolidMigrationRepositoryTest extends TestCase
 {
-    public function testGetRanMigrationsListMigrationsByPackage()
+    public function testGetRanMigrationsListMigrationsByPackage(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -53,7 +53,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $this->assertSame(['bar'], $result);
     }
 
-    public function testGetMigrationsList()
+    public function testGetMigrationsList(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -92,7 +92,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $this->assertSame($list, $result);
     }
 
-    public function testGetLastMigrationsGetsAllMigrationsWithTheLatestBatchNumber()
+    public function testGetLastMigrationsGetsAllMigrationsWithTheLatestBatchNumber(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -150,7 +150,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $this->assertSame($migrations, $result);
     }
 
-    public function testGetMigrationBatches()
+    public function testGetMigrationBatches(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -197,7 +197,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testLogMethodInsertsRecordIntoMigrationCollection()
+    public function testLogMethodInsertsRecordIntoMigrationCollection(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -223,7 +223,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $repository->log('bar', 1);
     }
 
-    public function testDeleteMethodRemovesAMigrationFromTheCollection()
+    public function testDeleteMethodRemovesAMigrationFromTheCollection(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -250,7 +250,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $repository->delete($migration);
     }
 
-    public function testGetNextBatchNumberReturnsLastBatchNumberPlusOne()
+    public function testGetNextBatchNumberReturnsLastBatchNumberPlusOne(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -289,7 +289,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $this->assertSame(5, $result);
     }
 
-    public function testGetLastBatchNumberReturnsMaxBatch()
+    public function testGetLastBatchNumberReturnsMaxBatch(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -329,7 +329,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $this->assertSame($batchNumber, $result);
     }
 
-    public function testCreateRepositoryCreatesProperDatabaseCollection()
+    public function testCreateRepositoryCreatesProperDatabaseCollection(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -345,7 +345,7 @@ class MongolidMigrationRepositoryTest extends TestCase
         $repository->createRepository();
     }
 
-    public function testRepositoryExists()
+    public function testRepositoryExists(): void
     {
         // Set
         $connection = m::mock(Connection::class);

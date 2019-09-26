@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class RefreshCommandTest extends TestCase
 {
-    public function testRefreshCommandCallsCommandsWithProperArguments()
+    public function testRefreshCommandCallsCommandsWithProperArguments(): void
     {
         // Set
         $command = m::mock(RefreshCommand::class.'[call]');
@@ -54,7 +54,7 @@ class RefreshCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testShouldRunRefreshCommandWithDbSeed()
+    public function testShouldRunRefreshCommandWithDbSeed(): void
     {
         // Set
         $command = m::mock(RefreshCommand::class.'[call]');
@@ -103,7 +103,7 @@ class RefreshCommandTest extends TestCase
         $command->run(new ArrayInput(['--seed' => true]), new NullOutput());
     }
 
-    public function testRefreshCommandCallsCommandsWithStep()
+    public function testRefreshCommandCallsCommandsWithStep(): void
     {
         // Set
         $command = m::mock(RefreshCommand::class.'[call]');
@@ -143,7 +143,7 @@ class RefreshCommandTest extends TestCase
         $command->run(new ArrayInput(['--step' => 2]), new NullOutput());
     }
 
-    public function testShouldConfirmToRun()
+    public function testShouldConfirmToRun(): void
     {
         // Set
         $command = m::mock(RefreshCommand::class.'[confirmToProceed]');

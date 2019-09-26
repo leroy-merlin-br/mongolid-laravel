@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class AbstractMigrationTest extends TestCase
 {
-    public function testGetConnection()
+    public function testGetConnection(): void
     {
         // Set
         $output = new OutputStyle(new ArrayInput([]), new NullOutput());

@@ -9,7 +9,7 @@ use Mongolid\Laravel\TestCase;
 
 class MongolidServiceProviderTest extends TestCase
 {
-    public function testShouldBoot()
+    public function testShouldBoot(): void
     {
         // Set
         $provider = new MongolidServiceProvider($this->app);
@@ -25,7 +25,7 @@ class MongolidServiceProviderTest extends TestCase
         $this->assertInstanceOf(NullFailedJobProvider::class, $queueFailerResult);
     }
 
-    public function testShouldBootUsingQueueFailer()
+    public function testShouldBootUsingQueueFailer(): void
     {
         // Set
         $provider = new MongolidServiceProvider($this->app);
@@ -39,7 +39,7 @@ class MongolidServiceProviderTest extends TestCase
         $this->assertInstanceOf(FailedJobProvider::class, $result);
     }
 
-    public function testShouldRegister()
+    public function testShouldRegister(): void
     {
         // Set
         $provider = new MongolidServiceProvider($this->app);
@@ -59,7 +59,7 @@ class MongolidServiceProviderTest extends TestCase
     /**
      * @dataProvider connectionVariations
      */
-    public function testShouldRegisterConnector($config, $connectionString)
+    public function testShouldRegisterConnector($config, $connectionString): void
     {
         // Set
         $provider = new MongolidServiceProvider($this->app);

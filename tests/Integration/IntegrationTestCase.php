@@ -10,17 +10,17 @@ class IntegrationTestCase extends TestCase
     use DropDatabaseTrait;
     use SetupConnectionTrait;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        $host = env('DB_HOST', 'localhost');
-        $database = env('DB_DATABASE', 'testing');
+        $host = getenv('DB_HOST') ?: 'localhost';
+        $database = getenv('DB_DATABASE') ?: 'testing';
 
         $this->setupConnection($host, $database);
         $this->dropDatabase();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->dropDatabase();
         parent::tearDown();

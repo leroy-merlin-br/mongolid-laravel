@@ -9,7 +9,7 @@ use Mongolid\Query\Builder;
 
 class AbstractModelTest extends TestCase
 {
-    public function testShouldValidateWithNoRules()
+    public function testShouldValidateWithNoRules(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -24,7 +24,7 @@ class AbstractModelTest extends TestCase
         $this->assertEmpty($model->errors()->all());
     }
 
-    public function testShouldReturnNullForInvalidStaticCall()
+    public function testShouldReturnNullForInvalidStaticCall(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -42,7 +42,7 @@ class AbstractModelTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testShouldNotValidateWithUnattendedRules()
+    public function testShouldNotValidateWithUnattendedRules(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -68,7 +68,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($expectedErrors, $model->errors()->all());
     }
 
-    public function testShouldValidateRulesWithCustomMessage()
+    public function testShouldValidateRulesWithCustomMessage(): void
     {
         // Set
         $model = new class() extends MongolidModel {
@@ -96,7 +96,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($expectedErrors, $model->errors()->all());
     }
 
-    public function testValidateShouldSkipUnchangedHashedAttributes()
+    public function testValidateShouldSkipUnchangedHashedAttributes(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -119,7 +119,7 @@ class AbstractModelTest extends TestCase
         $this->assertEmpty($model->errors()->all());
     }
 
-    public function testShouldValidateChangedHashedAttributes()
+    public function testShouldValidateChangedHashedAttributes(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -141,7 +141,7 @@ class AbstractModelTest extends TestCase
         $this->assertEmpty($model->errors()->all());
     }
 
-    public function testShouldSave()
+    public function testShouldSave(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -164,7 +164,7 @@ class AbstractModelTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldMockSave()
+    public function testShouldMockSave(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -190,7 +190,7 @@ class AbstractModelTest extends TestCase
     /**
      * @dataProvider getMethods
      */
-    public function testShouldHashAttributesOnSaveAndUpdate($method)
+    public function testShouldHashAttributesOnSaveAndUpdate($method): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -225,7 +225,7 @@ class AbstractModelTest extends TestCase
         $this->assertNull($model->password_confirmation);
     }
 
-    public function testShouldNotAttemptToSaveWhenInvalid()
+    public function testShouldNotAttemptToSaveWhenInvalid(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -251,7 +251,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($expectedErrors, $model->errors()->all());
     }
 
-    public function testShouldForceSaving()
+    public function testShouldForceSaving(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -282,7 +282,7 @@ class AbstractModelTest extends TestCase
         $this->assertFalse($model->errors()->any());
     }
 
-    public function testShouldDelete()
+    public function testShouldDelete(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -305,7 +305,7 @@ class AbstractModelTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldMockDelete()
+    public function testShouldMockDelete(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -328,7 +328,7 @@ class AbstractModelTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldGetFirst()
+    public function testShouldGetFirst(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -350,7 +350,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($model, $result);
     }
 
-    public function testShouldMockFirst()
+    public function testShouldMockFirst(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -370,7 +370,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($model, $result);
     }
 
-    public function testShouldGetFirstOrNew()
+    public function testShouldGetFirstOrNew(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -392,7 +392,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($model, $result);
     }
 
-    public function testShouldMockFirstOrNew()
+    public function testShouldMockFirstOrNew(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -412,7 +412,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($model, $result);
     }
 
-    public function testShouldGetFirstOrFailAndFoundIt()
+    public function testShouldGetFirstOrFailAndFoundIt(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -435,7 +435,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($model, $result);
     }
 
-    public function testShouldGetFirstOrFailAndFail()
+    public function testShouldGetFirstOrFailAndFail(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -457,7 +457,7 @@ class AbstractModelTest extends TestCase
         $model->firstOrFail('123');
     }
 
-    public function testShouldMockFirstOrFail()
+    public function testShouldMockFirstOrFail(): void
     {
         // Set
         $model = new class() extends AbstractModel
@@ -477,7 +477,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($model, $result);
     }
 
-    public function testShouldGetWhere()
+    public function testShouldGetWhere(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));
@@ -501,7 +501,7 @@ class AbstractModelTest extends TestCase
         $this->assertEquals($cursor, $result);
     }
 
-    public function testShouldGetAll()
+    public function testShouldGetAll(): void
     {
         // Set
         $builder = $this->instance(Builder::class, m::mock(Builder::class));

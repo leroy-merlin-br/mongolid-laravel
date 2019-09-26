@@ -5,7 +5,7 @@ use Mongolid\Laravel\Tests\Integration\Stubs\ReferencedUser;
 
 class AttributesKeyTest extends IntegrationTestCase
 {
-    public function testAttributesKeysShouldNotBeReserved()
+    public function testAttributesKeysShouldNotBeReserved(): void
     {
         $user = new ReferencedUser();
         $user->name = 'John';

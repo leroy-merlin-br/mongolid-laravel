@@ -7,7 +7,7 @@ use MongoDB\BSON\ObjectID;
 
 class EventTriggerTest extends TestCase
 {
-    public function testShouldFire()
+    public function testShouldFire(): void
     {
         // Set
         $dispatcher = m::mock(Dispatcher::class);

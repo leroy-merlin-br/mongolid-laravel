@@ -14,7 +14,7 @@ use Mongolid\Laravel\TestCase;
 
 class MigratorTest extends TestCase
 {
-    public function testShouldRunWithNoPendingMigrations()
+    public function testShouldRunWithNoPendingMigrations(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -51,7 +51,7 @@ class MigratorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testShouldRunWithPendingMigrations()
+    public function testShouldRunWithPendingMigrations(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -100,7 +100,7 @@ class MigratorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testShouldRollbackWithNoMigrations()
+    public function testShouldRollbackWithNoMigrations(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -125,7 +125,7 @@ class MigratorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testShouldRollbackWithMigrations()
+    public function testShouldRollbackWithMigrations(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -166,7 +166,7 @@ class MigratorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testShouldResetWithNoMigrations()
+    public function testShouldResetWithNoMigrations(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -190,7 +190,7 @@ class MigratorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testShouldResetWithMigrations()
+    public function testShouldResetWithMigrations(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -239,7 +239,7 @@ class MigratorTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    public function testShouldGetPaths()
+    public function testShouldGetPaths(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -254,7 +254,7 @@ class MigratorTest extends TestCase
         $this->assertSame(['/database'], $result);
     }
 
-    public function testShouldGetConnection()
+    public function testShouldGetConnection(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -273,7 +273,7 @@ class MigratorTest extends TestCase
         $this->assertSame('testing', $result);
     }
 
-    public function testShouldGetRepository()
+    public function testShouldGetRepository(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -287,7 +287,7 @@ class MigratorTest extends TestCase
         $this->assertSame($repository, $result);
     }
 
-    public function testRepositoryShouldExist()
+    public function testRepositoryShouldExist(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);
@@ -306,7 +306,7 @@ class MigratorTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldGetFilesystem()
+    public function testShouldGetFilesystem(): void
     {
         // Set
         $repository = m::mock(MigrationRepositoryInterface::class);

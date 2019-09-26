@@ -7,7 +7,7 @@ use Mongolid\Model\Exception\NotARelationException;
 
 class ReferencesOneRelationTest extends IntegrationTestCase
 {
-    public function testShouldRetrieveParentOfUser()
+    public function testShouldRetrieveParentOfUser(): void
     {
         // create parent
         $chuck = $this->createUser('Chuck');
@@ -55,7 +55,7 @@ class ReferencesOneRelationTest extends IntegrationTestCase
         $this->assertParent($chuck, $john);
     }
 
-    public function testShouldRetrieveSonOfUserUsingCustomKey()
+    public function testShouldRetrieveSonOfUserUsingCustomKey(): void
     {
         // create parent
         $chuck = $this->createUser('Chuck', '010');
@@ -103,7 +103,7 @@ class ReferencesOneRelationTest extends IntegrationTestCase
         $this->assertSon($chuck, $john);
     }
 
-    public function testShouldCatchInvalidRelations()
+    public function testShouldCatchInvalidRelations(): void
     {
         // Set
         $user = new ReferencedUser();

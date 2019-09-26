@@ -8,7 +8,7 @@ use Mongolid\Model\Exception\InvalidFieldNameException;
 
 class EmbedsOneRelationTest extends IntegrationTestCase
 {
-    public function testShouldRetrieveParentOfUser()
+    public function testShouldRetrieveParentOfUser(): void
     {
         // create parent
         $chuck = $this->createUser('Chuck');
@@ -57,7 +57,7 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         $this->assertParent($chuck, $john);
     }
 
-    public function testShouldRetrieveSonOfUserUsingCustomKey()
+    public function testShouldRetrieveSonOfUserUsingCustomKey(): void
     {
         // create parent
         $chuck = $this->createUser('Chuck');
@@ -105,7 +105,7 @@ class EmbedsOneRelationTest extends IntegrationTestCase
         $this->assertSon($chuck, $john);
     }
 
-    public function testShouldCatchInvalidFieldNameOnRelations()
+    public function testShouldCatchInvalidFieldNameOnRelations(): void
     {
         // Set
         $user = new EmbeddedUser();

@@ -42,7 +42,7 @@ abstract class TestCase extends BaseTestCase
     {
         return m::on(
             function ($value) use ($expected, $delta) {
-                    $this->assertEqualsWithDelta($expected, $value, $delta);
+                    $this->assertEqualsWithDelta($expected, $value, $delta, '');
 
                     return true;
             }

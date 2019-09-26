@@ -11,11 +11,9 @@ services:
       - DB_HOST=db
 
   db:
-    image: mongo:4.0
-    command: mongod --smallfiles
+    image: mongo:4.2
     volumes:
       - db:/data/db
-      - .:/var/www/html
 
   mkdocs:
     image: polinux/mkdocs

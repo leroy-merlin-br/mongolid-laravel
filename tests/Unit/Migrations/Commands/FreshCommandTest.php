@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 class FreshCommandTest extends TestCase
 {
-    public function testShouldConfirmToRun()
+    public function testShouldConfirmToRun(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -40,7 +40,7 @@ class FreshCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testShouldRunFreshCommand()
+    public function testShouldRunFreshCommand(): void
     {
         // Set
         $connection = m::mock(Connection::class);
@@ -79,7 +79,7 @@ class FreshCommandTest extends TestCase
         $command->run(new ArrayInput([]), new NullOutput());
     }
 
-    public function testShouldRunFreshCommandWithDbSeed()
+    public function testShouldRunFreshCommandWithDbSeed(): void
     {
         // Set
         $connection = m::mock(Connection::class);
