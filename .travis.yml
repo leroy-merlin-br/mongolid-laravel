@@ -11,7 +11,7 @@ cache:
 services: mongodb
 
 before_install:
-  - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - pecl install mongodb > /dev/null
 
 before_script:
   - composer install --no-interaction
@@ -21,4 +21,4 @@ script:
   - vendor/bin/phpunit -c phpunit.xml.dist
 
 after_success:
-  - if [[ $(phpenv version-name) = "7.2" ]]; then php vendor/bin/php-coveralls -v; fi
+  - if [[ $(phpenv version-name) = "7.3" ]]; then php vendor/bin/php-coveralls -v; fi
