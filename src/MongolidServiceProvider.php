@@ -48,17 +48,11 @@ class MongolidServiceProvider extends ServiceProvider
     {
         MongolidIoc::setContainer($this->app);
 
+        $connection = $this->getConnection();
+
         $this->app->singleton(
             Pool::class,
-            function ($app) {
-                $config = $app['config']->get('database.mongodb.default') ?? [];
-                $connectionString = $this->buildConnectionString($config);
-                $options = $config['options'] ?? [];
-                $driverOptions = $config['driver_options'] ?? [];
-
-                $connection = new Connection($connectionString, $options, $driverOptions);
-                $connection->defaultDatabase = $config['database'] ?? 'mongolid';
-
+            function () use ($connection) {
                 $pool = new Pool();
                 $pool->addConnection($connection);
 
@@ -80,6 +74,28 @@ class MongolidServiceProvider extends ServiceProvider
                 return new LaravelCacheComponent($app[CacheRepository::class]);
             }
         );
+        $this->app->singleton(
+            MongolidHealthChecker::class,
+            function () use ($connection) {
+                return new MongolidHealthChecker($connection);
+            }
+        );
+    }
+
+    /**
+     * Returns a new mongo db connection
+     */
+    private function getConnection(): Connection
+    {
+        $config = $this->app['config']->get('database.mongodb.default') ?? [];
+        $connectionString = $this->buildConnectionString($config);
+        $options = $config['options'] ?? [];
+        $driverOptions = $config['driver_options'] ?? [];
+
+        $connection = new Connection($connectionString, $options, $driverOptions);
+        $connection->defaultDatabase = $config['database'] ?? 'mongolid';
+
+        return $connection;
     }
 
     /**

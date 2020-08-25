@@ -51,11 +51,13 @@ class MongolidServiceProviderTest extends TestCase
         $pool = Ioc::make(Pool::class);
         $eventService = Ioc::make(EventTriggerService::class);
         $cacheComponent = Ioc::make(CacheComponentInterface::class);
+        $healthChecker = Ioc::make(MongolidHealthChecker::class);
 
         // Assertions
         $this->assertEquals('databaseName', $pool->getConnection()->defaultDatabase);
         $this->assertInstanceOf(EventTriggerService::class, $eventService);
         $this->assertInstanceOf(LaravelCacheComponent::class, $cacheComponent);
+        $this->assertInstanceOf(MongolidHealthChecker::class, $healthChecker);
     }
 
     /**
