@@ -22,14 +22,14 @@
         "ext-mongodb": "*",
         "mongodb/mongodb": "^1.4",
         "leroy-merlin-br/mongolid": "^3.0",
-        "illuminate/support": "^5.4 || ^6.0",
-        "illuminate/auth": "^5.4 || ^6.0",
-        "illuminate/queue": "^5.4 || ^6.0"
+        "illuminate/support": "^5.4 || ^6.0 || ^7.0",
+        "illuminate/auth": "^5.4 || ^6.0 || ^7.0",
+        "illuminate/queue": "^5.4 || ^6.0 || ^7.0"
     },
     "require-dev": {
         "leroy-merlin-br/coding-standard": "^0.1",
         "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^4.0",
+        "orchestra/testbench": "^4.0 || ^5.0",
         "php-coveralls/php-coveralls": "^2.1",
         "phpunit/phpunit": "^7.0 || ^8.0"
     },
