@@ -40,6 +40,10 @@ class LaravelEventTrigger implements EventTriggerInterface
      */
     public function fire(string $event, $payload, bool $halt)
     {
-        return $this->dispatcher->fire($event, $payload, $halt);
+        if (method_exists($this->dispatcher, 'fire')) {
+            return $this->dispatcher->fire($event, $payload, $halt);
+        }
+
+        return $this->dispatcher->dispatch($event, $payload, $halt);
     }
 }
