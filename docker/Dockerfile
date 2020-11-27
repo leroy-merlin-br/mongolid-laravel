@@ -3,6 +3,8 @@ LABEL maintainer="boitata@leroymerlin.com.br"
 
 USER root:root
 
+RUN docker-php-ext-enable xdebug
+
 ARG UID=1000
 ARG GID=1000
 
