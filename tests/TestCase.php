@@ -10,13 +10,13 @@ class TestCase extends BaseTestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         Ioc::setContainer($this->app);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->addToAssertionCount(
             m::getContainer()->mockery_getExpectationCount()
@@ -40,7 +40,7 @@ class TestCase extends BaseTestCase
     {
         return m::on(
             function ($value) use ($expected, $delta) {
-                    $this->assertEquals($expected, $value, '', $delta);
+                    $this->assertEqualsWithDelta($expected, $value, $delta);
 
                     return true;
             }
