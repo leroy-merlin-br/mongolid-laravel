@@ -6,7 +6,7 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/var/www/html
+      - .:/var/www/html:rw
 
   db:
     image: mongo:4.0
