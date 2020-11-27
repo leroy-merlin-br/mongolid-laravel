@@ -167,7 +167,6 @@ abstract class MongolidModel extends ActiveRecord
         return $this->rules ?? [];
     }
 
-
     /**
      * Get custom messages for validation errors.
      */
@@ -226,7 +225,7 @@ abstract class MongolidModel extends ActiveRecord
     public static function __callStatic($name, $arguments)
     {
         if ('shouldReceive' === $name) {
-            $class = get_called_class();
+            $class = static::class;
             static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
 
             return static::$mock[$class]->shouldReceive(...$arguments);
@@ -385,7 +384,7 @@ abstract class MongolidModel extends ActiveRecord
     protected static function callMockOrParent(string $method, array $arguments)
     {
         $classToCall = 'parent';
-        $class = get_called_class();
+        $class = static::class;
         $mock = static::$mock[$class] ?? null;
 
         if ($mock && $mock->mockery_getExpectationsFor($method)) {

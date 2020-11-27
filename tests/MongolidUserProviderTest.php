@@ -126,8 +126,6 @@ class MongolidUserProviderTest extends TestCase
         };
 
         $hasher = $this->app->make(Hasher::class);
-        $provider = new MongolidUserProvider($hasher, get_class($model));
-
-        return $provider;
+        return new MongolidUserProvider($hasher, get_class($model));
     }
 }
