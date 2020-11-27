@@ -1,0 +1,22 @@
+on: [push]
+name: Tests
+jobs:
+    setup-and-tests:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   name: Build containers
+                run: docker-compose build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+
+            -   name: Composer install
+                run: docker-compose run --rm -T php composer install --no-interaction --no-progress
+
+            -   name: Run Code Standards
+                run: docker-compose run --rm -T php vendor/bin/phpcs
+
+            -   name: Run Tests
+                run: docker-compose run --rm -T php vendor/bin/phpunit
+
+            -   name: Report Coverage
+                run: CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }} bash <(curl -Ls https://coverage.codacy.com/get.sh) report

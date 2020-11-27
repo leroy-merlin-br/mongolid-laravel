@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/leroy-merlin-br/mongolid-laravel.svg?branch=master)](https://travis-ci.org/leroy-merlin-br/mongolid-laravel)
-[![Coverage Status](https://coveralls.io/repos/github/leroy-merlin-br/mongolid-laravel/badge.svg?branch=master)](https://coveralls.io/github/leroy-merlin-br/mongolid-laravel?branch=master)
+[![Build Status](https://github.com/leroy-merlin-br/mongolid-laravel/workflows/Tests/badge.svg)](https://github.com/leroy-merlin-br/mongolid-laravel/actions?query=workflow%3ATests)
+[![Coverage Status](https://app.codacy.com/project/badge/Coverage/1ed42ceb8f994627b9887a97d296d11f)](https://www.codacy.com/gh/leroy-merlin-br/mongolid-laravel/dashboard?utm_source=github.com&utm_medium=referral&utm_content=leroy-merlin-br/mongolid-laravel&utm_campaign=Badge_Coverage)
 [![Latest Stable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/stable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
 [![Monthly Downloads](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/d/monthly.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)
 [![Latest Unstable Version](https://poser.pugx.org/leroy-merlin-br/mongolid-laravel/v/unstable.png)](https://packagist.org/packages/leroy-merlin-br/mongolid-laravel)

@@ -95,11 +95,9 @@ class MongolidUserProvider implements UserProvider
      */
     public function retrieveByToken($identifier, $token)
     {
-        $user = $this->createModel()->first(
+        return $this->createModel()->first(
             ['_id' => $identifier, 'remember_token' => $token]
         );
-
-        return $user;
     }
 
     /**

@@ -1,5 +1,5 @@
 /vendor
-composer.lock
 build
 .phpcs-cache
+.phpunit.result.cache
 phpcs.xml

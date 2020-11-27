@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  php:
+    build: docker
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html:rw
+
+  db:
+    image: mongo:4.0
+    command: mongod --smallfiles
+    volumes:
+      - db:/data/db
+      - .:/var/www/html
+
+  mkdocs:
+    image: polinux/mkdocs
+    volumes:
+      - .:/workdir/mkdocs
+
+volumes:
+  db:
+    driver: local
