@@ -69,7 +69,7 @@ abstract class AbstractModel extends BaseModel
     public static function __callStatic($name, $arguments)
     {
         if (in_array($name, ['shouldReceive', 'expects', 'allows'])) {
-            $class = get_called_class();
+            $class = static::class;
             static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
 
             return static::$mock[$class]->{$name}(...$arguments);
@@ -159,7 +159,7 @@ abstract class AbstractModel extends BaseModel
      */
     protected static function callMockOrParent(string $method, array $arguments)
     {
-        $mock = static::$mock[get_called_class()] ?? null;
+        $mock = static::$mock[static::class] ?? null;
 
         if ($mock && $mock->mockery_getExpectationsFor($method)) {
             return $mock->{$method}(...$arguments);
