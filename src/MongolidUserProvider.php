@@ -18,14 +18,15 @@ class MongolidUserProvider implements UserProvider
     /**
      * The MongoLid user model.
      *
-     * @var \MongolidLaravel\MongoLidModel
+     * @var string $model
      */
     protected $model;
 
     /**
      * Create a new database user provider.
      *
-     * @param \MongolidLaravel\MongoLidModel $model
+     * @param string $model
+     * Class::class instanceof \MongolidLaravel\MongoLidModel
      */
     public function __construct(HasherContract $hasher, $model)
     {
