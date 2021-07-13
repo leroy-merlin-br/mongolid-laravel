@@ -18,7 +18,7 @@ class MongolidUserProvider implements UserProvider
     /**
      * The MongoLid user model.
      *
-     * @var string|\MongolidLaravel\MongoLidModel $model
+     * @var string $model
      */
     protected $model;
 
