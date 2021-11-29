@@ -10,8 +10,6 @@ class EventTriggerTest extends TestCase
     public function testShouldFire(): void
     {
         // Set
-        $dispatcher = m::mock(Dispatcher::class);
-        $trigger = new EventTrigger($dispatcher);
         $dispatcher = m::mock(new class implements Dispatcher {
             public function fire($event, $payload = [], $halt = false)
             {
@@ -53,14 +51,15 @@ class EventTriggerTest extends TestCase
             {
             }
         });
-        $trigger = new LaravelEventTrigger($dispatcher);
+        $trigger = new EventTrigger($dispatcher);
         $event = 'collection:saved';
         $payload = ['_id' => new ObjectID()];
         $halt = false;
 
         // Expectations
-        $dispatcher->expects()
-            ->dispatch($event, $payload, $halt)
+        $dispatcher->shouldReceive('fire')
+            ->once()
+            ->with($event, $payload, $halt)
             ->andReturn(true);
 
         // Actions
@@ -74,7 +73,7 @@ class EventTriggerTest extends TestCase
     {
         // Set
         $dispatcher = m::mock(Dispatcher::class);
-        $trigger = new LaravelEventTrigger($dispatcher);
+        $trigger = new EventTrigger($dispatcher);
         $event = 'collection:saved';
         $payload = ['_id' => new ObjectID()];
         $halt = false;

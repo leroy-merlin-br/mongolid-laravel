@@ -71,7 +71,7 @@ class AbstractModelTest extends TestCase
     public function testShouldValidateRulesWithCustomMessage(): void
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class() extends AbstractModel {
             protected $rules = [
                 'name' => 'required',
             ];
