@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91910ef2c0dfafa283fafd39ae48a3ea",
+    "content-hash": "8a23db0e09973d51aba595e34380e695",
     "packages": [
         {
             "name": "brick/math",
@@ -981,42 +981,44 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v2.3.1",
+            "version": "v3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leroy-merlin-br/mongolid.git",
-                "reference": "62492fff793d0366c1a8f32becc18b3b200e1c15"
+                "reference": "20ad9dcfed65db2b47dafb2b73fc20be5683d38c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/62492fff793d0366c1a8f32becc18b3b200e1c15",
-                "reference": "62492fff793d0366c1a8f32becc18b3b200e1c15",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/20ad9dcfed65db2b47dafb2b73fc20be5683d38c",
+                "reference": "20ad9dcfed65db2b47dafb2b73fc20be5683d38c",
                 "shasum": ""
             },
             "require": {
-                "illuminate/container": "^5.8 || ^6.0 || ^7.0 || ^8.0",
-                "mongodb/mongodb": "^1.3",
-                "php": ">=7.1"
+                "ext-mongodb": "*",
+                "illuminate/container": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/support": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+                "mongodb/mongodb": "^1.4",
+                "php": ">=7.3"
             },
             "require-dev": {
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^6.4",
-                "sami/sami": "^4.0",
-                "squizlabs/php_codesniffer": "^2.0"
+                "leroy-merlin-br/coding-standard": "^1.0",
+                "mockery/mockery": "^1.2",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
             },
+            "suggest": {
+                "leroy-merlin-br/mongolid-laravel": "Easy, powerful and ultrafast MongoDB ODM for Laravel."
+            },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "v2.1.x-dev"
+                    "dev-master": "v3.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Mongolid\\": "src/Mongolid"
-                },
-                "classmap": [
-                    "tests/TestCase.php"
-                ]
+                    "Mongolid\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1030,19 +1032,26 @@
                 {
                     "name": "Guilherme Guitte",
                     "email": "guilherme.guitte@gmail.com"
+                },
+                {
+                    "name": "Boitatá",
+                    "email": "boitata@leroymerlin.com.br"
                 }
             ],
             "description": "Easy, powerful and ultrafast ODM for PHP and MongoDB.",
             "keywords": [
+                "Active Record",
+                "laravel",
+                "mongo",
                 "mongodb",
                 "nosql",
                 "odm"
             ],
             "support": {
                 "issues": "https://github.com/leroy-merlin-br/mongolid/issues",
-                "source": "https://github.com/leroy-merlin-br/mongolid/tree/v2.3.1"
+                "source": "https://github.com/leroy-merlin-br/mongolid/tree/v3.x"
             },
-            "time": "2021-04-01T17:30:20+00:00"
+            "time": "2021-06-24T20:08:40+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -7297,12 +7306,13 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.1"
+        "php": ">=7.3",
+        "ext-mongodb": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
