@@ -1,8 +1,8 @@
 <?php
 
-use MongolidLaravel\Migrations\Migration;
+use Mongolid\Laravel\Migrations\AbstractMigration;
 
-class DummyClass extends Migration
+class DummyClass extends AbstractMigration
 {
     /**
      * Run the migrations.

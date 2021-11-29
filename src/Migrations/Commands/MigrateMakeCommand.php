@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations\Commands;
+namespace Mongolid\Laravel\Migrations\Commands;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -9,7 +9,7 @@ namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Support\Composer;
 use Illuminate\Support\Str;
-use MongolidLaravel\Migrations\MigrationCreator;
+use Mongolid\Laravel\Migrations\MigrationCreator;
 
 class MigrateMakeCommand extends BaseCommand
 {
@@ -32,7 +32,7 @@ class MigrateMakeCommand extends BaseCommand
     /**
      * The migration creator instance.
      *
-     * @var \MongolidLaravel\Migrations\MigrationCreator
+     * @var \Mongolid\Laravel\Migrations\MigrationCreator
      */
     protected $creator;
 

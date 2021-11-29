@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations\Commands;
+namespace Mongolid\Laravel\Migrations\Commands;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -8,7 +8,7 @@ namespace MongolidLaravel\Migrations\Commands;
 */
 
 use Illuminate\Console\Command;
-use MongolidLaravel\Migrations\MigrationRepositoryInterface;
+use Mongolid\Laravel\Migrations\MigrationRepositoryInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 class InstallCommand extends Command
@@ -30,7 +30,7 @@ class InstallCommand extends Command
     /**
      * The repository instance.
      *
-     * @var \MongolidLaravel\Migrations\MigrationRepositoryInterface
+     * @var \Mongolid\Laravel\Migrations\MigrationRepositoryInterface
      */
     protected $repository;
 

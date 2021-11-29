@@ -1,12 +1,12 @@
 <?php
-namespace MongolidLaravel;
+namespace Mongolid\Laravel;
 
 use MongoDB\BSON\ObjectID;
 use MongoDB\Collection;
 use MongoDB\DeleteResult;
 use MongoDB\Driver\Cursor;
 use MongoDB\InsertOneResult;
-use Mongolid\Connection\Pool;
+use Mongolid\Connection\Connection;
 
 /**
  * Persistence layer that is used to save failed queue jobs on MongoDB.
@@ -23,17 +23,17 @@ class FailedJobsService
     /**
      * Connections that are going to be used to interact with database.
      *
-     * @var Pool
+     * @var Connection
      */
-    protected $connPool;
+    protected $connection;
 
     /**
-     * @param Pool   $connPool   Connections that are going to be used to interact with MongoDB
-     * @param string $collection Collection where jobs will be stored
+     * @param Connection $connection Connections that are going to be used to interact with MongoDB
+     * @param string     $collection Collection where jobs will be stored
      */
-    public function __construct(Pool $connPool, string $collection = 'failed_jobs')
+    public function __construct(Connection $connection, string $collection = 'failed_jobs')
     {
-        $this->connPool = $connPool;
+        $this->connection = $connection;
         $this->collection = $collection;
     }
 
@@ -44,7 +44,7 @@ class FailedJobsService
      */
     public function all()
     {
-        return $this->rawCollection()->find();
+        return $this->collection()->find();
     }
 
     /**
@@ -54,7 +54,7 @@ class FailedJobsService
      */
     public function find(string $id)
     {
-        return $this->rawCollection()->findOne(['_id' => new ObjectID($id)]);
+        return $this->collection()->findOne(['_id' => new ObjectID($id)]);
     }
 
     /**
@@ -64,7 +64,7 @@ class FailedJobsService
      */
     public function insert(array $attributes): InsertOneResult
     {
-        return $this->rawCollection()->insertOne($attributes);
+        return $this->collection()->insertOne($attributes);
     }
 
     /**
@@ -72,7 +72,7 @@ class FailedJobsService
      */
     public function delete(string $id): DeleteResult
     {
-        return $this->rawCollection()->deleteOne(['_id' => new ObjectID($id)]);
+        return $this->collection()->deleteOne(['_id' => new ObjectID($id)]);
     }
 
     /**
@@ -80,17 +80,16 @@ class FailedJobsService
      */
     public function drop()
     {
-        $this->rawCollection()->drop();
+        $this->collection()->drop();
     }
 
     /**
      * Get the actual MongoDB Collection object.
      */
-    protected function rawCollection(): Collection
+    protected function collection(): Collection
     {
-        $conn = $this->connPool->getConnection();
-        $database = $conn->defaultDatabase;
+        $database = $this->connection->defaultDatabase;
 
-        return $conn->getRawConnection()->$database->{$this->collection};
+        return $this->connection->getClient()->{$database}->{$this->collection};
     }
 }

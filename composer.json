@@ -1,13 +1,7 @@
 {
     "name": "leroy-merlin-br/mongolid-laravel",
     "description": "Easy, powerful and ultrafast MongoDB ODM for Laravel.",
-    "keywords": [
-        "odm",
-        "mongodb",
-        "nosql",
-        "laravel",
-        "illuminate"
-    ],
+    "keywords": ["odm", "mongodb", "nosql", "laravel", "illuminate", "nosql", "active record", "data mapper"],
     "license": "MIT",
     "authors": [
         {
@@ -17,14 +11,20 @@
         {
             "name": "Guilherme Guitte",
             "email": "guilherme.guitte@gmail.com"
+        },
+        {
+            "name": "Boitatá",
+            "email": "boitata@leroymerlin.com.br"
         }
     ],
     "require": {
-        "php": ">=7.1",
-        "leroy-merlin-br/mongolid": "^2.0",
-        "illuminate/support": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+        "php": ">=7.3",
+        "ext-mongodb": "*",
         "illuminate/auth": "^5.4 || ^6.0 || ^7.0 || ^8.0",
-        "illuminate/queue": "^5.4 || ^6.0 || ^7.0 || ^8.0"
+        "illuminate/queue": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+        "illuminate/support": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+        "leroy-merlin-br/mongolid": "^3.0",
+        "mongodb/mongodb": "^1.4"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0",
@@ -34,30 +34,40 @@
     },
     "autoload": {
         "psr-4": {
-            "MongolidLaravel\\": "src"
+            "Mongolid\\Laravel\\": "src"
         }
     },
     "autoload-dev": {
         "files": [
-            "tests/Migrations/stubs/DropAdmin.php",
-            "tests/Migrations/stubs/MigrationCreatorFakeMigration.php"
+            "tests/Unit/Migrations/stubs/DropAdmin.php",
+            "tests/Unit/Migrations/stubs/MigrationCreatorFakeMigration.php"
         ],
         "psr-4": {
-            "MongolidLaravel\\": "tests"
+            "Mongolid\\Laravel\\": "tests/Unit",
+            "Mongolid\\Laravel\\Tests\\": "tests"
         }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "v2.1.x-dev"
+            "dev-master": "v2.1.x-dev",
+            "dev-v3": "v3.0.x-dev"
         },
         "laravel": {
             "providers": [
-                "MongolidLaravel\\MongolidServiceProvider",
-                "MongolidLaravel\\MigrationServiceProvider"
+                "Mongolid\\Laravel\\Providers\\MongolidServiceProvider",
+                "Mongolid\\Laravel\\Providers\\MigrationServiceProvider"
             ],
             "aliases": {
-                "MongoLid": "MongolidLaravel\\MongolidModel"
+                "MongoLid": "Mongolid\\Laravel\\Model"
             }
         }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    },
+    "suggest": {
+        "leroy-merlin-br/mongolid-passport": "Mongolid Passport provides OAuth2 server support to Laravel and Mongolid."
     }
 }

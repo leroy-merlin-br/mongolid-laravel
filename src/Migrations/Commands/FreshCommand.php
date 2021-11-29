@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations\Commands;
+namespace Mongolid\Laravel\Migrations\Commands;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -9,7 +9,7 @@ namespace MongolidLaravel\Migrations\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
-use Mongolid\Connection\Pool;
+use Mongolid\Connection\Connection;
 use Symfony\Component\Console\Input\InputOption;
 
 class FreshCommand extends Command
@@ -31,14 +31,14 @@ class FreshCommand extends Command
     protected $description = 'Drop database and re-run all migrations';
 
     /**
-     * @var Pool
+     * @var Connection
      */
-    private $pool;
+    private $connection;
 
-    public function __construct(Pool $pool)
+    public function __construct(Connection $connection)
     {
         parent::__construct();
-        $this->pool = $pool;
+        $this->connection = $connection;
     }
 
     /**
@@ -78,10 +78,9 @@ class FreshCommand extends Command
      */
     protected function dropDatabase($database)
     {
-        $connection = $this->pool->getConnection();
-        $database = $database ?? $connection->defaultDatabase;
+        $database = $database ?? $this->connection->defaultDatabase;
 
-        $connection->getRawConnection()->dropDatabase($database);
+        $this->connection->getClient()->dropDatabase($database);
     }
 
     /**

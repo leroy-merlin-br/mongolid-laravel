@@ -1,5 +1,5 @@
 <?php
-namespace MongolidLaravel\Migrations\Commands;
+namespace Mongolid\Laravel\Migrations\Commands;
 
 /*
 * Copyright (c) Taylor Otwell, Leroy Merlin Brasil
@@ -8,7 +8,7 @@ namespace MongolidLaravel\Migrations\Commands;
 */
 
 use Illuminate\Support\Collection;
-use MongolidLaravel\Migrations\Migrator;
+use Mongolid\Laravel\Migrations\Migrator;
 use Symfony\Component\Console\Input\InputOption;
 
 class StatusCommand extends BaseCommand
@@ -30,7 +30,7 @@ class StatusCommand extends BaseCommand
     /**
      * The migrator instance.
      *
-     * @var \MongolidLaravel\Migrations\Migrator
+     * @var \Mongolid\Laravel\Migrations\Migrator
      */
     protected $migrator;
 

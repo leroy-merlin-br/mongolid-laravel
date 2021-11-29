@@ -15,10 +15,10 @@
     <rule ref="LeroyMerlin"/>
 
     <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <exclude-pattern>tests/Migrations/stubs/</exclude-pattern>
+        <exclude-pattern>tests/Unit/Migrations/stubs/</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingPropertyTypeHint">
-        <exclude-pattern>tests/MongolidModelTest.php</exclude-pattern>
+        <exclude-pattern>tests/Unit/AbstractModelTest.php</exclude-pattern>
     </rule>
 </ruleset>
