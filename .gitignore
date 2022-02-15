@@ -3,3 +3,4 @@ build
 .phpcs-cache
 .phpunit.result.cache
 phpcs.xml
+.idea

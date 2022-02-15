@@ -9,8 +9,8 @@ services:
       - .:/var/www/html:rw
 
   db:
-    image: mongo:4.0
-    command: mongod --smallfiles
+    image: mongo:4.2
+    command: mongod
     volumes:
       - db:/data/db
       - .:/var/www/html
