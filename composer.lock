@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "91910ef2c0dfafa283fafd39ae48a3ea",
+    "content-hash": "2205da56a86bf2107d4d28893f9472bf",
     "packages": [
         {
             "name": "brick/math",
@@ -981,42 +981,43 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v2.4.0",
+            "version": "dev-chore/mongolid-migration-v4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/leroy-merlin-br/mongolid.git",
-                "reference": "50c637d3cd20a6092c8b04f3fef120c4369e5b2f"
+                "url": "git@github.com:leroy-merlin-br/mongolid.git",
+                "reference": "f007740595d4ec8786db3e348fb760340ee91d85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/50c637d3cd20a6092c8b04f3fef120c4369e5b2f",
-                "reference": "50c637d3cd20a6092c8b04f3fef120c4369e5b2f",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/f007740595d4ec8786db3e348fb760340ee91d85",
+                "reference": "f007740595d4ec8786db3e348fb760340ee91d85",
                 "shasum": ""
             },
             "require": {
-                "illuminate/container": "^5.8 || ^6.0 || ^7.0 || ^8.0",
+                "ext-mongodb": "*",
+                "illuminate/container": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/support": "^5.4 || ^6.0 || ^7.0 || ^8.0",
                 "mongodb/mongodb": "1.8.0",
-                "php": ">=7.1"
+                "php": ">=7.3"
             },
             "require-dev": {
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^6.4",
-                "sami/sami": "^4.0",
-                "squizlabs/php_codesniffer": "^2.0"
+                "leroy-merlin-br/coding-standard": "^1.0",
+                "mockery/mockery": "^1.2",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+            },
+            "suggest": {
+                "leroy-merlin-br/mongolid-laravel": "Easy, powerful and ultrafast MongoDB ODM for Laravel."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "v2.1.x-dev"
+                    "dev-master": "v4.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Mongolid\\": "src/Mongolid"
-                },
-                "classmap": [
-                    "tests/TestCase.php"
-                ]
+                    "Mongolid\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1030,19 +1031,22 @@
                 {
                     "name": "Guilherme Guitte",
                     "email": "guilherme.guitte@gmail.com"
+                },
+                {
+                    "name": "Boitatá",
+                    "email": "boitata@leroymerlin.com.br"
                 }
             ],
             "description": "Easy, powerful and ultrafast ODM for PHP and MongoDB.",
             "keywords": [
+                "Active Record",
+                "laravel",
+                "mongo",
                 "mongodb",
                 "nosql",
                 "odm"
             ],
-            "support": {
-                "issues": "https://github.com/leroy-merlin-br/mongolid/issues",
-                "source": "https://github.com/leroy-merlin-br/mongolid/tree/v2.4.0"
-            },
-            "time": "2022-02-15T14:31:50+00:00"
+            "time": "2022-02-17T12:32:43+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -7298,7 +7302,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "leroy-merlin-br/mongolid": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
