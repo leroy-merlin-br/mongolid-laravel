@@ -8,8 +8,8 @@ use Mockery;
 use Mockery\Expectation;
 use MongoDB\Collection;
 use MongoDB\Database;
-use Mongolid\ActiveRecord;
-use Mongolid\Connection\Pool;
+use Mongolid\Connection\Connection;
+use Mongolid\LegacyRecord;
 
 /**
  * This class extends the Mongolid\ActiveRecord, so, in order
@@ -24,7 +24,7 @@ use Mongolid\Connection\Pool;
  * the "leroy-merlin\mongolid" is meant to be used with other frameworks
  * or even without any.
  */
-abstract class MongolidModel extends ActiveRecord
+abstract class MongolidModel extends LegacyRecord
 {
     /**
      * Validation rules.
@@ -180,7 +180,7 @@ abstract class MongolidModel extends ActiveRecord
      */
     protected function db(): Database
     {
-        $conn = app(Pool::class)->getConnection();
+        $conn = app(Connection::class)->getConnection();
         $database = $conn->defaultDatabase;
 
         return $conn->getRawConnection()->$database;

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8311f6a1ef16e52c3aaf5b1ba05ec794",
+    "content-hash": "678daaa060ddbe42bfbc2bd615612af9",
     "packages": [
         {
             "name": "brick/math",
@@ -981,29 +981,30 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v4.0.0-beta",
+            "version": "dev-chore/legacy-record",
             "source": {
                 "type": "git",
                 "url": "git@github.com:leroy-merlin-br/mongolid.git",
-                "reference": "40a59e12ba64ed8f20ab377b323d79ea9ea8067b"
+                "reference": "2997f06408199a9d7aaaded3d156e5ea47862ad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/40a59e12ba64ed8f20ab377b323d79ea9ea8067b",
-                "reference": "40a59e12ba64ed8f20ab377b323d79ea9ea8067b",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/2997f06408199a9d7aaaded3d156e5ea47862ad9",
+                "reference": "2997f06408199a9d7aaaded3d156e5ea47862ad9",
                 "shasum": ""
             },
             "require": {
                 "ext-mongodb": "*",
                 "illuminate/container": "^5.4 || ^6.0 || ^7.0 || ^8.0",
                 "illuminate/support": "^5.4 || ^6.0 || ^7.0 || ^8.0",
-                "mongodb/mongodb": "1.8.0",
+                "mongodb/mongodb": "^1.4",
                 "php": ">=7.3"
             },
             "require-dev": {
                 "leroy-merlin-br/coding-standard": "^1.0",
                 "mockery/mockery": "^1.2",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
+                "symfony/var-dumper": "^5.4"
             },
             "suggest": {
                 "leroy-merlin-br/mongolid-laravel": "Easy, powerful and ultrafast MongoDB ODM for Laravel."
@@ -1011,7 +1012,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "v4.0.x-dev"
+                    "dev-master": "v3.0.x-dev"
                 }
             },
             "autoload": {
@@ -1046,7 +1047,7 @@
                 "nosql",
                 "odm"
             ],
-            "time": "2022-02-18T12:17:10+00:00"
+            "time": "2022-02-18T20:08:31+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -7303,7 +7304,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "leroy-merlin-br/mongolid": 10
+        "leroy-merlin-br/mongolid": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
