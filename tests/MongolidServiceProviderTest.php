@@ -69,8 +69,8 @@ class MongolidServiceProviderTest extends TestCase
         // Actions
         $provider->registerConnector();
 
-        $pool = Container::make(Pool::class);
-        $mongoClient = $pool->getConnection()->getRawConnection();
+        $connection = Container::make(Connection::class);
+        $mongoClient = $connection->getClient();
 
         // Assertions
         $this->assertEquals($connectionString, (string) $mongoClient);

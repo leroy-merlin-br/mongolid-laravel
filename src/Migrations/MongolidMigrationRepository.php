@@ -143,9 +143,10 @@ class MongolidMigrationRepository implements MigrationRepositoryInterface
     private function collection(): Collection
     {
         if (!$this->cachedCollection) {
-            $database = $this->connection->defaultDatabase;
+            $database = $this->database ?? $this->connection->defaultDatabase;
 
-            $this->cachedCollection = $this->connection->getClient()->$database->{$this->collection};
+            $this->cachedCollection = $this->connection->getClient()
+                ->selectCollection($database, $this->collection);
         }
 
         return $this->cachedCollection;
