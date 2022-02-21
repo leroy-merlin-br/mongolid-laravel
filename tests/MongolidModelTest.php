@@ -3,12 +3,13 @@ namespace MongolidLaravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;
+use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
 use Mongolid\Cursor\Cursor;
-use Mongolid\DataMapper\DataMapper;
-use Mongolid\Exception\ModelNotFoundException;
+use Mongolid\Model\Exception\ModelNotFoundException;
+use Mongolid\Query\Builder;
 
 class MongolidModelTest extends TestCase
 {
@@ -125,7 +126,7 @@ class MongolidModelTest extends TestCase
     public function testShouldSave()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'users';
@@ -171,7 +172,7 @@ class MongolidModelTest extends TestCase
     public function testShouldHashAttributesOnSaveAndUpdate($method)
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
         $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
         $model = new class() extends MongolidModel {
@@ -259,7 +260,7 @@ class MongolidModelTest extends TestCase
     public function testShouldDelete()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -302,7 +303,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirst()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -346,7 +347,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirstOrNew()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -390,7 +391,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirstOrFailAndFoundIt()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -414,7 +415,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirstOrFailAndFail()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -457,7 +458,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetWhere()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
         $cursor = m::mock(Cursor::class);
 
         $model = new class() extends MongolidModel {
@@ -482,7 +483,7 @@ class MongolidModelTest extends TestCase
     public function testShouldGetAll()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
         $cursor = m::mock(Cursor::class);
 
         $model = new class() extends MongolidModel {
@@ -520,12 +521,12 @@ class MongolidModelTest extends TestCase
     public function testShouldGetCollection()
     {
         // Set
-        $pool = $this->instance(Pool::class, m::mock(Pool::class));
+        $connection = $this->instance(Connection::class, m::mock(Connection::class));
 
-        $connection = m::mock(Connection::class);
         $database = m::mock(Database::class);
         $connection->mongolid = $database;
         $database->collection_name = m::mock(Collection::class);
+        $client = m::mock(Client::class);
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -537,15 +538,14 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
-        $pool->shouldReceive('getConnection')
-            ->once()
-            ->withAnyArgs()
-            ->andReturn($connection);
-
-        $connection->shouldReceive('getRawConnection')
+        $connection->shouldReceive('getClient')
             ->once()
             ->with()
-            ->andReturnSelf();
+            ->andReturn($client);
+
+        $client->expects()
+            ->selectDatabase('mongolid')
+            ->andReturn($database);
 
         // Actions
         $result = $model->rawCollection();

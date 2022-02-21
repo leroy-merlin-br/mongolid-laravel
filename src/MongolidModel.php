@@ -307,7 +307,7 @@ abstract class MongolidModel extends LegacyRecord
      * @param array $projection fields to project in Mongo query
      * @param bool  $useCache   retrieves the entity through a CacheableCursor
      *
-     * @throws \Mongolid\Exception\ModelNotFoundException If no document was found
+     * @throws \Mongolid\Model\Exception\ModelNotFoundException If no document was found
      *
      * @return LegacyRecord
      */
