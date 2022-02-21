@@ -78,6 +78,8 @@ class FreshCommand extends Command
      */
     protected function dropDatabase($database)
     {
+        $database = $database ?? $this->connection->defaultDatabase;
+
         $this->connection->getClient()->dropDatabase($database);
     }
 
