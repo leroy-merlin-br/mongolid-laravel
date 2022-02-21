@@ -80,7 +80,7 @@ class FreshCommandTest extends TestCase
     public function testShouldRunFreshCommandWithDbSeed()
     {
         // Set
-        $connection= m::mock(Connection::class);
+        $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
         $command = m::mock(FreshCommand::class.'[call]', [$connection]);
         $app = m::mock(Application::class.'[environment]');

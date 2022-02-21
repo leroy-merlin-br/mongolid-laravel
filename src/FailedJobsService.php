@@ -28,8 +28,8 @@ class FailedJobsService
     protected $connection;
 
     /**
-     * @param Connection   $connection   Connections that are going to be used to interact with MongoDB
-     * @param string $collection Collection where jobs will be stored
+     * @param Connection $connection Connections that are going to be used to interact with MongoDB
+     * @param string     $collection Collection where jobs will be stored
      */
     public function __construct(Connection $connection, string $collection = 'failed_jobs')
     {

@@ -7,8 +7,6 @@ use Illuminate\Support\MessageBag;
 use Mockery;
 use Mockery\Expectation;
 use MongoDB\Collection;
-use MongoDB\Database;
-use Mongolid\Connection\Connection;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\LegacyRecord;
 
