@@ -2,7 +2,7 @@
 namespace MongolidLaravel;
 
 use Mockery as m;
-use Mongolid\Container\Ioc;
+use Mongolid\Container\Container;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
@@ -13,7 +13,7 @@ class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Ioc::setContainer($this->app);
+        Container::setContainer($this->app);
     }
 
     protected function tearDown(): void

@@ -8,7 +8,6 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
-use Mongolid\Connection\Pool;
 use MongolidLaravel\TestCase;
 
 class RulesTest extends TestCase
@@ -16,7 +15,7 @@ class RulesTest extends TestCase
     public function testShouldBeUnique()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $connection = m::mock(Connection::class);
@@ -56,7 +55,7 @@ class RulesTest extends TestCase
     public function testShouldBeUniqueExcludingId()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $connection = m::mock(Connection::class);
@@ -102,7 +101,7 @@ class RulesTest extends TestCase
     public function testShouldNotBeUniqueWhenThereAreResults()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $connection = m::mock(Connection::class);
@@ -148,7 +147,7 @@ class RulesTest extends TestCase
     public function testShouldBeUniqueCastingIdToInt()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $connection = m::mock(Connection::class);
@@ -194,7 +193,7 @@ class RulesTest extends TestCase
     public function testShouldNotCastIdToIntIfParameterIsNotStringTrue()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $connection = m::mock(Connection::class);
@@ -240,7 +239,7 @@ class RulesTest extends TestCase
     public function testUniqueShouldValidateParameters()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $parameters = [];
@@ -260,7 +259,7 @@ class RulesTest extends TestCase
     public function testShouldExist()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $connection = m::mock(Connection::class);
@@ -300,7 +299,7 @@ class RulesTest extends TestCase
     public function testShouldExistWithIntValue()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $connection = m::mock(Connection::class);
@@ -340,7 +339,7 @@ class RulesTest extends TestCase
     public function testShouldNotExistWhenThereIsNoResults()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $connection = m::mock(Connection::class);
@@ -380,7 +379,7 @@ class RulesTest extends TestCase
     public function testExistsShouldValidateParameters()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         $parameters = [];
@@ -400,7 +399,7 @@ class RulesTest extends TestCase
     public function testShouldRetrieveAlreadyTranslatedMessage()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
         $message = 'The email should be unique yo';
 
@@ -414,7 +413,7 @@ class RulesTest extends TestCase
     public function testShouldTranslateAMessage()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
         $expectedMessage = 'The email has already been taken.';
 
@@ -428,7 +427,7 @@ class RulesTest extends TestCase
     public function testShouldBeAnObjectIdWhenUsingObject()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         // Actions
@@ -441,7 +440,7 @@ class RulesTest extends TestCase
     public function testShouldBeAnObjectIdWhenUsingString()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         // Actions
@@ -454,7 +453,7 @@ class RulesTest extends TestCase
     public function testShouldNotBeAnObjectId()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
 
         // Actions
@@ -467,7 +466,7 @@ class RulesTest extends TestCase
     public function testShouldRetrieveAlreadyTranslatedMessageForObjectId()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
         $message = 'You shall not pass';
 
@@ -481,7 +480,7 @@ class RulesTest extends TestCase
     public function testShouldTranslateAMessageForObjectId()
     {
         // Set
-        $pool = m::mock(Pool::class);
+        $pool = m::mock(Connection::class);
         $rules = new Rules($pool);
         $expectedMessage = 'The productBank must be an MongoDB ObjectId.';
 

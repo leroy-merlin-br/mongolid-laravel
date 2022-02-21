@@ -8,7 +8,6 @@ use MongoDB\Collection;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
 use Mongolid\Connection\Connection;
-use Mongolid\Connection\Pool;
 use stdClass;
 
 class FailedJobsServiceTest extends TestCase
@@ -16,7 +15,7 @@ class FailedJobsServiceTest extends TestCase
     public function testAllShouldReturnWholeCollection()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connPool = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
         $this->mockRawCollection($connPool, $rawCollection);
         $cursor = m::mock(stdClass::class);
@@ -39,7 +38,7 @@ class FailedJobsServiceTest extends TestCase
     public function testFindShouldReturnWholeCollection()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connPool = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
         $this->mockRawCollection($connPool, $rawCollection);
         $job = ['job' => 'attributes'];
@@ -63,7 +62,7 @@ class FailedJobsServiceTest extends TestCase
     public function testInsertShouldAddOneJob()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connPool = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
         $this->mockRawCollection($connPool, $rawCollection);
         $job = ['job' => 'attributes'];
@@ -87,7 +86,7 @@ class FailedJobsServiceTest extends TestCase
     public function testDeleteShouldRemoveOneJob()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connPool = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
         $this->mockRawCollection($connPool, $rawCollection);
         $id = '59a86805401fec4f572fdd21';
@@ -111,7 +110,7 @@ class FailedJobsServiceTest extends TestCase
     public function testDropShouldCleanWholeCollection()
     {
         // Set
-        $connPool = m::mock(Pool::class);
+        $connPool = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
         $this->mockRawCollection($connPool, $rawCollection);
 
@@ -126,9 +125,11 @@ class FailedJobsServiceTest extends TestCase
         $failedJobs->drop();
     }
 
-    private function mockRawCollection($connPool, $rawCollection, $collection = 'failed_jobs')
-    {
-        $connection = m::mock(Connection::class);
+    private function mockRawCollection(
+        Connection $connection,
+        Collection $rawCollection,
+        string $collection = 'failed_jobs'
+    ): void {
         $rawClient = m::mock(Client::class);
 
         $connection->defaultDatabase = 'database';
@@ -136,14 +137,8 @@ class FailedJobsServiceTest extends TestCase
         $database->{$collection} = $rawCollection;
         $rawClient->database = $database;
 
-        $connPool->shouldReceive('getConnection')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($connection);
-
-        $connection->shouldReceive('getRawConnection')
-            ->withNoArgs()
-            ->once()
+        $connection->expects()
+            ->getClient()
             ->andReturn($rawClient);
     }
 }

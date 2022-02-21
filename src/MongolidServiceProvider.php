@@ -6,10 +6,8 @@ use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
-use Mongolid\Connection\Pool;
-use Mongolid\Container\Ioc as MongolidIoc;
+use Mongolid\Container\Container;
 use Mongolid\Event\EventTriggerService;
-use Mongolid\Util\CacheComponentInterface;
 use MongolidLaravel\Validation\Rules;
 
 class MongolidServiceProvider extends ServiceProvider
@@ -46,10 +44,10 @@ class MongolidServiceProvider extends ServiceProvider
      */
     public function registerConnector()
     {
-        MongolidIoc::setContainer($this->app);
+        Container::setContainer($this->app);
 
         $this->app->singleton(
-            Pool::class,
+            Connection::class,
             function ($app) {
                 $config = $app['config']->get('database.mongodb.default') ?? [];
                 $connectionString = $this->buildConnectionString($config);
@@ -59,10 +57,7 @@ class MongolidServiceProvider extends ServiceProvider
                 $connection = new Connection($connectionString, $options, $driverOptions);
                 $connection->defaultDatabase = $config['database'] ?? 'mongolid';
 
-                $pool = new Pool();
-                $pool->addConnection($connection);
-
-                return $pool;
+                return $connection;
             }
         );
         $this->app->singleton(
@@ -75,7 +70,7 @@ class MongolidServiceProvider extends ServiceProvider
             }
         );
         $this->app->singleton(
-            CacheComponentInterface::class,
+            LaravelCacheComponent::class,
             function ($app) {
                 return new LaravelCacheComponent($app[CacheRepository::class]);
             }

@@ -6,7 +6,6 @@ use Mockery as m;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
-use Mongolid\Connection\Pool;
 use Mongolid\Cursor\Cursor;
 use Mongolid\DataMapper\DataMapper;
 use Mongolid\Exception\ModelNotFoundException;

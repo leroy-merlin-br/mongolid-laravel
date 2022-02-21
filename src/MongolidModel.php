@@ -9,10 +9,11 @@ use Mockery\Expectation;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
+use Mongolid\Cursor\CursorInterface;
 use Mongolid\LegacyRecord;
 
 /**
- * This class extends the Mongolid\ActiveRecord, so, in order
+ * This class extends the Mongolid\LegacyRecord, so, in order
  * to understand the ODM implementation make sure to check the
  * base class.
  *
@@ -68,10 +69,8 @@ abstract class MongolidModel extends LegacyRecord
      * method into the existing Mock in order not to touch the database.
      *
      * @param bool $force force save even if the object is invalid
-     *
-     * @return bool
      */
-    public function save(bool $force = false)
+    public function save(bool $force = false): bool
     {
         if ($this->localMockHasExpectationsFor('save')) {
             return $this->getLocalMock()->save();
@@ -89,7 +88,7 @@ abstract class MongolidModel extends LegacyRecord
     /**
      * {@inheritdoc}
      */
-    public function update()
+    public function update(): bool
     {
         $this->hashAttributes();
 
@@ -100,10 +99,8 @@ abstract class MongolidModel extends LegacyRecord
      * Overwrites the delete method in order to be able to check for
      * the expectation in the localMock in order to call the delete method
      * into the existing mock and avoid touching the database.
-     *
-     * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         if ($this->localMockHasExpectationsFor('delete')) {
             return $this->getLocalMock()->delete();
@@ -176,22 +173,11 @@ abstract class MongolidModel extends LegacyRecord
     }
 
     /**
-     * Returns the database object (the connection).
-     */
-    protected function db(): Database
-    {
-        $conn = app(Connection::class)->getConnection();
-        $database = $conn->defaultDatabase;
-
-        return $conn->getRawConnection()->$database;
-    }
-
-    /**
      * Returns the Mongo collection object.
      */
     protected function collection(): Collection
     {
-        return $this->db()->{$this->collection};
+        return $this->getCollection();
     }
 
     /**
@@ -303,7 +289,7 @@ abstract class MongolidModel extends LegacyRecord
      * @param array $projection fields to project in MongoDB query
      * @param bool  $useCache   retrieves the entity through a CacheableCursor
      *
-     * @return ActiveRecord
+     * @return LegacyRecord
      */
     public static function first(
         $query = [],
@@ -323,7 +309,7 @@ abstract class MongolidModel extends LegacyRecord
      *
      * @throws \Mongolid\Exception\ModelNotFoundException If no document was found
      *
-     * @return ActiveRecord
+     * @return LegacyRecord
      */
     public static function firstOrFail(
         $query = [],
@@ -340,7 +326,7 @@ abstract class MongolidModel extends LegacyRecord
      *
      * @param mixed $id document id
      *
-     * @return ActiveRecord
+     * @return LegacyRecord
      */
     public static function firstOrNew($id)
     {
@@ -361,14 +347,14 @@ abstract class MongolidModel extends LegacyRecord
         array $query = [],
         array $projection = [],
         bool $useCache = false
-    ) {
+    ): CursorInterface {
         return static::callMockOrParent('where', func_get_args());
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function all()
+    public static function all(): CursorInterface
     {
         return static::callMockOrParent('all', func_get_args());
     }

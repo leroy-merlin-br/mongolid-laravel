@@ -8,7 +8,7 @@ namespace MongolidLaravel;
 */
 
 use Illuminate\Support\ServiceProvider;
-use Mongolid\Connection\Pool;
+use Mongolid\Connection\Connection;
 use MongolidLaravel\Migrations\Commands\FreshCommand;
 use MongolidLaravel\Migrations\Commands\InstallCommand;
 use MongolidLaravel\Migrations\Commands\MigrateCommand;
@@ -99,7 +99,7 @@ class MigrationServiceProvider extends ServiceProvider
             function ($app) {
                 $collection = $app['config']['database.mongodb.default.migrations'] ?? 'migrations';
 
-                return new MongolidMigrationRepository($app[Pool::class], $collection);
+                return new MongolidMigrationRepository($app[Connection::class], $collection);
             }
         );
     }
@@ -156,7 +156,7 @@ class MigrationServiceProvider extends ServiceProvider
         $this->app->singleton(
             'command.mongolid-migrate.fresh',
             function ($app) {
-                return new FreshCommand($app[Pool::class]);
+                return new FreshCommand($app[Connection::class]);
             }
         );
     }

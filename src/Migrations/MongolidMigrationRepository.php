@@ -8,7 +8,7 @@ namespace MongolidLaravel\Migrations;
 */
 
 use MongoDB\Collection;
-use Mongolid\Connection\Pool;
+use Mongolid\Connection\Connection;
 
 class MongolidMigrationRepository implements MigrationRepositoryInterface
 {
@@ -27,19 +27,19 @@ class MongolidMigrationRepository implements MigrationRepositoryInterface
     private $database;
 
     /**
-     * @var Pool
+     * @var Connection
      */
-    private $pool;
+    private $connection;
 
     /**
      * @var Collection
      */
     private $cachedCollection;
 
-    public function __construct(Pool $pool, string $collection)
+    public function __construct(Connection $connection, string $collection)
     {
         $this->collection = $collection;
-        $this->pool = $pool;
+        $this->connection = $connection;
     }
 
     public function getRan()
@@ -143,11 +143,9 @@ class MongolidMigrationRepository implements MigrationRepositoryInterface
     private function collection(): Collection
     {
         if (!$this->cachedCollection) {
-            $connection = $this->pool->getConnection();
-            $database = $this->database ?? $connection->defaultDatabase;
+            $database = $this->connection->defaultDatabase;
 
-            $this->cachedCollection = $connection->getRawConnection()
-                ->selectCollection($database, $this->collection);
+            $this->cachedCollection = $this->connection->getClient()->$database->{$this->collection};
         }
 
         return $this->cachedCollection;

@@ -4,7 +4,7 @@ namespace MongolidLaravel;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
-use Mongolid\Container\Ioc;
+use Mongolid\Container\Container;
 
 class MongolidUserProvider implements UserProvider
 {
@@ -83,7 +83,7 @@ class MongolidUserProvider implements UserProvider
     {
         $class = '\\'.ltrim($this->model, '\\');
 
-        return Ioc::make($class);
+        return Container::make($class);
     }
 
     /**
