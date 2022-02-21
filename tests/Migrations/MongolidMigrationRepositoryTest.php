@@ -21,21 +21,16 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testGetRanMigrationsListMigrationsByPackage()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
-
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
+
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
 
         // Expectations
-        $pool->expects()
-            ->getConnection()
-            ->andReturn($connection);
-
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -62,11 +57,10 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testGetMigrationsList()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
-
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
+
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
 
@@ -74,12 +68,8 @@ class MongolidMigrationRepositoryTest extends TestCase
         $list = [(object) ['migration' => 'bar']];
 
         // Expectations
-        $pool->expects()
-            ->getConnection()
-            ->andReturn($connection);
-
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -106,11 +96,10 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testGetLastMigrationsGetsAllMigrationsWithTheLatestBatchNumber()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
-
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
+
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
 
@@ -129,12 +118,8 @@ class MongolidMigrationRepositoryTest extends TestCase
         $cursor = SplFixedArray::fromArray($migrations);
 
         // Expectations
-        $pool->expects()
-            ->getConnection()
-            ->andReturn($connection);
-
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -169,11 +154,10 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testGetMigrationBatches()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
-
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
+
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
 
@@ -190,12 +174,8 @@ class MongolidMigrationRepositoryTest extends TestCase
         ];
 
         // Expectations
-        $pool->expects()
-            ->getConnection()
-            ->andReturn($connection);
-
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -221,21 +201,16 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testLogMethodInsertsRecordIntoMigrationCollection()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
-
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
+
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
 
         // Expectations
-        $pool->expects()
-            ->getConnection()
-            ->andReturn($connection);
-
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -252,22 +227,17 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testDeleteMethodRemovesAMigrationFromTheCollection()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
-        $migration = (object) ['migration' => 'create_foo_index'];
-
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $migration = (object) ['migration' => 'create_foo_index'];
+
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
 
         // Expectations
-        $pool->expects()
-            ->getConnection()
-            ->andReturn($connection);
-
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -284,23 +254,18 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testGetNextBatchNumberReturnsLastBatchNumberPlusOne()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
-
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
+
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
 
         $batchNumber = 4;
 
         // Expectations
-        $pool->expects()
-            ->getConnection()
-            ->andReturn($connection);
-
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -327,23 +292,18 @@ class MongolidMigrationRepositoryTest extends TestCase
 
     public function testGetLastBatchNumberReturnsMaxBatch()
     {
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
-
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
+
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
 
         $batchNumber = 4;
 
         // Expectations
-        $pool->expects()
-            ->getConnection()
-            ->andReturn($connection);
-
         $connection->expects()
-            ->getRawConnection()
+            ->getClient()
             ->andReturn($client);
 
         $client->expects()
@@ -372,11 +332,11 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testCreateRepositoryCreatesProperDatabaseCollection()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
+        $connection = m::mock(Connection::class);
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
 
         // Expectations
-        $pool->expects()
+        $connection->expects()
             ->getConnection()
             ->never();
 
@@ -387,11 +347,11 @@ class MongolidMigrationRepositoryTest extends TestCase
     public function testRepositoryExists()
     {
         // Set
-        $pool = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($pool, 'migrations');
+        $connection = m::mock(Connection::class);
+        $repository = new MongolidMigrationRepository($connection, 'migrations');
 
         // Expectations
-        $pool->expects()
+        $connection->expects()
             ->getConnection()
             ->never();
 
