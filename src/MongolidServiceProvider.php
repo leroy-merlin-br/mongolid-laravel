@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Container\Container;
 use Mongolid\Event\EventTriggerService;
+use Mongolid\Util\CacheComponentInterface;
 use MongolidLaravel\Validation\Rules;
 
 class MongolidServiceProvider extends ServiceProvider
@@ -70,7 +71,7 @@ class MongolidServiceProvider extends ServiceProvider
             }
         );
         $this->app->singleton(
-            LaravelCacheComponent::class,
+            CacheComponentInterface::class,
             function ($app) {
                 return new LaravelCacheComponent($app[CacheRepository::class]);
             }

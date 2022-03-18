@@ -2,6 +2,7 @@
 namespace MongolidLaravel;
 
 use Illuminate\Cache\Repository;
+use Mongolid\Util\CacheComponentInterface;
 use stdClass;
 
 /**
@@ -9,7 +10,7 @@ use stdClass;
  * Add a second layer of cache in memory to avoid hitting
  * Laravel's cache twice for large results.
  */
-class LaravelCacheComponent
+class LaravelCacheComponent implements CacheComponentInterface
 {
     /**
      * Copy cache result in memory array.
