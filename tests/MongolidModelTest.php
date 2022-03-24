@@ -7,7 +7,7 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\Database;
 use Mongolid\Connection\Connection;
-use Mongolid\Cursor\Cursor;
+use Mongolid\Cursor\CursorInterface;
 use Mongolid\Model\Exception\ModelNotFoundException;
 use Mongolid\Query\Builder;
 
@@ -459,7 +459,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
-        $cursor = m::mock(Cursor::class);
+        $cursor = m::mock(CursorInterface::class);
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';
@@ -484,7 +484,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
-        $cursor = m::mock(Cursor::class);
+        $cursor = m::mock(CursorInterface::class);
 
         $model = new class() extends MongolidModel {
             protected $collection = 'collection_name';

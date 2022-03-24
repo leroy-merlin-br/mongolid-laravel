@@ -338,8 +338,6 @@ abstract class MongolidModel extends LegacyRecord
      * @param array $query      mongoDB selection criteria
      * @param array $projection fields to project in MongoDB query
      * @param bool  $useCache   retrieves a CacheableCursor instead
-     *
-     * @return \Mongolid\Cursor\Cursor
      */
     public static function where(
         array $query = [],
