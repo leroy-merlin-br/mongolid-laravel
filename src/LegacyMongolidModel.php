@@ -24,7 +24,7 @@ use Mongolid\Model\AbstractModel;
  * the "leroy-merlin\mongolid" is meant to be used with other frameworks
  * or even without any.
  */
-abstract class MongolidModel extends AbstractModel
+abstract class LegacyMongolidModel extends LegacyRecord
 {
     /**
      * Validation rules.

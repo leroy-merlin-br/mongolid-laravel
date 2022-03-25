@@ -985,12 +985,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:leroy-merlin-br/mongolid.git",
-                "reference": "d651f333184aecd66cae11ccc71184be3f5f05a5"
+                "reference": "3649d52d88ab226493950561ebd462be81214716"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/d651f333184aecd66cae11ccc71184be3f5f05a5",
-                "reference": "d651f333184aecd66cae11ccc71184be3f5f05a5",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/3649d52d88ab226493950561ebd462be81214716",
+                "reference": "3649d52d88ab226493950561ebd462be81214716",
                 "shasum": ""
             },
             "require": {
@@ -1047,7 +1047,7 @@
                 "nosql",
                 "odm"
             ],
-            "time": "2022-03-18T14:26:43+00:00"
+            "time": "2022-03-23T20:23:34+00:00"
         },
         {
             "name": "mongodb/mongodb",
