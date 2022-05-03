@@ -9,7 +9,6 @@ use Mockery\Expectation;
 use MongoDB\Collection;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\LegacyRecord;
-use Mongolid\Model\AbstractModel;
 
 /**
  * This class extends the Mongolid\LegacyRecord, so, in order

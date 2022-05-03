@@ -3,10 +3,6 @@ namespace MongolidLaravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;
-use MongoDB\Client;
-use MongoDB\Collection;
-use MongoDB\Database;
-use Mongolid\Connection\Connection;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\DataMapper\DataMapper;
 use Mongolid\Model\Exception\ModelNotFoundException;
