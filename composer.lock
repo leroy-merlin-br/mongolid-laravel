@@ -981,7 +981,7 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v4.0.0-beta",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:leroy-merlin-br/mongolid.git",
