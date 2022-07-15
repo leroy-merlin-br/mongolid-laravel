@@ -21,7 +21,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "leroy-merlin-br/mongolid": "dev-chore/legacy-record-cache",
+        "leroy-merlin-br/mongolid": "v3.1.0",
         "illuminate/support": "^5.4 || ^6.0 || ^7.0 || ^8.0",
         "illuminate/auth": "^5.4 || ^6.0 || ^7.0 || ^8.0",
         "illuminate/queue": "^5.4 || ^6.0 || ^7.0 || ^8.0"
@@ -58,6 +58,11 @@
             "aliases": {
                 "MongoLid": "MongolidLaravel\\MongolidModel"
             }
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     }
 }

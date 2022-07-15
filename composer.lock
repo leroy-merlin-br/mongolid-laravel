@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35d227518484eabba75a0939bf80f245",
+    "content-hash": "b4a520607dcf505f8b03463644e7fc86",
     "packages": [
         {
             "name": "brick/math",
@@ -1029,16 +1029,16 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "dev-chore/legacy-record-cache",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:leroy-merlin-br/mongolid.git",
-                "reference": "1300e3b7af0736a7fd56e95faff431a069881381"
+                "reference": "5b199694094214e8f4b5f7b06523d683931cdae9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/1300e3b7af0736a7fd56e95faff431a069881381",
-                "reference": "1300e3b7af0736a7fd56e95faff431a069881381",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/5b199694094214e8f4b5f7b06523d683931cdae9",
+                "reference": "5b199694094214e8f4b5f7b06523d683931cdae9",
                 "shasum": ""
             },
             "require": {
@@ -1095,7 +1095,7 @@
                 "nosql",
                 "odm"
             ],
-            "time": "2022-05-06T13:08:49+00:00"
+            "time": "2022-07-13T14:36:49+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -7558,14 +7558,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "leroy-merlin-br/mongolid": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }
