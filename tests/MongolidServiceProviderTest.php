@@ -2,10 +2,9 @@
 namespace MongolidLaravel;
 
 use Illuminate\Queue\Failed\NullFailedJobProvider;
-use Mongolid\Connection\Pool;
-use Mongolid\Container\Ioc;
+use Mongolid\Connection\Connection;
+use Mongolid\Container\Container;
 use Mongolid\Event\EventTriggerService;
-use Mongolid\Util\CacheComponentInterface;
 
 class MongolidServiceProviderTest extends TestCase
 {
@@ -18,7 +17,7 @@ class MongolidServiceProviderTest extends TestCase
         // Actions
         $provider->boot();
         $result = $this->app['auth']->getProvider();
-        $queueFailerResult = Ioc::make('queue.failer');
+        $queueFailerResult = Container::make('queue.failer');
 
         // Actions
         $this->assertInstanceOf(MongolidUserProvider::class, $result);
@@ -33,7 +32,7 @@ class MongolidServiceProviderTest extends TestCase
 
         // Actions
         $provider->boot();
-        $result = Ioc::make('queue.failer');
+        $result = Container::make('queue.failer');
 
         // Actions
         $this->assertInstanceOf(MongolidFailedJobProvider::class, $result);
@@ -48,12 +47,12 @@ class MongolidServiceProviderTest extends TestCase
         // Actions
         $provider->register();
 
-        $pool = Ioc::make(Pool::class);
-        $eventService = Ioc::make(EventTriggerService::class);
-        $cacheComponent = Ioc::make(CacheComponentInterface::class);
+        $connection = Container::make(Connection::class);
+        $eventService = Container::make(EventTriggerService::class);
+        $cacheComponent = Container::make(LaravelCacheComponent::class);
 
         // Assertions
-        $this->assertEquals('databaseName', $pool->getConnection()->defaultDatabase);
+        $this->assertEquals('databaseName', $connection->defaultDatabase);
         $this->assertInstanceOf(EventTriggerService::class, $eventService);
         $this->assertInstanceOf(LaravelCacheComponent::class, $cacheComponent);
     }
@@ -70,8 +69,8 @@ class MongolidServiceProviderTest extends TestCase
         // Actions
         $provider->registerConnector();
 
-        $pool = Ioc::make(Pool::class);
-        $mongoClient = $pool->getConnection()->getRawConnection();
+        $connection = Container::make(Connection::class);
+        $mongoClient = $connection->getClient();
 
         // Assertions
         $this->assertEquals($connectionString, (string) $mongoClient);

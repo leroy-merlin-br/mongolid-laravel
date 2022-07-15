@@ -59,5 +59,10 @@
                 "MongoLid": "MongolidLaravel\\MongolidModel"
             }
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

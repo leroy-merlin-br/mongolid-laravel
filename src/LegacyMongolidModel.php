@@ -9,7 +9,6 @@ use Mockery\Expectation;
 use MongoDB\Collection;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\LegacyRecord;
-use Mongolid\Model\AbstractModel;
 
 /**
  * This class extends the Mongolid\LegacyRecord, so, in order
@@ -24,7 +23,7 @@ use Mongolid\Model\AbstractModel;
  * the "leroy-merlin\mongolid" is meant to be used with other frameworks
  * or even without any.
  */
-abstract class MongolidModel extends AbstractModel
+abstract class LegacyMongolidModel extends LegacyRecord
 {
     /**
      * Validation rules.

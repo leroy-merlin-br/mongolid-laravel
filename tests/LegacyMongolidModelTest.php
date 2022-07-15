@@ -3,21 +3,17 @@ namespace MongolidLaravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
 use Mockery as m;
-use MongoDB\Client;
-use MongoDB\Collection;
-use MongoDB\Database;
-use Mongolid\Connection\Connection;
 use Mongolid\Cursor\CursorInterface;
+use Mongolid\DataMapper\DataMapper;
 use Mongolid\Model\Exception\ModelNotFoundException;
-use Mongolid\Query\Builder;
+use MongolidLaravel\Stubs\LegacyMongolidModelStub;
 
-class MongolidModelTest extends TestCase
+class LegacyMongolidModelTest extends TestCase
 {
     public function testShouldValidateWithNoRules()
     {
         // Set
-        $model = new class() extends MongolidModel {
-        };
+        $model = new LegacyMongolidModelStub();
 
         // Actions
         $result = $model->isValid();
@@ -30,14 +26,11 @@ class MongolidModelTest extends TestCase
     public function testShouldNotValidateWithUnattendedRules()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            protected $rules = [
-                'name' => 'required',
-                'address' => 'min:100',
-            ];
-        };
-
-        $model->address = 'small address';
+        $model = new LegacyMongolidModelStub(['address' => 'small address']);
+        $model->setRules([
+            'name' => 'required',
+            'address' => 'min:100',
+        ]);
 
         $expectedErrors = [
             'The name field is required.',
@@ -55,18 +48,13 @@ class MongolidModelTest extends TestCase
     public function testShouldValidateRulesWithCustomMessage()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            protected $rules = [
-                'name' => 'required',
-            ];
-
-            public function messages(): array
-            {
-                return [
-                    'name.required' => 'The name must be fielded.',
-                ];
-            }
-        };
+        $model = new LegacyMongolidModelStub();
+        $model->setRules([
+            'name' => 'required',
+        ]);
+        $model->setMessages([
+            'name.required' => 'The name must be fielded.',
+        ]);
 
         $expectedErrors = [
             'The name must be fielded.',
@@ -83,16 +71,13 @@ class MongolidModelTest extends TestCase
     public function testValidateShouldSkipUnchangedHashedAttributes()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            public $rules = [
-                'name' => 'required',
-            ];
-
-            protected $hashedAttributes = ['password'];
-        };
-
-        $model->name = 'name';
-        $model->password = 'HASHED_PASSWORD';
+        $model = new LegacyMongolidModelStub([
+            'name' => 'name',
+            'password' => 'HASHED_PASSWORD',
+        ]);
+        $model->setRules([
+            'name' => 'required',
+        ]);
 
         // Actions
         $result = $model->isValid();
@@ -105,15 +90,12 @@ class MongolidModelTest extends TestCase
     public function testShouldValidateChangedHashedAttributes()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            public $rules = [
-                'password' => 'required',
-            ];
-
-            protected $hashedAttributes = ['password'];
-        };
-
-        $model->password = 'HASHED_PASSWORD';
+        $model = new LegacyMongolidModelStub([
+            'password' => 'HASHED_PASSWORD',
+        ]);
+        $model->setRules([
+            'password' => 'required',
+        ]);
 
         // Actions
         $result = $model->isValid();
@@ -126,11 +108,10 @@ class MongolidModelTest extends TestCase
     public function testShouldSave()
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
-            protected $collection = 'users';
-        };
+        $model = new LegacyMongolidModelStub();
+        $model->setCollection('users');
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -150,8 +131,7 @@ class MongolidModelTest extends TestCase
     public function testShouldMockSave()
     {
         // Set
-        $model = new class() extends MongolidModel {
-        };
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $model->shouldReceiveSave()
@@ -172,17 +152,14 @@ class MongolidModelTest extends TestCase
     public function testShouldHashAttributesOnSaveAndUpdate($method)
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
-        $model = new class() extends MongolidModel {
-            protected $collection = 'users';
-
-            protected $hashedAttributes = ['password'];
-        };
-
-        $model->password = '123456';
-        $model->password_confirmation = '123456';
+        $model = new LegacyMongolidModelStub([
+            'password' => '123456',
+            'password_confirmation' => '123456',
+        ]);
+        $model->setCollection('users');
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -209,19 +186,18 @@ class MongolidModelTest extends TestCase
     public function testShouldNotAttemptToSaveWhenInvalid()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            public $rules = [
-                'name' => 'required',
-                'address' => 'min:100',
-            ];
-        };
+        $model = new LegacyMongolidModelStub([
+            'address' => 'small address',
+        ]);
+        $model->setRules([
+            'name' => 'required',
+            'address' => 'min:100',
+        ]);
 
         $expectedErrors = [
             'The name field is required.',
             'The address must be at least 100 characters.',
         ];
-
-        $model->address = 'small address';
 
         // Actions
         $result = $model->save();
@@ -234,14 +210,13 @@ class MongolidModelTest extends TestCase
     public function testShouldForceSaving()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            public $rules = [
-                'name' => 'required',
-                'address' => 'min:100',
-            ];
-        };
-
-        $model->address = 'small address';
+        $model = new LegacyMongolidModelStub([
+            'address' => 'small address',
+        ]);
+        $model->setRules([
+            'name' => 'required',
+            'address' => 'min:100',
+        ]);
 
         // Expectations
         $model->shouldReceiveSave()
@@ -260,11 +235,10 @@ class MongolidModelTest extends TestCase
     public function testShouldDelete()
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
 
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $model = new LegacyMongolidModelStub();
+        $model->setCollection('collection_name');
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -284,8 +258,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockDelete()
     {
         // Set
-        $model = new class() extends MongolidModel {
-        };
+        $model = new LegacyMongolidModelStub();
+        $model->setCollection('');
 
         // Expectations
         $model->shouldReceiveDelete()
@@ -303,11 +277,8 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirst()
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
-
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -327,9 +298,7 @@ class MongolidModelTest extends TestCase
     public function testShouldMockFirst()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $model::shouldReceive('first')
@@ -347,11 +316,8 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirstOrNew()
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
-
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -371,9 +337,7 @@ class MongolidModelTest extends TestCase
     public function testShouldMockFirstOrNew()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $model::shouldReceive('firstOrNew')
@@ -391,11 +355,8 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirstOrFailAndFoundIt()
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
-
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -415,11 +376,8 @@ class MongolidModelTest extends TestCase
     public function testShouldGetFirstOrFailAndFail()
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
-
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $this->expectException(ModelNotFoundException::class);
@@ -438,9 +396,8 @@ class MongolidModelTest extends TestCase
     public function testShouldMockFirstOrFail()
     {
         // Set
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $model = new LegacyMongolidModelStub();
+        $model->setCollection('collection_name');
 
         // Expectations
         $model::shouldReceive('firstOrFail')
@@ -458,12 +415,10 @@ class MongolidModelTest extends TestCase
     public function testShouldGetWhere()
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $cursor = m::mock(CursorInterface::class);
 
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -483,12 +438,10 @@ class MongolidModelTest extends TestCase
     public function testShouldGetAll()
     {
         // Set
-        $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
+        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
         $cursor = m::mock(CursorInterface::class);
 
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-        };
+        $model = new LegacyMongolidModelStub();
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -508,50 +461,14 @@ class MongolidModelTest extends TestCase
     public function testShouldIgnoreInvalidStaticCalls()
     {
         // Set
-        $model = new class() extends MongolidModel {
-        };
+        $model = new LegacyMongolidModelStub();
+        $model->setCollection(null);
 
         // Actions
         $result = $model::foobar();
 
         // Assertions
         $this->assertNull($result);
-    }
-
-    public function testShouldGetCollection()
-    {
-        // Set
-        $connection = $this->instance(Connection::class, m::mock(Connection::class));
-
-        $database = m::mock(Database::class);
-        $connection->mongolid = $database;
-        $database->collection_name = m::mock(Collection::class);
-        $client = m::mock(Client::class);
-
-        $model = new class() extends MongolidModel {
-            protected $collection = 'collection_name';
-
-            public function rawCollection()
-            {
-                return $this->collection();
-            }
-        };
-
-        // Expectations
-        $connection->shouldReceive('getClient')
-            ->once()
-            ->with()
-            ->andReturn($client);
-
-        $client->expects()
-            ->selectDatabase('mongolid')
-            ->andReturn($database);
-
-        // Actions
-        $result = $model->rawCollection();
-
-        // Assertions
-        $this->assertEquals($database->collection_name, $result);
     }
 
     /**

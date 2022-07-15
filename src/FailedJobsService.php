@@ -6,7 +6,7 @@ use MongoDB\Collection;
 use MongoDB\DeleteResult;
 use MongoDB\Driver\Cursor;
 use MongoDB\InsertOneResult;
-use Mongolid\Connection\Pool;
+use Mongolid\Connection\Connection;
 
 /**
  * Persistence layer that is used to save failed queue jobs on MongoDB.
@@ -23,17 +23,17 @@ class FailedJobsService
     /**
      * Connections that are going to be used to interact with database.
      *
-     * @var Pool
+     * @var Connection
      */
-    protected $connPool;
+    protected $connection;
 
     /**
-     * @param Pool   $connPool   Connections that are going to be used to interact with MongoDB
-     * @param string $collection Collection where jobs will be stored
+     * @param Connection $connection Connections that are going to be used to interact with MongoDB
+     * @param string     $collection Collection where jobs will be stored
      */
-    public function __construct(Pool $connPool, string $collection = 'failed_jobs')
+    public function __construct(Connection $connection, string $collection = 'failed_jobs')
     {
-        $this->connPool = $connPool;
+        $this->connection = $connection;
         $this->collection = $collection;
     }
 
@@ -88,9 +88,8 @@ class FailedJobsService
      */
     protected function rawCollection(): Collection
     {
-        $conn = $this->connPool->getConnection();
-        $database = $conn->defaultDatabase;
+        $database = $this->connection->defaultDatabase;
 
-        return $conn->getRawConnection()->$database->{$this->collection};
+        return $this->connection->getClient()->$database->{$this->collection};
     }
 }
