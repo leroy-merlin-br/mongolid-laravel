@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -22,7 +23,7 @@ class ResetCommandTest extends TestCase
         // Set
         $migrator = m::mock(Migrator::class);
         $command = new ResetCommand($migrator);
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -47,7 +48,7 @@ class ResetCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->reset([__DIR__.DIRECTORY_SEPARATOR.'migrations']);
+            ->reset([__DIR__ . DIRECTORY_SEPARATOR . 'migrations']);
 
         // Actions
         $command->run(new ArrayInput([]), new NullOutput());
@@ -58,7 +59,7 @@ class ResetCommandTest extends TestCase
         // Set
         $migrator = m::mock(Migrator::class);
         $command = new ResetCommand($migrator);
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -83,7 +84,7 @@ class ResetCommandTest extends TestCase
             ->never();
 
         $migrator->expects()
-            ->reset([__DIR__.DIRECTORY_SEPARATOR.'migrations'])
+            ->reset([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'])
             ->never();
 
         // Actions
@@ -94,7 +95,7 @@ class ResetCommandTest extends TestCase
     {
         // Set
         $migrator = m::mock(Migrator::class);
-        $command = m::mock(ResetCommand::class.'[confirmToProceed]', [$migrator]);
+        $command = m::mock(ResetCommand::class . '[confirmToProceed]', [$migrator]);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);

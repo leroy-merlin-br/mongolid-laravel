@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -72,7 +73,7 @@ class MongolidUserProviderTest extends TestCase
     public function testShouldNotRetrieveByToken()
     {
         // Set
-        $model = new class() extends MongolidModel {
+        $model = new class () extends MongolidModel {
             public static function first(
                 $query = [],
                 array $projection = [],
@@ -115,7 +116,7 @@ class MongolidUserProviderTest extends TestCase
      */
     protected function getProvider()
     {
-        $model = new class() extends MongolidModel {
+        $model = new class () extends MongolidModel {
             public static function first(
                 $query = [],
                 array $projection = [],
@@ -126,6 +127,7 @@ class MongolidUserProviderTest extends TestCase
         };
 
         $hasher = $this->app->make(Hasher::class);
+
         return new MongolidUserProvider($hasher, get_class($model));
     }
 }

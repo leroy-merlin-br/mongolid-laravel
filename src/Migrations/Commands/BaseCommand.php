@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -25,7 +26,7 @@ class BaseCommand extends Command
             return collect($this->option('path'))->map(
                 function ($path) {
                     return !$this->usingRealPath()
-                        ? $this->laravel->basePath().'/'.$path
+                        ? $this->laravel->basePath() . '/' . $path
                         : $path;
                 }
             )->all();
@@ -54,6 +55,6 @@ class BaseCommand extends Command
      */
     protected function getMigrationPath()
     {
-        return $this->laravel->databasePath().DIRECTORY_SEPARATOR.'migrations';
+        return $this->laravel->databasePath() . DIRECTORY_SEPARATOR . 'migrations';
     }
 }

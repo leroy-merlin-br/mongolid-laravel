@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -99,7 +100,7 @@ class MigrateMakeCommand extends BaseCommand
     {
         if (!is_null($targetPath = $this->input->getOption('path'))) {
             return !$this->usingRealPath()
-                ? $this->laravel->basePath().'/'.$targetPath
+                ? $this->laravel->basePath() . '/' . $targetPath
                 : $targetPath;
         }
 

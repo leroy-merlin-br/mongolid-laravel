@@ -1,7 +1,8 @@
 <?php
+
 namespace MongolidLaravel;
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use SebastianBergmann\Comparator\Factory;
 

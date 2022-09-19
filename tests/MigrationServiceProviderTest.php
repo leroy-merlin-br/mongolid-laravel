@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 /*
@@ -25,7 +26,7 @@ class MigrationServiceProviderTest extends TestCase
     public function testShouldBoot()
     {
         // Set
-        $provider = m::mock(MigrationServiceProvider::class.'[commands]', [$this->app]);
+        $provider = m::mock(MigrationServiceProvider::class . '[commands]', [$this->app]);
 
         // Expectations
         $provider->expects()

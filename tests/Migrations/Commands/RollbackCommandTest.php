@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -22,7 +23,7 @@ class RollbackCommandTest extends TestCase
         // Set
         $migrator = m::mock(Migrator::class);
         $command = new RollbackCommand($migrator);
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -43,7 +44,7 @@ class RollbackCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->rollback([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => 0]);
+            ->rollback([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => 0]);
 
         // Actions
         $command->run(new ArrayInput([]), new NullOutput());
@@ -54,7 +55,7 @@ class RollbackCommandTest extends TestCase
         // Set
         $migrator = m::mock(Migrator::class);
         $command = new RollbackCommand($migrator);
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -75,7 +76,7 @@ class RollbackCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->rollback([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => 2]);
+            ->rollback([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => 2]);
 
         // Actions
         $command->run(new ArrayInput(['--step' => 2]), new NullOutput());
@@ -85,7 +86,7 @@ class RollbackCommandTest extends TestCase
     {
         // Set
         $migrator = m::mock(Migrator::class);
-        $command = m::mock(RollbackCommand::class.'[confirmToProceed]', [$migrator]);
+        $command = m::mock(RollbackCommand::class . '[confirmToProceed]', [$migrator]);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);

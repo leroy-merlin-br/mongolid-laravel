@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -18,9 +19,9 @@ class RefreshCommandTest extends TestCase
     public function testRefreshCommandCallsCommandsWithProperArguments()
     {
         // Set
-        $command = m::mock(RefreshCommand::class.'[call]');
+        $command = m::mock(RefreshCommand::class . '[call]');
 
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $command->setLaravel($app);
 
         // Expectations
@@ -57,9 +58,9 @@ class RefreshCommandTest extends TestCase
     public function testShouldRunRefreshCommandWithDbSeed()
     {
         // Set
-        $command = m::mock(RefreshCommand::class.'[call]');
+        $command = m::mock(RefreshCommand::class . '[call]');
 
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $command->setLaravel($app);
 
         // Expectations
@@ -106,9 +107,9 @@ class RefreshCommandTest extends TestCase
     public function testRefreshCommandCallsCommandsWithStep()
     {
         // Set
-        $command = m::mock(RefreshCommand::class.'[call]');
+        $command = m::mock(RefreshCommand::class . '[call]');
 
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $command->setLaravel($app);
 
         // Expectations
@@ -146,7 +147,7 @@ class RefreshCommandTest extends TestCase
     public function testShouldConfirmToRun()
     {
         // Set
-        $command = m::mock(RefreshCommand::class.'[confirmToProceed]');
+        $command = m::mock(RefreshCommand::class . '[confirmToProceed]');
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);

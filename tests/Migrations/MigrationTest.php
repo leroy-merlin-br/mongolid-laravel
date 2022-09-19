@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations;
 
 /*
@@ -18,7 +19,7 @@ class MigrationTest extends TestCase
     {
         // Set
         $output = new OutputStyle(new ArrayInput([]), new NullOutput());
-        $migration = new class($output) extends Migration {
+        $migration = new class ($output) extends Migration {
             /**
              * {@inheritdoc}
              */

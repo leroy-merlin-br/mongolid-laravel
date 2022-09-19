@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -38,6 +39,7 @@ class FreshCommand extends Command
     public function __construct(Connection $connection)
     {
         parent::__construct();
+
         $this->connection = $connection;
     }
 

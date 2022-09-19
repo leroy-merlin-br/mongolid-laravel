@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -22,7 +23,7 @@ class MigrateCommandTest extends TestCase
         // Set
         $migrator = m::mock(Migrator::class);
         $command = new MigrateCommand($migrator);
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -43,7 +44,7 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
+            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => false]);
 
         $migrator->expects()
             ->repositoryExists()
@@ -57,8 +58,8 @@ class MigrateCommandTest extends TestCase
     {
         // Set
         $migrator = m::mock(Migrator::class);
-        $command = m::mock(MigrateCommand::class.'[call]', [$migrator]);
-        $app = m::mock(Application::class.'[environment]');
+        $command = m::mock(MigrateCommand::class . '[call]', [$migrator]);
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -79,7 +80,7 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
+            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => false]);
 
         $migrator->expects()
             ->repositoryExists()
@@ -101,8 +102,8 @@ class MigrateCommandTest extends TestCase
     {
         // Set
         $migrator = m::mock(Migrator::class);
-        $command = m::mock(MigrateCommand::class.'[call]', [$migrator]);
-        $app = m::mock(Application::class.'[environment]');
+        $command = m::mock(MigrateCommand::class . '[call]', [$migrator]);
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -123,7 +124,7 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
+            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => false]);
 
         $migrator->expects()
             ->repositoryExists()
@@ -144,7 +145,7 @@ class MigrateCommandTest extends TestCase
         // Set
         $migrator = m::mock(Migrator::class);
         $command = new MigrateCommand($migrator);
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -165,7 +166,7 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => false]);
+            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => false]);
 
         $migrator->expects()
             ->repositoryExists()
@@ -180,7 +181,7 @@ class MigrateCommandTest extends TestCase
         // Set
         $migrator = m::mock(Migrator::class);
         $command = new MigrateCommand($migrator);
-        $app = m::mock(Application::class.'[environment]');
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
@@ -201,7 +202,7 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__.DIRECTORY_SEPARATOR.'migrations'], ['step' => true]);
+            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => true]);
 
         $migrator->expects()
             ->repositoryExists()
@@ -215,7 +216,7 @@ class MigrateCommandTest extends TestCase
     {
         // Set
         $migrator = m::mock(Migrator::class);
-        $command = m::mock(MigrateCommand::class.'[confirmToProceed]', [$migrator]);
+        $command = m::mock(MigrateCommand::class . '[confirmToProceed]', [$migrator]);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);

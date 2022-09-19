@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Validation;
 
 use InvalidArgumentException;
@@ -168,7 +169,9 @@ class Rules
         $attributeKey = "validation.attributes.$attribute";
         $attributeTranslation = trans($attributeKey);
 
-        $attribute = $attributeTranslation === $attributeKey ? $attribute : $attributeTranslation;
+        $attribute = $attributeTranslation === $attributeKey
+            ? $attribute
+            : $attributeTranslation;
 
         return trans("validation.{$rule}", compact('attribute'));
     }
