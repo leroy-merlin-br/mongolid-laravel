@@ -1,22 +1,47 @@
-on: [push]
-name: Tests
+name: Continuous Integration
+on:
+  - pull_request
+  - push
 jobs:
-    setup-and-tests:
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@v2
+  testing:
+    name: Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - "7.3"
+          - "7.4"
+          - "8.0"
+          - "8.1"
+        mongo:
+          - "3.6"
+          - "4.0"
+          - "4.2"
+          - "4.4"
+    services:
+      mongodb:
+        image: mongo:${{ matrix.mongo }}
+        ports:
+          - "27017:27017"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-            -   name: Build containers
-                run: docker-compose build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+      - name: PHP setup
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
 
-            -   name: Composer install
-                run: docker-compose run --rm -T php composer install --no-interaction --no-progress
+      - name: Composer
+        uses: ramsey/composer-install@v2
 
-            -   name: Run Code Standards
-                run: docker-compose run --rm -T php vendor/bin/phpcs
+      - name: Run Code Standards
+        run: vendor/bin/phpcs
 
-            -   name: Run Tests
-                run: docker-compose run --rm -T php vendor/bin/phpunit
+      - name: Run Tests
+        run: vendor/bin/phpunit
 
-            -   name: Report Coverage
-                run: CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }} bash <(curl -Ls https://coverage.codacy.com/get.sh) report
+      - name: Report Coverage
+        run: CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }} bash <(curl -Ls https://coverage.codacy.com/get.sh) report
