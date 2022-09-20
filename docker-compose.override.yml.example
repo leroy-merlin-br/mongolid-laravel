@@ -1,1 +1,11 @@
 version: '3'
+
+services:
+  db:
+    command: mongod --wiredTigerCacheSizeGB 0.25
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+        reservations:
+          memory: 512M

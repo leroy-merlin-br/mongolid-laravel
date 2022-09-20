@@ -10,13 +10,7 @@ services:
 
   db:
     image: mongo:4.2
-    command: mongod --wiredTigerCacheSizeGB 0.25
-    deploy:
-      resources:
-        limits:
-          memory: 1g
-        reservations:
-          memory: 512M
+    command: mongod
     volumes:
       - db:/data/db
       - .:/var/www/html
