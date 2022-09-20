@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
@@ -112,11 +113,7 @@ class MongolidServiceProvider extends ServiceProvider
 
         // If username is present, append "<username>:<password>@"
         if (isset($config['username'])) {
-            $result .= sprintf(
-                '%s:%s@',
-                $config['username'],
-                $config['password'] ?? ''
-            );
+            $result .= sprintf('%s:%s@', $config['username'], $config['password'] ?? '');
         }
 
         // Append "<hostname>/<database>"
@@ -127,7 +124,7 @@ class MongolidServiceProvider extends ServiceProvider
         );
 
         if (isset($config['cluster']['replica_set'])) {
-            $result .= '?replicaSet='.$config['cluster']['replica_set'];
+            $result .= '?replicaSet=' . $config['cluster']['replica_set'];
         }
 
         return $result;
@@ -146,21 +143,13 @@ class MongolidServiceProvider extends ServiceProvider
     {
         if (isset($config['cluster'])) {
             foreach ($config['cluster']['nodes'] as $node) {
-                $nodes[] = sprintf(
-                    '%s:%s',
-                    $node['host'] ?? '127.0.0.1',
-                    $node['port'] ?? 27017
-                );
+                $nodes[] = sprintf('%s:%s', $node['host'] ?? '127.0.0.1', $node['port'] ?? 27017);
             }
 
             return implode(',', $nodes ?? ['127.0.0.1:27017']);
         }
 
-        return sprintf(
-            '%s:%s',
-            $config['host'] ?? '127.0.0.1',
-            $config['port'] ?? 27017
-        );
+        return sprintf('%s:%s', $config['host'] ?? '127.0.0.1', $config['port'] ?? 27017);
     }
 
     /**
@@ -199,13 +188,13 @@ class MongolidServiceProvider extends ServiceProvider
     {
         $validator = $this->app->make(Factory::class);
 
-        $validator->extend('mongolid_unique', Rules::class.'@unique');
-        $validator->replacer('mongolid_unique', Rules::class.'@message');
+        $validator->extend('mongolid_unique', Rules::class . '@unique');
+        $validator->replacer('mongolid_unique', Rules::class . '@message');
 
-        $validator->extend('mongolid_exists', Rules::class.'@exists');
-        $validator->replacer('mongolid_exists', Rules::class.'@message');
+        $validator->extend('mongolid_exists', Rules::class . '@exists');
+        $validator->replacer('mongolid_exists', Rules::class . '@message');
 
-        $validator->extend('object_id', Rules::class.'@objectId');
-        $validator->replacer('object_id', Rules::class.'@objectIdMessage');
+        $validator->extend('object_id', Rules::class . '@objectId');
+        $validator->replacer('object_id', Rules::class . '@objectIdMessage');
     }
 }

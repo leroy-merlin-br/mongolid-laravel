@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations;
 
 /*
@@ -22,7 +23,7 @@ class MigrationCreatorTest extends TestCase
 
         // Expectations
         $files->expects()
-            ->get($creator->stubPath().'/blank.stub')
+            ->get($creator->stubPath() . '/blank.stub')
             ->andReturn('DummyClass');
 
         $files->expects()
@@ -47,7 +48,7 @@ class MigrationCreatorTest extends TestCase
 
         // Expectations
         $files->expects()
-            ->get($creator->stubPath().'/blank.stub')->andReturn('DummyClass');
+            ->get($creator->stubPath() . '/blank.stub')->andReturn('DummyClass');
 
         $files->expects()
             ->put(m::pattern('/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_add_bar_index.php/'), 'AddBarIndex');

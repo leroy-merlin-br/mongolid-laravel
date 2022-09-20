@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Stubs;
 
 use MongolidLaravel\LegacyMongolidModel;
@@ -18,7 +19,7 @@ class LegacyMongolidModelStub extends LegacyMongolidModel
     ];
 
     /**
-     * @var array
+     * @var string[]
      */
     private $messages;
 

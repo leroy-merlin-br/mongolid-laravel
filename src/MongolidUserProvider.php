@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
@@ -75,18 +76,6 @@ class MongolidUserProvider implements UserProvider
     }
 
     /**
-     * Create a new instance of the model.
-     *
-     * @return \MongolidLaravel\MongoLidModel
-     */
-    protected function createModel()
-    {
-        $class = '\\'.ltrim($this->model, '\\');
-
-        return Container::make($class);
-    }
-
-    /**
      * Retrieve a user by by their unique identifier and "remember me" token.
      *
      * @param mixed  $identifier
@@ -110,5 +99,17 @@ class MongolidUserProvider implements UserProvider
     {
         $user->remember_token = $token;
         $user->save();
+    }
+
+    /**
+     * Create a new instance of the model.
+     *
+     * @return \MongolidLaravel\MongoLidModel
+     */
+    protected function createModel()
+    {
+        $class = '\\' . ltrim($this->model, '\\');
+
+        return Container::make($class);
     }
 }

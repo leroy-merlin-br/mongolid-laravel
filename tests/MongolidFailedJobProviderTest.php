@@ -1,8 +1,9 @@
 <?php
+
 namespace MongolidLaravel;
 
 use ArrayObject;
-use DateTime;
+use DateTimeInterface;
 use Exception;
 use Mockery as m;
 use MongoDB\BSON\UTCDateTime;
@@ -78,10 +79,7 @@ class MongolidFailedJobProviderTest extends TestCase
 
         foreach ($data as $job) {
             $job['id'] = $job['_id'];
-            $job['failed_at'] = LocalDateTime::format(
-                $job['failed_at'],
-                DateTime::ATOM
-            );
+            $job['failed_at'] = LocalDateTime::format($job['failed_at'], DateTimeInterface::ATOM);
             unset($job['_id']);
 
             $expected[] = (object) $job;

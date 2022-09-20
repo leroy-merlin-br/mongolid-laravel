@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -29,7 +30,7 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
+            ->create('create_foo', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -50,7 +51,7 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
+            ->create('create_foo', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -71,7 +72,7 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
+            ->create('create_foo', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -92,7 +93,7 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', __DIR__.DIRECTORY_SEPARATOR.'migrations');
+            ->create('create_foo', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -113,10 +114,7 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create(
-                'create_users_collection',
-                __DIR__.DIRECTORY_SEPARATOR.'migrations'
-            );
+            ->create('create_users_collection', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -137,10 +135,7 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create(
-                'create_foo',
-                '/home/laravel/vendor/laravel-package/migrations'
-            );
+            ->create('create_foo', '/home/laravel/vendor/laravel-package/migrations');
 
         $composer->expects()
             ->dumpAutoloads();

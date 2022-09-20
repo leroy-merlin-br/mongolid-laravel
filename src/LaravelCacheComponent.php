@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Cache\Repository;
@@ -15,7 +16,7 @@ class LaravelCacheComponent implements CacheComponentInterface
     /**
      * Copy cache result in memory array.
      *
-     * @var array
+     * @var mixed[]
      */
     private $inMemoryCache = [];
 

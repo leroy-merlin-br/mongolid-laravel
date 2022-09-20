@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations;
 
 /*
@@ -24,7 +25,7 @@ class MigrationCreator
     /**
      * The registered post create hooks.
      *
-     * @var array
+     * @var Closure[]
      */
     protected $postCreate = [];
 
@@ -69,6 +70,34 @@ class MigrationCreator
     }
 
     /**
+     * Register a post migration create hook.
+     */
+    public function afterCreate(Closure $callback)
+    {
+        $this->postCreate[] = $callback;
+    }
+
+    /**
+     * Get the path to the stubs.
+     *
+     * @return string
+     */
+    public function stubPath()
+    {
+        return __DIR__ . '/stubs';
+    }
+
+    /**
+     * Get the filesystem instance.
+     *
+     * @return \Illuminate\Filesystem\Filesystem
+     */
+    public function getFilesystem()
+    {
+        return $this->files;
+    }
+
+    /**
      * Ensure that a migration with the given name doesn't already exist.
      *
      * @param string $name
@@ -89,7 +118,7 @@ class MigrationCreator
      */
     protected function getStub()
     {
-        return $this->files->get($this->stubPath().'/blank.stub');
+        return $this->files->get($this->stubPath() . '/blank.stub');
     }
 
     /**
@@ -127,7 +156,7 @@ class MigrationCreator
      */
     protected function getPath($name, $path)
     {
-        return $path.'/'.$this->getDatePrefix().'_'.$name.'.php';
+        return $path . '/' . $this->getDatePrefix() . '_' . $name . '.php';
     }
 
     /**
@@ -141,14 +170,6 @@ class MigrationCreator
     }
 
     /**
-     * Register a post migration create hook.
-     */
-    public function afterCreate(Closure $callback)
-    {
-        $this->postCreate[] = $callback;
-    }
-
-    /**
      * Get the date prefix for the migration.
      *
      * @return string
@@ -156,25 +177,5 @@ class MigrationCreator
     protected function getDatePrefix()
     {
         return date('Y_m_d_His');
-    }
-
-    /**
-     * Get the path to the stubs.
-     *
-     * @return string
-     */
-    public function stubPath()
-    {
-        return __DIR__.'/stubs';
-    }
-
-    /**
-     * Get the filesystem instance.
-     *
-     * @return \Illuminate\Filesystem\Filesystem
-     */
-    public function getFilesystem()
-    {
-        return $this->files;
     }
 }

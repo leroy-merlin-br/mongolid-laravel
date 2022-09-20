@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Mockery as m;
@@ -13,6 +14,7 @@ class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         Container::setContainer($this->app);
     }
 
@@ -22,6 +24,7 @@ class TestCase extends BaseTestCase
             m::getContainer()->mockery_getExpectationCount()
         );
         m::close();
+
         parent::tearDown();
     }
 

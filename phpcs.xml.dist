@@ -18,7 +18,21 @@
         <exclude-pattern>tests/Migrations/stubs/</exclude-pattern>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingPropertyTypeHint">
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint">
         <exclude-pattern>tests/MongolidModelTest.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter">
+        <exclude-pattern>tests/UTCDateTimeComparator.php</exclude-pattern>
+        <exclude-pattern>tests/LaravelEventTriggerTest.php</exclude-pattern>
+        <exclude-pattern>tests/MongolidUserProviderTest.php</exclude-pattern>
+        <exclude-pattern>src/MongolidServiceProvider.php</exclude-pattern>
+        <exclude-pattern>src/Validation/Rules.php</exclude-pattern>
+        <exclude-pattern>src/LegacyMongolidModel.php</exclude-pattern>
+        <exclude-pattern>src/MongolidModel.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint">
+        <type>warning</type>
     </rule>
 </ruleset>

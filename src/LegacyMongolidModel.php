@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel;
 
 use Illuminate\Contracts\Hashing\Hasher;
@@ -26,9 +27,23 @@ use Mongolid\LegacyRecord;
 abstract class LegacyMongolidModel extends LegacyRecord
 {
     /**
+     * Public local mock.
+     *
+     * @var Mockery\Mock
+     */
+    public $localMock;
+
+    /**
+     * Public static mock.
+     *
+     * @var Mockery\Mock
+     */
+    public static $mock;
+
+    /**
      * Validation rules.
      *
-     * @var array
+     * @var mixed[]
      */
     protected $rules;
 
@@ -40,24 +55,10 @@ abstract class LegacyMongolidModel extends LegacyRecord
     protected $errors;
 
     /**
-     * Public static mock.
-     *
-     * @var Mockery\Mock
-     */
-    public static $mock;
-
-    /**
-     * Public local mock.
-     *
-     * @var Mockery\Mock
-     */
-    public $localMock;
-
-    /**
      * List of attribute names which should be hashed on save. For
      * example: array('password');.
      *
-     * @var array
+     * @var string[]
      */
     protected $hashedAttributes = [];
 
@@ -171,52 +172,6 @@ abstract class LegacyMongolidModel extends LegacyRecord
     }
 
     /**
-     * Returns the Mongo collection object.
-     */
-    protected function collection(): Collection
-    {
-        return $this->getCollection();
-    }
-
-    /**
-     * Hashes the attributes specified in the hashedAttributes
-     * array.
-     */
-    protected function hashAttributes()
-    {
-        foreach ($this->hashedAttributes as $attr) {
-            // Hash attribute if changed
-            if (!isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
-                $this->$attr = app(Hasher::class)->make($this->$attr);
-            }
-
-            // Removes any confirmation field before saving it into the database
-            $confirmationField = $attr.'_confirmation';
-            if ($this->$confirmationField) {
-                unset($this->$confirmationField);
-            }
-        }
-    }
-
-    /**
-     * Initiate a mock expectation on the facade.
-     *
-     * @param string $name      name of the method being called
-     * @param array  $arguments method arguments
-     *
-     * @return Expectation|void
-     */
-    public static function __callStatic($name, $arguments)
-    {
-        if ('shouldReceive' === $name) {
-            $class = static::class;
-            static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
-
-            return static::$mock[$class]->shouldReceive(...$arguments);
-        }
-    }
-
-    /**
      * Initiate a mock expectation that is specific for the save method.
      *
      * @return Expectation
@@ -234,50 +189,6 @@ abstract class LegacyMongolidModel extends LegacyRecord
     public function shouldReceiveDelete()
     {
         return $this->localMockShouldReceive('delete');
-    }
-
-    /**
-     * Check if local mock is set.
-     */
-    protected function hasLocalMock(): bool
-    {
-        return null !== $this->localMock;
-    }
-
-    /**
-     * Get a local mock instance.
-     *
-     * @return Mockery\Mock|Mockery\MockInterface
-     */
-    protected function getLocalMock()
-    {
-        if (!$this->hasLocalMock()) {
-            $this->localMock = Mockery::mock();
-        }
-
-        return $this->localMock;
-    }
-
-    /**
-     * Initiate a mockery expectation that is specific for the given method.
-     *
-     * @param string $method name of the method being mocked
-     *
-     * @return Expectation
-     */
-    protected function localMockShouldReceive(string $method)
-    {
-        return $this->getLocalMock()->shouldReceive($method);
-    }
-
-    /**
-     * Check for a expectation for given method on local mock.
-     *
-     * @param string $method name of the method being checked
-     */
-    protected function localMockHasExpectationsFor(string $method): bool
-    {
-        return $this->hasLocalMock() && $this->getLocalMock()->mockery_getExpectationsFor($method);
     }
 
     /**
@@ -356,6 +267,78 @@ abstract class LegacyMongolidModel extends LegacyRecord
     }
 
     /**
+     * Returns the Mongo collection object.
+     */
+    protected function collection(): Collection
+    {
+        return $this->getCollection();
+    }
+
+    /**
+     * Hashes the attributes specified in the hashedAttributes
+     * array.
+     */
+    protected function hashAttributes()
+    {
+        foreach ($this->hashedAttributes as $attr) {
+            // Hash attribute if changed
+            if (!isset($this->original[$attr]) || $this->$attr != $this->original[$attr]) {
+                $this->$attr = app(Hasher::class)->make($this->$attr);
+            }
+
+            // Removes any confirmation field before saving it into the database
+            $confirmationField = $attr . '_confirmation';
+            if ($this->$confirmationField) {
+                unset($this->$confirmationField);
+            }
+        }
+    }
+
+    /**
+     * Check if local mock is set.
+     */
+    protected function hasLocalMock(): bool
+    {
+        return null !== $this->localMock;
+    }
+
+    /**
+     * Get a local mock instance.
+     *
+     * @return Mockery\Mock|Mockery\MockInterface
+     */
+    protected function getLocalMock()
+    {
+        if (!$this->hasLocalMock()) {
+            $this->localMock = Mockery::mock();
+        }
+
+        return $this->localMock;
+    }
+
+    /**
+     * Initiate a mockery expectation that is specific for the given method.
+     *
+     * @param string $method name of the method being mocked
+     *
+     * @return Expectation
+     */
+    protected function localMockShouldReceive(string $method)
+    {
+        return $this->getLocalMock()->shouldReceive($method);
+    }
+
+    /**
+     * Check for a expectation for given method on local mock.
+     *
+     * @param string $method name of the method being checked
+     */
+    protected function localMockHasExpectationsFor(string $method): bool
+    {
+        return $this->hasLocalMock() && $this->getLocalMock()->mockery_getExpectationsFor($method);
+    }
+
+    /**
      * Calls mock method if its have expectations. Calls parent method otherwise.
      *
      * @param string $method    name of the method being called
@@ -374,5 +357,23 @@ abstract class LegacyMongolidModel extends LegacyRecord
         }
 
         return call_user_func_array([$classToCall, $method], $arguments);
+    }
+
+    /**
+     * Initiate a mock expectation on the facade.
+     *
+     * @param string $name      name of the method being called
+     * @param array  $arguments method arguments
+     *
+     * @return Expectation|void
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if ('shouldReceive' === $name) {
+            $class = static::class;
+            static::$mock[$class] = static::$mock[$class] ?? Mockery::mock();
+
+            return static::$mock[$class]->shouldReceive(...$arguments);
+        }
     }
 }

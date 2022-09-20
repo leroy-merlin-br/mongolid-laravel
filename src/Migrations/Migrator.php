@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations;
 
 /*
@@ -39,7 +40,7 @@ class Migrator
     /**
      * The paths to all of the migration files.
      *
-     * @var array
+     * @var string[]
      */
     protected $paths = [];
 
@@ -92,24 +93,6 @@ class Migrator
     }
 
     /**
-     * Get the migration files that have not yet run.
-     *
-     * @param array $files
-     * @param array $ran
-     *
-     * @return array
-     */
-    protected function pendingMigrations($files, $ran)
-    {
-        return Collection::make($files)
-            ->reject(
-                function ($file) use ($ran) {
-                    return in_array($this->getMigrationName($file), $ran);
-                }
-            )->values()->all();
-    }
-
-    /**
      * Run an array of migrations.
      *
      * @param array $migrations
@@ -146,33 +129,6 @@ class Migrator
     }
 
     /**
-     * Run "up" a migration instance.
-     *
-     * @param string $file
-     * @param int    $batch
-     */
-    protected function runUp($file, $batch)
-    {
-        // First we will resolve a "real" instance of the migration class from this
-        // migration file name. Once we have the instances we can run the actual
-        // command such as "up" or "down", or we can just simulate the action.
-        $migration = $this->resolve(
-            $name = $this->getMigrationName($file)
-        );
-
-        $this->note("<comment>Migrating:</comment> {$name}");
-
-        $this->runMigration($migration, 'up');
-
-        // Once we have run a migrations class, we will log that it was run in this
-        // repository so that we don't try to run it next time we do a migration
-        // in the application. A migration repository keeps the migrate order.
-        $this->repository->log($name, $batch);
-
-        $this->note("<info>Migrated:</info>  {$name}");
-    }
-
-    /**
      * Rollback the last migration operation.
      *
      * @param array|string $paths
@@ -196,56 +152,6 @@ class Migrator
         }
 
         return $this->rollbackMigrations($migrations, $paths);
-    }
-
-    /**
-     * Get the migrations for a rollback operation.
-     *
-     * @param array $options
-     *
-     * @return array
-     */
-    protected function getMigrationsForRollback(array $options)
-    {
-        if (($steps = $options['step'] ?? 0) > 0) {
-            return $this->repository->getMigrations($steps);
-        }
-
-        return $this->repository->getLast();
-    }
-
-    /**
-     * Rollback the given migrations.
-     *
-     * @param array        $migrations
-     * @param array|string $paths
-     *
-     * @return array
-     */
-    protected function rollbackMigrations(array $migrations, $paths)
-    {
-        $rolledBack = [];
-
-        $this->requireFiles($files = $this->getMigrationFiles($paths));
-
-        // Next we will run through all of the migrations and call the "down" method
-        // which will reverse each migration in order. This getLast method on the
-        // repository already returns these migration's names in reverse order.
-        foreach ($migrations as $migration) {
-            $migration = (object) $migration;
-
-            if (!$file = Arr::get($files, $migration->migration)) {
-                $this->note("<fg=red>Migration not found:</> {$migration->migration}");
-
-                continue;
-            }
-
-            $rolledBack[] = $file;
-
-            $this->runDown($file, $migration);
-        }
-
-        return $rolledBack;
     }
 
     /**
@@ -274,71 +180,6 @@ class Migrator
     }
 
     /**
-     * Reset the given migrations.
-     *
-     * @param array $migrations
-     * @param array $paths
-     *
-     * @return array
-     */
-    protected function resetMigrations(array $migrations, array $paths)
-    {
-        // Since the getRan method that retrieves the migration name just gives us the
-        // migration name, we will format the names into objects with the name as a
-        // property on the objects so that we can pass it to the rollback method.
-        $migrations = collect($migrations)->map(
-            function ($m) {
-                return (object) ['migration' => $m];
-            }
-        )->all();
-
-        return $this->rollbackMigrations($migrations, $paths);
-    }
-
-    /**
-     * Run "down" a migration instance.
-     *
-     * @param string $file
-     * @param object $migration
-     */
-    protected function runDown($file, $migration)
-    {
-        // First we will get the file name of the migration so we can resolve out an
-        // instance of the migration. Once we get an instance we can run the migration.
-        $instance = $this->resolve(
-            $name = $this->getMigrationName($file)
-        );
-
-        $this->note("<comment>Rolling back:</comment> {$name}");
-
-        $this->runMigration($instance, 'down');
-
-        // Once we have successfully run the migration "down" we will remove it from
-        // the migration repository so it will be considered to have not been run
-        // by the application then will be able to fire by any later operation.
-        $this->repository->delete($migration);
-
-        $this->note("<info>Rolled back:</info>  {$name}");
-    }
-
-    /**
-     * Run a migration inside a transaction if the database supports it.
-     *
-     * @param object $migration
-     * @param string $method
-     */
-    protected function runMigration($migration, $method)
-    {
-        $callback = function () use ($migration, $method) {
-            if (method_exists($migration, $method)) {
-                $migration->{$method}();
-            }
-        };
-
-        $callback();
-    }
-
-    /**
      * Resolve a migration instance from a file.
      *
      * @param string $file
@@ -363,7 +204,7 @@ class Migrator
     {
         return Collection::make($paths)->flatMap(
             function ($path) {
-                return $this->files->glob($path.'/*_*.php');
+                return $this->files->glob($path . '/*_*.php');
             }
         )->filter()->sortBy(
             function ($file) {
@@ -482,6 +323,166 @@ class Migrator
         $this->output = $output;
 
         return $this;
+    }
+
+    /**
+     * Get the migration files that have not yet run.
+     *
+     * @param array $files
+     * @param array $ran
+     *
+     * @return array
+     */
+    protected function pendingMigrations($files, $ran)
+    {
+        return Collection::make($files)
+            ->reject(
+                function ($file) use ($ran) {
+                    return in_array($this->getMigrationName($file), $ran);
+                }
+            )->values()->all();
+    }
+
+    /**
+     * Run "up" a migration instance.
+     *
+     * @param string $file
+     * @param int    $batch
+     */
+    protected function runUp($file, $batch)
+    {
+        // First we will resolve a "real" instance of the migration class from this
+        // migration file name. Once we have the instances we can run the actual
+        // command such as "up" or "down", or we can just simulate the action.
+        $migration = $this->resolve(
+            $name = $this->getMigrationName($file)
+        );
+
+        $this->note("<comment>Migrating:</comment> {$name}");
+
+        $this->runMigration($migration, 'up');
+
+        // Once we have run a migrations class, we will log that it was run in this
+        // repository so that we don't try to run it next time we do a migration
+        // in the application. A migration repository keeps the migrate order.
+        $this->repository->log($name, $batch);
+
+        $this->note("<info>Migrated:</info>  {$name}");
+    }
+
+    /**
+     * Get the migrations for a rollback operation.
+     *
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function getMigrationsForRollback(array $options)
+    {
+        if (($steps = $options['step'] ?? 0) > 0) {
+            return $this->repository->getMigrations($steps);
+        }
+
+        return $this->repository->getLast();
+    }
+
+    /**
+     * Rollback the given migrations.
+     *
+     * @param array        $migrations
+     * @param array|string $paths
+     *
+     * @return array
+     */
+    protected function rollbackMigrations(array $migrations, $paths)
+    {
+        $rolledBack = [];
+
+        $this->requireFiles($files = $this->getMigrationFiles($paths));
+
+        // Next we will run through all of the migrations and call the "down" method
+        // which will reverse each migration in order. This getLast method on the
+        // repository already returns these migration's names in reverse order.
+        foreach ($migrations as $migration) {
+            $migration = (object) $migration;
+
+            if (!$file = Arr::get($files, $migration->migration)) {
+                $this->note("<fg=red>Migration not found:</> {$migration->migration}");
+
+                continue;
+            }
+
+            $rolledBack[] = $file;
+
+            $this->runDown($file, $migration);
+        }
+
+        return $rolledBack;
+    }
+
+    /**
+     * Reset the given migrations.
+     *
+     * @param array $migrations
+     * @param array $paths
+     *
+     * @return array
+     */
+    protected function resetMigrations(array $migrations, array $paths)
+    {
+        // Since the getRan method that retrieves the migration name just gives us the
+        // migration name, we will format the names into objects with the name as a
+        // property on the objects so that we can pass it to the rollback method.
+        $migrations = collect($migrations)->map(
+            function ($m) {
+                return (object) ['migration' => $m];
+            }
+        )->all();
+
+        return $this->rollbackMigrations($migrations, $paths);
+    }
+
+    /**
+     * Run "down" a migration instance.
+     *
+     * @param string $file
+     * @param object $migration
+     */
+    protected function runDown($file, $migration)
+    {
+        // First we will get the file name of the migration so we can resolve out an
+        // instance of the migration. Once we get an instance we can run the migration.
+        $instance = $this->resolve(
+            $name = $this->getMigrationName($file)
+        );
+
+        $this->note("<comment>Rolling back:</comment> {$name}");
+
+        $this->runMigration($instance, 'down');
+
+        // Once we have successfully run the migration "down" we will remove it from
+        // the migration repository so it will be considered to have not been run
+        // by the application then will be able to fire by any later operation.
+        $this->repository->delete($migration);
+
+        $this->note("<info>Rolled back:</info>  {$name}");
+    }
+
+    /**
+     * Run a migration inside a transaction if the database supports it.
+     *
+     * @param object $migration
+     * @param string $method
+     */
+    protected function runMigration($migration, $method)
+    {
+        $callback = function () use ($migration, $method) {
+            if (method_exists($migration, $method)) {
+                $migration->{$method}();
+            }
+        };
+
+        $callback();
     }
 
     /**

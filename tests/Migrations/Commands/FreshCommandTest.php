@@ -1,4 +1,5 @@
 <?php
+
 namespace MongolidLaravel\Migrations\Commands;
 
 /*
@@ -21,7 +22,7 @@ class FreshCommandTest extends TestCase
     {
         // Set
         $connection = m::mock(Connection::class);
-        $command = m::mock(FreshCommand::class.'[confirmToProceed]', [$connection]);
+        $command = m::mock(FreshCommand::class . '[confirmToProceed]', [$connection]);
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
@@ -44,8 +45,8 @@ class FreshCommandTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $command = m::mock(FreshCommand::class.'[call]', [$connection]);
-        $app = m::mock(Application::class.'[environment]');
+        $command = m::mock(FreshCommand::class . '[call]', [$connection]);
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
         $client = m::mock(Client::class);
@@ -82,8 +83,8 @@ class FreshCommandTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $command = m::mock(FreshCommand::class.'[call]', [$connection]);
-        $app = m::mock(Application::class.'[environment]');
+        $command = m::mock(FreshCommand::class . '[call]', [$connection]);
+        $app = m::mock(Application::class . '[environment]');
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);
 
