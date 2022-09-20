@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41bb49a7e100f3473f20fb0921209377",
+    "content-hash": "51144e68f3a858033d0360358943f642",
     "packages": [
         {
             "name": "brick/math",
@@ -1030,16 +1030,16 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v3.1.0",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:leroy-merlin-br/mongolid.git",
-                "reference": "5b199694094214e8f4b5f7b06523d683931cdae9"
+                "reference": "09f282f33ee00abfaf000e4ecb6e099ed28fb9dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/5b199694094214e8f4b5f7b06523d683931cdae9",
-                "reference": "5b199694094214e8f4b5f7b06523d683931cdae9",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/09f282f33ee00abfaf000e4ecb6e099ed28fb9dc",
+                "reference": "09f282f33ee00abfaf000e4ecb6e099ed28fb9dc",
                 "shasum": ""
             },
             "require": {
@@ -1050,10 +1050,10 @@
                 "php": ">=7.3"
             },
             "require-dev": {
-                "leroy-merlin-br/coding-standard": "^1.0",
-                "mockery/mockery": "^1.2",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
-                "symfony/var-dumper": "^5.4"
+                "leroy-merlin-br/coding-standard": "^3.0.2",
+                "mockery/mockery": "^1.5.1",
+                "phpunit/phpunit": "^9.5.24",
+                "symfony/var-dumper": "^5.4.11"
             },
             "suggest": {
                 "leroy-merlin-br/mongolid-laravel": "Easy, powerful and ultrafast MongoDB ODM for Laravel."
@@ -1096,7 +1096,7 @@
                 "nosql",
                 "odm"
             ],
-            "time": "2022-07-13T14:36:49+00:00"
+            "time": "2022-09-20T18:12:47+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -7081,16 +7081,16 @@
         },
         {
             "name": "spatie/laravel-ray",
-            "version": "1.30.0",
+            "version": "1.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-ray.git",
-                "reference": "1afe8d38cf13e9f7d0f6438e67bca71c3ed8d1f6"
+                "reference": "7394694afd89d05879e7a69c54abab73c1199acd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/1afe8d38cf13e9f7d0f6438e67bca71c3ed8d1f6",
-                "reference": "1afe8d38cf13e9f7d0f6438e67bca71c3ed8d1f6",
+                "url": "https://api.github.com/repos/spatie/laravel-ray/zipball/7394694afd89d05879e7a69c54abab73c1199acd",
+                "reference": "7394694afd89d05879e7a69c54abab73c1199acd",
                 "shasum": ""
             },
             "require": {
@@ -7149,7 +7149,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-ray/issues",
-                "source": "https://github.com/spatie/laravel-ray/tree/1.30.0"
+                "source": "https://github.com/spatie/laravel-ray/tree/1.31.0"
             },
             "funding": [
                 {
@@ -7161,7 +7161,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2022-07-29T10:02:43+00:00"
+            "time": "2022-09-20T13:13:22+00:00"
         },
         {
             "name": "spatie/macroable",
