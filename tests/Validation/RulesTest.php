@@ -226,7 +226,9 @@ class RulesTest extends TestCase
             ->never();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Validation rule mongolid_unique requires at least 1 parameters.');
+        $this->expectExceptionMessage(
+            'Validation rule mongolid_unique requires at least 1 parameters.'
+        );
 
         // Actions
         $rules->unique('email', 'john@doe.com', $parameters);
@@ -331,7 +333,11 @@ class RulesTest extends TestCase
             ->andReturn(0);
 
         // Actions
-        $result = $rules->exists('email', 'john@doe.com', ['users', 'email_field']);
+        $result = $rules->exists(
+            'email',
+            'john@doe.com',
+            ['users', 'email_field']
+        );
 
         // Assertions
         $this->assertFalse($result);
@@ -351,7 +357,9 @@ class RulesTest extends TestCase
             ->never();
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Validation rule mongolid_exists requires at least 1 parameters.');
+        $this->expectExceptionMessage(
+            'Validation rule mongolid_exists requires at least 1 parameters.'
+        );
 
         // Actions
         $rules->exists('email', 'john@doe.com', $parameters);
@@ -379,7 +387,11 @@ class RulesTest extends TestCase
         $expectedMessage = 'The email has already been taken.';
 
         // Actions
-        $result = $rules->message('validation.mongolid_unique', 'email', 'mongolid_unique');
+        $result = $rules->message(
+            'validation.mongolid_unique',
+            'email',
+            'mongolid_unique'
+        );
 
         // Assertions
         $this->assertSame($result, $expectedMessage);
@@ -446,7 +458,11 @@ class RulesTest extends TestCase
         $expectedMessage = 'The productBank must be an MongoDB ObjectId.';
 
         // Actions
-        $result = $rules->objectIdMessage('validation.object_id', 'productBank', 'object_id');
+        $result = $rules->objectIdMessage(
+            'validation.object_id',
+            'productBank',
+            'object_id'
+        );
 
         // Assertions
         $this->assertSame($result, $expectedMessage);

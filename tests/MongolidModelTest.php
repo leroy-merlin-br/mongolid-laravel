@@ -522,7 +522,10 @@ class MongolidModelTest extends TestCase
     public function testShouldGetCollection()
     {
         // Set
-        $connection = $this->instance(Connection::class, m::mock(Connection::class));
+        $connection = $this->instance(
+            Connection::class,
+            m::mock(Connection::class)
+        );
 
         $database = m::mock(Database::class);
         $connection->mongolid = $database;

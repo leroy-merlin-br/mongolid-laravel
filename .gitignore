@@ -4,3 +4,4 @@ build
 .phpunit.result.cache
 phpcs.xml
 .idea
+docker-compose.override.yml

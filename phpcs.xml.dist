@@ -32,6 +32,37 @@
         <exclude-pattern>src/MongolidModel.php</exclude-pattern>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>src/LaravelCacheComponent.php</exclude-pattern>
+        <exclude-pattern>src/MigrationServiceProvider.php</exclude-pattern>
+        <exclude-pattern>src/MongolidServiceProvider.php</exclude-pattern>
+        <exclude-pattern>src/Validation/Rules.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Migration.php</exclude-pattern>
+        <exclude-pattern>src/MongolidFailedJobProvider.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/MigrateCommand.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/FreshCommand.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/InstallCommand.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/MigrationCreator.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/RollbackCommand.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/MigrateMakeCommand.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/StatusCommand.php</exclude-pattern>
+        <exclude-pattern>src/LaravelEventTrigger.php</exclude-pattern>
+        <exclude-pattern>src/FailedJobsService.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/RefreshCommand.php</exclude-pattern>
+        <exclude-pattern>src/MongolidUserProvider.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/MongolidMigrationRepository.php</exclude-pattern>
+        <exclude-pattern>src/LegacyMongolidModel.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Migrator.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/ResetCommand.php</exclude-pattern>
+        <exclude-pattern>src/Migrations/Commands/ResetCommand.php</exclude-pattern>
+        <exclude-pattern>src/MongolidModel.php</exclude-pattern>
+        <exclude-pattern>tests/Stubs</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall">
+        <exclude-pattern>tests/MongolidUserProviderTest.php</exclude-pattern>
+    </rule>
+
     <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint">
         <type>warning</type>
     </rule>

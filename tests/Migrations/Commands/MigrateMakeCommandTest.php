@@ -30,13 +30,19 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
+            ->create(
+                'create_foo',
+                __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
+            );
 
         $composer->expects()
             ->dumpAutoloads();
 
         // Actions
-        $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
+        $command->run(
+            new ArrayInput(['name' => 'create_foo']),
+            new NullOutput()
+        );
     }
 
     public function testBasicCreateGivesCreatorProperArguments()
@@ -51,13 +57,19 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
+            ->create(
+                'create_foo',
+                __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
+            );
 
         $composer->expects()
             ->dumpAutoloads();
 
         // Actions
-        $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
+        $command->run(
+            new ArrayInput(['name' => 'create_foo']),
+            new NullOutput()
+        );
     }
 
     public function testBasicCreateGivesCreatorProperArgumentsWhenNameIsStudlyCase()
@@ -72,13 +84,19 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
+            ->create(
+                'create_foo',
+                __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
+            );
 
         $composer->expects()
             ->dumpAutoloads();
 
         // Actions
-        $command->run(new ArrayInput(['name' => 'CreateFoo']), new NullOutput());
+        $command->run(
+            new ArrayInput(['name' => 'CreateFoo']),
+            new NullOutput()
+        );
     }
 
     public function testBasicCreateGivesCreatorProperArgumentsWhenCollectionIsSet()
@@ -93,13 +111,19 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
+            ->create(
+                'create_foo',
+                __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
+            );
 
         $composer->expects()
             ->dumpAutoloads();
 
         // Actions
-        $command->run(new ArrayInput(['name' => 'create_foo']), new NullOutput());
+        $command->run(
+            new ArrayInput(['name' => 'create_foo']),
+            new NullOutput()
+        );
     }
 
     public function testBasicCreateGivesCreatorProperArgumentsWhenCreateCollectionPatternIsFound()
@@ -114,13 +138,19 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_users_collection', __DIR__ . DIRECTORY_SEPARATOR . 'migrations');
+            ->create(
+                'create_users_collection',
+                __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
+            );
 
         $composer->expects()
             ->dumpAutoloads();
 
         // Actions
-        $command->run(new ArrayInput(['name' => 'create_users_collection']), new NullOutput());
+        $command->run(
+            new ArrayInput(['name' => 'create_users_collection']),
+            new NullOutput()
+        );
     }
 
     public function testCanSpecifyPathToCreateMigrationsIn()
@@ -135,14 +165,19 @@ class MigrateMakeCommandTest extends TestCase
 
         // Expectations
         $creator->expects()
-            ->create('create_foo', '/home/laravel/vendor/laravel-package/migrations');
+            ->create(
+                'create_foo',
+                '/home/laravel/vendor/laravel-package/migrations'
+            );
 
         $composer->expects()
             ->dumpAutoloads();
 
         // Actions
         $command->run(
-            new ArrayInput(['name' => 'create_foo', '--path' => 'vendor/laravel-package/migrations']),
+            new ArrayInput(
+                ['name' => 'create_foo', '--path' => 'vendor/laravel-package/migrations']
+            ),
             new NullOutput()
         );
     }

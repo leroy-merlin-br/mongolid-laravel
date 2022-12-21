@@ -112,7 +112,10 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
             'queue' => $job['queue'],
             'payload' => $job['payload'],
             'exception' => $job['exception'],
-            'failed_at' => LocalDateTime::format($job['failed_at'], DateTime::ATOM),
+            'failed_at' => LocalDateTime::format(
+                $job['failed_at'],
+                DateTime::ATOM
+            ),
         ];
     }
 }

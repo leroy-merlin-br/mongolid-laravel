@@ -24,7 +24,10 @@ class MongolidMigrationRepositoryTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
@@ -60,7 +63,10 @@ class MongolidMigrationRepositoryTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
@@ -99,7 +105,10 @@ class MongolidMigrationRepositoryTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
@@ -136,7 +145,9 @@ class MongolidMigrationRepositoryTest extends TestCase
                     'limit' => 1,
                 ]
             )
-            ->andReturn(SplFixedArray::fromArray([(object) ['batch' => $batchNumber]]));
+            ->andReturn(
+                SplFixedArray::fromArray([(object) ['batch' => $batchNumber]])
+            );
 
         $collection->expects()
             ->find(
@@ -157,7 +168,10 @@ class MongolidMigrationRepositoryTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
@@ -204,7 +218,10 @@ class MongolidMigrationRepositoryTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
@@ -230,7 +247,10 @@ class MongolidMigrationRepositoryTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
         $migration = (object) ['migration' => 'create_foo_index'];
 
         $client = m::mock(Client::class);
@@ -257,7 +277,10 @@ class MongolidMigrationRepositoryTest extends TestCase
         // Set
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
@@ -282,7 +305,9 @@ class MongolidMigrationRepositoryTest extends TestCase
                     'limit' => 1,
                 ]
             )
-            ->andReturn(SplFixedArray::fromArray([(object) ['batch' => $batchNumber]]));
+            ->andReturn(
+                SplFixedArray::fromArray([(object) ['batch' => $batchNumber]])
+            );
 
         // Actions
         $result = $repository->getNextBatchNumber();
@@ -295,7 +320,10 @@ class MongolidMigrationRepositoryTest extends TestCase
     {
         $connection = m::mock(Connection::class);
         $connection->defaultDatabase = 'mongolid';
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         $client = m::mock(Client::class);
         $collection = m::mock(Collection::class);
@@ -320,7 +348,9 @@ class MongolidMigrationRepositoryTest extends TestCase
                     'limit' => 1,
                 ]
             )
-            ->andReturn(SplFixedArray::fromArray([(object) ['batch' => $batchNumber]]));
+            ->andReturn(
+                SplFixedArray::fromArray([(object) ['batch' => $batchNumber]])
+            );
 
         // Actions
         $repository->setSource('testing');
@@ -334,7 +364,10 @@ class MongolidMigrationRepositoryTest extends TestCase
     {
         // Set
         $connection = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         // Expectations
         $connection->expects()
@@ -349,7 +382,10 @@ class MongolidMigrationRepositoryTest extends TestCase
     {
         // Set
         $connection = m::mock(Connection::class);
-        $repository = new MongolidMigrationRepository($connection, 'migrations');
+        $repository = new MongolidMigrationRepository(
+            $connection,
+            'migrations'
+        );
 
         // Expectations
         $connection->expects()

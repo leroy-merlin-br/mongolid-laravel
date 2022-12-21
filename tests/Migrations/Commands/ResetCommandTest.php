@@ -95,7 +95,10 @@ class ResetCommandTest extends TestCase
     {
         // Set
         $migrator = m::mock(Migrator::class);
-        $command = m::mock(ResetCommand::class . '[confirmToProceed]', [$migrator]);
+        $command = m::mock(
+            ResetCommand::class . '[confirmToProceed]',
+            [$migrator]
+        );
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);

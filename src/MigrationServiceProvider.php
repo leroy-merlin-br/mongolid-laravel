@@ -100,7 +100,10 @@ class MigrationServiceProvider extends ServiceProvider
             function ($app) {
                 $collection = $app['config']['database.mongodb.default.migrations'] ?? 'migrations';
 
-                return new MongolidMigrationRepository($app[Connection::class], $collection);
+                return new MongolidMigrationRepository(
+                    $app[Connection::class],
+                    $collection
+                );
             }
         );
     }
@@ -170,7 +173,9 @@ class MigrationServiceProvider extends ServiceProvider
         $this->app->singleton(
             'command.mongolid-migrate.install',
             function ($app) {
-                return new InstallCommand($app['mongolid.migration.repository']);
+                return new InstallCommand(
+                    $app['mongolid.migration.repository']
+                );
             }
         );
     }

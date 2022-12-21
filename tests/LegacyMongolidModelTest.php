@@ -109,7 +109,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldSave()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
 
         $model = new LegacyMongolidModelStub();
         $model->setCollection('users');
@@ -153,7 +156,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldHashAttributesOnSaveAndUpdate($method)
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
         $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
         $model = new LegacyMongolidModelStub([
@@ -236,7 +242,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldDelete()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
 
         $model = new LegacyMongolidModelStub();
         $model->setCollection('collection_name');
@@ -278,7 +287,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldGetFirst()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
         $model = new LegacyMongolidModelStub();
 
         // Expectations
@@ -317,7 +329,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldGetFirstOrNew()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
         $model = new LegacyMongolidModelStub();
 
         // Expectations
@@ -356,7 +371,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldGetFirstOrFailAndFoundIt()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
         $model = new LegacyMongolidModelStub();
 
         // Expectations
@@ -377,7 +395,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldGetFirstOrFailAndFail()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
         $model = new LegacyMongolidModelStub();
 
         // Expectations
@@ -416,7 +437,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldGetWhere()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
         $cursor = m::mock(CursorInterface::class);
 
         $model = new LegacyMongolidModelStub();
@@ -439,7 +463,10 @@ class LegacyMongolidModelTest extends TestCase
     public function testShouldGetAll()
     {
         // Set
-        $dataMapper = $this->instance(DataMapper::class, m::mock(DataMapper::class));
+        $dataMapper = $this->instance(
+            DataMapper::class,
+            m::mock(DataMapper::class)
+        );
         $cursor = m::mock(CursorInterface::class);
 
         $model = new LegacyMongolidModelStub();

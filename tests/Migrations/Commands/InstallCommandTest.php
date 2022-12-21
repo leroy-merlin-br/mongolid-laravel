@@ -32,6 +32,9 @@ class InstallCommandTest extends TestCase
             ->createRepository();
 
         // Actions
-        $command->run(new ArrayInput(['--database' => 'foo']), new NullOutput());
+        $command->run(
+            new ArrayInput(['--database' => 'foo']),
+            new NullOutput()
+        );
     }
 }

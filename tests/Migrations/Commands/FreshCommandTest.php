@@ -22,7 +22,10 @@ class FreshCommandTest extends TestCase
     {
         // Set
         $connection = m::mock(Connection::class);
-        $command = m::mock(FreshCommand::class . '[confirmToProceed]', [$connection]);
+        $command = m::mock(
+            FreshCommand::class . '[confirmToProceed]',
+            [$connection]
+        );
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);

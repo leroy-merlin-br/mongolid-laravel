@@ -95,7 +95,10 @@ class StatusCommandTest extends TestCase
             ->andReturn('drop_admin');
 
         // Actions
-        $command->run(new ArrayInput(['--path' => 'database']), new NullOutput());
+        $command->run(
+            new ArrayInput(['--path' => 'database']),
+            new NullOutput()
+        );
     }
 
     public function testShouldRunCommandWithNoMigrations()
@@ -139,6 +142,9 @@ class StatusCommandTest extends TestCase
             ->andReturn($migrationFiles);
 
         // Actions
-        $command->run(new ArrayInput(['--path' => 'database']), new NullOutput());
+        $command->run(
+            new ArrayInput(['--path' => 'database']),
+            new NullOutput()
+        );
     }
 }

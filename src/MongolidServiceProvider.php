@@ -51,12 +51,18 @@ class MongolidServiceProvider extends ServiceProvider
         $this->app->singleton(
             Connection::class,
             function ($app) {
-                $config = $app['config']->get('database.mongodb.default') ?? [];
+                $config = $app['config']->get(
+                    'database.mongodb.default'
+                ) ?? [];
                 $connectionString = $this->buildConnectionString($config);
                 $options = $config['options'] ?? [];
                 $driverOptions = $config['driver_options'] ?? [];
 
-                $connection = new Connection($connectionString, $options, $driverOptions);
+                $connection = new Connection(
+                    $connectionString,
+                    $options,
+                    $driverOptions
+                );
                 $connection->defaultDatabase = $config['database'] ?? 'mongolid';
 
                 return $connection;
@@ -66,7 +72,9 @@ class MongolidServiceProvider extends ServiceProvider
             EventTriggerService::class,
             function ($app) {
                 $eventService = new EventTriggerService();
-                $eventService->registerEventDispatcher($app->make(LaravelEventTrigger::class));
+                $eventService->registerEventDispatcher(
+                    $app->make(LaravelEventTrigger::class)
+                );
 
                 return $eventService;
             }
@@ -113,7 +121,11 @@ class MongolidServiceProvider extends ServiceProvider
 
         // If username is present, append "<username>:<password>@"
         if (isset($config['username'])) {
-            $result .= sprintf('%s:%s@', $config['username'], $config['password'] ?? '');
+            $result .= sprintf(
+                '%s:%s@',
+                $config['username'],
+                $config['password'] ?? ''
+            );
         }
 
         // Append "<hostname>/<database>"
@@ -143,13 +155,21 @@ class MongolidServiceProvider extends ServiceProvider
     {
         if (isset($config['cluster'])) {
             foreach ($config['cluster']['nodes'] as $node) {
-                $nodes[] = sprintf('%s:%s', $node['host'] ?? '127.0.0.1', $node['port'] ?? 27017);
+                $nodes[] = sprintf(
+                    '%s:%s',
+                    $node['host'] ?? '127.0.0.1',
+                    $node['port'] ?? 27017
+                );
             }
 
             return implode(',', $nodes ?? ['127.0.0.1:27017']);
         }
 
-        return sprintf('%s:%s', $config['host'] ?? '127.0.0.1', $config['port'] ?? 27017);
+        return sprintf(
+            '%s:%s',
+            $config['host'] ?? '127.0.0.1',
+            $config['port'] ?? 27017
+        );
     }
 
     /**

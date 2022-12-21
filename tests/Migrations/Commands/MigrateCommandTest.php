@@ -44,7 +44,10 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => false]);
+            ->run(
+                [__DIR__ . DIRECTORY_SEPARATOR . 'migrations'],
+                ['step' => false]
+            );
 
         $migrator->expects()
             ->repositoryExists()
@@ -80,7 +83,10 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => false]);
+            ->run(
+                [__DIR__ . DIRECTORY_SEPARATOR . 'migrations'],
+                ['step' => false]
+            );
 
         $migrator->expects()
             ->repositoryExists()
@@ -124,7 +130,10 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => false]);
+            ->run(
+                [__DIR__ . DIRECTORY_SEPARATOR . 'migrations'],
+                ['step' => false]
+            );
 
         $migrator->expects()
             ->repositoryExists()
@@ -166,14 +175,20 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => false]);
+            ->run(
+                [__DIR__ . DIRECTORY_SEPARATOR . 'migrations'],
+                ['step' => false]
+            );
 
         $migrator->expects()
             ->repositoryExists()
             ->andReturn(true);
 
         // Actions
-        $command->run(new ArrayInput(['--database' => 'foo']), new NullOutput());
+        $command->run(
+            new ArrayInput(['--database' => 'foo']),
+            new NullOutput()
+        );
     }
 
     public function testStepMayBeSet()
@@ -202,7 +217,10 @@ class MigrateCommandTest extends TestCase
             ->andReturn($migrator);
 
         $migrator->expects()
-            ->run([__DIR__ . DIRECTORY_SEPARATOR . 'migrations'], ['step' => true]);
+            ->run(
+                [__DIR__ . DIRECTORY_SEPARATOR . 'migrations'],
+                ['step' => true]
+            );
 
         $migrator->expects()
             ->repositoryExists()
@@ -216,7 +234,10 @@ class MigrateCommandTest extends TestCase
     {
         // Set
         $migrator = m::mock(Migrator::class);
-        $command = m::mock(MigrateCommand::class . '[confirmToProceed]', [$migrator]);
+        $command = m::mock(
+            MigrateCommand::class . '[confirmToProceed]',
+            [$migrator]
+        );
         $app = new Application();
         $app->useDatabasePath(__DIR__);
         $command->setLaravel($app);

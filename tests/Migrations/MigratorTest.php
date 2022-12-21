@@ -81,7 +81,9 @@ class MigratorTest extends TestCase
             ->andReturn($migrationFiles);
 
         $files->expects()
-            ->requireOnce('database/migrations/2018_12_12_123456_drop_admin.php');
+            ->requireOnce(
+                'database/migrations/2018_12_12_123456_drop_admin.php'
+            );
 
         $repository->expects()
             ->getNextBatchNumber()
@@ -155,7 +157,9 @@ class MigratorTest extends TestCase
             ->andReturn($migrationFiles);
 
         $files->expects()
-            ->requireOnce('database/migrations/2018_12_12_123456_drop_admin.php');
+            ->requireOnce(
+                'database/migrations/2018_12_12_123456_drop_admin.php'
+            );
 
         $repository->expects()
             ->delete($last[0]);
@@ -217,16 +221,23 @@ class MigratorTest extends TestCase
             ->andReturn($migrationFiles);
 
         $files->expects()
-            ->requireOnce('database/migrations/2018_12_12_123456_migration_creator_fake_migration.php');
+            ->requireOnce(
+                'database/migrations/2018_12_12_123456_migration_creator_fake_migration.php'
+            );
 
         $files->expects()
-            ->requireOnce('database/migrations/2018_12_12_123456_drop_admin.php');
+            ->requireOnce(
+                'database/migrations/2018_12_12_123456_drop_admin.php'
+            );
 
         $repository->expects()
             ->delete(
                 m::on(
                     function ($parameter) use ($ran) {
-                        $this->assertEquals((object) ['migration' => $ran[0]], $parameter);
+                        $this->assertEquals(
+                            (object) ['migration' => $ran[0]],
+                            $parameter
+                        );
 
                         return true;
                     }

@@ -132,7 +132,11 @@ abstract class MongolidModel extends AbstractModel
         }
 
         // Creates validator with attributes and the rules of the object
-        $validator = app(ValidationFactory::class)->make($attributes, $rules, $this->messages());
+        $validator = app(ValidationFactory::class)->make(
+            $attributes,
+            $rules,
+            $this->messages()
+        );
 
         // Validate and attach errors
         if ($hasErrors = $validator->fails()) {
@@ -336,7 +340,9 @@ abstract class MongolidModel extends AbstractModel
      */
     protected function localMockHasExpectationsFor(string $method): bool
     {
-        return $this->hasLocalMock() && $this->getLocalMock()->mockery_getExpectationsFor($method);
+        return $this->hasLocalMock() && $this->getLocalMock()->mockery_getExpectationsFor(
+            $method
+        );
     }
 
     /**
