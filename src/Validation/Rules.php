@@ -72,7 +72,10 @@ class Rules
         $collection = $parameters[0];
         $field = $parameters[1] ?? $attribute;
 
-        return $this->hasResults($collection, [$field => $this->transformIfId($value)]);
+        return $this->hasResults(
+            $collection,
+            [$field => $this->transformIfId($value)]
+        );
     }
 
     /**
@@ -127,7 +130,9 @@ class Rules
     private function requireParameterCount(int $count, array $parameters, string $rule): void
     {
         if (count($parameters) < $count) {
-            throw new InvalidArgumentException("Validation rule {$rule} requires at least {$count} parameters.");
+            throw new InvalidArgumentException(
+                "Validation rule {$rule} requires at least {$count} parameters."
+            );
         }
     }
 

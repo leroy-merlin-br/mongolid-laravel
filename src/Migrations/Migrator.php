@@ -188,7 +188,9 @@ class Migrator
      */
     public function resolve($file)
     {
-        $class = Str::studly(implode('_', array_slice(explode('_', $file), 4)));
+        $class = Str::studly(
+            implode('_', array_slice(explode('_', $file), 4))
+        );
 
         return new $class($this->output);
     }
@@ -407,7 +409,9 @@ class Migrator
             $migration = (object) $migration;
 
             if (!$file = Arr::get($files, $migration->migration)) {
-                $this->note("<fg=red>Migration not found:</> {$migration->migration}");
+                $this->note(
+                    "<fg=red>Migration not found:</> {$migration->migration}"
+                );
 
                 continue;
             }

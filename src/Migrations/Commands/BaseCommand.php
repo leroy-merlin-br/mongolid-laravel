@@ -45,7 +45,9 @@ class BaseCommand extends Command
      */
     protected function usingRealPath()
     {
-        return $this->input->hasOption('realpath') && $this->option('realpath');
+        return $this->input->hasOption('realpath') && $this->option(
+            'realpath'
+        );
     }
 
     /**

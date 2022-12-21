@@ -27,7 +27,12 @@ class MigrationCreatorTest extends TestCase
             ->andReturn('DummyClass');
 
         $files->expects()
-            ->put(m::pattern('/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_create_bar.php/'), 'CreateBar');
+            ->put(
+                m::pattern(
+                    '/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_create_bar.php/'
+                ),
+                'CreateBar'
+            );
 
         // Actions
         $creator->create('create_bar', 'database/migrations');
@@ -48,10 +53,17 @@ class MigrationCreatorTest extends TestCase
 
         // Expectations
         $files->expects()
-            ->get($creator->stubPath() . '/blank.stub')->andReturn('DummyClass');
+            ->get($creator->stubPath() . '/blank.stub')->andReturn(
+                'DummyClass'
+            );
 
         $files->expects()
-            ->put(m::pattern('/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_add_bar_index.php/'), 'AddBarIndex');
+            ->put(
+                m::pattern(
+                    '/database\/migrations\/\d{4}_\d{2}_\d{2}_\d{6}_add_bar_index.php/'
+                ),
+                'AddBarIndex'
+            );
 
         // Actions
         $creator->create('add_bar_index', 'database/migrations');
@@ -68,10 +80,15 @@ class MigrationCreatorTest extends TestCase
 
         // Expectations
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('A MigrationCreatorFakeMigration class already exists.');
+        $this->expectExceptionMessage(
+            'A MigrationCreatorFakeMigration class already exists.'
+        );
 
         // Actions
-        $creator->create('migration_creator_fake_migration', 'database/migrations');
+        $creator->create(
+            'migration_creator_fake_migration',
+            'database/migrations'
+        );
     }
 
     public function testShouldGetFilesystem()

@@ -43,7 +43,10 @@ class LaravelCacheComponent implements CacheComponentInterface
             return $this->inMemoryCache[$key];
         }
 
-        return $this->inMemoryCache[$key] = $this->laravelCache->get($key, null);
+        return $this->inMemoryCache[$key] = $this->laravelCache->get(
+            $key,
+            null
+        );
     }
 
     /**

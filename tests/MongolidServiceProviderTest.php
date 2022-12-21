@@ -22,7 +22,10 @@ class MongolidServiceProviderTest extends TestCase
 
         // Actions
         $this->assertInstanceOf(MongolidUserProvider::class, $result);
-        $this->assertInstanceOf(NullFailedJobProvider::class, $queueFailerResult);
+        $this->assertInstanceOf(
+            NullFailedJobProvider::class,
+            $queueFailerResult
+        );
     }
 
     public function testShouldBootUsingQueueFailer()

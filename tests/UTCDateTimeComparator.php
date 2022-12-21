@@ -33,7 +33,11 @@ class UTCDateTimeComparator extends Comparator
         $expectedDateTime = $expected->toDateTime();
         $actualDateTime = $actual->toDateTime();
 
-        if (abs($expectedDateTime->getTimestamp() - $actualDateTime->getTimestamp()) > $delta) {
+        if (
+            abs(
+                $expectedDateTime->getTimestamp() - $actualDateTime->getTimestamp()
+            ) > $delta
+        ) {
             throw new ComparisonFailure(
                 $expected,
                 $actual,
