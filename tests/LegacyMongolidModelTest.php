@@ -32,6 +32,10 @@ class LegacyMongolidModelTest extends TestCase
             'name' => 'required',
             'address' => 'min:100',
         ]);
+        $model->setMessages([
+            'name.required' => 'The :attribute field is required.',
+            'address.min' => 'The :attribute must be at least 100 characters.',
+        ]);
 
         $expectedErrors = [
             'The name field is required.',
@@ -116,6 +120,7 @@ class LegacyMongolidModelTest extends TestCase
 
         $model = new LegacyMongolidModelStub();
         $model->setCollection('users');
+        $model->password = 'test123';
 
         // Expectations
         $dataMapper->shouldReceive('setSchema')->passthru();
@@ -199,6 +204,10 @@ class LegacyMongolidModelTest extends TestCase
         $model->setRules([
             'name' => 'required',
             'address' => 'min:100',
+        ]);
+        $model->setMessages([
+            'name.required' => 'The :attribute field is required.',
+            'address.min' => 'The :attribute must be at least 100 characters.',
         ]);
 
         $expectedErrors = [

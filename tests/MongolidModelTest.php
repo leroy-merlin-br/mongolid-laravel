@@ -36,6 +36,14 @@ class MongolidModelTest extends TestCase
                 'name' => 'required',
                 'address' => 'min:100',
             ];
+
+            public function messages(): array
+            {
+                return [
+                    'name.required' => 'The :attribute field is required.',
+                    'address.min' => 'The :attribute must be at least 100 characters.',
+                ];
+            }
         };
 
         $model->address = 'small address';
@@ -215,6 +223,14 @@ class MongolidModelTest extends TestCase
                 'name' => 'required',
                 'address' => 'min:100',
             ];
+
+            public function messages(): array
+            {
+                return [
+                    'name.required' => 'The :attribute field is required.',
+                    'address.min' => 'The :attribute must be at least 100 characters.',
+                ];
+            }
         };
 
         $expectedErrors = [
@@ -528,8 +544,6 @@ class MongolidModelTest extends TestCase
         );
 
         $database = m::mock(Database::class);
-        $connection->mongolid = $database;
-        $database->collection_name = m::mock(Collection::class);
         $client = m::mock(Client::class);
 
         $model = new class () extends MongolidModel {
@@ -542,6 +556,11 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
+        $database->expects()
+            ->selectCollection('collection_name')
+            ->twice()
+            ->andReturn(m::mock(Collection::class));
+
         $connection->shouldReceive('getClient')
             ->once()
             ->with()

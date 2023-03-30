@@ -5,3 +5,4 @@ build
 phpcs.xml
 .idea
 docker-compose.override.yml
+phpunit.xml

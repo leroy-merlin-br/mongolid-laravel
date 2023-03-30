@@ -97,7 +97,7 @@ class MongolidUserProvider implements UserProvider
      */
     public function updateRememberToken(UserContract $user, $token)
     {
-        $user->remember_token = $token;
+        $user->setRememberToken($token);
         $user->save();
     }
 

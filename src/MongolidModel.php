@@ -355,15 +355,14 @@ abstract class MongolidModel extends AbstractModel
      */
     protected static function callMockOrParent(string $method, array $arguments)
     {
-        $classToCall = 'parent';
         $class = static::class;
         $mock = static::$mock[$class] ?? null;
 
         if ($mock && $mock->mockery_getExpectationsFor($method)) {
-            $classToCall = $mock;
+            return $mock->$method(...$arguments);
         }
 
-        return call_user_func_array([$classToCall, $method], $arguments);
+        return parent::$method(...$arguments);
     }
 
     /**

@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.0-fpm
 LABEL maintainer="boitata@leroymerlin.com.br"
 
 USER root:root
@@ -12,7 +12,7 @@ RUN apt-get update -qq \
     zlib1g-dev libicu-dev \
     && apt-get clean
 
-RUN pecl install xdebug-3.1.6 mongodb \
+RUN pecl install xdebug-3.2.1 mongodb \
   && docker-php-ext-enable \
     mongodb xdebug \
   && docker-php-ext-configure  \
