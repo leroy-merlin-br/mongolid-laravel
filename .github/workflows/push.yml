@@ -13,10 +13,10 @@ jobs:
           - "8.0"
           - "8.1"
         mongo:
-          - "3.6"
           - "4.0"
           - "4.2"
           - "4.4"
+          - "5.0"
     services:
       mongodb:
         image: mongo:${{ matrix.mongo }}
