@@ -89,8 +89,11 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
 
     /**
      * Flush all of the failed jobs from storage.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function flush()
+    public function flush($hours = null)
     {
         $this->failedJobs->drop();
     }

@@ -6,6 +6,7 @@ use Mockery as m;
 use MongoDB\BSON\ObjectID;
 use MongoDB\Client;
 use MongoDB\Collection;
+use MongoDB\Database;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
 use Mongolid\Connection\Connection;
@@ -131,13 +132,17 @@ class FailedJobsServiceTest extends TestCase
         Collection $rawCollection,
         string $collection = 'failed_jobs'
     ): void {
+        $database = m::mock(Database::class);
+        $database->expects()
+            ->selectCollection($collection)
+            ->andReturn($rawCollection);
+
         $rawClient = m::mock(Client::class);
+        $rawClient->expects()
+            ->selectDatabase('database')
+            ->andReturn($database);
 
         $connection->defaultDatabase = 'database';
-        $database = new stdClass();
-        $database->{$collection} = $rawCollection;
-        $rawClient->database = $database;
-
         $connection->expects()
             ->getClient()
             ->andReturn($rawClient);

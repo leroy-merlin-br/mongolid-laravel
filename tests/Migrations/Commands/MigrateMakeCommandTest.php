@@ -33,7 +33,8 @@ class MigrateMakeCommandTest extends TestCase
             ->create(
                 'create_foo',
                 __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
-            );
+            )
+            ->andReturn('foo_created');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -60,7 +61,8 @@ class MigrateMakeCommandTest extends TestCase
             ->create(
                 'create_foo',
                 __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
-            );
+            )
+            ->andReturn('foo_created');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -87,7 +89,8 @@ class MigrateMakeCommandTest extends TestCase
             ->create(
                 'create_foo',
                 __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
-            );
+            )
+            ->andReturn('foo_created');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -114,7 +117,8 @@ class MigrateMakeCommandTest extends TestCase
             ->create(
                 'create_foo',
                 __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
-            );
+            )
+            ->andReturn('foo_created');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -141,7 +145,8 @@ class MigrateMakeCommandTest extends TestCase
             ->create(
                 'create_users_collection',
                 __DIR__ . DIRECTORY_SEPARATOR . 'migrations'
-            );
+            )
+            ->andReturn('foo_created');
 
         $composer->expects()
             ->dumpAutoloads();
@@ -168,7 +173,8 @@ class MigrateMakeCommandTest extends TestCase
             ->create(
                 'create_foo',
                 '/home/laravel/vendor/laravel-package/migrations'
-            );
+            )
+            ->andReturn('foo_created');
 
         $composer->expects()
             ->dumpAutoloads();

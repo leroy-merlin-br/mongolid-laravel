@@ -2,8 +2,8 @@
 
 namespace MongolidLaravel;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Foundation\Auth\User;
 use Mockery as m;
 use MongoDB\BSON\ObjectID;
 
@@ -41,7 +41,7 @@ class MongolidUserProviderTest extends TestCase
     {
         // Set
         $provider = $this->getProvider();
-        $user = m::mock(Authenticatable::class);
+        $user = m::mock(User::class);
         $params = ['user' => 'user', 'password' => '1234'];
         $hasher = $this->app->make(Hasher::class);
 
@@ -96,7 +96,7 @@ class MongolidUserProviderTest extends TestCase
     {
         // Set
         $provider = $this->getProvider();
-        $user = m::mock(Authenticatable::class);
+        $user = m::mock(User::class)->makePartial();
 
         // Expectations
         $user->shouldReceive('save')

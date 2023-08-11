@@ -21,6 +21,13 @@ class LegacyMongolidModelStub extends LegacyMongolidModel
     /**
      * @var string[]
      */
+    protected array $hiddenAttributes = [
+        'password',
+    ];
+
+    /**
+     * @var string[]
+     */
     private $messages;
 
     public function __construct(array $attributes = [])
@@ -51,5 +58,19 @@ class LegacyMongolidModelStub extends LegacyMongolidModel
     public function messages(): array
     {
         return $this->messages ?? [];
+    }
+
+    public function toArray(): array
+    {
+        $data = [];
+        foreach ($this->attributes as $key => $value) {
+            if (in_array($key, $this->hiddenAttributes, true)) {
+                continue;
+            }
+
+            $data[$key] = $value;
+        }
+
+        return $data;
     }
 }

@@ -14,6 +14,11 @@ use stdClass;
 class LaravelCacheComponent implements CacheComponentInterface
 {
     /**
+     * Cache component that will be used to store
+     */
+    private Repository $laravelCache;
+
+    /**
      * Copy cache result in memory array.
      *
      * @var mixed[]
