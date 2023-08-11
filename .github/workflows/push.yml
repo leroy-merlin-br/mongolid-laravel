@@ -30,6 +30,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          extensions: mongodb-mongodb/mongo-php-driver@1.16.0
 
       - name: Composer
         uses: ramsey/composer-install@v2
