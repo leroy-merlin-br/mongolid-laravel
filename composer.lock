@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ecb3fabc3deb12ae899da519f0ab17d7",
+    "content-hash": "d7d95279cecbbdb00f08180ddefec51b",
     "packages": [
         {
             "name": "brick/math",
@@ -1404,16 +1404,16 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v3.6",
+            "version": "v3.7",
             "source": {
                 "type": "git",
                 "url": "git@github.com:leroy-merlin-br/mongolid.git",
-                "reference": "cd3cbce20f417479e6ab9170003492113d0e3baa"
+                "reference": "b6ddd9319ce2ad5fba428d672003a0ead1ca29ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/cd3cbce20f417479e6ab9170003492113d0e3baa",
-                "reference": "cd3cbce20f417479e6ab9170003492113d0e3baa",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/b6ddd9319ce2ad5fba428d672003a0ead1ca29ed",
+                "reference": "b6ddd9319ce2ad5fba428d672003a0ead1ca29ed",
                 "shasum": ""
             },
             "require": {
@@ -1469,7 +1469,7 @@
                 "nosql",
                 "odm"
             ],
-            "time": "2023-08-28T20:23:55+00:00"
+            "time": "2023-10-23T12:52:18+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -8469,5 +8469,5 @@
         "php": "^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
