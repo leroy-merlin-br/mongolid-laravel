@@ -78,7 +78,8 @@ class MongolidUserProviderTest extends TestCase
                 $query = [],
                 array $projection = [],
                 bool $useCache = false
-            ) {
+            ): null|static {
+                return null;
             }
         };
 
@@ -114,20 +115,20 @@ class MongolidUserProviderTest extends TestCase
     /**
      * @return MongolidUserProvider
      */
-    protected function getProvider()
+    protected function getProvider(): MongolidUserProvider
     {
         $model = new class () extends MongolidModel {
             public static function first(
                 $query = [],
                 array $projection = [],
                 bool $useCache = false
-            ) {
-                return m::mock(MongolidModel::class);
+            ): null|static {
+                return m::mock(static::class);
             }
         };
 
         $hasher = $this->app->make(Hasher::class);
 
-        return new MongolidUserProvider($hasher, get_class($model));
+        return new MongolidUserProvider($hasher, $model::class);
     }
 }

@@ -9,7 +9,6 @@ use Mockery;
 use Mockery\Expectation;
 use MongoDB\Collection;
 use Mongolid\Cursor\CursorInterface;
-use Mongolid\LegacyRecord;
 use Mongolid\Model\AbstractModel;
 
 /**
@@ -202,14 +201,12 @@ abstract class MongolidModel extends AbstractModel
      * @param mixed $query      mongoDB selection criteria
      * @param array $projection fields to project in MongoDB query
      * @param bool  $useCache   retrieves the entity through a CacheableCursor
-     *
-     * @return LegacyRecord
      */
     public static function first(
         $query = [],
         array $projection = [],
         bool $useCache = false
-    ) {
+    ): ?static {
         return static::callMockOrParent('first', func_get_args());
     }
 
@@ -222,14 +219,12 @@ abstract class MongolidModel extends AbstractModel
      * @param bool  $useCache   retrieves the entity through a CacheableCursor
      *
      * @throws \Mongolid\Model\Exception\ModelNotFoundException If no document was found
-     *
-     * @return LegacyRecord
      */
     public static function firstOrFail(
         $query = [],
         array $projection = [],
         bool $useCache = false
-    ) {
+    ): static {
         return static::callMockOrParent('firstOrFail', func_get_args());
     }
 
@@ -239,10 +234,8 @@ abstract class MongolidModel extends AbstractModel
      * _id field filled.
      *
      * @param mixed $id document id
-     *
-     * @return LegacyRecord
      */
-    public static function firstOrNew($id)
+    public static function firstOrNew($id): ?static
     {
         return static::callMockOrParent('firstOrNew', func_get_args());
     }

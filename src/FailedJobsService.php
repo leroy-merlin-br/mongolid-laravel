@@ -16,10 +16,8 @@ class FailedJobsService
 {
     /**
      * Collection name. Default 'failed_jobs'.
-     *
-     * @var string
      */
-    protected $collection;
+    protected string $collection;
 
     /**
      * Connections that are going to be used to interact with database.

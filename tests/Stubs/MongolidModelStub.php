@@ -6,10 +6,7 @@ use MongolidLaravel\MongolidModel;
 
 class MongolidModelStub extends MongolidModel
 {
-    /**
-     * @var string
-     */
-    protected $collection = 'collection_name';
+    protected ?string $collection = 'collection_name';
 
     public function __construct(array $attributes = [])
     {

@@ -12,7 +12,7 @@ RUN apt-get update -qq \
     zlib1g-dev libicu-dev \
     && apt-get clean
 
-RUN pecl install xdebug-3.2.1 mongodb \
+RUN pecl install xdebug-3.2.1 mongodb-1.17.0 \
   && docker-php-ext-enable \
     mongodb xdebug \
   && docker-php-ext-configure  \

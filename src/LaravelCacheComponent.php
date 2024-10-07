@@ -42,7 +42,7 @@ class LaravelCacheComponent implements CacheComponentInterface
      *
      * @return mixed
      */
-    public function get(string $key)
+    public function get(string $key): mixed
     {
         if (isset($this->inMemoryCache[$key])) {
             return $this->inMemoryCache[$key];
@@ -61,7 +61,7 @@ class LaravelCacheComponent implements CacheComponentInterface
      * @param mixed  $value   value being stored in cache
      * @param float  $minutes cache ttl
      */
-    public function put(string $key, $value, float $minutes)
+    public function put(string $key, mixed $value, float $minutes): void
     {
         if (is_array($value)) {
             foreach ($value as $index => $document) {
