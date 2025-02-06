@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4212869cc77295641b985acd59e77460",
+    "content-hash": "560dbdd58e4b75ee8bb327bd382a0239",
     "packages": [
         {
             "name": "brick/math",
@@ -1408,16 +1408,16 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v3.x-dev",
+            "version": "dev-chore/bump-packages-fix",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leroy-merlin-br/mongolid.git",
-                "reference": "7f13a3a018aafe8c9b40acaebd49ed2d53898551"
+                "reference": "f933688be691cff84094279830e336a8e9416e75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/7f13a3a018aafe8c9b40acaebd49ed2d53898551",
-                "reference": "7f13a3a018aafe8c9b40acaebd49ed2d53898551",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/f933688be691cff84094279830e336a8e9416e75",
+                "reference": "f933688be691cff84094279830e336a8e9416e75",
                 "shasum": ""
             },
             "require": {
@@ -1437,7 +1437,6 @@
             "suggest": {
                 "leroy-merlin-br/mongolid-laravel": "Easy, powerful and ultrafast MongoDB ODM for Laravel."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1478,9 +1477,9 @@
             ],
             "support": {
                 "issues": "https://github.com/leroy-merlin-br/mongolid/issues",
-                "source": "https://github.com/leroy-merlin-br/mongolid/tree/v3.x"
+                "source": "https://github.com/leroy-merlin-br/mongolid/tree/chore/bump-packages-fix"
             },
-            "time": "2025-02-05T13:38:17+00:00"
+            "time": "2025-02-06T13:31:03+00:00"
         },
         {
             "name": "mongodb/mongodb",

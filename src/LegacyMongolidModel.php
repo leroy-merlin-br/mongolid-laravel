@@ -228,7 +228,7 @@ abstract class LegacyMongolidModel extends LegacyRecord
         $query = [],
         array $projection = [],
         bool $useCache = false
-    ) {
+    ): mixed {
         return static::callMockOrParent('firstOrFail', func_get_args());
     }
 
