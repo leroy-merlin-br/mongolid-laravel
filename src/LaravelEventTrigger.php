@@ -12,10 +12,8 @@ class LaravelEventTrigger implements EventTriggerInterface
 {
     /**
      * Laravel's Event dispatcher.
-     *
-     * @var \Illuminate\Contracts\Events\Dispatcher
      */
-    protected $dispatcher;
+    protected Dispatcher $dispatcher;
 
     /**
      * Injects a Laravel's event dispatcher instance.
@@ -39,12 +37,13 @@ class LaravelEventTrigger implements EventTriggerInterface
      *
      * @return mixed Event handler return. The importance of this return is determined by $halt
      */
-    public function fire(string $event, $payload, bool $halt)
+    public function fire(string $event, mixed $payload, bool $halt): mixed
     {
         if (method_exists($this->dispatcher, 'fire')) {
             return $this->dispatcher->fire($event, $payload, $halt);
         }
+        $this->dispatcher->dispatch($event, $payload, $halt);
 
-        return $this->dispatcher->dispatch($event, $payload, $halt);
+        return true;
     }
 }
