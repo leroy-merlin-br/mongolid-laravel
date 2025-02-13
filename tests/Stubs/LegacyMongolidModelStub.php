@@ -9,7 +9,7 @@ class LegacyMongolidModelStub extends LegacyMongolidModel
     /**
      * @var ?string
      */
-    protected $collection = 'collection_name';
+    protected ?string $collection = 'collection_name';
 
     /**
      * @var string[]

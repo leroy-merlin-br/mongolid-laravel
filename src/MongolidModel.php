@@ -6,11 +6,13 @@ use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Support\MessageBag;
 use Mockery;
+use Mockery\CompositeExpectation;
 use Mockery\Expectation;
 use MongoDB\Collection;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\LegacyRecord;
 use Mongolid\Model\AbstractModel;
+use Mongolid\Model\ModelInterface;
 
 /**
  * This class extends the Mongolid\LegacyRecord, so, in order
@@ -18,7 +20,7 @@ use Mongolid\Model\AbstractModel;
  * base class.
  *
  * The MongolidLaravel\MongolidModel simply extends the original
- * and framework agnostic model of MongoLid and implements some
+ * and framework-agnostic model of MongoLid and implements some
  * validation rules using Laravel validation components.
  *
  * Remember, this package is meant to be used with Laravel while
@@ -124,7 +126,7 @@ abstract class MongolidModel extends AbstractModel
         $attributes = $this->getDocumentAttributes();
 
         // Verify attributes that are hashed and that have not changed
-        // those doesn't need to be validated.
+        // this doesn't need to be validated.
         foreach ($this->hashedAttributes as $hashedAttr) {
             if (isset($this->original[$hashedAttr]) && $this->$hashedAttr == $this->original[$hashedAttr]) {
                 unset($rules[$hashedAttr]);
@@ -181,7 +183,7 @@ abstract class MongolidModel extends AbstractModel
      *
      * @return Expectation
      */
-    public function shouldReceiveSave()
+    public function shouldReceiveSave(): CompositeExpectation
     {
         return $this->localMockShouldReceive('save');
     }
@@ -191,7 +193,7 @@ abstract class MongolidModel extends AbstractModel
      *
      * @return Expectation
      */
-    public function shouldReceiveDelete()
+    public function shouldReceiveDelete(): CompositeExpectation
     {
         return $this->localMockShouldReceive('delete');
     }
@@ -209,7 +211,7 @@ abstract class MongolidModel extends AbstractModel
         $query = [],
         array $projection = [],
         bool $useCache = false
-    ) {
+    ): ?ModelInterface {
         return static::callMockOrParent('first', func_get_args());
     }
 
@@ -229,7 +231,7 @@ abstract class MongolidModel extends AbstractModel
         $query = [],
         array $projection = [],
         bool $useCache = false
-    ) {
+    ): ?ModelInterface {
         return static::callMockOrParent('firstOrFail', func_get_args());
     }
 
@@ -240,9 +242,9 @@ abstract class MongolidModel extends AbstractModel
      *
      * @param mixed $id document id
      *
-     * @return LegacyRecord
+     * @return AbstractModel
      */
-    public static function firstOrNew($id)
+    public static function firstOrNew(mixed $id): AbstractModel
     {
         return static::callMockOrParent('firstOrNew', func_get_args());
     }
@@ -283,7 +285,7 @@ abstract class MongolidModel extends AbstractModel
      * Hashes the attributes specified in the hashedAttributes
      * array.
      */
-    protected function hashAttributes()
+    protected function hashAttributes(): void
     {
         foreach ($this->hashedAttributes as $attr) {
             // Hash attribute if changed
@@ -334,7 +336,7 @@ abstract class MongolidModel extends AbstractModel
     }
 
     /**
-     * Check for a expectation for given method on local mock.
+     * Check for an expectation for given method on local mock.
      *
      * @param string $method name of the method being checked
      */

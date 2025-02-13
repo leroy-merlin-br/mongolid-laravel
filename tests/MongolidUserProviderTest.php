@@ -6,6 +6,9 @@ use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Foundation\Auth\User;
 use Mockery as m;
 use MongoDB\BSON\ObjectID;
+use Mongolid\LegacyRecord;
+use Mongolid\Model\ModelInterface;
+use stdClass;
 
 class MongolidUserProviderTest extends TestCase
 {
@@ -78,7 +81,8 @@ class MongolidUserProviderTest extends TestCase
                 $query = [],
                 array $projection = [],
                 bool $useCache = false
-            ) {
+            ): ?ModelInterface {
+                return null;
             }
         };
 
@@ -114,14 +118,14 @@ class MongolidUserProviderTest extends TestCase
     /**
      * @return MongolidUserProvider
      */
-    protected function getProvider()
+    protected function getProvider(): MongolidUserProvider
     {
         $model = new class () extends MongolidModel {
             public static function first(
                 $query = [],
                 array $projection = [],
                 bool $useCache = false
-            ) {
+            ): ?ModelInterface {
                 return m::mock(MongolidModel::class);
             }
         };

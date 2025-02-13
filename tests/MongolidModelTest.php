@@ -138,7 +138,7 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'users';
+            protected ?string $collection = 'users';
         };
 
         // Expectations
@@ -185,7 +185,7 @@ class MongolidModelTest extends TestCase
         $hasher = $this->instance(Hasher::class, m::mock(Hasher::class));
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'users';
+            protected ?string $collection = 'users';
 
             protected $hashedAttributes = ['password'];
         };
@@ -280,7 +280,7 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -323,7 +323,7 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -345,7 +345,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -367,7 +367,7 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -389,7 +389,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -411,7 +411,7 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -435,7 +435,7 @@ class MongolidModelTest extends TestCase
         $dataMapper = $this->instance(Builder::class, m::mock(Builder::class));
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -456,7 +456,7 @@ class MongolidModelTest extends TestCase
     {
         // Set
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -479,7 +479,7 @@ class MongolidModelTest extends TestCase
         $cursor = m::mock(CursorInterface::class);
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -504,7 +504,7 @@ class MongolidModelTest extends TestCase
         $cursor = m::mock(CursorInterface::class);
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
         };
 
         // Expectations
@@ -547,7 +547,7 @@ class MongolidModelTest extends TestCase
         $client = m::mock(Client::class);
 
         $model = new class () extends MongolidModel {
-            protected $collection = 'collection_name';
+            protected ?string $collection = 'collection_name';
 
             public function rawCollection()
             {

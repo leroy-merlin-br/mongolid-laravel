@@ -10,6 +10,7 @@ use Mockery\Expectation;
 use MongoDB\Collection;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\LegacyRecord;
+use Mongolid\Model\ModelInterface;
 
 /**
  * This class extends the Mongolid\LegacyRecord, so, in order
@@ -114,7 +115,7 @@ abstract class LegacyMongolidModel extends LegacyRecord
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         if (!$rules = $this->rules()) {
             return true;
@@ -208,7 +209,7 @@ abstract class LegacyMongolidModel extends LegacyRecord
         $query = [],
         array $projection = [],
         bool $useCache = false
-    ) {
+    ): ?LegacyRecord {
         return static::callMockOrParent('first', func_get_args());
     }
 
@@ -228,7 +229,7 @@ abstract class LegacyMongolidModel extends LegacyRecord
         $query = [],
         array $projection = [],
         bool $useCache = false
-    ): mixed {
+    ): ?ModelInterface {
         return static::callMockOrParent('firstOrFail', func_get_args());
     }
 
@@ -241,7 +242,7 @@ abstract class LegacyMongolidModel extends LegacyRecord
      *
      * @return LegacyRecord
      */
-    public static function firstOrNew($id)
+    public static function firstOrNew($id): ?LegacyRecord
     {
         return static::callMockOrParent('firstOrNew', func_get_args());
     }
