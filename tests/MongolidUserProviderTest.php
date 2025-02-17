@@ -6,9 +6,7 @@ use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Foundation\Auth\User;
 use Mockery as m;
 use MongoDB\BSON\ObjectID;
-use Mongolid\LegacyRecord;
 use Mongolid\Model\ModelInterface;
-use stdClass;
 
 class MongolidUserProviderTest extends TestCase
 {

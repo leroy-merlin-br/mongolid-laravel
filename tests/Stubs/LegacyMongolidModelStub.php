@@ -6,9 +6,6 @@ use MongolidLaravel\LegacyMongolidModel;
 
 class LegacyMongolidModelStub extends LegacyMongolidModel
 {
-    /**
-     * @var ?string
-     */
     protected ?string $collection = 'collection_name';
 
     /**

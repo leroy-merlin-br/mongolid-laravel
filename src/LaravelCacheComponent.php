@@ -20,8 +20,10 @@ class LaravelCacheComponent implements CacheComponentInterface
 
     /**
      * Copy cache result in memory array.
+     *
+     * @var array<string, mixed> $inMemoryCache
      */
-    private array $inMemoryCache = [];
+    private $inMemoryCache = [];
 
     /**
      * Injects the dependencies of LaravelCacheComponent.
