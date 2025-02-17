@@ -246,7 +246,7 @@ abstract class MongolidModel extends AbstractModel
      */
     public static function firstOrNew(mixed $id): AbstractModel
     {
-        return static::callMockOrParent('firstOrNew', func_get_args());
+        return static::callMockOrParent('firstOrNew', ...$id);
     }
 
     /**

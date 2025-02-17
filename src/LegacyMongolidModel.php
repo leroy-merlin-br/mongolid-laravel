@@ -244,7 +244,7 @@ abstract class LegacyMongolidModel extends LegacyRecord
      */
     public static function firstOrNew($id): ?LegacyRecord
     {
-        return static::callMockOrParent('firstOrNew', func_get_args());
+        return static::callMockOrParent('firstOrNew', ...$id);
     }
 
     /**
