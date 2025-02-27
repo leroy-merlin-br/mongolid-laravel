@@ -1471,12 +1471,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/leroy-merlin-br/mongolid.git",
-                "reference": "26799be3df0cc6b3bd0eea570b5de08aab5011ae"
+                "reference": "83081cfb912d14b38ec6d7f6eedb3e1096f63bff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/26799be3df0cc6b3bd0eea570b5de08aab5011ae",
-                "reference": "26799be3df0cc6b3bd0eea570b5de08aab5011ae",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/83081cfb912d14b38ec6d7f6eedb3e1096f63bff",
+                "reference": "83081cfb912d14b38ec6d7f6eedb3e1096f63bff",
                 "shasum": ""
             },
             "require": {
@@ -1538,7 +1538,7 @@
                 "issues": "https://github.com/leroy-merlin-br/mongolid/issues",
                 "source": "https://github.com/leroy-merlin-br/mongolid/tree/chore/bump-packages-fix"
             },
-            "time": "2025-02-20T16:20:02+00:00"
+            "time": "2025-02-27T14:09:49+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -5867,16 +5867,16 @@
         },
         {
             "name": "orchestra/sidekick",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/sidekick.git",
-                "reference": "1f251f336afa92e4899b6916f52032ff8d5bc47a"
+                "reference": "95e056508a5990480fc9a67cacf1119b58d8d233"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/sidekick/zipball/1f251f336afa92e4899b6916f52032ff8d5bc47a",
-                "reference": "1f251f336afa92e4899b6916f52032ff8d5bc47a",
+                "url": "https://api.github.com/repos/orchestral/sidekick/zipball/95e056508a5990480fc9a67cacf1119b58d8d233",
+                "reference": "95e056508a5990480fc9a67cacf1119b58d8d233",
                 "shasum": ""
             },
             "require": {
@@ -5888,7 +5888,7 @@
                 "laravel/framework": "^9.52.16|^10.48.28|^11.42.1|^12.0|^13.0",
                 "laravel/pint": "^1.4",
                 "phpstan/phpstan": "^2.1",
-                "phpunit/phpunit": "^9.6|^10.0|^11.0",
+                "phpunit/phpunit": "^9.6|^10.0|^11.0|^12.0",
                 "symfony/process": "^6.0|^7.0"
             },
             "type": "library",
@@ -5913,9 +5913,9 @@
             "description": "Packages Toolkit Utilities and Helpers for Laravel",
             "support": {
                 "issues": "https://github.com/orchestral/sidekick/issues",
-                "source": "https://github.com/orchestral/sidekick/tree/v1.0.3"
+                "source": "https://github.com/orchestral/sidekick/tree/v1.0.4"
             },
-            "time": "2025-02-20T12:05:57+00:00"
+            "time": "2025-02-26T09:16:37+00:00"
         },
         {
             "name": "orchestra/testbench",
