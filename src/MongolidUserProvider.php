@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Mongolid\Container\Container;
+use SensitiveParameter;
 
 class MongolidUserProvider implements UserProvider
 {
@@ -99,6 +100,23 @@ class MongolidUserProvider implements UserProvider
     {
         $user->setRememberToken($token);
         $user->save();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function rehashPasswordIfRequired(
+        UserContract $user,
+        #[SensitiveParameter] array $credentials,
+        bool $force = false
+    ) {
+        if (! $this->hasher->needsRehash($user->getAuthPassword()) && ! $force) {
+            return;
+        }
+
+        $user->forceFill([
+            $user->getAuthPasswordName() => $this->hasher->make($credentials['password']),
+        ])->save();
     }
 
     /**
