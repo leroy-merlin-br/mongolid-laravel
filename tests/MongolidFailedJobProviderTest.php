@@ -13,7 +13,7 @@ use Mongolid\Util\LocalDateTime;
 
 class MongolidFailedJobProviderTest extends TestCase
 {
-    public function testLogShouldPersistFailedJob()
+    public function testLogShouldPersistFailedJob(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
@@ -52,7 +52,7 @@ class MongolidFailedJobProviderTest extends TestCase
         $this->assertEquals('xpto1', $result);
     }
 
-    public function testAllShouldReturnAllJobs()
+    public function testAllShouldReturnAllJobs(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
@@ -103,7 +103,67 @@ class MongolidFailedJobProviderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testFindShouldReturnJob()
+    /**
+     * @dataProvider getIdsScenarios
+     */
+    public function testShouldReturnIds(array $expected, ?string $queue): void
+    {
+        // Set
+        $service = m::mock(FailedJobsService::class);
+        $provider = new MongolidFailedJobProvider($service);
+
+        $data = [
+            [
+                '_id' => '12345',
+                'connection' => 'sqs',
+                'queue' => 'queue1',
+                'payload' => '{some:json}',
+                'exception' => 'Exception: Xtpo',
+                'failed_at' => LocalDateTime::format(
+                    new UTCDateTime(),
+                    DateTimeInterface::ATOM
+                ),
+            ],
+            [
+                '_id' => '67890',
+                'connection' => 'sqs',
+                'queue' => 'queue2',
+                'payload' => '{some:json}',
+                'exception' => 'Exception: Xtpo',
+                'failed_at' => LocalDateTime::format(
+                    new UTCDateTime(),
+                    DateTimeInterface::ATOM
+                ),
+            ],
+        ];
+
+        // Expectations
+        $service->shouldReceive()
+            ->all()
+            ->andReturn($data);
+
+        // Actions
+        $result = $provider->ids($queue);
+
+        // Assertions
+        $this->assertEquals($expected, $result);
+    }
+
+    public static function getIdsScenarios(): array
+    {
+        return [
+            'no queue' => [
+                'expected' => ['12345', '67890'],
+                'queue' => null,
+            ],
+            'with queue' => [
+                'expected' => ['67890'],
+                'queue' => 'queue2',
+            ],
+        ];
+    }
+
+    public function testFindShouldReturnJob(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
@@ -131,7 +191,7 @@ class MongolidFailedJobProviderTest extends TestCase
         $this->assertEquals($data, $result);
     }
 
-    public function testForgetShouldDeleteJob()
+    public function testForgetShouldDeleteJob(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
@@ -158,7 +218,7 @@ class MongolidFailedJobProviderTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testFlushShouldDropWholeCollection()
+    public function testFlushShouldDropWholeCollection(): void
     {
         // Set
         $service = m::mock(FailedJobsService::class);
