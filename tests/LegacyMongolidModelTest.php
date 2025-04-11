@@ -511,7 +511,7 @@ class LegacyMongolidModelTest extends TestCase
     /**
      * Retrieves methods which should hash attributes before send data to DB.
      */
-    public function getMethods()
+    public static function getMethods(): array
     {
         return [
             ['save'],

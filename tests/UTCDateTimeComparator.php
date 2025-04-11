@@ -2,6 +2,7 @@
 
 namespace MongolidLaravel;
 
+use DateTime;
 use MongoDB\BSON\UTCDateTime;
 use SebastianBergmann\Comparator\Comparator;
 use SebastianBergmann\Comparator\ComparisonFailure;
@@ -14,7 +15,7 @@ class UTCDateTimeComparator extends Comparator
     /**
      * {@inheritdoc}
      */
-    public function accepts($expected, $actual)
+    public function accepts($expected, $actual): bool
     {
         return $expected instanceof UTCDateTime
             && $actual instanceof UTCDateTime;
@@ -28,7 +29,7 @@ class UTCDateTimeComparator extends Comparator
      *
      * {@inheritdoc}
      */
-    public function assertEquals($expected, $actual, $delta = 100, $canonicalize = false, $ignoreCase = false)
+    public function assertEquals($expected, $actual, $delta = 100, $canonicalize = false, $ignoreCase = false): void
     {
         $expectedDateTime = $expected->toDateTime();
         $actualDateTime = $actual->toDateTime();

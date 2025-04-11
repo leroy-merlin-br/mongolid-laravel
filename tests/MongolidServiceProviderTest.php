@@ -80,7 +80,7 @@ class MongolidServiceProviderTest extends TestCase
         $this->assertEquals($connectionString, (string) $mongoClient);
     }
 
-    public function connectionVariations()
+    public static function connectionVariations(): array
     {
         return [
             'default values' => [
