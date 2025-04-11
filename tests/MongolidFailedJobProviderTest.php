@@ -149,20 +149,6 @@ class MongolidFailedJobProviderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public static function getIdsScenarios(): array
-    {
-        return [
-            'no queue' => [
-                'expected' => ['12345', '67890'],
-                'queue' => null,
-            ],
-            'with queue' => [
-                'expected' => ['67890'],
-                'queue' => 'queue2',
-            ],
-        ];
-    }
-
     public function testFindShouldReturnJob(): void
     {
         // Set
@@ -231,5 +217,19 @@ class MongolidFailedJobProviderTest extends TestCase
 
         // Actions
         $provider->flush();
+    }
+
+    public static function getIdsScenarios(): array
+    {
+        return [
+            'no queue' => [
+                'expected' => ['12345', '67890'],
+                'queue' => null,
+            ],
+            'with queue' => [
+                'expected' => ['67890'],
+                'queue' => 'queue2',
+            ],
+        ];
     }
 }

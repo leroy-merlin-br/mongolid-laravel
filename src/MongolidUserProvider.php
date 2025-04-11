@@ -110,12 +110,18 @@ class MongolidUserProvider implements UserProvider
         #[SensitiveParameter] array $credentials,
         bool $force = false
     ) {
-        if (! $this->hasher->needsRehash($user->getAuthPassword()) && ! $force) {
+        $needsRehash = $this->hasher->needsRehash(
+            $user->getAuthPassword()
+        );
+
+        if (!$needsRehash && !$force) {
             return;
         }
 
         $user->forceFill([
-            $user->getAuthPasswordName() => $this->hasher->make($credentials['password']),
+            $user->getAuthPasswordName() => $this->hasher->make(
+                $credentials['password']
+            ),
         ])->save();
     }
 

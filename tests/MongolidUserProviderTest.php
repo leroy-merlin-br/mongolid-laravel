@@ -11,7 +11,7 @@ class MongolidUserProviderTest extends TestCase
 {
     private Hasher $hasher;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -199,7 +199,6 @@ class MongolidUserProviderTest extends TestCase
                 return m::mock(MongolidModel::class);
             }
         };
-
 
         return new MongolidUserProvider($this->hasher, get_class($model));
     }
