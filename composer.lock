@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3721965f4a3ce4ae65a1b10d0706994e",
+    "content-hash": "8b07e5973db19121273a4dd2a6293cf8",
     "packages": [
         {
             "name": "brick/math",
@@ -1434,16 +1434,16 @@
         },
         {
             "name": "leroy-merlin-br/mongolid",
-            "version": "v3.8",
+            "version": "v3.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/leroy-merlin-br/mongolid.git",
-                "reference": "c52120292354a4ee532f5023aa71f1f5cbbb02a4"
+                "reference": "9b8f5a5c15683afe0a26b47ed594e4d0c0eea1e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/c52120292354a4ee532f5023aa71f1f5cbbb02a4",
-                "reference": "c52120292354a4ee532f5023aa71f1f5cbbb02a4",
+                "url": "https://api.github.com/repos/leroy-merlin-br/mongolid/zipball/9b8f5a5c15683afe0a26b47ed594e4d0c0eea1e7",
+                "reference": "9b8f5a5c15683afe0a26b47ed594e4d0c0eea1e7",
                 "shasum": ""
             },
             "require": {
@@ -1502,9 +1502,9 @@
             ],
             "support": {
                 "issues": "https://github.com/leroy-merlin-br/mongolid/issues",
-                "source": "https://github.com/leroy-merlin-br/mongolid/tree/v3.8"
+                "source": "https://github.com/leroy-merlin-br/mongolid/tree/v3.8.1"
             },
-            "time": "2025-04-08T18:55:59+00:00"
+            "time": "2025-10-01T13:35:16+00:00"
         },
         {
             "name": "mongodb/mongodb",
