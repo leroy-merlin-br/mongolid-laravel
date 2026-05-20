@@ -160,7 +160,7 @@ class MongolidUserProviderTest extends TestCase
         $provider->rehashPasswordIfRequired($user, $credentials);
     }
 
-    public function testShouldRehashPasswordIfRequired3(): void
+    public function testShouldNotRehashPassword(): void
     {
         // Set
         $provider = $this->getProvider();

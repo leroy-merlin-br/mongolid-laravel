@@ -10,18 +10,27 @@
 # MongoLid (Laravel Package)
 
 - [Introduction](#introduction)
+- [Support Policy](#support-policy)
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
 - [Authentication](#authentication)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
-- [Additional Information](#additional_information)
+- [Additional Information](#additional-information)
 
 ## Introduction
 
 MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementation for working with MongoDB. Each database collection can have a corresponding "Model" which is used to interact with that collection.
 
 > Note: The ODM implementation is within the [(non laravel) mongolid repository](https://github.com/leroy-merlin-br/mongolid).
+
+## Support Policy
+
+### Official support for this release line
+
+- **Laravel:** `11.x`
+- **PHP:** `^8.2`
+- **MongoDB:** `7.0`
 
 ## Installation
 
@@ -31,17 +40,15 @@ Install with `composer require` (use one of the above tags if needed).
 composer require leroy-merlin-br/mongolid-laravel
 ```
 
-**Note:** Mongolid Laravel 2.0 only supports Laravel 5.4+. For older versions use the tags:
+This package uses Laravel package discovery in the current supported baseline.
+In a standard Laravel 11 application, no manual provider registration is required.
 
-- Laravel 4.2 `"leroy-merlin-br/mongolid-laravel": "^0.7"`
-- Laravel 5.1 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta4"`
-- Laravel 5.2 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
-- Laravel 5.3 `"leroy-merlin-br/mongolid-laravel": "2.0.0-beta6"`
+If you need to maintain older Laravel versions, use the historical tags/branches that match that legacy baseline.
 
 
 Make sure to set minimum stability to `dev` when using a beta tag (`composer config minimum-stability dev`).
 
-> **Note**: If you are using Laravel 5.5, the next steps for providers and aliases are unnecessaries. MongoLid supports Laravel new [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
+> **Note**: The manual provider and alias examples below are only necessary if package discovery is disabled in your application.
 
 In your `config/app.php` add `'MongolidLaravel\MongolidServiceProvider'` to the end of the `$providers` array
 

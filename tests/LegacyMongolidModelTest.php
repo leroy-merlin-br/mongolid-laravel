@@ -8,6 +8,7 @@ use Mongolid\Cursor\CursorInterface;
 use Mongolid\DataMapper\DataMapper;
 use Mongolid\Model\Exception\ModelNotFoundException;
 use MongolidLaravel\Stubs\LegacyMongolidModelStub;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class LegacyMongolidModelTest extends TestCase
 {
@@ -155,9 +156,7 @@ class LegacyMongolidModelTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @dataProvider getMethods
-     */
+    #[DataProvider('getMethods')]
     public function testShouldHashAttributesOnSaveAndUpdate($method)
     {
         // Set

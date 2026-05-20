@@ -10,6 +10,7 @@ use MongoDB\BSON\UTCDateTime;
 use MongoDB\DeleteResult;
 use MongoDB\InsertOneResult;
 use Mongolid\Util\LocalDateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MongolidFailedJobProviderTest extends TestCase
 {
@@ -103,9 +104,7 @@ class MongolidFailedJobProviderTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @dataProvider getIdsScenarios
-     */
+    #[DataProvider('getIdsScenarios')]
     public function testShouldReturnIds(array $expected, ?string $queue): void
     {
         // Set
