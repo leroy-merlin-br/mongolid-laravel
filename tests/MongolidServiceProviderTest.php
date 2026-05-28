@@ -6,6 +6,7 @@ use Illuminate\Queue\Failed\NullFailedJobProvider;
 use Mongolid\Connection\Connection;
 use Mongolid\Container\Container;
 use Mongolid\Event\EventTriggerService;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MongolidServiceProviderTest extends TestCase
 {
@@ -61,9 +62,7 @@ class MongolidServiceProviderTest extends TestCase
         $this->assertInstanceOf(LaravelCacheComponent::class, $cacheComponent);
     }
 
-    /**
-     * @dataProvider connectionVariations
-     */
+    #[DataProvider('connectionVariations')]
     public function testShouldRegisterConnector($config, $connectionString)
     {
         // Set
@@ -80,7 +79,7 @@ class MongolidServiceProviderTest extends TestCase
         $this->assertEquals($connectionString, (string) $mongoClient);
     }
 
-    public function connectionVariations()
+    public static function connectionVariations(): array
     {
         return [
             'default values' => [

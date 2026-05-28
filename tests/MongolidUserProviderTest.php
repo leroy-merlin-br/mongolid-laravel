@@ -9,7 +9,17 @@ use MongoDB\BSON\ObjectID;
 
 class MongolidUserProviderTest extends TestCase
 {
-    public function testShouldRetrieveById()
+    private Hasher $hasher;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->hasher = m::mock($this->app->make(Hasher::class))
+            ->makePartial();
+    }
+
+    public function testShouldRetrieveById(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -23,7 +33,7 @@ class MongolidUserProviderTest extends TestCase
         $this->assertInstanceOf(MongolidModel::class, $result);
     }
 
-    public function testShouldRetrieveByCredentials()
+    public function testShouldRetrieveByCredentials(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -37,7 +47,7 @@ class MongolidUserProviderTest extends TestCase
         $this->assertInstanceOf(MongolidModel::class, $result);
     }
 
-    public function testShouldValidateCredentials()
+    public function testShouldValidateCredentials(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -58,7 +68,7 @@ class MongolidUserProviderTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testShouldRetrieveByToken()
+    public function testShouldRetrieveByToken(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -70,7 +80,7 @@ class MongolidUserProviderTest extends TestCase
         $this->assertInstanceOf(MongolidModel::class, $result);
     }
 
-    public function testShouldNotRetrieveByToken()
+    public function testShouldNotRetrieveByToken(): void
     {
         // Set
         $model = new class () extends MongolidModel {
@@ -92,7 +102,7 @@ class MongolidUserProviderTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testShouldUpdateRememberToken()
+    public function testShouldUpdateRememberToken(): void
     {
         // Set
         $provider = $this->getProvider();
@@ -111,10 +121,74 @@ class MongolidUserProviderTest extends TestCase
         $this->assertEquals('1234', $user->remember_token);
     }
 
-    /**
-     * @return MongolidUserProvider
-     */
-    protected function getProvider()
+    public function testShouldRehashPasswordIfRequired(): void
+    {
+        // Set
+        $provider = $this->getProvider();
+        $user = m::mock(User::class)->makePartial();
+        $credentials = [
+            'password' => '1234',
+        ];
+
+        // Expectations
+        $user->expects()
+            ->getAuthPassword()
+            ->andReturn($credentials['password']);
+
+        $user->expects()
+            ->getAuthPasswordName()
+            ->andReturn('password');
+
+        $user->expects('forceFill')
+            ->withArgs(function ($attributes) use ($credentials) {
+                $result = $this->hasher->check(
+                    $credentials['password'],
+                    $attributes['password']
+                );
+
+                $this->assertTrue($result);
+
+                return true;
+            })
+            ->andReturnSelf();
+
+        $user->expects()
+            ->save()
+            ->andReturnTrue();
+
+        // Actions
+        $provider->rehashPasswordIfRequired($user, $credentials);
+    }
+
+    public function testShouldNotRehashPassword(): void
+    {
+        // Set
+        $provider = $this->getProvider();
+        $user = m::mock(User::class)->makePartial();
+        $credentials = [
+            'password' => '1234',
+        ];
+
+        // Expectations
+        $user->expects()
+            ->getAuthPassword()
+            ->andReturn($credentials['password']);
+
+        $this->hasher->expects('needsRehash')
+            ->andReturnFalse();
+
+        $user->expects('forceFill')
+            ->never();
+
+        $user->expects()
+            ->save()
+            ->never();
+
+        // Actions
+        $provider->rehashPasswordIfRequired($user, $credentials);
+    }
+
+    protected function getProvider(): MongolidUserProvider
     {
         $model = new class () extends MongolidModel {
             public static function first(
@@ -126,8 +200,6 @@ class MongolidUserProviderTest extends TestCase
             }
         };
 
-        $hasher = $this->app->make(Hasher::class);
-
-        return new MongolidUserProvider($hasher, get_class($model));
+        return new MongolidUserProvider($this->hasher, get_class($model));
     }
 }

@@ -11,6 +11,7 @@ use Mongolid\Connection\Connection;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\Model\Exception\ModelNotFoundException;
 use Mongolid\Query\Builder;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class MongolidModelTest extends TestCase
 {
@@ -175,9 +176,7 @@ class MongolidModelTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @dataProvider getMethods
-     */
+    #[DataProvider('getMethods')]
     public function testShouldHashAttributesOnSaveAndUpdate($method)
     {
         // Set
@@ -580,7 +579,7 @@ class MongolidModelTest extends TestCase
     /**
      * Retrieves methods which should hash attributes before send data to DB.
      */
-    public function getMethods()
+    public static function getMethods(): array
     {
         return [
             ['save'],

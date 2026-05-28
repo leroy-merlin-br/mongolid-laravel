@@ -23,6 +23,27 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function ids($queue = null)
+    {
+        $ids = [];
+        foreach ($this->failedJobs->all() as $job) {
+            if (is_null($queue)) {
+                $ids[] = (string) $job['_id'];
+
+                continue;
+            }
+
+            if ($queue === $job['queue']) {
+                $ids[] = (string) $job['_id'];
+            }
+        }
+
+        return $ids;
+    }
+
+    /**
      * Log a failed job into storage.
      *
      * @param string     $connection
