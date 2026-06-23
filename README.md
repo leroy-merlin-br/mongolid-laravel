@@ -28,7 +28,7 @@ MongoLid ODM (Object Document Mapper) provides a beautiful, simple implementatio
 
 ### Official support for this release line
 
-- **Laravel:** `11.x`
+- **Laravel:** `12.x`
 - **PHP:** `^8.2`
 - **MongoDB:** `7.0`
 
@@ -41,7 +41,7 @@ composer require leroy-merlin-br/mongolid-laravel
 ```
 
 This package uses Laravel package discovery in the current supported baseline.
-In a standard Laravel 11 application, no manual provider registration is required.
+In a standard Laravel 12 application, no manual provider registration is required.
 
 If you need to maintain older Laravel versions, use the historical tags/branches that match that legacy baseline.
 

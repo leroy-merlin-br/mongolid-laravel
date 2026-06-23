@@ -26,14 +26,14 @@
     "require": {
         "php": "^8.2",
         "ext-mongodb": "^1.20.0",
-        "leroy-merlin-br/mongolid": "v3.8.2",
-        "illuminate/support": "^11.0",
-        "illuminate/auth": "^11.0",
-        "illuminate/queue": "^11.0"
+        "leroy-merlin-br/mongolid": "v4.1.0",
+        "illuminate/support": "^12.60",
+        "illuminate/auth": "^12.60",
+        "illuminate/queue": "^12.60"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.3|^10.5|^11.5",
-        "orchestra/testbench": "^9.17",
+        "orchestra/testbench": "^10.0",
         "mockery/mockery": "^1.5.1",
         "leroy-merlin-br/coding-standard": "^3.1.0"
     },
