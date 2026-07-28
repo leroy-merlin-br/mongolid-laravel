@@ -93,7 +93,7 @@ class MongolidUserProvider implements UserProvider
      * @return UserContract|null
      * @throws BindingResolutionException
      */
-    public function retrieveByToken($identifier, $token)
+    public function retrieveByToken($identifier, #[SensitiveParameter] $token)
     {
         /** @var UserContract|null $user */
         $user = $this->createModel()->first(
@@ -110,7 +110,7 @@ class MongolidUserProvider implements UserProvider
      */
     public function updateRememberToken(
         UserContract $user,
-        $token
+        #[SensitiveParameter] $token
     ): void {
         $user->setRememberToken($token);
         $user->save();
