@@ -5,8 +5,9 @@ on:
 jobs:
   testing:
     name: Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
+      fail-fast: false
       matrix:
         php:
           - "8.2"
@@ -15,7 +16,7 @@ jobs:
           - "8.5"
         mongo:
           - "7.0"
-          - "8.0"
+          - "8.0.38"
     services:
       mongodb:
         image: mongo:${{ matrix.mongo }}
@@ -31,7 +32,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: mongodb-mongodb/mongo-php-driver@1.20.1
+          extensions: mongodb-1.21.13
 
       - name: Composer
         uses: ramsey/composer-install@v2
