@@ -199,6 +199,19 @@ abstract class MongolidModel extends AbstractModel
     }
 
     /**
+     * Gets the collection using explicit select methods, as the magic
+     * property access is not reliable on newer mongodb/mongodb versions.
+     */
+    public function getCollection(): Collection
+    {
+        $connection = Container::make(Connection::class);
+
+        return $connection->getClient()
+            ->selectDatabase($connection->defaultDatabase)
+            ->selectCollection($this->getCollectionName());
+    }
+
+    /**
      * Gets the first entity of this kind that matches the query.
      *
      * @param mixed $query      mongoDB selection criteria
@@ -279,19 +292,6 @@ abstract class MongolidModel extends AbstractModel
     protected function collection(): Collection
     {
         return $this->getCollection();
-    }
-
-    /**
-     * Gets the collection using explicit select methods, as the magic
-     * property access is not reliable on newer mongodb/mongodb versions.
-     */
-    public function getCollection(): Collection
-    {
-        $connection = Container::make(Connection::class);
-
-        return $connection->getClient()
-            ->selectDatabase($connection->defaultDatabase)
-            ->selectCollection($this->getCollectionName());
     }
 
     /**
