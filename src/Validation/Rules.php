@@ -143,7 +143,9 @@ class Rules
     {
         $database = $this->connection->defaultDatabase;
 
-        $collection = $this->connection->getClient()->$database->{$collection};
+        $collection = $this->connection->getClient()
+            ->selectDatabase($database)
+            ->selectCollection($collection);
 
         return (bool) $collection->countDocuments($query);
     }

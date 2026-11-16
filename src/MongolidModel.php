@@ -8,6 +8,8 @@ use Illuminate\Support\MessageBag;
 use Mockery;
 use Mockery\Expectation;
 use MongoDB\Collection;
+use Mongolid\Connection\Connection;
+use Mongolid\Container\Container;
 use Mongolid\Cursor\CursorInterface;
 use Mongolid\LegacyRecord;
 use Mongolid\Model\AbstractModel;
@@ -277,6 +279,19 @@ abstract class MongolidModel extends AbstractModel
     protected function collection(): Collection
     {
         return $this->getCollection();
+    }
+
+    /**
+     * Gets the collection using explicit select methods, as the magic
+     * property access is not reliable on newer mongodb/mongodb versions.
+     */
+    public function getCollection(): Collection
+    {
+        $connection = Container::make(Connection::class);
+
+        return $connection->getClient()
+            ->selectDatabase($connection->defaultDatabase)
+            ->selectCollection($this->getCollectionName());
     }
 
     /**

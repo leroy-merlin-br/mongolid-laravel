@@ -91,6 +91,8 @@ class FailedJobsService
     {
         $database = $this->connection->defaultDatabase;
 
-        return $this->connection->getClient()->$database->{$this->collection};
+        return $this->connection->getClient()
+            ->selectDatabase($database)
+            ->selectCollection($this->collection);
     }
 }

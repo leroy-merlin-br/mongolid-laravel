@@ -555,10 +555,10 @@ class MongolidModelTest extends TestCase
         };
 
         // Expectations
+        $collection = m::mock(Collection::class);
         $database->expects()
             ->selectCollection('collection_name')
-            ->twice()
-            ->andReturn(m::mock(Collection::class));
+            ->andReturn($collection);
 
         $connection->shouldReceive('getClient')
             ->once()
@@ -573,7 +573,7 @@ class MongolidModelTest extends TestCase
         $result = $model->rawCollection();
 
         // Assertions
-        $this->assertEquals($database->collection_name, $result);
+        $this->assertSame($collection, $result);
     }
 
     /**
