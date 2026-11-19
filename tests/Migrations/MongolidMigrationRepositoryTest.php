@@ -8,14 +8,18 @@ namespace MongolidLaravel\Migrations;
 * See the accompanying LICENSE file for terms.
 */
 
+use ArrayIterator;
 use Mockery as m;
+use MongoDB\BSON\Int64;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Client;
 use MongoDB\Collection;
+use MongoDB\Driver\CursorInterface as DriverCursorInterface;
+use MongoDB\Driver\Server;
 use Mongolid\Connection\Connection;
 use MongolidLaravel\TestCase;
-use SplFixedArray;
 use stdClass;
+use LogicException;
 
 class MongolidMigrationRepositoryTest extends TestCase
 {
@@ -49,7 +53,9 @@ class MongolidMigrationRepositoryTest extends TestCase
                     'projection' => ['_id' => 0, 'migration' => 1],
                 ]
             )
-            ->andReturn([(object) ['migration' => 'bar']]);
+            ->andReturn(
+                $this->createCursor([(object) ['migration' => 'bar']])
+            );
 
         // Actions
         $result = $repository->getRan();
@@ -91,7 +97,7 @@ class MongolidMigrationRepositoryTest extends TestCase
                     'limit' => $steps,
                 ]
             )
-            ->andReturn(SplFixedArray::fromArray($list));
+            ->andReturn($this->createCursor($list));
 
         // Actions
         $result = $repository->getMigrations($steps);
@@ -125,7 +131,6 @@ class MongolidMigrationRepositoryTest extends TestCase
         $migration2->migration = 'create_products_index';
 
         $migrations = [$migration1, $migration2];
-        $cursor = SplFixedArray::fromArray($migrations);
 
         // Expectations
         $connection->expects()
@@ -146,7 +151,7 @@ class MongolidMigrationRepositoryTest extends TestCase
                 ]
             )
             ->andReturn(
-                SplFixedArray::fromArray([(object) ['batch' => $batchNumber]])
+                $this->createCursor([(object) ['batch' => $batchNumber]])
             );
 
         $collection->expects()
@@ -154,7 +159,9 @@ class MongolidMigrationRepositoryTest extends TestCase
                 ['batch' => $batchNumber],
                 ['sort' => ['migration' => -1]]
             )
-            ->andReturn($cursor);
+            ->andReturn(
+                $this->createCursor($migrations)
+            );
 
         // Actions
         $result = $repository->getLast();
@@ -204,7 +211,9 @@ class MongolidMigrationRepositoryTest extends TestCase
                     'sort' => ['batch' => 1, 'migration' => 1],
                 ]
             )
-            ->andReturn(SplFixedArray::fromArray($list));
+            ->andReturn(
+                $this->createCursor($list)
+            );
 
         // Actions
         $result = $repository->getMigrationBatches();
@@ -306,7 +315,7 @@ class MongolidMigrationRepositoryTest extends TestCase
                 ]
             )
             ->andReturn(
-                SplFixedArray::fromArray([(object) ['batch' => $batchNumber]])
+                $this->createCursor([(object) ['batch' => $batchNumber]])
             );
 
         // Actions
@@ -349,7 +358,7 @@ class MongolidMigrationRepositoryTest extends TestCase
                 ]
             )
             ->andReturn(
-                SplFixedArray::fromArray([(object) ['batch' => $batchNumber]])
+                $this->createCursor([(object) ['batch' => $batchNumber]])
             );
 
         // Actions
@@ -397,5 +406,79 @@ class MongolidMigrationRepositoryTest extends TestCase
 
         // Assertions
         $this->assertTrue($result);
+    }
+
+    private function createCursor(array $documents): DriverCursorInterface
+    {
+        return new class ($documents) implements DriverCursorInterface {
+            private ArrayIterator $iterator;
+
+            public function __construct(private array $documents)
+            {
+                $this->iterator = new ArrayIterator($documents);
+            }
+
+            public function current(): array|object|null
+            {
+                return $this->iterator->valid()
+                    ? $this->iterator->current()
+                    : null;
+            }
+
+            public function getId(): Int64
+            {
+                throw new LogicException(
+                    'Cursor ID is not used by this test.'
+                );
+            }
+
+            public function getServer(): Server
+            {
+                throw new LogicException(
+                    'Cursor server is not used by this test.'
+                );
+            }
+
+            public function isDead(): bool
+            {
+                throw new LogicException(
+                    'Cursor state is not used by this test.'
+                );
+            }
+
+            public function key(): ?int
+            {
+                $key = $this->iterator->key();
+
+                return is_int($key) ? $key : null;
+            }
+
+            public function next(): void
+            {
+                $this->iterator->next();
+            }
+
+            public function rewind(): void
+            {
+                $this->iterator->rewind();
+            }
+
+            /**
+             * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
+             */
+            public function setTypeMap(array $typemap): void
+            {
+            }
+
+            public function toArray(): array
+            {
+                return $this->documents;
+            }
+
+            public function valid(): bool
+            {
+                return $this->iterator->valid();
+            }
+        };
     }
 }
