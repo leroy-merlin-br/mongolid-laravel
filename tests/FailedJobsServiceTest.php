@@ -8,9 +8,9 @@ use MongoDB\Client;
 use MongoDB\Collection;
 use MongoDB\Database;
 use MongoDB\DeleteResult;
+use MongoDB\Driver\CursorInterface;
 use MongoDB\InsertOneResult;
 use Mongolid\Connection\Connection;
-use stdClass;
 
 class FailedJobsServiceTest extends TestCase
 {
@@ -20,7 +20,7 @@ class FailedJobsServiceTest extends TestCase
         $connPool = m::mock(Connection::class);
         $rawCollection = m::mock(Collection::class);
         $this->mockRawCollection($connPool, $rawCollection);
-        $cursor = m::mock(stdClass::class);
+        $cursor = m::mock(CursorInterface::class);
 
         $failedJobs = new FailedJobsService($connPool);
 
