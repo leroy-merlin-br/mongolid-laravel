@@ -105,7 +105,7 @@ class MongolidFailedJobProvider implements FailedJobProviderInterface
     {
         $result = $this->failedJobs->delete($id);
 
-        return (bool) $result->getDeletedCount();
+        return (bool) $result->isAcknowledged() && $result->getDeletedCount();
     }
 
     /**

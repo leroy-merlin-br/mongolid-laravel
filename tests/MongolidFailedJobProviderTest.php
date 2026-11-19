@@ -191,6 +191,11 @@ class MongolidFailedJobProviderTest extends TestCase
             ->once()
             ->andReturn($deletedResult);
 
+        $deletedResult->shouldReceive('isAcknowledged')
+            ->withNoArgs()
+            ->once()
+            ->andReturnTrue();
+
         $deletedResult->shouldReceive('getDeletedCount')
             ->withNoArgs()
             ->once()

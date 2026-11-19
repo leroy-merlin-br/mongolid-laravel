@@ -25,8 +25,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "ext-mongodb": "^1.21.13",
-        "leroy-merlin-br/mongolid": "v4.1.1",
+        "ext-mongodb": "^2.5.0",
+        "leroy-merlin-br/mongolid": "dev-chore/update-mongodb-2.3",
         "illuminate/support": "^12.60",
         "illuminate/auth": "^12.60",
         "illuminate/queue": "^12.60"
